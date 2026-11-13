@@ -1,0 +1,8 @@
+theorems checked: 139
+    135 Classical.choice
+    138 Quot.sound
+    139 propext
+count matches Test/Axioms.lean: 139
+AXIOM SCAN OK: 5743 constants (5413 theorems) of ShibVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

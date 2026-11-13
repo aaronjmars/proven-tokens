@@ -1,0 +1,8 @@
+theorems checked: 250
+    233 Classical.choice
+    245 Quot.sound
+    247 propext
+count matches Test/Axioms.lean: 250
+AXIOM SCAN OK: 8079 constants (7538 theorems) of LinkVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

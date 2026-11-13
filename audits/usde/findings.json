@@ -1,0 +1,132 @@
+{
+ "token": "USDE",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit of token-kit/tokens/usde (USDe, 0x4c9edd5852cd905f086c759e8383e09bff1e68b3), Lean 4 on EthLib at the pinned commit. Nothing outside audits/usde/ was changed. Lean was not built: results rest on reading statements and on the saved clean-rebuild log logs/usde.*. Date 2026-11-11.",
+ "checked_ok": [
+  "Bytes: CODE_NAT in Code/Bytes.lean equals survey/tokens/USDE/runtime.hex and data/usde.runtime.hex byte for byte; CODE_SIZE 7567; keccak256 recomputed in pure Python = 6ca5462f...ef9625 = EXPECTED_HASH in Test/Hash.lean = SOURCE.md (check_code.py).",
+  "Selector table: the 25 'DUP1 PUSH4 k EQ PUSH2 d JUMPI' entries in the bytes equal ENTRIES in Map.lean in order (key and destination); the 25 keys equal the selectors of the 25 functions of abi.json, none extra, none missing (check_code.py).",
+  "Opcodes before the 53 metadata bytes (linear sweep): 12 SSTORE, 35 SLOAD, 1 STATICCALL (pc 6036, after GAS at 6035), no CALL, CALLCODE, DELEGATECALL, CREATE, CREATE2, SELFDESTRUCT, TLOAD, TSTORE, PUSH0. Matches survey MAP.md.",
+  "Dispatch: ends_ok_dispatch / runFrame_ok_dispatch are for any runner and any gas; value != 0, under 4 bytes and unknown selector are each proved to never end with no error (ok_valueSent, ok_short, ok_other : False).",
+  "supply_preserved covers all 24 non-permit entries by a match on Fin 25 (entry 6 = permit is the only one excluded, by hsel6); renounceOwnership is closed by ok_renounceOwnership : False. supply_permit covers entry 6. Together process_step_all covers every selector.",
+  "No runner hypothesis anywhere: supply_<fn> are for every runChild (universally quantified, instantiated with processRunner in inv_goodCall); permit theorems name processRunner. No hrunner / Keeps* / CalleeKeeps / stub runner in the token (rg).",
+  "Completeness theorems ok_<fn> have only fork, size, selector, start, run, no-error as hypotheses; the 184 pruned branches (paths.json _pruned: 180 by entry, 4 by an earlier condition) do not weaken them because the ok_ theorems are proved against the bytes for every run.",
+  "Witnesses: 21 generated (Sanity/Zero.lean, one per success path of 19 functions, amounts 1 and balances 5, not zero, for every runner and every bound) and 3 by hand for the three DOMAIN_SEPARATOR branches. Missing: permit, name, symbol, eip712Domain (USDE-3, USDE-7).",
+  "Permit constants recomputed (check_constants.py): PERMIT_TYPEHASH, EIP712Domain type hash, keccak('USDe'), keccak('1'), Approval topic, half curve order = floor(n/2), and CACHED_DOMAIN = keccak of the five domain words for chain 1 and 0x4c9e...68b3. All are PUSH32 constants in the bytes.",
+  "EthLib's ECRECOVER (Precompiles/Ecrecover.lean) is a real definition: v must be 27 or 28, Ecdsa.recover, empty output on a rejected signature, 3000 gas; no opaque, extern or axiom in it.",
+  "Soundness hygiene and counts: see USDE-8.",
+  "Failed message: untouched_process_failed is proved for any code and any fork from EthLib's getStorage_processMessage_of_error; process_value_fails proves a nonzero value always fails."
+ ],
+ "findings": [
+  {
+   "id": "USDE-1",
+   "token": "USDE",
+   "severity": "minor",
+   "claim": "status.json permit.invariant and README row 'supply invariant, OpenZeppelin permit': 'process_step_all, process_step_all_inv, callsP_process, inv_callsP: every top-level message with any selector, permit included' keeps sum of balances = totalSupply.",
+   "what_is_actually_proved": "One step is proved for real: for one call of EthLib's processMessage (default meter) on a message with message.code = CODE, no precompile, Paris <= fork < Glamsterdam, under Sep (callKeys message) and NoDelegation1, Inv at the start state gives Inv at the end state (ok run: GoodCall or PermitCall; error run: rollback, proved by untouched_process_failed; nonzero value: always an error, proved). The runner is the concrete processRunner, not a hypothesis. What is NOT proved is the history: (a) inv_callsP is an induction over the inductive CallsP whose 'other' step is 'Untouched C S S'' = every storage word of C equal, and that is ASSUMED for everything that is not a successful run of CODE at the sequence level (the definition restates what the step needs). (b) A transaction where another contract calls the token (router transferFrom, a minter contract calling mint) changes C's storage, so it is not an 'other' step, and it is not a 'call' step either, because the S and S' of the sequence are the transaction's, not the inner frame's. process_step_all does apply to the inner processMessage call taken alone (it has exactly the form the runner uses for children: MessageCall.lean:313), but nothing composes it with the outer frame (incorporateChild) or with an outer revert (restoreTxState). (c) No theorem links processMessage to processMessageCall / processTransaction (the first frame of a transaction passes first.meter, Process.lean:337; for the Nat meter start/commit make it the same number, but the link is not stated; rg finds no processMessageCall in the token or TokenKit). (d) There is no base case: Inv at deployment is assumed (disclosed). So the invariant is a per-message theorem plus a sequence model, not a statement about chain histories. status.json says 'top-level' and lists (d); it does not say (a) to (c).",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/Seq.lean:63-71 (GoodCall), 75-76 ('def Untouched (C) (S S') : Prop := forall n, storageAt S' C n = storageAt S C n'), 79-83 (Calls.other : Untouched C S S' -> ...), doc lines 23-26 ('for the other changes it is the assumption of the step'); token-kit/tokens/usde/UsdeVerify/Usde/PermitSeq.lean:160-167 (CallsP), 179-185 (inv_callsP), 231-241 (process_step_all: hparis, hglam, hmc : message.code = CODE, noPrecompile, hsize, hdel : NoDelegation1 fork state, K : Sep (callKeys message), hproc : processMessage fork message state substate = .ok ended). upstream/EthLib/EthLib/Execution/Evm/Call/MessageCall.lean:282-320 (processMessage, child runner line 313); Execution/Transactions/Process.lean:323-340 (processMessageCall). Scratch base case: scratch file UsdeInvEmpty.lean (not kept) (inv_of_empty).",
+   "suggested_fix": "Say in the headline: 'per message, plus a sequence model where every other step is assumed to keep C's storage'. To close it: prove that a frame of any other code keeps Inv C when each child message to C does (induction over runFrame with the child case given by process_step_all and the error case by restoreTxState), then lift to processMessageCall for the Nat meter. Add inv_of_empty as the base case.",
+   "machine_check": "written, not built (lean/UsdeInvEmpty.lean, inv_of_empty)"
+  },
+  {
+   "id": "USDE-2",
+   "token": "USDE",
+   "severity": "minor",
+   "claim": "status.json assumptions[0]: Sep (callKeys message) is 'Hypothesis on keccak, not proved'; supply invariant and readable theorems hold under it.",
+   "what_is_actually_proved": "Sep is a hypothesis of supply_preserved, supply_permit, 8 of the 19 generated readable theorems and of every GoodCall / PermitCall step. It is never discharged for any message, not even for the sanity witness calls (their doc says 'no hypothesis about keccak is used'), so no closed theorem in the token says 'this concrete call kept Inv'. Unlike upstream's KeccakSep (docs/AUDIT.md item 1, 'almost certainly false'), this Sep is narrow enough to be plausible: every field compares one fixed slot (4, 0, 1, 11, a balance, allowance or nonce slot of the three call keys) with the 2^160 balance slots, so under the random-function heuristic each field fails with chance about 2^-96, about 20 fields per message. But it is still an existence claim about keccak, not a computational one: for some (unfindable) messages Sep is false, and for those the theorems say nothing and the bytes could really break the invariant (an allowance write that lands on a balance slot). Two fields (total, fixed) are global facts and do not depend on the message at all. name(), symbol(), eip712Domain(), and every completeness and path theorem do not use Sep (checked: rg finds no Sep in Gen/, Sanity/, Complete/). The access check of mint (caller = minter) is in ok_mint and needs no Sep.",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/Sep.lean:60-65 (callKeys), 68-81 (structure Sep: total, uniq, allow, nonce, fixed); token-kit/tokens/usde/UsdeVerify/Usde/Invariant.lean:646-654 (supply_preserved, hsep); token-kit/tokens/usde/UsdeVerify/Usde/PermitSeq.lean:92-103 (supply_permit, hsep); token-kit/TokenKit/Evm/Supply.lean:53-57 (NotBal, UniqBal over x.toNat < 2^160); upstream/usdt-verify/docs/AUDIT.md:27-60.",
+   "suggested_fix": "Keep it as a named hypothesis, but say in the headline 'for every message whose mapping slots do not collide (assumed, about 2^-96 per message under the usual heuristic)'. Do not write 'every message' without it."
+  },
+  {
+   "id": "USDE-3",
+   "token": "USDE",
+   "severity": "minor",
+   "claim": "status.json permit.main / permit.readable / permit.invariant: ok_permit_real, permit_readable, supply_permit describe a successful permit under EthLib's real runner with no assumption on the precompile.",
+   "what_is_actually_proved": "All three are of the form 'if a run of permit ends with no error then ...'. That part is solid: the runner is processRunner, the output of address 1 is EthLib's Precompiles.Ecrecover.compute (a real secp256k1 recovery, not a stub or opaque), the only extra hypotheses are Paris <= fork < Glamsterdam and hdel. But nothing in the token shows that such a run exists. There is no Sanity theorem for permit at all: not for the three prefix paths that reach pc 6035 (permit_p8, p10, p12), not for the two tails from pc 6037 (permitTailC_p*, permitTailR_p*), not for a whole call. status.json not_covered discloses the missing whole-call witness and says 'the three pre-call branches and both tails are proved'; it does not say that these, too, have no witness. So 'a successful permit keeps Inv' and permit_readable could be vacuous in the model without the build noticing (for example if no memory layout met permit_callC's hypotheses). I found no sign that they are: the bytes at 6035/6036 are GAS STATICCALL, the constants check out (below), and EthLib proves output_sign (a signature made with a private key recovers that key's address).",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/Permit.lean:399-424 (ok_permit_real statement), 244-272 (permit_callC), 363-384 (PermitDone); token-kit/tokens/usde/UsdeVerify/Usde/PermitSeq.lean:300-333 (permit_readable); token-kit/tokens/usde/UsdeVerify/Usde/Sanity/Zero.lean and Sanity/Domain.lean theorem lists (21 + 3 witnesses, none named permit: rg 'permit' in Sanity/ is empty); token-kit/TokenKit/Evm/Precompile.lean:549-570 (ecrecover_call_ok hypotheses), 456-459 (recoveredWord); upstream/EthLib/EthLib/Execution/Evm/Precompiles/Ecrecover.lean:47-60 (output, compute); Execution/Proofs/Evm/Precompiles/Ecrecover.lean:255 (output_sign).",
+   "suggested_fix": "Add three kernel-computable witnesses: (1) a permit call that reaches pc 6035 in the cached branch, (2) one in a rebuilt branch, (3) a run of the tail from pc 6037 with a chosen recovered word equal to the owner. None needs secp256k1. For a whole call, state it existentially from output_sign (exists r s, the call succeeds) instead of computing a signature in the kernel."
+  },
+  {
+   "id": "USDE-4",
+   "token": "USDE",
+   "severity": "minor",
+   "claim": "status.json assumptions[1]: fork bounds. Frame theorems from Berlin; top-level lift from Paris; permit Paris <= fork < Glamsterdam.",
+   "what_is_actually_proved": "Confirmed, and one consequence is not spelled out: process_step_all (the 'any selector' theorem) carries hglam : fork < .glamsterdam for EVERY selector, so from Glamsterdam it says nothing even for transfer. The older process_step (Seq.lean, no permit) has no upper bound, but it is stated for the one-counter meter (Evm fork Nat), and EthLib runs transactions with StateGasMeter from Glamsterdam (Process.lean:438), so it does not describe the real runner there either. Net scope of the whole USDE result against EthLib's real transaction runner: Paris up to BPO5. The contract was compiled for Paris (no PUSH0 in the bytes: checked), so the lower bound costs nothing. Hegota is rejected by EthLib itself (forkNotYetSpecified).",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/PermitSeq.lean:231 ('theorem process_step_all (hparis : .paris <= fork) (hglam : fork < .glamsterdam)'); token-kit/tokens/usde/UsdeVerify/Usde/Seq.lean:205 (process_step, Evm fork Nat); upstream/EthLib/EthLib/Execution/Transactions/Process.lean:435-439 ('else if fork >= .glamsterdam then runTransaction StateGasMeter ...'); upstream/EthLib/EthLib/Base/Fork.lean (fork list).",
+   "suggested_fix": "State the window 'Paris to BPO5' in the README row. Port the two-counter meter (upstream usdt-verify did; see its AUDIT.md T1 and U1 for the traps)."
+  },
+  {
+   "id": "USDE-5",
+   "token": "USDE",
+   "severity": "note",
+   "claim": "status.json assumptions[3]: 'permit only: hdel / NoDelegation1: the account at address 1 holds no EIP-7702 delegation code in the start state (a fact of the state, true on chain)'.",
+   "what_is_actually_proved": "The hypothesis is as described and is not false for the real runner: it is a fact about the state, not about the runner, and it is true whenever the code of account 1 is empty. It is only used from Pectra (the statement has 'pectra <= fork ->' inside). It is not shown satisfiable inside the token, but that is trivial (before Pectra it holds in every state: scratch lemma). Two small things: process_step_all asks for it for every selector, not only permit (harmless, it is only used in the permit branch); and CallsP needs it again at every permit step, so a sequence theorem does not get it from the start state (it could: no step of CODE writes account 1).",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/PermitSeq.lean:44-46 (def NoDelegation1), 138-148 (PermitCall carries NoDelegation1 fork S), 235 (hdel in process_step_all); token-kit/tokens/usde/UsdeVerify/Usde/Permit.lean:401-402; token-kit/TokenKit/Evm/Precompile.lean:561-562.",
+   "suggested_fix": "Optional: prove NoDelegation1 is kept by every step of CallsP, so it is needed once at the start.",
+   "machine_check": "written, not built (lean/UsdeInvEmpty.lean, noDelegation1_before_pectra)"
+  },
+  {
+   "id": "USDE-6",
+   "token": "USDE",
+   "severity": "minor",
+   "claim": "status.json contract_findings[0]: 'Mint: only the address in slot 11 (minter) can mint'.",
+   "what_is_actually_proved": "Proved per function, and for mint with no keccak hypothesis: ok_mint (any runner, from Berlin) says a mint run that ends with no error had caller = low 160 bits of slot 11, to != 0, and a checked totalSupply add. mint_readable restates it. What is not a theorem: 'totalSupply never grows except in such a mint'. It follows by reading the other 22 readable theorems one by one (each says slot 4 is kept, or lowered by burn / burnFrom), 8 of the generated ones under Sep, plus permit_readable under Sep. No single statement says it, and the kit's generator for exactly this (scripts/gen_nomint.py, used for QNT) is not in config 'generators' for USDE. From the bytes I confirm the shape: 12 SSTOREs, no CALL, CALLCODE, DELEGATECALL, CREATE, CREATE2 or SELFDESTRUCT, one STATICCALL at pc 6036.",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/Gen/PMint.lean:334-352 (ok_mint: 'equal message.caller.toU256 (bitwiseAnd MASK (storageAt state message.currentTarget 11)) != 0'); token-kit/tokens/usde/UsdeVerify/Usde/Readable.lean (mint_readable: 'callerW message = minterOf message state', 'addrArg1 message != 0'); token-kit/tokens/usde/config/usde.json 'generators' (no nomint); audits/check_code.py output (opcode_pcs_before_metadata).",
+   "suggested_fix": "Add one theorem: for every selector, a run that ends with no error and raises the word of slot 4 has selector 0x40c10f19 and caller = minter (under Sep). Enable gen_nomint or write it by hand from ends_ok_dispatch and the readable set."
+  },
+  {
+   "id": "USDE-7",
+   "token": "USDE",
+   "severity": "note",
+   "claim": "status.json not_covered[1]: name(), symbol(), eip712Domain() only have 'no storage word of any account changes, no log'.",
+   "what_is_actually_proved": "Confirmed. ro_name, ro_symbol, ro_eip712Domain (and supply_name etc. on top) are proved for any runner with no Sep. Their return data and gas are not stated and there is no witness that any of the three ever ends with no error, so these three are the only selectors of the table with neither an exact success theorem nor a witness (besides permit, USDE-3). The entry path theorems nameEntry_p*, symbolEntry_p*, eip712DomainEntry_p* and their ok_ forms are not named in Test/Axioms.lean; the scan of every constant covers them.",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/Gen/Loops.lean:1669-1678 (ro_name); token-kit/tokens/usde/UsdeVerify/Usde/ReadableMore.lean (name_readable, symbol_readable, eip712Domain_readable); check_axioms_list.py (audit scratch, not kept) output.",
+   "suggested_fix": "Add a witness for name() on a state with the on-chain words of slots 5 and 6, or state the return data."
+  },
+  {
+   "id": "USDE-8",
+   "token": "USDE",
+   "severity": "note",
+   "claim": "status.json build and theorem_counts: 379 theorems checked, 1420 jobs, exit 0, AXIOM SCAN OK 13195 constants (12921 theorems), 0 sorry / native_decide / bv_decide / axiom.",
+   "what_is_actually_proved": "All confirmed from files (not rebuilt). logs/usde.log: 'Build completed successfully (1420 jobs).', EXIT=0, 63 'Built UsdeVerify.*' lines (a real rebuild of the token, 104 s), 379 '#print axioms' results whose names equal the 379 lines of Test/Axioms.lean, only propext / Classical.choice / Quot.sound, no sorry warning, the AXIOM SCAN OK line with the stated counts, the hash test line 'CODE: 7567 bytes, keccak256 6ca5...9625'. Every count in theorem_counts matches a count of 'theorem' declarations in the named file (B 417, P paths 163, ok_ 32, mem 3, Loops 300, Invariant 24, SupplyLib 15, Sep 21, Readable 19, ReadableLib 11, Seq 10, Permit 7, PermitSeq 11, Lib 4, Code 5). rg over tokens/usde and TokenKit: no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by, opaque, extern; 1499 uses of 'decide +kernel' (kernel-checked, adds no axiom). No 'variable' block binds a hypothesis (164 blocks checked), so no theorem has a hidden premise. The axioms list has no skip list beyond 6 names that no file declares (supply_renounceOwnership and 5 others, stated in the file). All headline theorems are named in it. Housekeeping only: status.json has no 'claims' key (the claims sit under 'permit', 'contract_findings' and 'theorem_counts'); 'to_merge_into_kit' is stale (token-kit/kit-status.json 'usde_ena_merge' says the merge is done and regen_check gives SAME for usde), and tokens/usde/scripts still holds the old generator copies, which differ from the kit's (gen_paths.py by 931 diff lines) and are no longer what regen.sh runs.",
+   "evidence": "logs/usde.log, usde.axioms, usde.done; token-kit/tokens/usde/UsdeVerify/Test/Axioms.lean:36-41 and the scan at the end; check_axioms_list.py (audit scratch, not kept); token-kit/kit-status.json:832-848.",
+   "suggested_fix": "Delete or mark the stale script copies and the to_merge_into_kit block; add a 'claims' list to status.json like the other tokens."
+  },
+  {
+   "id": "USDE-9",
+   "token": "USDE",
+   "severity": "note",
+   "claim": "status.json contract_findings (7 items) and what the proofs show about the real contract.",
+   "what_is_actually_proved": "Each item matches a theorem I read. Worth telling the owner: (1) Mint has no cap and one gate, caller = slot 11. The owner (slot 0) can set slot 11 to any address at any time with setMinter (no delay, no zero check: setMinter_readable needs only caller = owner), so the owner key alone is enough to mint any amount in two calls. (2) renounceOwnership always fails (renounceOwnership_never, any runner), so that power can only move by the two-step transfer, never be dropped. (3) transfer and transferFrom check only to != 0; to may be the token's own address, and none of the 25 selectors can move tokens out of it, so tokens sent to the contract are stuck. (4) With an allowance of 2^256-1, transferFrom and burnFrom do not lower it, emit no Approval log and skip the 'caller != 0' check (both branches are in transferFrom_readable / burnFrom_readable). (5) permit has no check of v in the bytes; a bad v is rejected only because ECRECOVER returns nothing and the output word was 0 before the call. s in the upper half is rejected. The nonce is written before the call and its add is unchecked. (6) The cached domain separator in the code equals the rebuilt hash for chain id 1 and the deployed address, with name hash keccak('USDe') and version '1' (recomputed in check_constants.py); on another chain id or under DELEGATECALL the separator is rebuilt. (7) No external call other than STATICCALL to address 1: no reentrancy surface, no hook, no pause, no blacklist, no fee. (8) The balance add in transfer / transferFrom / mint and the supply sub in burn / burnFrom are unchecked in the bytes and are safe only because of the invariant (transfer_no_wrap, mint_no_wrap, burn_no_wrap).",
+   "evidence": "token-kit/tokens/usde/UsdeVerify/Usde/Readable.lean (mint_readable, setMinter_readable, transferOwnership_readable, acceptOwnership_readable, transfer_readable, transferFrom_readable, burnFrom_readable); token-kit/tokens/usde/UsdeVerify/Usde/ReadableMore.lean (renounceOwnership_never); token-kit/tokens/usde/UsdeVerify/Usde/ReadableLib.lean:86-114; token-kit/tokens/usde/UsdeVerify/Usde/Permit.lean:399-424; check_constants.py (audit scratch, not kept) and check_code.py outputs.",
+   "suggested_fix": "None for the proof. For the owner: treat the owner key as a mint key."
+  }
+ ],
+ "not_checked": [
+  "Nothing was built: there is no Lean on this machine. Every 'proved' above means 'the statement is in the source and the saved log of the clean rebuild shows the module built with standard axioms'. The scratch file lean/UsdeInvEmpty.lean is written, not built.",
+  "The proofs inside Gen/ (path and block theorems) were not read line by line; only statements. Their soundness rests on the Lean kernel and the log.",
+  "That the saved log comes from exactly the files now in the repo (no hash of the sources is stored with the log). The 379 names and the counts match.",
+  "The Solidity source was not compared with the bytes (same as status.json). On-chain values of slots 0 and 11 (who owner and minter are, whether the minter is a contract) were not read.",
+  "Whether Sep holds for any concrete message (it cannot be checked by computation; see USDE-2).",
+  "The whole of token-kit/scripts was not audited switch by switch; I checked the config keys used by USDE (paths, prune, supply.never_ok, supply.unchecked, axioms.declared_only) against what the generated statements say, and that the kit generators are recorded as writing the same files.",
+  "The revert and stuck path theorems (how each failing run ends, gas of failures) beyond their use in the ok_ theorems.",
+  "EthLib itself (that its EVM matches mainnet) and the linear-sweep disassembly as a full control-flow argument."
+ ],
+ "verdict": {
+  "bytecode is the deployed code (7567 bytes, hash test)": "holds",
+  "build: exit 0, 379 theorems checked, standard axioms only, scan of 13195 constants": "holds (from the saved log; not rebuilt)",
+  "theorem_counts": "holds",
+  "permit.main (ok_permit_real)": "holds with caveat: Paris to BPO5, hdel; no witness that any permit run succeeds (USDE-3)",
+  "permit.domain_separator (both branches, gas 1592 / 1845 / 1835, digest bytes)": "holds",
+  "permit.no_assumption_on_precompile": "holds",
+  "permit.readable (permit_readable)": "holds with caveat: needs Sep for one slot inequality; no witness (USDE-3)",
+  "permit.invariant / README 'supply invariant, OpenZeppelin permit' (every top-level message, any selector)": "holds with caveat: per processMessage call, Paris to BPO5, under Sep per message and NoDelegation1; the sequence result assumes every other step keeps C's storage, nested calls and the transaction layer are not linked, no base case (USDE-1, USDE-2, USDE-4)",
+  "assumptions list in status.json": "holds (accurate; USDE-1 a to c are limits it does not list)",
+  "contract_findings[0] only the minter can mint": "holds with caveat: per function; no single theorem that supply only grows through mint (USDE-6)",
+  "contract_findings[1..6] (setMinter, two-step owner, renounceOwnership always reverts, burn / burnFrom, no pause or fee, permit shape)": "holds",
+  "overall": "No critical or major finding. No false or self-restating hypothesis on the runner, no vacuous path theorem found. The limits are scope limits, all but USDE-1 a to c disclosed."
+ }
+}

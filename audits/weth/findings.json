@@ -1,0 +1,117 @@
+{
+ "token": "WETH",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "QNT, BNB and WETH audit"
+ },
+ "paths_note": "Evidence paths name the files as they were when audited. qnt-verify, bnb-verify, weth-verify and shib-verify were the first per-token projects; they were merged into token-kit/tokens/<t> (same file names), so their paths are given there. Later fixes changed some of these files, so line numbers can be off. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent audit of qnt-verify, bnb-verify, weth-verify (Lean 4 on EthLib). Local projects not modified. Lean experiments run on box lean-weth in <project>/Audit/, copies in the scratch Lean files (not kept). Date 2026-11-10.",
+ "findings": [
+  {
+   "id": "WETH-1",
+   "token": "WETH",
+   "severity": "major",
+   "claim": "solvent_withdraw / solvent_preserved: withdraw keeps 'sum of balances <= ether held', including when the callee has code, under the named hypothesis CalleeKeeps.",
+   "what_is_actually_proved": "For a callee with code the reentrancy safety is assumed, not proved: the conclusion of CalleeKeeps (Solvent C child.state) is literally the conclusion of solvent_withdraw (the proof ends with s.state = child.state and applies the hypothesis). What the theorem adds is only the premise: at the CALL the contract is Backed (balance already lowered). CalleeKeeps is discharged in the project only for callees with no code (calleeKeeps_noCode, withdrawHyp_eoa). It is satisfiable for a simple contract: I proved it for a callee whose code is one STOP byte (calleeKeeps_stop, about 50 lines, standard axioms). But as stated it is over-quantified: any caller frame whose C account record matches, any msg.gas (the real 2300 stipend bound from CallSend is thrown away), and nothing ties the code stored for C in caller.state to CODE (getCode reads a free codeWrites table by hash). So for a callee that calls back into C it is not provable and is false over processRunner in general (argued from the definitions, not machine-checked). Every withdraw by a contract that does more than accept ether (routers, multisigs) is outside what is proved.",
+   "evidence": "WethVerify/Evm/Call.lean of the first WETH project (not kept; the kit form is token-kit/TokenKit/Evm/Call.lean) (def CalleeKeeps), Weth/Invariant.lean:142-154, Weth/Seq.lean:299-314; EthLib Execution/State/Tracker.lean:190 (getCode). Lean check: scratch file WethCalleeStop.lean (not kept), box /home/user/Audit/CalleeStop.lean of the first WETH project (not kept), theorem WethVerify.Audit.calleeKeeps_stop, axioms [propext, Classical.choice, Quot.sound].",
+   "suggested_fix": "Keep msg.gas <= 2300 in the hypothesis (both branches of the CALL gas give at most the stipend) and prove one general lemma: a frame with at most 2300 gas cannot SSTORE or send value, so it cannot change C's storage or lower C's ether. That closes reentrancy for all callees up to the gas schedule. Also pin caller.state to the state at the CALL and require getCode of C's hash = CODE."
+  },
+  {
+   "id": "WETH-2",
+   "token": "WETH",
+   "severity": "note",
+   "claim": "The balance is lowered before the message is sent.",
+   "what_is_actually_proved": "This is a real theorem about the bytes. ok_withdraw_exact shows every successful run sends exactly one message, from caller.state = wState with two account-read marks, where wState already has balanceOf[sender] lowered by wad (SSTORE at pc 2675, CALL at pc 2724). Hypotheses: fork < Glamsterdam, caller code readable, no 7702 delegation, depth, and the runner's callee condition.",
+   "evidence": "token-kit/tokens/weth/WethVerify/Weth/Withdraw.lean:175-269; disassembly WETH.txt (not kept) pc 2675 and 2724.",
+   "suggested_fix": "None."
+  },
+  {
+   "id": "WETH-3",
+   "token": "WETH",
+   "severity": "major",
+   "claim": "solvent_preserved: every successful call keeps the contract solvent.",
+   "what_is_actually_proved": "For withdraw with value 0 the caller of the theorem must supply WithdrawReady: enough gas to reach and pay the CALL, depth below 1024, caller code readable, no EIP-7702 delegation from Pectra, fork < Glamsterdam. A run that fails these should end in an error or a caught failed CALL (revert), which would keep the invariant trivially, but that is not proved; such runs are simply outside the theorem. hdel excludes delegated EOAs, which exist on mainnet since Pectra. All other functions and both fallbacks (under 4 bytes, unknown selector, with value = deposit) are covered with no extra hypothesis. The equality form is not claimed (correct: forced ether makes it false).",
+   "evidence": "token-kit/tokens/weth/WethVerify/Weth/Invariant.lean:62-82, 142-154; Weth/Seq.lean:151-166 (goodCall_process needs hval, hne, hcodeC, hw).",
+   "suggested_fix": "Prove the failing branches: depth or low gas gives no message and the tail reverts; a delegated caller is a callee with code (falls under WETH-1 fix)."
+  },
+  {
+   "id": "WETH-4",
+   "token": "WETH",
+   "severity": "minor",
+   "claim": "status.json: '37 path theorems, none vacuous: each success path has a witness'.",
+   "what_is_actually_proved": "The withdraw witness (withdraw_runs) uses stubRunner, which is not the interpreter's runner, and wad = 0. There is no witness of withdraw under processRunner or with ether moved. Disclosed in not_proved, but the 'none vacuous' sentence overstates it for withdraw_p3 and withdrawTail_p1. Sanity.fallbackShort_runs and fallbackOther_runs are not in Test/Axioms.lean (my whole-environment scan covers them: clean).",
+   "evidence": "token-kit/tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean:1-84; generator_divergence.json flags 4 and 5.",
+   "suggested_fix": "Add a witness with processRunner, EOA caller, wad > 0, using withdrawHyp_eoa. Add the two fallback witnesses to the axioms list."
+  },
+  {
+   "id": "WETH-5",
+   "token": "WETH",
+   "severity": "note",
+   "claim": "The invariant handles ether credited at call entry.",
+   "what_is_actually_proved": "Correct. Frame theorems take Backed message.value C state (sum of balances + value <= ether), and goodCall_process derives it from moveEther_into (value credited before the frame). deposit's unchecked ADD is safe for the inequality. Slots: balanceOf base 3, allowance base 4; all 6 SSTORE keys are keccak outputs over those bases.",
+   "evidence": "WethVerify/Evm/Solvent.lean of the first WETH project (not kept; the kit form is token-kit/TokenKit/Evm/Solvent.lean), Evm/Ether.lean, Weth/Seq.lean:167-175; disassembly WETH.txt (not kept).",
+   "suggested_fix": "None."
+  },
+  {
+   "id": "ALL-1",
+   "token": "QNT, BNB, WETH",
+   "severity": "minor",
+   "claim": "Invariant theorems hold 'for every call'.",
+   "what_is_actually_proved": "Each write theorem needs Sep (callKeys message): keccak slots of the addresses in the call do not collide with each other or with fixed slots. Never proved (cannot be, short of a keccak model). Disclosed. One gas counter only (no EIP-8037). Frame theorems from Berlin, message lift from Paris. Static frames: handled (a successful run with SSTORE implies not static, derived in ok_<fn>). Value to non-payable functions: proved to revert. Dirty upper address bits: handled by the masks in the path terms. Short call data: QNT reverts (spec_short), BNB payable fallback stops for 1 to 3 bytes and empty data, WETH enterShort = deposit.",
+   "evidence": "*/Sep.lean; */Complete/Dispatch.lean (selector_cases); Gen/P*.lean ok_<fn> statements.",
+   "suggested_fix": "None beyond wording."
+  },
+  {
+   "id": "ALL-2",
+   "token": "QNT, BNB, WETH",
+   "severity": "minor",
+   "claim": "check_axioms.sh shows only standard axioms.",
+   "what_is_actually_proved": "The result is right (see checked_ok: I scanned every constant), but the script is weak: axiom names on wrapped continuation lines are not checked, an empty log passes, the count is not compared, sorry warnings are not read. QNT and BNB versions give a false alarm on macOS grep.",
+   "evidence": "generator_divergence.json flag 3; */scripts/check_axioms.sh:5-11.",
+   "suggested_fix": "Replace by a Lean-side scan over all constants of the project (scratch file AllAxioms*.lean (not kept) does this)."
+  }
+ ],
+ "verdict": {
+  "code constant equals on-chain runtime code": "holds",
+  "path theorems and completeness incl. totalSupply = ether balance": "holds",
+  "balance lowered before the message is sent (ok_withdraw_exact)": "holds with caveat (pre-Glamsterdam, no delegation, depth)",
+  "solvency (sum of balances <= ether) for deposit, fallbacks, approve, transfer, transferFrom": "holds with caveat (Sep)",
+  "solvency for withdraw to a caller with no code": "holds with caveat (WithdrawReady: gas, depth, no 7702 delegation, pre-Glamsterdam)",
+  "solvency for withdraw to a caller with code (reentrancy)": "does not hold as a proved fact (assumed through CalleeKeeps; provable for a STOP contract, shown here)",
+  "each success path has a witness": "holds with caveat (withdraw: stub runner, amount 0)"
+ },
+ "checked_ok": [
+  "CODE literal equals survey/tokens/<SYM>/runtime.hex and data/*.runtime.hex in all three (5155, 5355, 3124 bytes); keccak matches Test/Hash.lean; eth_getCode at latest from Etherscan equals runtime.hex for all three addresses.",
+  "lake build on the box: qnt-verify rc 0, bnb-verify rc 0, weth-verify 'Build completed successfully (1379 jobs)'; box copies byte-identical to local (sha256).",
+  "Axioms test lines match status.json: QNT 131, BNB 132, WETH 133, standard axioms only.",
+  "Whole-environment scan (every constant whose module starts with the project name): QNT 5005 constants / 4827 theorems, BNB 5323 / 5157, WETH 3003 / 2832. Union of axioms = propext, Classical.choice, Quot.sound. No axiom declaration, no opaque, no implemented_by, no extern.",
+  "Text scan: no sorry, native_decide, bv_decide, unsafe, implemented_by, opaque, axiom. set_option only autoImplicit false, two linter options, maxRecDepth 4096. One instance (stepLiftLogic). Macros are tactic helpers only.",
+  "All SSTORE sites in the three bytecodes listed and their keys traced (QNT 10, BNB 12, WETH 6).",
+  "All pruned branches (QNT 3, BNB 13, WETH 3) are proved inside the path theorems, none merely skipped.",
+  "SHIB regeneration with each project's scripts is byte-identical (23 of 23 files); each project regenerates to its committed files (no hand edit of generated files).",
+  "CalleeKeeps is satisfiable for a contract that just accepts ether (calleeKeeps_stop). calleeKeeps_noCode covers EOAs.",
+  "WETH value credit at call entry is modelled correctly (Backed + moveEther_into)."
+ ],
+ "not_checked": [
+  "EthLib itself and the shared usdt-verify library (trusted as the model).",
+  "Machine-checked falsity of CalleeKeeps for a re-entering callee (argued only).",
+  "Solidity source to bytecode correspondence; slot names taken from layout knowledge and the bytes, Etherscan source not diffed.",
+  "Readable corollaries were read for shape only, not each re-derived.",
+  "Failing paths (revert, invalid, stuck) one by one; gas constants against a reference client.",
+  "Shadowed names beyond the environment scan (no duplicate definitions of EthLib names found by the build; not exhaustively searched)."
+ ],
+ "generator_divergence": {
+  "summary": "No generator change silently weakens a default code path: SHIB output is byte-identical with all three script sets. The weakenings are opt-in config features.",
+  "weakening_flags": [
+   "WETH stops/segments: ok_totalSupply and ok_withdraw end at a middle frame; hstatic added to ok_withdrawTail; gen_solvent skips both silently (hand files fill them).",
+   "WETH explicit_size adds hsize (4 <= data size) to every per-function theorem; closed at the top by the fallback theorems.",
+   "WETH axioms.declared_only and BNB axioms.skip can drop names from the axioms test silently (today only non-existent names).",
+   "WETH Sanity.fallbackShort_runs and fallbackOther_runs missing from Test/Axioms.lean.",
+   "check_axioms.sh in all projects misses wrapped lines, empty logs and counts."
+  ],
+  "not_weakening": [
+   "QNT decide_equivalent, BNB prune/dead_branches, WETH equal_self: proved in Lean.",
+   "BNB min_size = 1 widens the path theorems; WETH Ro.accounts strengthens Ro."
+  ]
+ }
+}

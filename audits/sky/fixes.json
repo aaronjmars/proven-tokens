@@ -1,0 +1,532 @@
+{
+ "token": "SKY",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/sky.log",
+  "axioms": "logs/sky.axioms"
+ },
+ "findings": {
+  "SKY-1": {
+   "severity": "major",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 3,
+     "do": "PermitByContract (Permit1271.lean) leaves `out` as a free existential. Tie it to the STATICCALL to the owner so the theorem says the owner was called and answered with the magic value."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "done",
+     "what_changed": "PermitByContract (Sky/Permit1271.lean:391) now says that `out` is the output of the STATICCALL the code makes to the owner. New conjunct OwnerCall (Sky/OwnerCall.lean:546): there are a caller frame, a message msg and a child with Ran (processRunner fork bound) caller msg child, child.error = none, child.output = out, and msg.currentTarget = msg.target = the owner, msg.caller = the token, msg.codeAddress and msg.code = the code of the owner or of its EIP-7702 delegate (Routes), msg.data = erc1271Input digest r s vw (196 bytes: selector 0x1626ba7e, digest, 64, 65, r, s, first byte of the v word, 31 zero bytes), value 0, isStatic, depth + 1, same blockEnv and txEnv, reservoir 0, and msg.gas = EthLib's messageCallGas (63/64 rule) on the exact gas the bytes leave at the GAS opcode (g0 - (externalBaseCost + k), k = 1292 for permit(v,r,s), 1315 with the start gas + 23 for permit(bytes)). The caller state and substate are those EthLib builds (routeState / routeSub, owner and token recorded as read, owner marked accessed).",
+     "scratch_check": "scratch file PermitByContractWeak.lean (not kept) compiled on the box against the new tree: it fails at line 59 (type mismatch, PermitByContract has a new signature). The equivalence permitByContract_iff cannot be stated for the new PermitByContract: its right side has no runner, no message and no child. The old weak body is kept under an honest name, PermitKept, and is only implied (PermitByContract.kept).",
+     "theorems_added": [
+      "OwnerCall.lean (new, 604 lines, 19 theorems): staticcall_sent (456), ownerCall_of_sends (576), code_data (213), copy_step (386), copy_data (407), read196 (169), magicOr_toNat, magicOr_lo, magicOr_hi, byteAt_rawW, byteAt_rawW_miss, byteAt_rawW_hit, byteAt_wordOf, read_eq_of_bytes, byteAt_toList, wordBytes_toList, natToBytes_mod, byteAt_wordBytes_lo, byteAt_wordBytes_hi; defs erc1271Input (163), OwnerCall (546), MAGIC_1271, MASK_224",
+      "Permit1271.lean: PermitByContract.kept (416), PermitEnd.kept (637); defs PermitKept (357), PermitEndKept (629), permitEndF"
+     ],
+     "theorems_restated": [
+      "permit_call_A (Permit1271.lean:425), permit_call_B (519), permit_call_C (PermitBytes1271.lean:195), permit_call_D (289): also conclude OwnerCall for the bytes read from memory",
+      "permit_contract_A (472), permit_contract_B (566), permit_contract_C (PermitBytes1271.lean:244), permit_contract_D (338): conclude the new PermitByContract",
+      "ok_permit_full (Permit1271.lean:677), ok_permitBytes65_full (PermitBytes.lean:343): PermitEnd with the new PermitByContract",
+      "PermitSeq.lean permitEnd_facts, permit_end and PermitBytesSeq.lean permitBytes65_end: use the weak form through .kept"
+     ],
+     "theorems_retired": [
+      "permitByContract_mono (PermitBytes.lean): the new statement has exact call gas, so it is not monotone in gas; replaced by permitKept_mono (295) and gas_shift_eq (303)"
+     ],
+     "hypotheses_still_assumed": [
+      "hparis, hglam (Paris <= fork < Glamsterdam)",
+      "hdel / NoDelegation1 (address 1 holds no delegation code)",
+      "message.data.size < 2^256",
+      "no assumption on the code of the owner"
+     ],
+     "files": "SkyVerify/Sky/OwnerCall.lean (new, 1 to 604), Permit1271.lean (350 to 752), PermitBytes1271.lean (190 to 381), PermitBytes.lean (286 to 480), PermitSeq.lean (60 to 110), PermitBytesSeq.lean (50 to 100), SkyVerify.lean (import), scripts/mk_config.py (axioms list)",
+     "left": "The gas after the call is still an inequality (g + 1290 <= g0). The start state of the callee is given through the caller frame, not as a closed formula over the start state of the permit call."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/sky/SkyVerify/Sky/Permit1271.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/OwnerCall.lean",
+    "token-kit/tokens/sky/SkyVerify.lean",
+    "token-kit/tokens/sky/scripts/mk_config.py",
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-2": {
+   "severity": "major",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 4,
+     "do": "permit(bytes) is proved only for a 65-byte signature. Prove the other lengths (the contract-wallet route) or say so in the headline."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "done (by rename and rewording; other lengths not proved)",
+     "what_changed": "Every theorem, def and constructor about permit(bytes) that needs the 65-byte length now has 65 in its name, and the doc comments, the file headers of PermitBytesSeq.lean and the status.json texts say '65-byte signatures only' and that a successful call with another length is not a step of Calls65 and is not proved.",
+     "renamed": {
+      "ok_permitBytes_full": "ok_permitBytes65_full",
+      "permitBytes_end": "permitBytes65_end",
+      "supply_permitBytes": "supply_permitBytes65",
+      "PermitBytesCall": "PermitBytes65Call",
+      "inv_permitBytesCall": "inv_permitBytes65Call",
+      "permitBytesCall_process": "permitBytes65Call_process",
+      "CallsAll": "Calls65 (constructor permitBytes65)",
+      "inv_callsAll": "inv_calls65",
+      "callsAll_of_callsP": "calls65_of_callsP",
+      "callsAll_process": "calls65_process",
+      "process_step_any": "process_step_sig65",
+      "process_step_any_inv": "process_step_sig65_inv",
+      "permitBytes_readable": "permitBytes65_readable",
+      "PermitBytesAfterEc": "PermitBytes65AfterEc",
+      "PermitBytesChecks": "PermitBytes65Checks"
+     },
+     "old_names": "retired, not kept as aliases (they were the misleading part); used only inside tokens/sky. audits/sky/fixes.json is a dated record and still has the old names.",
+     "hypotheses_still_assumed": [
+      "hlen: the length word of the signature is 65"
+     ],
+     "files": "SkyVerify/Sky/PermitBytes.lean, PermitBytes1271.lean, PermitBytesSeq.lean (header 1 to 40, doc comments of Calls65, process_step_sig65, inv_calls65), PermitSeq.lean (header), docs/MAP.md, scripts/mk_config.py, config/sky.json, Test/Axioms.lean (generated), status.json (permit, assumptions, not_covered, renamed)",
+     "left": "Other lengths: needs a CALLDATACOPY rule for a symbolic length, an invariant for the ABI encoder copy loop with a symbolic length, and body paths whose memory size depends on the length. Only ok_permitBytes_decoded (to pc 4293) holds for them."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "sky-bytes",
+     "recorded_status": "done (closed by proof)",
+     "summary": "permit(address,address,uint256,uint256,bytes) (0x9fd5a6cf) is now proved for every signature length, not only 65. The headline theorems have no hypothesis on the length; the 65 theorems are kept as the special case.",
+     "from_the_bytes": {
+      "decoder": "pc 0 to 4293 (ok_permitBytes_decoded, any length): no value; call data of 164 bytes or more; clean address words; offset word <= 2^64 - 1; 4 + offset + 31 < size (signed); length word <= 2^64 - 1; 4 + offset + length + 32 <= size. Any failed check reverts, so in the theorems these are conclusions about a successful run, not hypotheses. 711 gas.",
+      "allocation_and_copy": "the bytes are allocated at 128: length word at 128, free memory pointer = 128 + ((63 + ((L + 31) & ~31)) & ~31) = c + 160 with c = L rounded up to 32 (sigFree_W); CALLDATACOPY of exactly L bytes to 160, then a zero word at 160 + L; memory size c + 192. Gas copyCost c = 84 + 3 * (c / 32) + memoryGasCost (c + 192) - memoryGasCost 160 (bytes_copy_any, exact).",
+      "length_check": "at pc 2704.. the code compares the length word with 65 (sub 65 L). Only L = 65 takes the ECRECOVER path. Every other L (0, 1..64, 66.., up to 2^64 - 1) jumps to the EXTCODESIZE of the owner (pc 3580): owner with no code reverts, else isValidSignature by STATICCALL.",
+      "encoder": "free memory pointer F (c + 482 on chain id 1, c + 802 else, F % 32 = 2 because the digest preimage of 66 bytes was allocated without rounding). The code writes the digest, 64 and L at F + 36, copies the signature with the routine at pc 3812 (32 bytes per turn, ceil(L/32) turns, then a zero word at the end) to F + 132, writes the selector over F + 32, then copies the c + 100 bytes of the call data once more to F + c + 132 and calls with input (F + c + 132, c + 100) and output (F + 2c + 232, 32). Memory ends at F + 2c + 286. Gas encCost F c = 841 + 134 * (c / 32) + memoryGasCost (F + 2c + 286) - memoryGasCost (F + 30) (encoder, exact).",
+      "call_data": "erc1271Bytes digest sig = 0x1626ba7e ++ digest ++ 64 ++ L ++ sig ++ zeros to the next multiple of 32: 100 + ceil32(L) bytes (enc_chain proves the memory at the call arguments is exactly this, for the L bytes copied from the call data).",
+      "cases": {
+       "n = 0": "c = 0, nothing copied, call data of 100 bytes with length 0; same theorems",
+       "n < 65 and n > 65": "same path, same theorems (length is a variable)",
+       "very large n": "bounded by the decoder at 2^64 - 1 and by the call data size (bytesIn); the theorems hold for every such L; memory cost grows with c^2 so a real run ends out of gas long before, which is an error and not a successful run",
+       "malformed offset or length": "the decoder reverts (offset > 2^64 - 1, length word outside the call data, length > 2^64 - 1, bytes outside the call data); no hypothesis on the offset word is used",
+       "dirty padding after the bytes": "not read: the code copies L bytes and writes its own zeros"
+      }
+     },
+     "theorems_added": {
+      "Sky/BytesWord.lean": "W lemmas, LenC, sigFree_W, SigMem, bytesMemAny_sigMem, copyCost, bytes_copy_any (4293 to 2287, any length, exact gas) [in HEAD already]",
+      "Sky/BytesGen.lean (generated by tokens/sky/scripts/symgen.py)": "sb2430_0/1/2 (nonce read and write, any memory), sb3191 (domain separator), sb2551 (struct hash), sb2704 (digest, length not 65, to the EXTCODESIZE), sbE1/sbE2/sbE3 (encoder around the two copy runs), sbA0/sbA1m/sbA1e/sbA1 (answer checks), sbW/sbW_2 (allowance write, log; stuck when static), sbN0/sbN1, tails tail_deadline, tail_owner, tail_no_code, tail_mask, tail_magic; each with <name>_mem (size, words, frame)",
+      "Sky/BytesLoop.lean": "copyMem, copyMem_spec, copyGas, copy_routine: the copy routine at pc 3812 for any source, destination and length, by induction on the words, exact gas (lines 224, 246)",
+      "Sky/BytesCall.lean": "erc1271Bytes (69), size_erc1271Bytes, byteAt_erc1271Bytes, EncMem (123), enc_chain (148), encCost (285), encoder (290), PermitByContractAny (366: OwnerCall in the strong form with erc1271Bytes digest sig, exact gas at the STATICCALL, 32-byte answer = magic value, SameOutside, then PermitWrites), PermitByContractAny.kept, permit_contract_any (412)",
+      "Sky/PermitBytesAny.lean": "nonceM_spec, digest_chain, digest_part (148), bodyCostC/D (186, 191), bodyMemC_enc, domM_spec, bodyMemD_enc, body_C (304), body_D (347), PermitBytesChecks (394), PermitBytes65Checks.any, PermitBytesByContract (441), sub65_ne, ok_permitBytes_other (469), ok_permitBytes_full (590, no hypothesis on the length), permitBytes_other_no_code_fails (629)",
+      "Sky/PermitBytesSeq.lean": "permitByContractAny_facts (354), permitBytes_end (377), supply_permitBytes (434), PermitBytesCall (467), PermitBytes65Call.any, inv_permitBytesCall (489), CallsAny (499), calls65_any (511), inv_callsAny (523), permitBytesCall_process (536), process_step_any (578: every message to the code, no hypothesis on selector or signature), process_step_any_inv (606), callsAny_process (623), permitBytes_readable (648)"
+     },
+     "theorems_retired": "none. Every 65 theorem is kept under its 65 name as the special case (ok_permitBytes65_full, supply_permitBytes65, process_step_sig65, Calls65 and the rest). Names retired by the rename round (ok_permitBytes_full, supply_permitBytes, process_step_any, permitBytes_readable, PermitBytesCall, PermitBytesChecks and the like) are reused, now with the all-length meaning: see status.json renamed.all_lengths.",
+     "hypotheses_still_assumed": [
+      "Paris <= fork < Glamsterdam (hparis, hglam)",
+      "message.data.size < 2^256",
+      "NoDelegation1 / hdel (address 1 holds no EIP-7702 delegation code): only where the ECRECOVER path can be taken, so in the all-length theorems and the 65 ones; ok_permitBytes_other does not need it",
+      "Sep (callKeys message) for supply_permitBytes, permitBytes_readable, process_step_any and the sequence theorems (keccak separation, SKY-4, not part of this task)",
+      "top-level lift: message.code = CODE, no precompile (process theorems)",
+      "no hypothesis on the signature length in ok_permitBytes_full, permitBytes_end, supply_permitBytes, permitBytes_readable, permitBytesCall_process, process_step_any, process_step_any_inv, callsAny_process; no hypothesis over the runner; no assumption on the code of the owner"
+     ],
+     "files": [
+      "token-kit/tokens/sky/SkyVerify/Sky/BytesWord.lean",
+      "token-kit/tokens/sky/SkyVerify/Sky/BytesGen.lean (generated)",
+      "token-kit/tokens/sky/SkyVerify/Sky/BytesLoop.lean",
+      "token-kit/tokens/sky/SkyVerify/Sky/BytesCall.lean (new)",
+      "token-kit/tokens/sky/SkyVerify/Sky/PermitBytesAny.lean (new)",
+      "token-kit/tokens/sky/SkyVerify/Sky/PermitBytesSeq.lean (header reworded, all-length part appended from line 350)",
+      "token-kit/tokens/sky/SkyVerify/Sky/PermitBytes.lean (doc wording only)",
+      "token-kit/tokens/sky/SkyVerify.lean (5 imports added)",
+      "token-kit/tokens/sky/scripts/symgen.py (local generator)",
+      "token-kit/tokens/sky/scripts/mk_config.py (axioms.after + token_generators)",
+      "token-kit/tokens/sky/config/sky.json and SkyVerify/Test/Axioms.lean (regenerated)",
+      "token-kit/tokens/sky/status.json"
+     ],
+     "what_is_left": [
+      "gas after the STATICCALL to the owner is an inequality on every ERC-1271 route (the gas the owner code uses is unknown); everything before the call is exact",
+      "no lemma that erc1271Input digest r s v (the call data of the 65-byte ERC-1271 route) equals erc1271Bytes digest of the 65 bytes: the 65 route keeps its own statement",
+      "three dotted names (PermitByContractAny.kept, PermitBytes65Checks.any, PermitBytes65Call.any) are left out of the #print axioms list by gen_axioms.py declared_only (a known limit of the kit script, see status.json to_merge_into_kit); the scan of every constant in Test/Axioms.lean covers them",
+      "no concrete successful-run witness for permit(bytes) (SKY-5, not part of this task); SKY-3 and SKY-4 (sequence base case, Sep) unchanged",
+      "git: nothing committed or pushed (working tree on branch fix4-wip)"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/sky/SkyVerify/Sky/PermitBytes.lean",
+    "token-kit/tokens/sky/docs/MAP.md",
+    "token-kit/tokens/sky/scripts/mk_config.py",
+    "token-kit/tokens/sky/config/sky.json",
+    "token-kit/tokens/sky/SkyVerify/Test/Axioms.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/BytesWord.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/BytesGen.lean",
+    "token-kit/tokens/sky/scripts/symgen.py",
+    "token-kit/tokens/sky/SkyVerify/Sky/BytesLoop.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/BytesCall.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/PermitBytesAny.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/PermitBytesSeq.lean",
+    "token-kit/tokens/sky/SkyVerify.lean",
+    "token-kit/tokens/sky/status.json",
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-3": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "partly",
+     "what_changed": "Shared kit part done: generic runner theorem (any message at any depth keeps 'holds CODE + invariant', success or failure), transaction link (EthLib processTransaction) and any finite list of transactions, base case shape, all run-local (no SepAll, no NoCollision). The token itself was not edited by this agent.",
+     "theorems_added": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Apply recipe B to this token (frameKeepsR by cases on the permit selector, Q carries NoDelegation1), regenerate Test/Axioms.lean, update status.json, rebuild. Recipe B was not compiled on a permit token. plus class C handling if the ERC-1271 branch has a runner hypothesis. The token is owned by another fix agent this round."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "not done",
+     "note": "not done, waiting for the kit"
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 2,
+     "recorded_status": "not done (not in fixes 5 to 9)",
+     "what": "Only the base case was added: Instance.callsAny_from_zero. The Untouched step of the sequence theorems is still an assumption."
+    },
+    {
+     "round": "ONDO fix round",
+     "part": "sky",
+     "recorded_status": "done",
+     "what_changed": "SKY now has the whole-transaction form that the 11 Tx.lean tokens have (recipe B of audits/sky/fixes.json, shape of tokens/dai Dai/Tx.lean). The blocker of the last round (permit makes an outside read-only STATICCALL to the owner, ERC-1271) turned out to need no fact about the runner: supply_permit (PermitSeq.lean) and supply_permitBytes (PermitBytesSeq.lean, any signature length) are already stated for EthLib's real runner and bound the STATICCALL to ANY owner code with TokenKit.staticcall_kept (a static run changes no storage word). The new frame rule frameKeepsR_of_real (Sky/FrameRule.lean) turns such a frame theorem (RealFrameKeeps) into the kit interface Seq.FrameKeepsR. realFrameKeeps covers every selector by cases: 0x9fd5a6cf supply_permitBytes, 0xd505accf supply_permit, else supply_preserved. Re-entry into SKY from inside the owner's STATICCALL is one more event of the run and is covered by the kit induction with the same run-local Q. The old Untouched / Calls models are kept as the older, weaker per-message model.",
+     "headline": "SkyVerify.supply_any_transactions (Sky/Tx.lean:174): Inv C after any finite list of transactions as EthLib's processTransaction runs them (Seq.Chain), whoever calls and however deep, both permit selectors and the ERC-1271 way to any owner code included.",
+     "theorems_added": [
+      "Sky/FrameRule.lean: frameKeepsR_of_real (61); def RealFrameKeeps",
+      "Sky/Tx.lean: storageOnly_inv, code_size_ne_zero, code_not_indicator, code_not_delegated, inv_zeroBase, realFrameKeeps (118), frameKeepsR (133), supply_message_any_depth (142), supply_transaction (157), supply_any_transactions (174), supply_from_zero (184); abbrev QMsg"
+     ],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": {
+      "Seq.TxClean.call/.create with Q := QMsg: Sep (callKeys m) at each entry into C during the run (keccak, NOT proved)": "supply_transaction, supply_any_transactions, supply_from_zero; supply_message_any_depth via Seq.Clean",
+      "Seq.TxClean.call/.create: NoDelegation1 fork s at each entry into C (address 1 holds no EIP-7702 delegation code; used by the two permit selectors, from Pectra; NOT proved, not shown kept between entries)": "same theorems; realFrameKeeps, frameKeepsR",
+      "Seq.TxClean.create: no keccak collision on codes deposited in the run": "supply_transaction, supply_any_transactions, supply_from_zero",
+      "Seq.TxClean.auths: no EIP-7702 authorization sets a code with the hash of CODE": "same",
+      "Seq.TxClean.data: call data to C below 2^256 bytes": "same",
+      "Dencun <= fork < Glamsterdam per transaction; Paris <= fork < Glamsterdam for supply_message_any_depth, realFrameKeeps, frameKeepsR": "all of Tx.lean",
+      "start state Seq.Good C CODE (Inv C); supply_from_zero: Seq.HoldsCode and all-zero storage": "supply_transaction, supply_any_transactions, supply_from_zero",
+      "Seq.Sane C CODE message": "supply_message_any_depth only",
+      "nothing about the code of the owner contract or the runner": "frameKeepsR_of_real has no hypothesis"
+     },
+     "files": {
+      "token-kit/tokens/sky/SkyVerify/Sky/FrameRule.lean": "new, lines 1 to 67",
+      "token-kit/tokens/sky/SkyVerify/Sky/Tx.lean": "new, lines 1 to 193",
+      "token-kit/tokens/sky/SkyVerify.lean": "2 import lines (FrameRule, Tx)",
+      "token-kit/tokens/sky/scripts/mk_config.py": "axioms.imports + SkyVerify.Sky.Tx, axioms.after + 12 names",
+      "token-kit/tokens/sky/config/sky.json": "regenerated (axioms key only)",
+      "token-kit/tokens/sky/SkyVerify/Test/Axioms.lean": "regenerated by gen_axioms.py + kit_opens.py, 441 -> 453 names",
+      "token-kit/tokens/sky/status.json": "assumptions (old sequence line rewritten, 9 transaction lines), not_covered (5 transaction-level lines), claims (new), transaction_theorems, build, theorem_counts, to_merge_into_kit, fix_round_audit5"
+     },
+     "new_theorem_count": "Test/Axioms.lean 453 (was 441): +12 (11 in Tx.lean, 1 in FrameRule.lean)",
+     "left": "Same limits as the other 11 Tx.lean tokens: block-level steps between transactions, the constructor and the real start state (base case is all-zero storage), forks before Dencun at transaction level, Glamsterdam and later, and the run-local TxClean hypotheses (Sep, NoDelegation1, no keccak collisions) are assumed, not proved."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/sky/SkyVerify/Test/Axioms.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/FrameRule.lean",
+    "token-kit/tokens/sky/SkyVerify/Sky/Tx.lean",
+    "token-kit/tokens/sky/SkyVerify.lean",
+    "token-kit/tokens/sky/scripts/mk_config.py",
+    "token-kit/tokens/sky/config/sky.json",
+    "token-kit/tokens/sky/status.json",
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "not done",
+     "note": "not done, waiting for the kit"
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 5,
+     "recorded_status": "closed (as far as Lean can go)",
+     "what": "One closed instance: the call m0 from the all-zero state. Sep (callKeys m0) is reduced to Instance.KeyFacts, 5 named keccak facts (each over the 2^160 address words; not provable in Lean, said so in status.json), and the facts between two given slots are computed by the kernel. The start invariant is proved.",
+     "theorems": [
+      "SkyVerify.Instance.sep_m0_iff",
+      "Instance.sep_iff",
+      "Instance.allow_ne_total",
+      "Instance.nonce_ne_total",
+      "Instance.allow_ne_nonce",
+      "Instance.ward_ne_total",
+      "Instance.inv_start",
+      "Instance.inv_of_zero",
+      "Instance.supply_m0"
+     ],
+     "left": "KeyFacts itself is an assumption (named in status.json assumptions)"
+    }
+   ],
+   "evidence": [
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-5": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 6,
+     "do": "Missing witnesses. Add a real successful run for permit (and for UNI's transfer, transferFrom, mint, delegate, delegateBySig), discharge NoDelegation1 (scratch: scratch file NoDelegation1Empty.lean (not kept), scratch file NoDelegation1Sat.lean (not kept), scratch file PermitWitness.lean (not kept)), and add a LINK receiver that really re-enters."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "not done",
+     "what_changed": "No witness added. status.json not_covered says so and names the blocker.",
+     "blocked_on": [
+      "The witnesses of the kit (gen_sanity.py, Witness.endsL_of_reaches) run the generated `reaches` direction of a path that has no outside call. The permit paths have two outside calls (ECRECOVER at pc 3501, STATICCALL to the owner), and the lemmas for them (permit_ec, staticcall_sent, TokenKit.call_outcome) exist only in the direction 'a successful run implies'. A forward lemma 'from this frame the call returns this child result and the run goes on at this frame' is needed for a precompile call and for a STATICCALL to a concrete callee; that is kit work (TokenKit/Evm).",
+      "ECRECOVER route: the kernel must evaluate EthLib's Ecrecover.compute (secp256k1) on one real signature with decide or rfl, with no native_decide. Not tried; likely too slow.",
+      "ERC-1271 route: would be the easier one (a tiny callee that returns the magic value, no ecrecover result needed past 'not the owner'), but it still needs ECRECOVER to run forward and the forward STATICCALL lemma."
+     ],
+     "left": "Both witnesses. The claim in status.json is worded as 'not machine-checked'."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 6,
+     "recorded_status": "closed for the ECRECOVER way of the 7-argument permit; partly overall",
+     "what": "A real successful run of permit with a real secp256k1 signature under the real runner of EthLib (ECRECOVER evaluated by the kernel). NoDelegation1 discharged for concrete states.",
+     "theorems": [
+      "Instance.permit_runs",
+      "Instance.permit_runs_inv",
+      "Instance.ecrecover_call_runs",
+      "Instance.noDelegation1_of_emptyHash",
+      "Instance.noDelegation1_sState",
+      "Instance.noDelegation1_before_pectra"
+     ],
+     "left": "no run for the ERC-1271 way (needs a concrete owner contract and a forward rule for a STATICCALL to code), none for permit(bytes), none for the path where the chain id differs from the deployment one"
+    }
+   ],
+   "evidence": [
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-6": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 8,
+     "do": "Claims proved per call but worded as lasting facts. WBTC: restate supply_all with the local callee assumption (scratch: scratch file SupplyAllCallee.lean (not kept)). ENA mint limits, SKY wards, USDE minter, WBTC roles: add the sequence theorem or reword the claim as per call."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "done (reworded as per call; no sequence theorem)",
+     "what_changed": "status.json contract_findings: the two lines on mint and on wards now start with 'Per call (..._readable), not a theorem over sequences' and say what one successful call shows (wards[caller] = 1 at the start of that call; rely / deny write the one slot wards[usr]). not_covered has a line that no sequence theorem for wards exists and why.",
+     "theorems_added": [],
+     "left": "A sequence theorem ('a wards slot changes only in a step that is a rely or deny call') needs, for each of the other functions, that the wards slots are kept, which needs keccak separation of wards slots from balance, allowance and nonce slots for all addresses; Sep states separation only for the keys of one call. Goes with SKY-4 (kit)."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 8,
+     "recorded_status": "closed by wording",
+     "what": "No sequence form: every claim about wards and the mint rule is worded per call in status.json and the docs. Reason written down: TokenKit/Seq carries predicates on one state, not relations along a run."
+    }
+   ],
+   "evidence": [
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-7": {
+   "severity": "note",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 7,
+     "do": "Fork range. The one-counter gas meter is not the one EthLib runs from Glamsterdam. State fork < Glamsterdam in every theorem that needs it and in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "done (wording)",
+     "what_changed": "status.json assumptions: first line is the fork scope 'Paris up to but not including Glamsterdam' for every claim, with which theorems carry only a lower bound and which carry hglam; not_covered: 'From Glamsterdam on: nothing'. Seq.lean header (lines 10 to 19): a FORK SCOPE note. The permit theorems already carry hglam : fork < .glamsterdam as a hypothesis.",
+     "left": "The generated theorems (Invariant.lean supply_preserved, Readable.lean) and Seq.lean process_step still have only a lower fork bound in their statements: they are true as stated (they are about processMessage with the one-counter meter) and the generator is the kit's, so no hypothesis was added. If the lead wants the bound in the statements, it is a change of gen_supply.py / gen_readable.py (kit)."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 7,
+     "recorded_status": "closed",
+     "what": "Every theorem about a real run (Seq.lean, PermitSeq.lean, PermitBytesSeq.lean, Instance.supply_m0, permit_runs) states Paris <= fork < Glamsterdam; status.json fork_range explains why the one-frame theorems (Berlin <= fork, any runner) do not depend on the meter.",
+     "theorems": [
+      "goodCall_process",
+      "process_step",
+      "process_step_inv",
+      "calls_process (hglam added in Seq.lean)"
+     ]
+    }
+   ],
+   "evidence": [
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  },
+  "SKY-8": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "sky",
+     "recorded_status": "done",
+     "what_changed": "permitBytes65_no_code_fails (PermitBytes.lean:448): for permit(bytes) with a 65-byte signature, when the recovered address is not the owner and the owner has no code, the run ends with an error. Proved from ok_permitBytes65_full and the new shared lemma permitEnd_no_code (Permit1271.lean:647); permit_no_code_fails now uses the same lemma.",
+     "theorems_added": [
+      "permitEnd_no_code",
+      "permitBytes65_no_code_fails"
+     ],
+     "hypotheses_still_assumed": [
+      "hparis, hglam",
+      "message.data.size < 2^256",
+      "hlen (65)",
+      "hdel",
+      "hrec: the recovered address is not the owner (for every domain word)",
+      "hcode: the owner has no code in the state after the ECRECOVER call"
+     ],
+     "left": "Nothing for 65 bytes. For other lengths see SKY-2."
+    }
+   ],
+   "evidence": [
+    "logs/sky.log",
+    "logs/sky.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "sky",
+   "date": "2026-11-11",
+   "build": {
+    "where": "E2B box lean-fix-sky, /home/user/token-kit/tokens/sky, after rm -rf tokens/sky/.lake/build",
+    "command": "lake build",
+    "exit_code": 0,
+    "final_line": "Build completed successfully (1448 jobs).",
+    "rebuilt": "85 SkyVerify modules built, 0 replayed",
+    "check_axioms": "theorems checked: 366; count matches Test/Axioms.lean: 366; AXIOM SCAN OK: 18739 constants (18338 theorems) of SkyVerify and TokenKit; only standard axioms",
+    "log": "logs/sky.log",
+    "axioms": "logs/sky.axioms",
+    "kit_used": "the kit on the box from the start of the round; TokenKit/, TokenKit.lean and token-kit/scripts/ were not edited by this part",
+    "sync": "sha256 of the 99 files of tokens/sky (no .lake, no __pycache__, no .DS_Store) identical on Mac and box, and status.json too",
+    "generated_files": "config/sky.json changed in the `axioms` key only (scripts/mk_config.py); scripts/regen.sh run in place; scripts/regen_check.sh sky: SAME (every generated file byte-identical but Test/Axioms.lean, which went from 348 to 366 names)",
+    "forbidden": "no sorry, admit, native_decide, bv_decide, unsafe, implemented_by or axiom declaration in tokens/sky/SkyVerify; no em dash or en dash in tokens/sky"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "sky-bytes",
+   "date": "2026-11-11",
+   "summary": "permit(address,address,uint256,uint256,bytes) (0x9fd5a6cf) is now proved for every signature length, not only 65. The headline theorems have no hypothesis on the length; the 65 theorems are kept as the special case.",
+   "build": {
+    "box": "lean-fix-sky2 (removed after the run)",
+    "kit": "committed kit, git archive HEAD (05be7e6); the working-tree kit was not pushed",
+    "command": "lake build in token-kit/tokens/sky from an empty tokens/sky/.lake/build, LEAN_NUM_THREADS=2",
+    "result": "exit 0, Build completed successfully (1453 jobs), 90 SkyVerify modules built, 0 errors",
+    "axioms": "check_axioms.sh sky.log SkyVerify/Test/Axioms.lean: 407 theorems checked, count matches, AXIOM SCAN OK: 21462 constants (20976 theorems), only propext, Classical.choice, Quot.sound",
+    "forbidden": "grep of every .lean file under SkyVerify/ for sorry, admit, native_decide, bv_decide, unsafe, implemented_by, axiom: no hit (bv_omega is used once, in sub65_ne; it is omega on bit vectors, not bv_decide)",
+    "sync": "sha256 of all 106 files of tokens/sky (no .lake, no __pycache__) identical on Mac and box, status.json included",
+    "logs": "logs/sky.log, logs/sky.axioms (overwritten with this clean build)"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-f",
+   "date": "2026-11-11 / 2026-11-12 UTC",
+   "summary": "UNI-2, UNI-4, UNI-5, SKY-4, SKY-7 closed. UNI-3 and SKY-5 closed for one real run per function (all six UNI writers; SKY permit by ECRECOVER), with the paths that still have no run listed. SKY-6 and the UNI mint rules worded per call (no sequence form). SKY-3 still open (base case only). No sorry, no added axiom, no native_decide.",
+   "build": {
+    "command": "lake build (LEAN_NUM_THREADS=3) from an empty tokens/sky/.lake/build",
+    "result": "Build completed successfully (1465 jobs).  exit 0",
+    "axioms": "count matches Test/Axioms.lean: 441; AXIOM SCAN OK: 21964 constants (21300 theorems); only standard axioms",
+    "log": "logs/sky.log",
+    "axioms_output": "logs/sky.axioms",
+    "files": "108 files identical on Mac and box (sha256)",
+    "theorem_declarations": 1273
+   }
+  },
+  {
+   "round": "ONDO fix round",
+   "part": "sky",
+   "date": "2026-11-12"
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "fix": 10,
+   "what": "the auditor scratch Lean file PermitByContractWeak.lean built on the rebuild box: compiles (exit 0, no sorry): PermitByContract is equivalent to the form without the two conjuncts about `out`. SKY-1 is machine-checked."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-f",
+   "entry": "fix-9-records",
+   "fix": 9,
+   "recorded_status": "done",
+   "what": "both status.json files updated: build, counts, assumptions, not_covered, fork_range, main theorems; stale notes about missing witnesses removed; doc headers of Seq.lean, Tx.lean, Sep.lean, SigSupply.lean and the new files match the theorems."
+  }
+ ]
+}

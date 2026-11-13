@@ -1,0 +1,470 @@
+⚠ [1300/1361] Replayed UsdtVerify.Evm.At
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1302/1361] Replayed UsdtVerify.Evm.Gas
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1304/1361] Replayed UsdtVerify.Evm.Storage
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1305/1361] Replayed UsdtVerify.Evm.Write
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Base.Proofs.U256` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1307/1361] Replayed UsdtVerify.Evm.GasRules
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Log` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1308/1361] Replayed UsdtVerify.Evm.Steps
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1309/1361] Replayed UsdtVerify.Evm.Calldata
+warning: UsdtVerify/Evm/Calldata.lean: imports `EthLib.Base.Proofs.BigEndian` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1311/1361] Replayed UsdtVerify.Evm.Stuck
+warning: UsdtVerify/Evm/Stuck.lean: imports `EthLib.Base.Proofs.MapM` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1312/1361] Replayed UsdtVerify.Evm.NoAbort
+warning: UsdtVerify/Evm/NoAbort.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1313/1361] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1314/1361] Replayed UsdtVerify.Evm.MemRev
+warning: UsdtVerify/Evm/MemRev.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1322/1361] Replayed UsdtVerify.Evm.Route
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1323/1361] Replayed UsdtVerify.Evm.Runners
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1327/1361] Replayed TokenKit.Evm.Mem
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1328/1361] Replayed TokenKit.Evm.Rules
+warning: TokenKit/Evm/Rules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Region` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1329/1361] Replayed TokenKit.Evm.Stack
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1330/1361] Replayed TokenKit.Evm.Supply
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1331/1361] Replayed TokenKit.Evm.Readable
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1334/1384] Replayed TokenKit.Evm.Witness
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1335/1384] Replayed TokenKit.Seq.Frame
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Message` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1336/1384] Replayed TokenKit.Seq.Run
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Interpreter` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Reach` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1342/1384] Replayed TokenKit.Seq.Tx
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Process` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Authorization` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean:151:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1344/1384] Replayed TokenKit.Evm.Supply2
+warning: TokenKit/Evm/Supply2.lean:84:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [1347/1384] Built QntVerify.Qnt.Code.Bytes (405ms)
+⚠ [1348/1384] Built QntVerify.Qnt.Code (1.3s)
+warning: QntVerify/Qnt/Code.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NatCode` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1349/1384] Built QntVerify.Qnt.Sep (1.4s)
+⚠ [1350/1384] Built QntVerify.Test.Hash (1.2s)
+warning: QntVerify/Test/Hash.lean: imports `EthLib.Execution.Evm.Instructions.Keccak` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+info: QntVerify/Test/Hash.lean:30:0: CODE: 5155 bytes, keccak256 37a685d7f4eca5e68dbfeae3fecdd7ec467dcac37d5c0c90591de54d5ea525c1
+✔ [1351/1384] Built QntVerify.Qnt.Steps (1.9s)
+⚠ [1352/1384] Built QntVerify.Qnt.Map (3.0s)
+warning: QntVerify/Qnt/Map.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: QntVerify/Qnt/Map.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1353/1384] Built QntVerify.Qnt.Spec.Dispatch (4.1s)
+warning: QntVerify/Qnt/Spec/Dispatch.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1354/1384] Built QntVerify.Qnt.Enter (1.5s)
+✔ [1355/1384] Built QntVerify.Qnt.Complete.Dispatch (1.6s)
+✔ [1356/1384] Built QntVerify.Qnt.Gen.B4 (9.3s)
+✔ [1357/1384] Built QntVerify.Qnt.Gen.B0 (17s)
+✔ [1358/1384] Built QntVerify.Qnt.Gen.B2 (19s)
+✔ [1359/1384] Built QntVerify.Qnt.Gen.B1 (23s)
+✔ [1360/1384] Built QntVerify.Qnt.Gen.B3 (24s)
+✔ [1361/1384] Built QntVerify.Qnt.Gen.PDECIMAL_ZEROS (1.6s)
+✔ [1362/1384] Built QntVerify.Qnt.Gen.PBalanceOf (1.7s)
+✔ [1363/1384] Built QntVerify.Qnt.Gen.PSymbol (1.7s)
+✔ [1364/1384] Built QntVerify.Qnt.Gen.PAllowance (1.8s)
+✔ [1365/1384] Built QntVerify.Qnt.Gen.PCrowdsale (1.9s)
+✔ [1366/1384] Built QntVerify.Qnt.Gen.PIncreaseApproval (3.2s)
+✔ [1367/1384] Built QntVerify.Qnt.Gen.PTotalSupply (1.9s)
+✔ [1368/1384] Built QntVerify.Qnt.Gen.PApprove (1.9s)
+✔ [1369/1384] Built QntVerify.Qnt.Gen.PDecimals (2.1s)
+✔ [1370/1384] Built QntVerify.Qnt.Gen.PDecreaseApproval (4.3s)
+✔ [1371/1384] Built QntVerify.Qnt.Gen.PMint (2.8s)
+✔ [1372/1384] Built QntVerify.Qnt.Gen.PName (1.6s)
+✔ [1373/1384] Built QntVerify.Qnt.Gen.PTransfer (5.0s)
+✔ [1374/1384] Built QntVerify.Qnt.Gen.PTransferFrom (37s)
+✔ [1375/1384] Built QntVerify.Qnt.Gen (1.4s)
+✔ [1376/1384] Built QntVerify.Qnt.Sanity.Zero (1.6s)
+✔ [1377/1384] Built QntVerify.Qnt.Invariant (1.7s)
+✔ [1378/1384] Built QntVerify.Qnt.Sanity.Moves (1.5s)
+⚠ [1379/1384] Built QntVerify.Qnt.Seq (1.5s)
+warning: QntVerify/Qnt/Seq.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1380/1384] Built QntVerify.Qnt.Tx (1.4s)
+✔ [1381/1384] Built QntVerify.Qnt.Readable (4.1s)
+ℹ [1382/1384] Built QntVerify.Test.Axioms (6.1s)
+info: QntVerify/Test/Axioms.lean:39:0: 'QntVerify.valid_CODE' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:40:0: 'QntVerify.prelude' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:41:0: 'QntVerify.table' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:42:0: 'QntVerify.dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:43:0: 'QntVerify.enter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:44:0: 'QntVerify.Nonpayable.spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:45:0: 'QntVerify.Fallback.spec_unknown' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:46:0: 'QntVerify.Fallback.spec_short' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:47:0: 'QntVerify.Complete.ends_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:48:0: 'QntVerify.Complete.runFrame_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:49:0: 'QntVerify.Paths.name_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:50:0: 'QntVerify.Paths.name_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:51:0: 'QntVerify.Paths.ok_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:52:0: 'QntVerify.Readable.name_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:53:0: 'QntVerify.delta_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:54:0: 'QntVerify.Sanity.name_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:55:0: 'QntVerify.Paths.approve_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:56:0: 'QntVerify.Paths.approve_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:57:0: 'QntVerify.Paths.approve_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:58:0: 'QntVerify.Paths.ok_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:59:0: 'QntVerify.Readable.approve_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:60:0: 'QntVerify.delta_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:61:0: 'QntVerify.Sanity.approve_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:62:0: 'QntVerify.Paths.totalSupply_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:63:0: 'QntVerify.Paths.totalSupply_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:64:0: 'QntVerify.Paths.ok_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:65:0: 'QntVerify.Readable.totalSupply_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:66:0: 'QntVerify.delta_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:67:0: 'QntVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:68:0: 'QntVerify.Paths.transferFrom_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:69:0: 'QntVerify.Paths.transferFrom_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:70:0: 'QntVerify.Paths.transferFrom_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:71:0: 'QntVerify.Paths.transferFrom_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:72:0: 'QntVerify.Paths.transferFrom_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:73:0: 'QntVerify.Paths.transferFrom_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:74:0: 'QntVerify.Paths.transferFrom_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:75:0: 'QntVerify.Paths.transferFrom_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:76:0: 'QntVerify.Paths.ok_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:77:0: 'QntVerify.Readable.transferFrom_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:78:0: 'QntVerify.delta_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:79:0: 'QntVerify.Sanity.transferFrom_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:80:0: 'QntVerify.Paths.decimals_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:81:0: 'QntVerify.Paths.decimals_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:82:0: 'QntVerify.Paths.ok_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:83:0: 'QntVerify.Readable.decimals_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:84:0: 'QntVerify.delta_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:85:0: 'QntVerify.Sanity.decimals_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:86:0: 'QntVerify.Paths.mint_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:87:0: 'QntVerify.Paths.mint_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:88:0: 'QntVerify.Paths.mint_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:89:0: 'QntVerify.Paths.mint_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:90:0: 'QntVerify.Paths.mint_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:91:0: 'QntVerify.Paths.ok_mint' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:92:0: 'QntVerify.Readable.mint_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:93:0: 'QntVerify.delta_mint' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:94:0: 'QntVerify.Paths.DECIMAL_ZEROS_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:95:0: 'QntVerify.Paths.DECIMAL_ZEROS_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:96:0: 'QntVerify.Paths.ok_DECIMAL_ZEROS' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:97:0: 'QntVerify.Readable.DECIMAL_ZEROS_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:98:0: 'QntVerify.delta_DECIMAL_ZEROS' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:99:0: 'QntVerify.Sanity.DECIMAL_ZEROS_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:100:0: 'QntVerify.Paths.decreaseApproval_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:101:0: 'QntVerify.Paths.decreaseApproval_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:102:0: 'QntVerify.Paths.decreaseApproval_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:103:0: 'QntVerify.Paths.decreaseApproval_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:104:0: 'QntVerify.Paths.decreaseApproval_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:105:0: 'QntVerify.Paths.ok_decreaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:106:0: 'QntVerify.Readable.decreaseApproval_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:107:0: 'QntVerify.delta_decreaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:108:0: 'QntVerify.Sanity.decreaseApproval_p4_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:109:0: 'QntVerify.Paths.balanceOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:110:0: 'QntVerify.Paths.balanceOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:111:0: 'QntVerify.Paths.ok_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:112:0: 'QntVerify.Readable.balanceOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:113:0: 'QntVerify.delta_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:114:0: 'QntVerify.Sanity.balanceOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:115:0: 'QntVerify.Paths.symbol_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:116:0: 'QntVerify.Paths.symbol_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:117:0: 'QntVerify.Paths.ok_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:118:0: 'QntVerify.Readable.symbol_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:119:0: 'QntVerify.delta_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:120:0: 'QntVerify.Sanity.symbol_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:121:0: 'QntVerify.Paths.crowdsale_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:122:0: 'QntVerify.Paths.crowdsale_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:123:0: 'QntVerify.Paths.ok_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:124:0: 'QntVerify.Readable.crowdsale_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:125:0: 'QntVerify.delta_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:126:0: 'QntVerify.Sanity.crowdsale_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:127:0: 'QntVerify.Paths.transfer_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:128:0: 'QntVerify.Paths.transfer_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:129:0: 'QntVerify.Paths.transfer_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:130:0: 'QntVerify.Paths.transfer_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:131:0: 'QntVerify.Paths.transfer_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:132:0: 'QntVerify.Paths.transfer_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:133:0: 'QntVerify.Paths.ok_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:134:0: 'QntVerify.Readable.transfer_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:135:0: 'QntVerify.delta_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:136:0: 'QntVerify.Sanity.transfer_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:137:0: 'QntVerify.Paths.increaseApproval_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:138:0: 'QntVerify.Paths.increaseApproval_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:139:0: 'QntVerify.Paths.increaseApproval_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:140:0: 'QntVerify.Paths.increaseApproval_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:141:0: 'QntVerify.Paths.ok_increaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:142:0: 'QntVerify.Readable.increaseApproval_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:143:0: 'QntVerify.delta_increaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:144:0: 'QntVerify.Sanity.increaseApproval_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:145:0: 'QntVerify.Paths.allowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:146:0: 'QntVerify.Paths.allowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:147:0: 'QntVerify.Paths.ok_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:148:0: 'QntVerify.Readable.allowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:149:0: 'QntVerify.delta_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:150:0: 'QntVerify.Sanity.allowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:151:0: 'QntVerify.supply_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:152:0: 'QntVerify.Sanity.Moves.transfer_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:153:0: 'QntVerify.Sanity.Moves.mint_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:154:0: 'QntVerify.Sanity.Moves.decreaseApproval_p2_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:155:0: 'TokenKit.Witness.caller1_ne' depends on axioms: [propext, Quot.sound]
+info: QntVerify/Test/Axioms.lean:156:0: 'QntVerify.mint_caller' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:157:0: 'QntVerify.Supply.D_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:158:0: 'QntVerify.goodCall_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:159:0: 'QntVerify.goodCall_mint_D' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:160:0: 'QntVerify.calls_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:161:0: 'QntVerify.calls_D_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:162:0: 'QntVerify.calls_D_no_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:163:0: 'QntVerify.inv_calls_no_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:164:0: 'QntVerify.goodCall_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:165:0: 'QntVerify.untouched_process_failed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:166:0: 'QntVerify.process_value_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:167:0: 'QntVerify.process_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:168:0: 'QntVerify.process_step_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:169:0: 'QntVerify.calls_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:170:0: 'QntVerify.code_size_ne_zero' depends on axioms: [propext]
+info: QntVerify/Test/Axioms.lean:171:0: 'QntVerify.code_not_indicator' depends on axioms: [propext, Quot.sound]
+info: QntVerify/Test/Axioms.lean:172:0: 'QntVerify.code_not_delegated' depends on axioms: [propext, Quot.sound]
+info: QntVerify/Test/Axioms.lean:173:0: 'QntVerify.D_of_getStorage' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:174:0: 'QntVerify.storageOnly_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:175:0: 'QntVerify.floor_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:176:0: 'QntVerify.frameKeepsQ_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:177:0: 'QntVerify.floor_message_any_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:178:0: 'QntVerify.floor_transaction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:179:0: 'QntVerify.floor_any_transactions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:180:0: 'QntVerify.fixed_mono_transaction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:181:0: 'QntVerify.fixed_mono_any_transactions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:182:0: 'QntVerify.storageOnly_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:183:0: 'QntVerify.inv_zeroBase' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:184:0: 'QntVerify.frameKeepsQ_noCrowd' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:185:0: 'QntVerify.noCrowd_message_any_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:186:0: 'QntVerify.inv_transaction_no_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:187:0: 'QntVerify.inv_any_transactions_no_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:188:0: 'QntVerify.inv_from_zero_no_crowdsale' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:189:0: 'TokenKit.Seq.frameKeepsR_of_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:190:0: 'TokenKit.Seq.storageOnly_supply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:191:0: 'TokenKit.Seq.zeroBase_supply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:192:0: 'TokenKit.Seq.processMessage_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:193:0: 'TokenKit.Seq.processTransaction_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:194:0: 'TokenKit.Seq.chain_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:195:0: 'TokenKit.Seq.chain_from_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: QntVerify/Test/Axioms.lean:199:0: AXIOM SCAN OK: 5477 constants (5129 theorems) of QntVerify and TokenKit, axioms used: [Quot.sound,
+ Classical.choice,
+ propext]
+✔ [1383/1384] Built QntVerify (1.0s)
+Build completed successfully (1384 jobs).
+EXIT=0

@@ -1,0 +1,380 @@
+{
+ "token": "SHIB",
+ "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+ "compiler": "solc 0.5.0, optimizer off",
+ "lean_root": "ShibVerify",
+ "lean_dir": "Shib",
+ "hex": "data/shib.runtime.hex",
+ "paths_json": "work/paths.json",
+ "dispatch": {
+  "comment": "Numbers of the hand-written theorem `enter` (Enter.lean): gas of the prelude, gas of one table entry, and the memory words after the prelude.",
+  "prelude_gas": 62,
+  "entry_gas": 22,
+  "memory_words": [
+   0,
+   0,
+   128
+  ]
+ },
+ "slots": {
+  "balances": 0,
+  "allowances": 1,
+  "totalSupply": 2
+ },
+ "functions": [
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "increaseAllowance",
+   "sig": "increaseAllowance(address,uint256)"
+  },
+  {
+   "name": "decreaseAllowance",
+   "sig": "decreaseAllowance(address,uint256)"
+  },
+  {
+   "name": "burn",
+   "sig": "burn(uint256)"
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  }
+ ],
+ "axioms": {
+  "comment": "names: hand-written theorems checked before the generated ones; after: theorems of files that import the generated ones; imports: the modules Test/Axioms.lean imports.",
+  "imports": [
+   "ShibVerify.Shib.Invariant",
+   "ShibVerify.Shib.Readable",
+   "ShibVerify.Shib.Sanity.Moves",
+   "ShibVerify.Shib.Seq",
+   "ShibVerify.Shib.Tx"
+  ],
+  "names": [
+   "valid_CODE",
+   "prelude",
+   "table",
+   "dispatch",
+   "enter",
+   "Nonpayable.spec",
+   "Fallback.spec_unknown",
+   "Fallback.spec_short",
+   "ends_ok_dispatch",
+   "runFrame_ok_dispatch"
+  ],
+  "after": [
+   "Sanity.Moves.transfer_moves",
+   "Witness.caller1_ne",
+   "Supply.inv_of_ro",
+   "Supply.inv_congr",
+   "inv_goodCall",
+   "inv_calls",
+   "goodCall_process",
+   "untouched_process_failed",
+   "process_value_fails",
+   "process_step",
+   "process_step_inv",
+   "calls_process",
+   "storageOnly_inv",
+   "code_size_ne_zero",
+   "code_not_indicator",
+   "code_not_delegated",
+   "inv_zeroBase",
+   "frameKeepsQ",
+   "supply_message_any_depth",
+   "supply_transaction",
+   "supply_any_transactions",
+   "supply_from_zero",
+   "Seq.frameKeepsR_of_all",
+   "Seq.storageOnly_supply",
+   "Seq.zeroBase_supply",
+   "Seq.processMessage_good_local",
+   "Seq.processTransaction_good",
+   "Seq.chain_good",
+   "Seq.chain_from_zero"
+  ]
+ },
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)"
+ },
+ "readable": {
+  "totalSupply": {
+   "doc": "totalSupply(): no value; returns `_totalSupply`; writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (totalSupply message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "balanceOf": {
+   "doc": "balanceOf(a): no value, 36 bytes of call data or more; returns `_balances[a]`; writes nothing and logs nothing.",
+   "let": {
+    "a": "addrArg1 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {a})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender): no value, 68 bytes of call data or more; returns `_allowances[owner][spender]`; writes nothing and logs nothing.",
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "decimals": {
+   "doc": "decimals(): no value; returns the low byte of slot 5; writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (BitVec.ofNat 256 ((storageAt state message.currentTarget 5).toNat % 256))",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(to, amount) from the caller `from`. Success needs: no value, 68 bytes of call data, a frame that may write, `from` and `to` not 0, `amount <= _balances[from]`, and (when `to` is not `from`) no overflow of `_balances[to]`. Then: returns 1; `_balances[from]` is the old word minus `amount` and `_balances[to]` the old word plus `amount` (when `to = from` the balance is unchanged); `_totalSupply` and every other slot keep their word; exactly one log, Transfer(from, to, amount).",
+   "let": {
+    "from": "sender message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{from} \u2260 0",
+    "{to} \u2260 0",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 0 \u2192 k \u2260 mapSlot {to} 0 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "approve": {
+   "doc": "approve(spender, value) from the caller `owner`. Success needs: no value, 68 bytes of call data, a frame that may write, `owner` and `spender` not 0. Then: returns 1; `_allowances[owner][spender]` is `value`; `_totalSupply` and every other slot keep their word; exactly one log, Approval(owner, spender, value).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "value": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{owner} \u2260 0",
+    "{spender} \u2260 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {owner} {spender} = {value}",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 1) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes {value}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(from, to, amount) by the caller `spender`. Success needs: no value, 100 bytes of call data, a frame that may write, `from`, `to` and `spender` not 0, `amount <= _balances[from]`, `amount <= _allowances[from][spender]`, and (when `to` is not `from`) no overflow of `_balances[to]`. Then: returns 1; the balances move as in transfer (unchanged when `to = from`); `_allowances[from][spender]` is the old word minus `amount`; `_totalSupply` and every other slot keep their word; exactly two logs, Transfer(from, to, amount) then Approval(from, spender, new allowance).",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "sender message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 96 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{from} \u2260 0",
+    "{to} \u2260 0",
+    "{spender} \u2260 0",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{amount}.toNat \u2264 (allowance message state {from} {spender}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "(allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 0 \u2192 k \u2260 mapSlot {to} 0 \u2192 k \u2260 mapSlot {spender} (mapSlot {from} 1) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = (substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))).push (log3 message.currentTarget APPROVAL {from} {spender} (wordBytes (sub (allowance message state {from} {spender}) {amount})))"
+   ]
+  },
+  "increaseAllowance": {
+   "doc": "increaseAllowance(spender, added) from the caller `owner`. Success needs: no value, 68 bytes of call data, a frame that may write, `owner` and `spender` not 0, no overflow of `_allowances[owner][spender] + added`. Then: returns 1; the allowance is the old word plus `added`; `_totalSupply` and every other slot keep their word; exactly one log, Approval(owner, spender, new allowance).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "added": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{owner} \u2260 0",
+    "{spender} \u2260 0",
+    "(allowance message state {owner} {spender}).toNat + {added}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat + {added}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 1) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (add (allowance message state {owner} {spender}) {added})))"
+   ]
+  },
+  "decreaseAllowance": {
+   "doc": "decreaseAllowance(spender, subtracted) from the caller `owner`. Success needs: no value, 68 bytes of call data, a frame that may write, `owner` and `spender` not 0, `subtracted <= _allowances[owner][spender]`. Then: returns 1; the allowance is the old word minus `subtracted`; `_totalSupply` and every other slot keep their word; exactly one log, Approval(owner, spender, new allowance).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "subtracted": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{owner} \u2260 0",
+    "{spender} \u2260 0",
+    "{subtracted}.toNat \u2264 (allowance message state {owner} {spender}).toNat"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat - {subtracted}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 1) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (sub (allowance message state {owner} {spender}) {subtracted})))"
+   ]
+  },
+  "burn": {
+   "doc": "burn(amount) by the caller `from`. Success needs: no value, 36 bytes of call data, a frame that may write, `from` not 0, `amount <= _totalSupply`, `amount <= _balances[from]`. Then: returns nothing; `_totalSupply` and `_balances[from]` are each the old word minus `amount`; every other slot keeps its word; exactly one log, Transfer(from, 0, amount).",
+   "let": {
+    "from": "sender message",
+    "amount": "arg1 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{from} \u2260 0",
+    "{amount}.toNat \u2264 (totalSupply message state).toNat",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(totalSupply message s.state).toNat = (totalSupply message state).toNat - {amount}.toNat",
+    "(balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat",
+    "\u2200 k, k \u2260 2 \u2192 k \u2260 mapSlot {from} 0 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} 0 (wordBytes {amount}))"
+   ]
+  }
+ },
+ "sanity": {
+  "comment": "The argument words of the witness call of each function (scripts/gen_sanity.py): address arguments not 0, amounts 0.",
+  "totalSupply": [],
+  "balanceOf": [
+   1
+  ],
+  "allowance": [
+   1,
+   2
+  ],
+  "decimals": [],
+  "transfer": [
+   1,
+   0
+  ],
+  "approve": [
+   1,
+   0
+  ],
+  "transferFrom": [
+   1,
+   2,
+   0
+  ],
+  "increaseAllowance": [
+   1,
+   0
+  ],
+  "decreaseAllowance": [
+   1,
+   0
+  ],
+  "burn": [
+   0
+  ]
+ }
+}

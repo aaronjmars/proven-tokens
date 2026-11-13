@@ -1,0 +1,538 @@
+{
+ "token": "LINK",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/link.log",
+  "axioms": "logs/link.axioms"
+ },
+ "findings": {
+  "LINK-1": {
+   "severity": "critical",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 1,
+     "do": "LINK's reentrancy and sequence headlines rest on the global keccak hypotheses SepAll and NoCollision CODE, which are almost certainly false as stated. Replace them with the run-local keccak condition WBTC already uses (tokens/wbtc Trace.lean, AnyLocal.lean, SeqLocal.lean)."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "critical",
+     "recorded_status": "done",
+     "what_changed": "WBTC's run-local form is ported to LINK. The headline reentrancy and sequence theorems now assume only run-local keccak conditions (Sep (callKeys m) for messages that enter LINK's code during the run; no code deposited during the run collides with CODE). The theorems on the global SepAll / NoCollision are renamed so the hypothesis is in the name, kept as corollaries, and status.json says they are not usable facts (main_theorems.global_forms_NOT_USABLE_FACTS, global_keccak_hypotheses).",
+     "theorems_added": [
+      "AnyLocal: frameKeepsQ, runnerKeeps_processRunner_local, calleeKeeps_processRunner_local, supply_all_real_local (headline), cleanRunL_of_sepAll_noCollision, cleanFrameL_of_sepAll_noCollision, supply_all_real_of_global",
+      "SeqLocal: process_good_local, create_good_local, good_msgL, good_createL, good_runL, inv_runL (headline), Sep.restrict, cleanL_of_sepList, cleanL_of_sepAll_noCollision, cleanCreateL_of_sepAll_noCollision, Msg.toLocal, Create.toLocal, Run.toLocal, inv_run_of_global",
+      "TraceWit: not_sent_totalSupply, cleanL_totalSupply, cleanL_totalSupply_other, process_good_totalSupply",
+      "Hold: SepAll.msg (def SepMsg)",
+      "Trace.lean: 29 theorems (copy of WBTC's)"
+     ],
+     "theorems_renamed": {
+      "frameKeeps": "frameKeeps_sepAll",
+      "calleeKeeps_processRunner": "calleeKeeps_processRunner_sepAll_noCollision",
+      "supply_all_real": "supply_all_real_sepAll_noCollision",
+      "process_good": "process_good_sepAll_noCollision",
+      "good_msg": "good_msg_sepAll_noCollision",
+      "good_run": "good_run_sepAll_noCollision",
+      "inv_run": "inv_run_sepAll_noCollision"
+     },
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "Sep (callKeys message) of the frame's own message (never discharged)",
+      "CleanFrameL / CleanL / CleanCreateL: run-local, over a run of arbitrary receiver code; proved only for totalSupply runs (from Sep of that message) and from a finite Sep list (cleanL_of_sepList)",
+      "HoldsCode, Inv at the start",
+      "Berlin <= fork < Glamsterdam",
+      "gas <= GAS_CAP = 2^60 - 1",
+      "Sane of the top message, Other steps (assumed)"
+     ],
+     "files": [
+      "token-kit/tokens/link/LinkVerify/Link/Trace.lean (new, 862 lines)",
+      "token-kit/tokens/link/LinkVerify/Link/AnyLocal.lean (new, 175)",
+      "token-kit/tokens/link/LinkVerify/Link/SeqLocal.lean (new, 220)",
+      "token-kit/tokens/link/LinkVerify/Link/TraceWit.lean (new, 107)",
+      "token-kit/tokens/link/LinkVerify/Link/Hold.lean",
+      "token-kit/tokens/link/LinkVerify/Link/Any.lean",
+      "token-kit/tokens/link/LinkVerify/Link/Seq.lean (rewritten, 159)",
+      "token-kit/tokens/link/LinkVerify/Link/Sanity/Tac.lean (one comment)",
+      "token-kit/tokens/link/LinkVerify.lean",
+      "token-kit/tokens/link/scripts/mk_config_more.py",
+      "token-kit/tokens/link/config/link.json",
+      "token-kit/tokens/link/LinkVerify/Test/Axioms.lean",
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "No closed instance of the run-local condition for a run that sends a message (transferAndCall to a receiver with code): see LINK-4."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/LinkVerify/Link/Trace.lean",
+    "token-kit/tokens/link/LinkVerify/Link/AnyLocal.lean",
+    "token-kit/tokens/link/LinkVerify/Link/SeqLocal.lean",
+    "token-kit/tokens/link/LinkVerify/Link/TraceWit.lean",
+    "token-kit/tokens/link/LinkVerify/Link/Hold.lean",
+    "token-kit/tokens/link/LinkVerify/Link/Any.lean",
+    "token-kit/tokens/link/LinkVerify/Link/Seq.lean",
+    "token-kit/tokens/link/LinkVerify/Link/Sanity/Tac.lean",
+    "token-kit/tokens/link/LinkVerify.lean",
+    "token-kit/tokens/link/scripts/mk_config_more.py",
+    "token-kit/tokens/link/config/link.json",
+    "token-kit/tokens/link/LinkVerify/Test/Axioms.lean",
+    "token-kit/tokens/link/status.json",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-2": {
+   "severity": "major",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "partly",
+     "what_changed": "Shared kit part done: generic runner theorem (any message at any depth keeps 'holds CODE + invariant', success or failure), transaction link (EthLib processTransaction) and any finite list of transactions, base case shape, all run-local (no SepAll, no NoCollision). The token itself was not edited by this agent. The creation case asked by the finding is part of the kit transaction theorem (processMessageCall_good, creation branch).",
+     "theorems_added": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Apply recipe C (capped chain with GasCap GAS_CAP; the token's own frameKeepsQ ports by renaming). The token is owned by another fix agent this round. ZeroBase is false for LINK (constant total): leave the base case out."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "major",
+     "recorded_status": "done",
+     "what_changed": "Top-level creations are covered: a creation at another address than L run by processCreateMessage keeps GoodLink. Both sequence relations (Seq.Run global form, SeqLocal.RunL headline) have a create step.",
+     "theorems_added": [
+      "SeqLocal.create_good_local (uses Trace.processCreateMessage_good_local)",
+      "SeqLocal.good_createL, def CreateL, RunL.create",
+      "Seq.create_good_sepAll_noCollision (uses Reenter.processCreateMessage_good), Seq.good_create_sepAll_noCollision, def Create, Run.create"
+     ],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "message.currentTarget != L (a creation at L itself is excluded)",
+      "CleanCreateL of the run (no instance proved)",
+      "message.gas <= GAS_CAP, Berlin <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/link/LinkVerify/Link/SeqLocal.lean lines 65-70, 87-100, 112-128, 137-143",
+      "token-kit/tokens/link/LinkVerify/Link/Seq.lean lines 76-88, 100-109, 130-135"
+     ],
+     "left": "A creation transaction as a whole (fees, nonce) is still the assumed Other step."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/LinkVerify/Link/SeqLocal.lean",
+    "token-kit/tokens/link/LinkVerify/Link/Seq.lean",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-3": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "partly",
+     "what_changed": "A base case: baseState holds CODE at LINK_ADDRESS with the supply 10^27 on one holder; it is Good modulo two named hypotheses, and the sequence theorem is stated from it.",
+     "theorems_added": [
+      "Sanity.sumTo_zero, Sanity.codeHash_codeState_self, Sanity.holdsCode_baseState, Sanity.inv_baseState, Sanity.good_baseState, Sanity.inv_runL_baseState"
+     ],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "hH : hashOf CODE != EMPTY_CODE_HASH (true by the #eval hash test, not proved in the kernel: keccak of the full code must not be run in the kernel, it ran a box out of memory for WBTC)",
+      "hu : Supply.UniqBal 1 CALLER1W (one keccak fact about one address)"
+     ],
+     "files": [
+      "token-kit/tokens/link/LinkVerify/Link/Sanity/Base.lean (new, 119 lines)"
+     ],
+     "left": "The base state is a model state, not the on-chain state: the constructor and the history before Berlin are not modelled (now in status.json not_covered). A concrete MsgL step from baseState (totalSupply through processMessage) is not written."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 5,
+     "recorded_status": "partly",
+     "what_changed": "Checked, no Lean change: base case good_baseState / inv_runL_baseState (link-wbtc) and the closed run reenter_closed (reenter) exist; status.json points to them.",
+     "theorems": [
+      "Sanity.good_baseState",
+      "Sanity.inv_runL_baseState",
+      "reenter_closed"
+     ],
+     "hypotheses_still_assumed": [
+      "hH",
+      "hu : Supply.UniqBal 1 CALLER1W (base state)",
+      "hA : Sep RE_KEYS, hRE (reenter_closed)"
+     ],
+     "files": [
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "keccak facts stay hypotheses; no MsgL step from baseState itself."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/LinkVerify/Link/Sanity/Base.lean",
+    "token-kit/tokens/link/status.json",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 6,
+     "do": "Missing witnesses. Add a real successful run for permit (and for UNI's transfer, transferFrom, mint, delegate, delegateBySig), discharge NoDelegation1 (scratch: scratch file NoDelegation1Empty.lean (not kept), scratch file NoDelegation1Sat.lean (not kept), scratch file PermitWitness.lean (not kept)), and add a LINK receiver that really re-enters."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "partly",
+     "what_changed": "Records only plus the general theorem. status.json now puts the hypotheses next to the claim (assumptions: CalleeKeeps entry; findings_contract last original item); the general run-local theorem calleeKeeps_processRunner_local covers a receiver that calls back under CleanFrameL. Comment in Any.lean fixed (onTokenTransfer).",
+     "theorems_added": [
+      "AnyLocal.calleeKeeps_processRunner_local (see LINK-1)"
+     ],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "CleanFrameL, HoldsCode, fork range, bound <= 2^60 - 1"
+     ],
+     "files": [
+      "token-kit/tokens/link/status.json",
+      "token-kit/tokens/link/LinkVerify/Link/TraceWit.lean header"
+     ],
+     "left": "NOT DONE: a witness with a receiver that really calls transfer back into the token inside onTokenTransfer. Blocked on size, not on a missing idea: it needs a hand-written receiver bytecode with a CALL step evaluated under processRunner (transferAndCall frame, receiver frame, nested transfer frame of LINK's code, in the style of Sanity/Tac.lean and WBTC's Sanity/ReclaimSelf.lean), then the list of messages each frame sends (Trace.Sent.of_reaches / of_step_child) to discharge CleanFrameL from a finite Sep list. WBTC has the same gap. Stated in status.json not_covered."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "reenter",
+     "recorded_status": "done for one closed run; three keccak facts stay as named hypotheses",
+     "what_changed": "New folder LinkVerify/Link/ReWit/. A hand-written 45 byte receiver RE that calls back LINK.transfer(0x2000, 1) from inside onTokenTransfer; a real processMessage run of transferAndCall(0x1000, 1, '') from a closed start state; the run is shown to meet CleanFrameL and CleanL, and supply_all_real_local, process_good_local and inv_runL are applied to it. Doc paragraph of TraceWit.lean now points to ReWit. No old theorem changed.",
+     "theorems_added": {
+      "ReWit/Re.lean": 23,
+      "ReWit/Run.lean": 33,
+      "ReWit/Closed.lean": 21,
+      "headline": [
+       "tac_re_core",
+       "supply_tac_re_frame",
+       "process_tac_re",
+       "msgL_tac_re",
+       "reenter_closed"
+      ],
+      "added_to_Test_Axioms": 23
+     },
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "hA : Sep RE_KEYS, RE_KEYS = [CALLER1W, 0x1000, 0x2000, 1] (keccak slot separation for four words)",
+      "hH : hashOf CODE != EMPTY_CODE_HASH",
+      "hRE : hashOf RE != hashOf CODE",
+      "Paris <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/link/LinkVerify/Link/ReWit/Re.lean",
+      "token-kit/tokens/link/LinkVerify/Link/ReWit/Run.lean",
+      "token-kit/tokens/link/LinkVerify/Link/ReWit/Closed.lean (reenter_closed is the last theorem)",
+      "token-kit/tokens/link/LinkVerify/Link/TraceWit.lean (doc lines 22-28 only)",
+      "token-kit/tokens/link/LinkVerify.lean (3 imports)",
+      "token-kit/tokens/link/scripts/mk_config_more.py (23 names)",
+      "token-kit/tokens/link/config/link.json (generated)",
+      "token-kit/tokens/link/LinkVerify/Test/Axioms.lean (generated, 227 -> 250)",
+      "token-kit/tokens/link/status.json"
+     ],
+     "what_is_left": "Sep RE_KEYS, hH and hRE are not proved (keccak). Only one receiver, amount 1, empty data, one start state; no receiver that calls another function, calls back twice or deeper, and no failing run. The older hypothesis CalleeKeeps (supply_transferAndCall, supply_all) is not shown for RE: the witness goes through the run-local theorems."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 6,
+     "recorded_status": "closed (by part reenter, checked here)",
+     "what_changed": "Nothing by me. reenter_closed (LinkVerify/Link/ReWit/Closed.lean) is in Test/Axioms.lean and passed the clean build: a receiver that calls transfer back during transferAndCall, real runner, Paris <= fork < Glamsterdam.",
+     "theorems": [
+      "reenter_closed"
+     ],
+     "hypotheses_still_assumed": [
+      "hA : Sep RE_KEYS",
+      "hH",
+      "hRE : hashOf RE != hashOf CODE"
+     ],
+     "files": [
+      "token-kit/tokens/link/LinkVerify/Link/ReWit/Closed.lean"
+     ],
+     "left": "one receiver, one run."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/status.json",
+    "token-kit/tokens/link/LinkVerify/Link/TraceWit.lean",
+    "token-kit/tokens/link/LinkVerify/Link/ReWit/Re.lean",
+    "token-kit/tokens/link/LinkVerify/Link/ReWit/Run.lean",
+    "token-kit/tokens/link/LinkVerify/Link/ReWit/Closed.lean",
+    "token-kit/tokens/link/LinkVerify.lean",
+    "token-kit/tokens/link/scripts/mk_config_more.py",
+    "token-kit/tokens/link/config/link.json",
+    "token-kit/tokens/link/LinkVerify/Test/Axioms.lean",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-5": {
+   "severity": "minor",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "partly",
+     "what_changed": "status.json main_theorems.dispatcher and per_function reworded: ok_ theorems are about successful runs only; name and symbol are out of the ok_ list; the dispatcher line names ends_ok_dispatch, ok_short, ok_other, value_zero_of_ok.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [],
+     "files": [
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "name_runs and symbol_runs witnesses are not written (the paths are loops over the string); said in not_covered."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/status.json",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-6": {
+   "severity": "minor",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "partly",
+     "what_changed": "status.json transferAndCall_whole now names the pc 0 theorem transferAndCall_readable first, says ok_tac_whole starts at pc 530 with hN and hdel, and that 'exact message' is the head words only.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "hN, hdel, gas < 2^60, Sep (callKeys message)"
+     ],
+     "files": [
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "The lemma that the copied bytes are the argument padded to 32 bytes is not written (not_covered)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/status.json",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-7": {
+   "severity": "note",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "note",
+     "recorded_status": "done",
+     "what_changed": "The odds of Sep (about 12 * 2^-96 per call) and the fact that it is never discharged are in docs/MAP.md (new section) and in status.json assumptions.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "Sep (callKeys message)"
+     ],
+     "files": [
+      "token-kit/tokens/link/docs/MAP.md",
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "nothing"
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 5,
+     "recorded_status": "closed (by link-wbtc)",
+     "what_changed": "Nothing new; the odds and the never-discharged note are in docs/MAP.md and status.json.",
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/docs/MAP.md",
+    "token-kit/tokens/link/status.json",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-8": {
+   "severity": "note",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 9,
+     "do": "Records. Add the missing build logs (the full clean rebuild of 2026-11-11 gives them), fix stale notes, comments and counts in the status files, and add the contract facts the auditors found (for example PEPE holding limits are buy-side only)."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "note",
+     "recorded_status": "done",
+     "what_changed": "Any.lean: onTokenReceived -> onTokenTransfer (2 places). status.json: stale ethlib_on_box note replaced, Steps.lean counted, all counts recounted from the files (767 theorems, 227 in the axioms test), #eval tests said not to be theorems. Also found and fixed: Map.lean doc text said the table is split by GT comparisons (false for this bytecode) and gave the wrong shape for the first entry; fixed in the local gen_dispatch.py and regenerated.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [],
+     "files": [
+      "token-kit/tokens/link/LinkVerify/Link/Any.lean",
+      "token-kit/tokens/link/status.json",
+      "token-kit/tokens/link/scripts/gen_dispatch.py",
+      "token-kit/tokens/link/LinkVerify/Link/Map.lean"
+     ],
+     "left": "the records of the first build (not kept) still use the old theorem names; a note in status.json says so."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "Counts rechecked against the files (844 theorems, 250 in the axioms test: both right). Added fork_range, the fix 7 explanation, one stale not_covered line reworded, and a line that LINK has no Tx.lean.",
+     "files": [
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/LinkVerify/Link/Any.lean",
+    "token-kit/tokens/link/status.json",
+    "token-kit/tokens/link/scripts/gen_dispatch.py",
+    "token-kit/tokens/link/LinkVerify/Link/Map.lean",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  },
+  "LINK-9": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "note",
+     "recorded_status": "done",
+     "what_changed": "The owner notes are added to status.json findings_contract (no mint or burn, increaseApproval / decreaseApproval without validRecipient, no call data length check, why the keccak hypothesis is not a formality).",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [],
+     "files": [
+      "token-kit/tokens/link/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/link/status.json",
+    "logs/link.log",
+    "logs/link.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "link-wbtc",
+   "date": "2026-11-11",
+   "build": {
+    "box": "lean-fix-link",
+    "command": "lake build from a clean tokens/link/.lake/build",
+    "final_line": "Build completed successfully (1425 jobs).",
+    "exit_code": 0,
+    "seconds": 121,
+    "axioms": "check_axioms.sh rc=0: theorems checked 227, count matches Test/Axioms.lean 227, AXIOM SCAN OK 7887 constants (7376 theorems), only propext, Classical.choice, Quot.sound",
+    "log": "logs/link.log",
+    "axioms_file": "logs/link.axioms"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "reenter",
+   "date": "2026-11-11",
+   "design": {
+    "receiver_code": "RE, 45 bytes, hand-written: 63a9059cbb 6000 52 612000 6020 52 6001 6040 52 6000 6000 6044 601c 6000 33 62030d40 f1 6001 6000 52 6020 6000 f3. It builds the call data transfer(0x2000, 1), CALLs msg.sender with 200000 gas and no value, then returns the word 1.",
+    "link": "transferAndCall(0x1000, 1, '') from CALLER1; the receiver at 0x1000 holds RE; during onTokenTransfer it calls LINK.transfer(0x2000, 1). End balances: receiver 0, 0x2000 has 1."
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-d",
+   "date": "2026-11-11",
+   "scope": "fixes 5 to 9 of audits/link/fixes.json",
+   "build": {
+    "box": "lean-fix-d",
+    "command": "lake build from a removed tokens/link/.lake/build, kit = git archive HEAD token-kit, LEAN_NUM_THREADS=2",
+    "exit_code": 0,
+    "seconds": 210,
+    "final_line": "Build completed successfully (1428 jobs).",
+    "axioms": "check_axioms.sh exit 0: theorems checked 250, count matches Test/Axioms.lean 250, AXIOM SCAN OK 8079 constants (7538 theorems), only propext, Classical.choice, Quot.sound",
+    "log": "logs/link.log",
+    "axioms_file": "logs/link.axioms"
+   },
+   "fork_range": "headlines and every CALL theorem: Berlin <= fork < Glamsterdam; closed witnesses from Paris; plain generated theorems: Berlin <= fork only"
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "fix": 10,
+   "what": "the auditor scratch Lean file SepAllGlobal.lean built on the rebuild box: compiles (exit 0, no sorry): SepAll really is a statement over all address words and NoCollision CODE over every byte string, as LINK-1 says. This confirms how wide the hypotheses are; it does not prove them false."
+  }
+ ]
+}

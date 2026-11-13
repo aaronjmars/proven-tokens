@@ -1,0 +1,1294 @@
+{
+ "token": "WBTC",
+ "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+ "compiler": "solc 0.4.24, optimizer on (200 runs)",
+ "lean_root": "WbtcVerify",
+ "lean_dir": "Wbtc",
+ "hex": "data/wbtc.runtime.hex",
+ "paths_json": "work/paths.json",
+ "dispatch": {
+  "split_doc": "The table is linear (solc 0.4, no split by\nGT comparisons): each entry is tested in turn.",
+  "generate": true,
+  "mode": "walk",
+  "memory_words": [
+   0,
+   0,
+   128
+  ],
+  "value_check": "per_function",
+  "layout_doc": [
+   "Storage layout, read off the bytecode (see docs/MAP.md):",
+   "",
+   "- `balances[a]` at `mapSlot a 0`.",
+   "- `totalSupply_` at slot 1.",
+   "- `allowed[owner][spender]` at `mapSlot spender (mapSlot owner 2)`.",
+   "- `name` (a string) at slot 3 and `symbol` (a string) at slot 4.",
+   "- slot 5 packs: `decimals` in byte 0, `owner` in bits 8..167, `mintingFinished` in",
+   "  byte 21 (bit 168) and `paused` in byte 22 (bit 176).",
+   "- `pendingOwner` in the low 160 bits of slot 6."
+  ]
+ },
+ "paths": {
+  "raw_memory": "across_blocks",
+  "raw_words": true,
+  "env08": true,
+  "log_before_sstore": true,
+  "block_imports": [
+   "WbtcVerify.Wbtc.Lib"
+  ]
+ },
+ "prune": "normalized",
+ "slots": {
+  "balances": 0,
+  "totalSupply": 1,
+  "allowances": 2
+ },
+ "functions": [
+  {
+   "name": "mintingFinished",
+   "sig": "mintingFinished()"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "unpause",
+   "sig": "unpause()"
+  },
+  {
+   "name": "mint",
+   "sig": "mint(address,uint256)"
+  },
+  {
+   "name": "burn",
+   "sig": "burn(uint256)"
+  },
+  {
+   "name": "claimOwnership",
+   "sig": "claimOwnership()"
+  },
+  {
+   "name": "paused",
+   "sig": "paused()"
+  },
+  {
+   "name": "decreaseApproval",
+   "sig": "decreaseApproval(address,uint256)"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "renounceOwnership",
+   "sig": "renounceOwnership()"
+  },
+  {
+   "name": "finishMinting",
+   "sig": "finishMinting()"
+  },
+  {
+   "name": "pause",
+   "sig": "pause()"
+  },
+  {
+   "name": "owner",
+   "sig": "owner()"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "increaseApproval",
+   "sig": "increaseApproval(address,uint256)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "pendingOwner",
+   "sig": "pendingOwner()"
+  },
+  {
+   "name": "transferOwnership",
+   "sig": "transferOwnership(address)"
+  }
+ ],
+ "fallbacks": [
+  {
+   "name": "short",
+   "kind": "short"
+  },
+  {
+   "name": "other",
+   "kind": "other"
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  }
+ ],
+ "stops": [
+  1521,
+  1535,
+  3196,
+  3210
+ ],
+ "prefix_functions": [
+  {
+   "name": "reclaimToken",
+   "sig": "reclaimToken(address)"
+  }
+ ],
+ "generators": [
+  "code",
+  "dispatch",
+  "paths",
+  "loops",
+  "supply",
+  "readable",
+  "sanity",
+  "axioms"
+ ],
+ "token_generators": [
+  "scripts/gen_value.py"
+ ],
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)",
+  "MINT": "Mint(address,uint256)",
+  "BURN": "Burn(address,uint256)",
+  "PAUSE": "Pause()",
+  "UNPAUSE": "Unpause()",
+  "OWNERSHIP_TRANSFERRED": "OwnershipTransferred(address,address)"
+ },
+ "supply": {
+  "comment": "checked04: the SafeMath checks of Solidity 0.4 with the optimizer on; caller_key raw: the caller is a key of callKeys with no mask; never_ok: renounceOwnership fails on every path.",
+  "checked04": true,
+  "never_ok": true,
+  "caller_key": "raw",
+  "what": "the sum of all balances is `totalSupply_`",
+  "what_kept": "if the sum of all balances was `totalSupply_` before, it is after.",
+  "norm": "and_mask_comm, mask_idem, mask_toU256', storageAt_readSlot",
+  "disch": "slot_side",
+  "rules": "Supply.D_read, D_bal hsep, D_tot hsep, D_allow hsep, D_owner hsep, D_pending hsep, storageAt_readSlot",
+  "dispatch": "  obtain \u27e8_, i, hi\u27e9 := ends_ok_dispatch hfork hsize' start hrun hok\n"
+ },
+ "segments": [
+  {
+   "name": "reclaimCodeA",
+   "pc": 1522,
+   "stack": [
+    "cs",
+    "t2",
+    0,
+    128,
+    36,
+    128,
+    32,
+    164,
+    1889567281,
+    "t2",
+    0,
+    "t",
+    570,
+    "sel"
+   ],
+   "raw_mem": {
+    "size": 192,
+    "fp": 128,
+    "words": {}
+   },
+   "post_def": true
+  },
+  {
+   "name": "reclaimMid",
+   "pc": 1562,
+   "stack": [
+    "n",
+    128,
+    0,
+    "t",
+    570,
+    "sel"
+   ],
+   "raw_mem": {
+    "size": 192,
+    "fp": 128,
+    "words": {
+     "128": "bal"
+    }
+   },
+   "post_def": true
+  },
+  {
+   "name": "reclaimCodeB",
+   "pc": 3197,
+   "stack": [
+    "cs",
+    "t3",
+    0,
+    128,
+    68,
+    128,
+    32,
+    196,
+    2835717307,
+    "t3",
+    "bal",
+    "owner",
+    "t2",
+    1617,
+    "bal",
+    "t",
+    570,
+    "sel"
+   ],
+   "raw_mem": {
+    "size": 224,
+    "fp": 128,
+    "words": {}
+   },
+   "post_def": true
+  },
+  {
+   "name": "reclaimEnd",
+   "pc": 3237,
+   "stack": [
+    "n",
+    128,
+    "bal",
+    "owner",
+    "t2",
+    1617,
+    "bal",
+    "t",
+    570,
+    "sel"
+   ],
+   "raw_mem": {
+    "size": 224,
+    "fp": 128,
+    "words": {
+     "128": "ret"
+    }
+   },
+   "post_def": true
+  }
+ ],
+ "readable_opts": {
+  "comment": "facts checked04: the condition shapes of Solidity 0.4 with the optimizer on (gen_readable.facts04; lemmas of WbtcVerify/Wbtc/ReadableLib.lean); caller_key raw: the caller is a key with no mask and `sender` is its word; close: the closing tactic; several_paths same_claims: every success path proves the same claims (decreaseApproval has two); simp: the mask on the right of AND, the mask of the word of an address, the fields of the packed slot 5 after a write, the logs with one and two topics; header: the fields of slots 5 and 6.",
+  "facts": "checked04",
+  "caller_key": "raw",
+  "close": "readable_close08",
+  "several_paths": "same_claims",
+  "imports": [
+   "TokenKit.Evm.ReadableOpt",
+   "TokenKit.Evm.Opt06",
+   "TokenKit.Evm.Bits08",
+   "WbtcVerify.Wbtc.ReadableLib"
+  ],
+  "simp": [
+   "and_mask_comm",
+   "mask_toU256'",
+   "and_255_comm",
+   "and_255_idem",
+   "slot_5_6",
+   "slot_6_5",
+   "paused_pause",
+   "owner_pause",
+   "minting_pause",
+   "decimals_pause",
+   "paused_unpause",
+   "owner_unpause",
+   "minting_unpause",
+   "decimals_unpause",
+   "owner_claim",
+   "paused_claim",
+   "minting_claim",
+   "decimals_claim",
+   "mask_and_high",
+   "mask_or_high",
+   "logs_logSub1",
+   "Readable.logs_logSub2",
+   "log1",
+   "Readable.log2"
+  ],
+  "unfold": [
+   "ownerOf",
+   "pausedOf",
+   "mintingFinishedOf",
+   "decimalsOf",
+   "pendingOwnerOf"
+  ],
+  "header": [
+   "/-- `owner` of the called contract in the state `S`: bits 8 to 167 of slot 5. -/\nabbrev ownerOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd MASK (div (storageAt S m.currentTarget 5) (256 : U256))",
+   "/-- The byte of `paused` of the called contract in the state `S` (byte 22 of slot 5; not 0:\npaused). -/\nabbrev pausedOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd (255 : U256) (div (storageAt S m.currentTarget 5)\n    (95780971304118053647396689196894323976171195136475136 : U256))",
+   "/-- The byte of `mintingFinished` of the called contract in the state `S` (byte 21 of slot 5;\nnot 0: minting is finished). -/\nabbrev mintingFinishedOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd (255 : U256) (div (storageAt S m.currentTarget 5)\n    (374144419156711147060143317175368453031918731001856 : U256))",
+   "/-- `decimals` of the called contract in the state `S`: byte 0 of slot 5. -/\nabbrev decimalsOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd (255 : U256) (storageAt S m.currentTarget 5)",
+   "/-- `pendingOwner` of the called contract in the state `S`: the low 160 bits of slot 6. -/\nabbrev pendingOwnerOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd MASK (storageAt S m.currentTarget 6)"
+  ],
+  "sep_doc": "A theorem whose\nfunction writes two or more mapping or supply slots (transfer, transferFrom, mint, burn) takes\n`Sep (callKeys message)` (the hypothesis on keccak of Sep.lean, not proved): without it two of the\nslots could be the same slot. The other theorems take no hypothesis on keccak.",
+  "doc": [
+   "WBTC (Solidity 0.4.24) has no check of the size of the call data: bytes of an argument past the\nend of the call data read as zero, so no theorem here has a claim on `message.data.size`.\nSlot 5 packs four fields: `decimalsOf` (byte 0), `ownerOf` (bits 8 to 167), `mintingFinishedOf`\n(byte 21) and `pausedOf` (byte 22); `pendingOwnerOf` is the low 160 bits of slot 6. A theorem of\na function that writes slot 5 or slot 6 gives the word written and each field after the write.\n\"Every other slot keeps its word\" is said for every slot number `k` other than the slots named;\nthat a named mapping slot is not slot 5 or 6 is a fact about keccak and is not claimed here.",
+   "What the bytes do (see also Roles.lean): `mint` and `burn` are for the owner only and are NOT\nblocked by the pause; `mint` needs `mintingFinished` to be 0 and takes any receiver, 0 included;\n`burn` burns tokens of the caller (the owner); `transfer`, `transferFrom`, `approve`,\n`increaseApproval` and `decreaseApproval` fail while paused; `finishMinting` writes nothing and\nreturns 0 (false); `transferOwnership` only writes `pendingOwner` (no log, any word, 0 included)\nand `claimOwnership`, from the pending owner, moves it into `owner`; `renounceOwnership` has no\nsuccessful run (it has no theorem here: see `renounceOwnership_fails` in Roles.lean)."
+  ]
+ },
+ "readable": {
+  "mintingFinished": {
+   "doc": "mintingFinished(). Success needs no value. Then: returns 1 when byte 21 of slot 5 is not 0, else 0; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (isZero (isZero (mintingFinishedOf message state)))",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "totalSupply": {
+   "doc": "totalSupply(). Success needs no value. Then: returns the word of slot 1 (`totalSupply_`); no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (totalSupply message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "decimals": {
+   "doc": "decimals(). Success needs no value. Then: returns byte 0 of slot 5; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (decimalsOf message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "paused": {
+   "doc": "paused(). Success needs no value. Then: returns 1 when byte 22 of slot 5 is not 0, else 0; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (isZero (isZero (pausedOf message state)))",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "owner": {
+   "doc": "owner(). Success needs no value. Then: returns the address in bits 8 to 167 of slot 5; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (ownerOf message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "pendingOwner": {
+   "doc": "pendingOwner(). Success needs no value. Then: returns the address in the low 160 bits of slot 6; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (pendingOwnerOf message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "balanceOf": {
+   "doc": "balanceOf(owner). Success needs no value. Then: returns `balances[owner]` (the argument masked to 160 bits); no slot changes; no log. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "addrArg1 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {owner})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender). Success needs no value. Then: returns `allowed[owner][spender]` (the arguments masked to 160 bits); no slot changes; no log. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(to, value) with `from` the caller. Success needs: no value, a frame that may write, an account of the contract, the token not paused, `value <= balances[from]`, `to` not 0, and (when `to` is not `from`) no overflow of `balances[to]`. Then: returns 1; `balances[from]` is the old word minus `value` and `balances[to]` the old word plus `value` (when `to = from` the balance is unchanged); every other slot keeps its word; exactly one log, Transfer(from, to, value). `to` may be the contract itself. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "from": "sender message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "pausedOf message state = 0",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{to} \u2260 0",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "\u2200 k, k \u2260 mapSlot {from} 0 \u2192 k \u2260 mapSlot {to} 0 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "approve": {
+   "doc": "approve(spender, value) from the caller `owner`. Success needs: no value, a frame that may write, an account of the contract, the token not paused. Then: returns 1; `allowed[owner][spender]` is `value` (whatever it was: no check of the old allowance); every other slot keeps its word; exactly one log, Approval(owner, spender, value). `spender` may be 0. No hypothesis on keccak is needed. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "value": "arg2 message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "pausedOf message state = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {owner} {spender} = {value}",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes {value}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(from, to, value) by the caller `spender`. Success needs: no value, a frame that may write, an account of the contract, the token not paused, `value <= balances[from]`, `value <= allowed[from][spender]`, `to` not 0, and (when `to` is not `from`) no overflow of `balances[to]`. Then: returns 1; `balances[from]` is the old word minus `value` and `balances[to]` the old word plus `value` (when `to = from` the balance is unchanged); `allowed[from][spender]` is the old word minus `value` (whoever `spender` is: `from`, `to` or another address; an allowance of `2^256 - 1` is lowered too); every other slot keeps its word; exactly one log, Transfer(from, to, value) (no Approval log). The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "sender message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "pausedOf message state = 0",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{amount}.toNat \u2264 (allowance message state {from} {spender}).toNat",
+    "{to} \u2260 0",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "(allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "\u2200 k, k \u2260 mapSlot {from} 0 \u2192 k \u2260 mapSlot {to} 0 \u2192 k \u2260 mapSlot {spender} (mapSlot {from} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "increaseApproval": {
+   "doc": "increaseApproval(spender, added) from the caller `owner`. Success needs: no value, a frame that may write, an account of the contract, the token not paused, and no overflow of `allowed[owner][spender]`. Then: returns 1; `allowed[owner][spender]` is the old word plus `added`; every other slot keeps its word; exactly one log, Approval(owner, spender, new allowance). No hypothesis on keccak is needed. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "added": "arg2 message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "pausedOf message state = 0",
+    "(allowance message state {owner} {spender}).toNat + {added}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat + {added}.toNat",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (add {added} (allowance message state {owner} {spender}))))"
+   ]
+  },
+  "decreaseApproval": {
+   "doc": "decreaseApproval(spender, subtracted) from the caller `owner`. Success needs: no value, a frame that may write, an account of the contract, the token not paused. Then: returns 1; `allowed[owner][spender]` is 0 when `subtracted` is at least the old word, else the old word minus `subtracted`; every other slot keeps its word; exactly one log, Approval(owner, spender, new allowance). No hypothesis on keccak is needed. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "subtracted": "arg2 message",
+    "old": "allowance message state (sender message) (addrArg1 message)"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "pausedOf message state = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{old}.toNat \u2264 {subtracted}.toNat \u2192 allowance message s.state {owner} {spender} = 0",
+    "{subtracted}.toNat < {old}.toNat \u2192 (allowance message s.state {owner} {spender}).toNat = {old}.toNat - {subtracted}.toNat",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "{old}.toNat \u2264 {subtracted}.toNat \u2192 s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (0 : U256)))",
+    "{subtracted}.toNat < {old}.toNat \u2192 s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (sub {old} {subtracted})))"
+   ]
+  },
+  "mint": {
+   "doc": "mint(to, amount) by the owner. Success needs: no value, a frame that may write, an account of the contract, the caller is the owner, `mintingFinished` is 0, no overflow of `totalSupply_` and no overflow of `balances[to]`. The pause is NOT checked and `to` may be 0. Then: returns 1; `totalSupply_` and `balances[to]` are each the old word plus `amount`; every other slot keeps its word; exactly two logs, Mint(to, amount) then Transfer(0, to, amount). The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = ownerOf message state",
+    "mintingFinishedOf message state = 0",
+    "(totalSupply message state).toNat + {amount}.toNat < 2 ^ 256",
+    "(balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(totalSupply message s.state).toNat = (totalSupply message state).toNat + {amount}.toNat",
+    "(balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "\u2200 k, k \u2260 1 \u2192 k \u2260 mapSlot {to} 0 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = (substate.logs.push (Readable.log2 message.currentTarget MINT {to} (wordBytes {amount}))).push (Readable.log3 message.currentTarget TRANSFER 0 {to} (wordBytes {amount}))"
+   ]
+  },
+  "burn": {
+   "doc": "burn(value) by the owner `from` (the caller). Success needs: no value, a frame that may write, an account of the contract, the caller is the owner, `value <= balances[from]` and `value <= totalSupply_`. The pause is NOT checked. Then: returns nothing; `balances[from]` and `totalSupply_` are each the old word minus `value`; every other slot keeps its word; exactly two logs, Burn(from, value) then Transfer(from, 0, value). The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "from": "sender message",
+    "amount": "arg1 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = ownerOf message state",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{amount}.toNat \u2264 (totalSupply message state).toNat"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat",
+    "(totalSupply message s.state).toNat = (totalSupply message state).toNat - {amount}.toNat",
+    "\u2200 k, k \u2260 mapSlot {from} 0 \u2192 k \u2260 1 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = (substate.logs.push (Readable.log2 message.currentTarget BURN {from} (wordBytes {amount}))).push (Readable.log3 message.currentTarget TRANSFER {from} 0 (wordBytes {amount}))"
+   ]
+  },
+  "pause": {
+   "doc": "pause() by the owner. Success needs: no value, a frame that may write, an account of the contract, the caller is the owner, and the token is not paused. Then: returns nothing; byte 22 of slot 5 is 1 and the other bytes of slot 5 keep their value (owner, mintingFinished, decimals); every other slot keeps its word; exactly one log, Pause().",
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = ownerOf message state",
+    "pausedOf message state = 0"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "pausedOf message s.state = 1",
+    "ownerOf message s.state = ownerOf message state",
+    "mintingFinishedOf message s.state = mintingFinishedOf message state",
+    "decimalsOf message s.state = decimalsOf message state",
+    "storageAt s.state message.currentTarget 5 = bitwiseOr (95780971304118053647396689196894323976171195136475136 : U256) (bitwiseAnd (115792089237316195423546560861005357749589898509895355986843660353153328480255 : U256) (storageAt state message.currentTarget 5))",
+    "\u2200 k, k \u2260 5 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log1 message.currentTarget PAUSE ByteArray.empty)"
+   ]
+  },
+  "unpause": {
+   "doc": "unpause() by the owner. Success needs: no value, a frame that may write, an account of the contract, the caller is the owner, and the token is paused. Then: returns nothing; byte 22 of slot 5 is 0 and the other bytes of slot 5 keep their value (owner, mintingFinished, decimals); every other slot keeps its word; exactly one log, Unpause().",
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = ownerOf message state",
+    "pausedOf message state \u2260 0"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "pausedOf message s.state = 0",
+    "ownerOf message s.state = ownerOf message state",
+    "mintingFinishedOf message s.state = mintingFinishedOf message state",
+    "decimalsOf message s.state = decimalsOf message state",
+    "storageAt s.state message.currentTarget 5 = bitwiseAnd (115792089237316195423546560861005357749589898509895355986843660353153328480255 : U256) (storageAt state message.currentTarget 5)",
+    "\u2200 k, k \u2260 5 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log1 message.currentTarget UNPAUSE ByteArray.empty)"
+   ]
+  },
+  "finishMinting": {
+   "doc": "finishMinting() by the owner. Success needs: no value and the caller is the owner. Then: returns 0 (false); no slot changes (`mintingFinished` is NOT set); no log. It writes nothing, so it also runs in a frame that may not write.",
+   "requires": [
+    "message.value = 0",
+    "sender message = ownerOf message state"
+   ],
+   "ensures": [
+    "s.output = wordBytes (0 : U256)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "transferOwnership": {
+   "doc": "transferOwnership(newOwner) by the owner. Success needs: no value, a frame that may write, an account of the contract, and the caller is the owner. Then: returns nothing; the low 160 bits of slot 6 (`pendingOwner`) are `newOwner` (the argument masked to 160 bits; 0 and the owner itself are accepted) and its high bits keep their value; slot 5 keeps its word, so the owner does NOT change; every other slot keeps its word; no log. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "new": "addrArg1 message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = ownerOf message state"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "pendingOwnerOf message s.state = {new}",
+    "ownerOf message s.state = ownerOf message state",
+    "storageAt s.state message.currentTarget 6 = bitwiseOr {new} (bitwiseAnd (115792089237316195423570985007226406215939081747436879206741300988257197096960 : U256) (storageAt state message.currentTarget 6))",
+    "\u2200 k, k \u2260 6 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "claimOwnership": {
+   "doc": "claimOwnership() by the pending owner. Success needs: no value, a frame that may write, an account of the contract, and the caller is `pendingOwner` (the low 160 bits of slot 6). Then: returns nothing; `owner` is the old `pendingOwner` (the caller) and the other bytes of slot 5 keep their value (paused, mintingFinished, decimals); `pendingOwner` is 0; every other slot keeps its word; exactly one log, OwnershipTransferred(old owner, new owner).",
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = pendingOwnerOf message state"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "ownerOf message s.state = pendingOwnerOf message state",
+    "pendingOwnerOf message s.state = 0",
+    "pausedOf message s.state = pausedOf message state",
+    "mintingFinishedOf message s.state = mintingFinishedOf message state",
+    "decimalsOf message s.state = decimalsOf message state",
+    "storageAt s.state message.currentTarget 5 = bitwiseOr (mul (pendingOwnerOf message state) (256 : U256)) (bitwiseAnd (115792089237316195423570984634543488696558837605497246864089130975994398638335 : U256) (storageAt state message.currentTarget 5))",
+    "storageAt s.state message.currentTarget 6 = bitwiseAnd (115792089237316195423570985007226406215939081747436879206741300988257197096960 : U256) (storageAt state message.currentTarget 6)",
+    "\u2200 k, k \u2260 5 \u2192 k \u2260 6 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget OWNERSHIP_TRANSFERRED (ownerOf message state) (pendingOwnerOf message state) ByteArray.empty)"
+   ]
+  }
+ },
+ "sanity": {
+  "comment": "The witness call of each success path (scripts/gen_sanity.py, form eval): the argument words and the words of the slots of the state. The caller is Witness.CALLER1 (word Witness.CALLER1W); amounts are 1 and the balances, allowances and total supply used are 5. A key `<path>@<name>` is one more witness `<fn>_<name>_runs` of the same path on another state; a path of kind revert named here gets a witness `<path>_reverts` (the run ends with an error).",
+  "imports": [
+   "TokenKit.Evm.WitnessOpt"
+  ],
+  "doc": "`<path>_runs` (or `<fn>_runs` for a function with one success path): in the state with one\naccount at the contract `C` that holds the stated words at the stated slots (every other slot\n0), the stated call from the caller `Witness.CALLER1` meets every hypothesis of the success path\ntheorem; so the loop of the interpreter runs it from pc 0 to the end with no error, for every\nmessage runner and every gas bound that holds its gas, with the stated output and end state.\nEvery condition is computed by the kernel, the keccak of each mapping slot included: no\nhypothesis about keccak is used.\n\nThe word `0x0101..0108` of slot 5 is: owner `Witness.CALLER1` (bits 8 to 167), `mintingFinished`\n0, `paused` 0, decimals 8; `0x01000101..0108` is the same with `paused` 1.\n`mint_paused_runs`, `burn_paused_runs`: a mint and a burn succeed while the token is paused. `<path>_reverts`: the stated call\nmeets every hypothesis of a REVERT path theorem, so it ends with an error: a transfer, a transferFrom and an approve while the\ntoken is paused, a mint by a caller that is not the owner, a claimOwnership by a caller that is\nnot the pending owner, and renounceOwnership by the owner (its last path, which returns the\nreason string).\nreclaimToken(address) is not here: its witnesses need a second contract (the witness stream).",
+  "mintingFinished": {
+   "args": [],
+   "slots": []
+  },
+  "totalSupply": {
+   "args": [],
+   "slots": [
+    [
+     1,
+     5
+    ]
+   ]
+  },
+  "decimals": {
+   "args": [],
+   "slots": [
+    [
+     5,
+     "(0x010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "paused": {
+   "args": [],
+   "slots": [
+    [
+     5,
+     "(0x0100010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "owner": {
+   "args": [],
+   "slots": [
+    [
+     5,
+     "(0x010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "pendingOwner": {
+   "args": [],
+   "slots": [
+    [
+     6,
+     2
+    ]
+   ]
+  },
+  "balanceOf": {
+   "args": [
+    2
+   ],
+   "slots": [
+    [
+     "mapSlot 2 0",
+     5
+    ]
+   ]
+  },
+  "allowance": {
+   "args": [
+    2,
+    3
+   ],
+   "slots": [
+    [
+     "mapSlot 3 (mapSlot 2 2)",
+     5
+    ]
+   ]
+  },
+  "approve": {
+   "approve_p3": {
+    "args": [
+     2,
+     7
+    ],
+    "slots": []
+   },
+   "approve_p1": {
+    "args": [
+     2,
+     7
+    ],
+    "slots": [
+     [
+      5,
+      "(0x0100010101010101010101010101010101010101010108 : U256)"
+     ]
+    ]
+   }
+  },
+  "increaseApproval": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": []
+  },
+  "decreaseApproval": {
+   "decreaseApproval_p3": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": []
+   },
+   "decreaseApproval_p6": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 (mapSlot Witness.CALLER1W 2)",
+      5
+     ]
+    ]
+   }
+  },
+  "transfer": {
+   "transfer_p6": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot Witness.CALLER1W 0",
+      5
+     ]
+    ]
+   },
+   "transfer_p1": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      5,
+      "(0x0100010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      "mapSlot Witness.CALLER1W 0",
+      5
+     ]
+    ]
+   }
+  },
+  "transferFrom": {
+   "transferFrom_p8": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 0",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   },
+   "transferFrom_p1": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      5,
+      "(0x0100010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      "mapSlot 2 0",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   }
+  },
+  "mint": {
+   "mint_p6": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      5,
+      "(0x010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      1,
+      5
+     ]
+    ]
+   },
+   "mint_p6@paused": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      5,
+      "(0x0100010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      1,
+      5
+     ]
+    ]
+   },
+   "mint_p1": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      1,
+      5
+     ]
+    ]
+   }
+  },
+  "burn": {
+   "burn_p5": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      5,
+      "(0x010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W 0",
+      5
+     ]
+    ]
+   },
+   "burn_p5@paused": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      5,
+      "(0x0100010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W 0",
+      5
+     ]
+    ]
+   }
+  },
+  "pause": {
+   "args": [],
+   "slots": [
+    [
+     5,
+     "(0x010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "unpause": {
+   "args": [],
+   "slots": [
+    [
+     5,
+     "(0x0100010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "finishMinting": {
+   "args": [],
+   "slots": [
+    [
+     5,
+     "(0x010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "transferOwnership": {
+   "args": [
+    2
+   ],
+   "slots": [
+    [
+     5,
+     "(0x010101010101010101010101010101010101010108 : U256)"
+    ]
+   ]
+  },
+  "claimOwnership": {
+   "claimOwnership_p4": {
+    "args": [],
+    "slots": [
+     [
+      5,
+      "(0x0208 : U256)"
+     ],
+     [
+      6,
+      "Witness.CALLER1W"
+     ]
+    ]
+   },
+   "claimOwnership_p1": {
+    "args": [],
+    "slots": [
+     [
+      5,
+      "(0x010101010101010101010101010101010101010108 : U256)"
+     ],
+     [
+      6,
+      2
+     ]
+    ]
+   }
+  },
+  "renounceOwnership": {
+   "renounceOwnership_p2": {
+    "args": [],
+    "slots": [
+     [
+      5,
+      "(0x010101010101010101010101010101010101010108 : U256)"
+     ]
+    ]
+   }
+  }
+ },
+ "axioms": {
+  "declared_only": true,
+  "dotted_decl": true,
+  "imports": [
+   "WbtcVerify.Wbtc.Invariant"
+  ],
+  "names": [
+   "CODE_eq",
+   "size_CODE",
+   "and_div_selector",
+   "div_and_selector",
+   "mask_idem",
+   "mask_lt"
+  ],
+  "after": [
+   "Complete.ends_ok_dispatch",
+   "Complete.value_zero_of_ok",
+   "TokenKit.callInS",
+   "TokenKit.callIn_outcome",
+   "TokenKit.callIn_outcome_any",
+   "Reenter.processMessage_good",
+   "Reenter.processCreateMessage_good",
+   "Reenter.processRunner_goodKept",
+   "Reenter.runFrame_keeps",
+   "SepAll.call",
+   "TokenKit.callOut_outcome",
+   "TokenKit.extendMemory_inout",
+   "TokenKit.ends_step",
+   "TokenKit.callTail_rule",
+   "TokenKit.callTail_ok",
+   "TokenKit.bubble_out",
+   "TokenKit.bubble_spec",
+   "rc_tail1",
+   "rc_tail2",
+   "ok_reclaim_first",
+   "ok_reclaim_second",
+   "ok_reclaim",
+   "reclaim_two_calls",
+   "sane_of_sentVia",
+   "good_through_call",
+   "reclaim_good",
+   "supply_reclaimToken",
+   "reclaimCalleeKeeps_of_keepsOn",
+   "rc_data1",
+   "rc_data2",
+   "rc_caller_owner",
+   "rcOwner_address",
+   "reclaimToken_readable",
+   "rc_bubble1",
+   "rc_bubble2",
+   "reclaim_fails_value",
+   "reclaim_fails_not_owner",
+   "reclaim_fails_no_code",
+   "supply_reclaimToken_runner",
+   "storageOnly_inv",
+   "code_not_delegated",
+   "supply_all_calleeKeeps",
+   "supply_all_runnerKeeps",
+   "frameKeeps_sepAll",
+   "runnerKeeps_processRunner_sepAll_noCollision",
+   "supply_all_real_sepAll_noCollision",
+   "process_good_sepAll_noCollision",
+   "good_run_sepAll_noCollision",
+   "inv_run_sepAll_noCollision",
+   "Trace.runFrame_agree",
+   "Trace.not_sent_of_failing",
+   "Trace.not_sent_of_specG",
+   "Trace.Sent.of_reaches",
+   "Trace.Sent.of_step_child",
+   "Trace.clean_of_global",
+   "Trace.clean_of_no_sent",
+   "Trace.processMessage_ind_local",
+   "Trace.processMessage_good_local",
+   "Trace.processCreateMessage_good_local",
+   "Trace.processRunner_good_local",
+   "Trace.runFrame_keeps_local",
+   "frameKeepsQ",
+   "runnerKeeps_processRunner_local",
+   "supply_all_real_local",
+   "supply_all_real_of_global",
+   "process_good_local",
+   "create_good_local",
+   "good_runL",
+   "inv_runL",
+   "Run.toLocal",
+   "inv_run_of_global",
+   "not_sent_totalSupply",
+   "cleanW_totalSupply",
+   "cleanW_totalSupply_other",
+   "process_good_totalSupply",
+   "cleanW_of_sepList",
+   "Trace.Clean.mono",
+   "Readable.add_bound_ltc",
+   "Readable.add_nat_ltc",
+   "Readable.lt_of_lessThan",
+   "Readable.ge_of_lessThan",
+   "and_255_comm",
+   "and_255_idem",
+   "slot_5_6",
+   "slot_6_5",
+   "div_pow",
+   "div_256",
+   "div_168",
+   "div_176",
+   "fld",
+   "fldN",
+   "fld0",
+   "fld0N",
+   "paused_pause",
+   "owner_pause",
+   "minting_pause",
+   "decimals_pause",
+   "paused_unpause",
+   "owner_unpause",
+   "minting_unpause",
+   "decimals_unpause",
+   "owner_claim",
+   "paused_claim",
+   "minting_claim",
+   "decimals_claim",
+   "Roles.mint_only_owner",
+   "Roles.burn_only_owner",
+   "Roles.pause_role",
+   "Roles.unpause_role",
+   "Roles.paused_blocks",
+   "Roles.transferOwnership_role",
+   "Roles.claimOwnership_role",
+   "Roles.renounceOwnership_fails",
+   "Roles.finishMinting_does_nothing",
+   "Roles.name_reads_only",
+   "Roles.symbol_reads_only",
+   "Roles.every_call",
+   "Roles.totalSupply_change",
+   "Roles.slot5_change",
+   "Roles.mintingFinished_fixed",
+   "Roles.decimals_fixed",
+   "Roles.owner_change",
+   "Roles.paused_change",
+   "Roles.pendingOwner_change",
+   "Sanity.reclaimToken_runs",
+   "Sanity.reclaimToken_runs_closed",
+   "Sanity.reclaimToken_notOwner_reverts",
+   "Sanity.reclaimToken_notOwner_reverts_closed",
+   "Sanity.reclaimToken_noCode_reverts",
+   "Sanity.reclaimToken_noCode_reverts_closed",
+   "Sanity.reclaimToken_calleeReverts",
+   "Sanity.reclaimToken_calleeReverts_closed",
+   "Sanity.reclaimToken_shortReturn_reverts",
+   "Sanity.reclaimToken_shortReturn_reverts_closed",
+   "Sanity.reclaimToken_falseReturn_reverts",
+   "Sanity.reclaimToken_falseReturn_reverts_closed",
+   "Sanity.tiny_token_keeps",
+   "Sanity.one_token_call_runs",
+   "Sanity.self_balanceOf_runs",
+   "Sanity.self_transfer_runs",
+   "Sanity.reclaimToken_self_runs",
+   "Sanity.reclaimToken_self_runs_closed",
+   "tiny_spec",
+   "tiny_not_sent",
+   "tiny_process",
+   "tiny_runner",
+   "reclaimCalleeKeeps_tiny",
+   "supply_reclaimToken_tiny",
+   "cleanRunW_tiny",
+   "callOut_sent",
+   "reclaim_sent",
+   "cleanFrameW_reclaim_tiny",
+   "supply_all_real_local_reclaim_tiny",
+   "cleanW_reclaim_tiny",
+   "process_good_reclaim_tiny",
+   "Sanity.sumTo_zero",
+   "Sanity.holdsCode_emptyState",
+   "Sanity.inv_emptyState",
+   "Sanity.good_emptyState",
+   "Sanity.inv_runL_emptyState",
+   "Sanity.size_RE",
+   "Sanity.re_not_delegated",
+   "Sanity.mcg_keep",
+   "Sanity.re_call",
+   "Sanity.spec_message_runs",
+   "Sanity.re_message_runs",
+   "Sanity.frameOf_noValue",
+   "Sanity.cleanRun_call",
+   "Sanity.clean_of_spec",
+   "Sanity.re_clean",
+   "Sanity.call_run_s",
+   "Sanity.seg1_s",
+   "Sanity.seg2_s",
+   "Sanity.first_call_s",
+   "Sanity.second_call_s",
+   "Sanity.token_toU256",
+   "Sanity.token_ne_wbtc",
+   "Sanity.ReSt.callSt",
+   "Sanity.ReSt.rar2",
+   "Sanity.re_inner_spec",
+   "Sanity.re_inner_runs",
+   "Sanity.re_call_runs",
+   "Sanity.reclaim_re_core",
+   "Sanity.callKeys_reMsg",
+   "Sanity.sep_outer",
+   "Sanity.sep_inner",
+   "Sanity.supply_reclaim_re_frame",
+   "Sanity.process_reclaim_re",
+   "Sanity.msgL_reclaim_re",
+   "Sanity.re_hash_ne",
+   "Sanity.holdsCode_reState",
+   "Sanity.tokenCode_reState",
+   "Sanity.reSt_reState",
+   "Sanity.inv_reState",
+   "Sanity.reclaim_reenter_closed"
+  ]
+ }
+}

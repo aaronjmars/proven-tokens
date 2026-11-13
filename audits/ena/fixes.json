@@ -1,0 +1,373 @@
+{
+ "token": "ENA",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/ena.log",
+  "axioms": "logs/ena.axioms"
+ },
+ "findings": {
+  "ENA-1": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": 5,
+     "recorded_status": "partly",
+     "theorems": [
+      "Instance.inv_start",
+      "Instance.sep_iff",
+      "Instance.sep_m0_iff",
+      "Instance.callKeys_m0",
+      "Instance.supply_m0",
+      "Instance.supply_permit_m1",
+      "Instance.permit_runs_inv",
+      "Instance.allow_ne_total",
+      "Instance.nonce_ne_total",
+      "Instance.allow_ne_nonce",
+      "Instance.slots_not_fixed"
+     ],
+     "what_changed": "One concrete state (all-zero storage) and one concrete call (allowance(K, K) from the address with word K). The start invariant is proved for it. Sep for its keys is proved EQUAL to a list of 7 named keccak facts (KeyFacts), in both directions, and the slot facts the kernel can compute are computed. supply_preserved and supply_permit are instantiated with every other hypothesis discharged. status.json and docs/MAP.md now say plainly that no closed instance of Sep exists and give the 2^-96 heuristic. ENA-1 extra point: Sep was not extended with \"allowance and nonce slots are not 0, 1, 11\" (it would change every theorem under Sep); the fact is computed by the kernel for the keys of the instance (slots_not_fixed) and the gap is stated in status.json (closed_instance.extra_keccak_fact).",
+     "hypotheses_left": "KeyFacts (7 facts, each \"this slot is the balance slot of no address word\", over 2^160 keccak values; cannot be proved in Lean) and the fork range. The keccak part of Sep is NOT closed.",
+     "files": [
+      "token-kit/tokens/ena/EnaVerify/Ena/Instance.lean (new)",
+      "token-kit/tokens/ena/EnaVerify/Ena/PermitRun.lean (new)",
+      "token-kit/tokens/ena/EnaVerify.lean",
+      "token-kit/tokens/ena/config/ena.json",
+      "token-kit/tokens/ena/EnaVerify/Test/Axioms.lean (regenerated)",
+      "token-kit/tokens/ena/status.json",
+      "token-kit/tokens/ena/docs/MAP.md"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/docs/MAP.md",
+    "token-kit/tokens/ena/EnaVerify/Ena/Instance.lean",
+    "token-kit/tokens/ena/EnaVerify/Ena/PermitRun.lean",
+    "token-kit/tokens/ena/EnaVerify.lean",
+    "token-kit/tokens/ena/config/ena.json",
+    "token-kit/tokens/ena/EnaVerify/Test/Axioms.lean",
+    "token-kit/tokens/ena/status.json",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 8,
+     "do": "Claims proved per call but worded as lasting facts. WBTC: restate supply_all with the local callee assumption (scratch: scratch file SupplyAllCallee.lean (not kept)). ENA mint limits, SKY wards, USDE minter, WBTC roles: add the sequence theorem or reword the claim as per call."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": 8,
+     "recorded_status": "closed by rewording (per call); no sequence theorem",
+     "theorems": [],
+     "what_changed": "status.json contract_findings and mint.who / mint.scope: 'only the owner', 'once per 365 days' and '10 percent per 365 days' are now worded per call, and the over-time readings are marked as inferences, not Lean theorems. docs/MAP.md says the same.",
+     "hypotheses_left": "No sequence theorem about slot 11 or slot 4 (it needs block time in the step relation and the extra keccak facts of ENA-1); no single no-other-mint theorem.",
+     "files": [
+      "token-kit/tokens/ena/status.json",
+      "token-kit/tokens/ena/docs/MAP.md"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/docs/MAP.md",
+    "token-kit/tokens/ena/status.json",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-3": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 6,
+     "do": "Missing witnesses. Add a real successful run for permit (and for UNI's transfer, transferFrom, mint, delegate, delegateBySig), discharge NoDelegation1 (scratch: scratch file NoDelegation1Empty.lean (not kept), scratch file NoDelegation1Sat.lean (not kept), scratch file PermitWitness.lean (not kept)), and add a LINK receiver that really re-enters."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": 6,
+     "recorded_status": "closed for the cached-separator branch; the two rebuilt-separator branches have no witness",
+     "theorems": [
+      "Instance.permit_runs",
+      "Instance.recovered_m1",
+      "Instance.ecrecover_call_runs",
+      "Instance.processMessage_precompile_ok",
+      "Instance.supply_permit_m1",
+      "Instance.permit_runs_inv",
+      "Instance.noDelegation1_of_emptyHash",
+      "Instance.noDelegation1_sState",
+      "Instance.noDelegation1_before_pectra"
+     ],
+     "what_changed": "A real successful permit run under EthLib's real runner processRunner, from 100000 gas, with a real secp256k1 signature (public test key 0x11...11). The kernel checks the signature with EthLib's own Ecrecover.compute (decide +kernel, no native_decide, nothing assumed about the precompile). New forward rule for GAS STATICCALL to address 1 (the kit had only the backward rule). End state: allowance (K, K) = 7, nonce 1. NoDelegation1 is discharged for every state where address 1 has the empty code hash and, before Pectra, for every state.",
+     "hypotheses_left": "permit_runs: only Shapella <= fork < Glamsterdam. Not witnessed: the two branches that rebuild the domain separator. NoDelegation1 is not shown to be kept by a run or a sequence.",
+     "files": [
+      "token-kit/tokens/ena/EnaVerify/Ena/Instance.lean (new)",
+      "token-kit/tokens/ena/EnaVerify/Ena/PermitRun.lean (new)",
+      "token-kit/tokens/ena/EnaVerify.lean",
+      "token-kit/tokens/ena/config/ena.json",
+      "token-kit/tokens/ena/EnaVerify/Test/Axioms.lean (regenerated)",
+      "token-kit/tokens/ena/status.json",
+      "token-kit/tokens/ena/docs/MAP.md"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/Instance.lean",
+    "token-kit/tokens/ena/EnaVerify/Ena/PermitRun.lean",
+    "token-kit/tokens/ena/EnaVerify.lean",
+    "token-kit/tokens/ena/config/ena.json",
+    "token-kit/tokens/ena/EnaVerify/Test/Axioms.lean",
+    "token-kit/tokens/ena/status.json",
+    "token-kit/tokens/ena/docs/MAP.md",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "partly",
+     "what_changed": "Shared kit part done: generic runner theorem (any message at any depth keeps 'holds CODE + invariant', success or failure), transaction link (EthLib processTransaction) and any finite list of transactions, base case shape, all run-local (no SepAll, no NoCollision). The token itself was not edited by this agent.",
+     "theorems_added": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Apply recipe B to this token (frameKeepsR by cases on the permit selector, Q carries NoDelegation1), regenerate Test/Axioms.lean, update status.json, rebuild. Recipe B was not compiled on a permit token. ENA lower fork bound is Shapella."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "apply-b",
+     "recorded_status": "done",
+     "severity": "minor",
+     "token": "ena",
+     "what_changed": "New EnaVerify/Ena/Tx.lean on TokenKit.Seq: the supply invariant (with 'C holds CODE') after any message at any depth, any transaction as EthLib's processTransaction runs it, any finite list of transactions, and from the all-zero base case. Every selector included. The assumed `Untouched` step is not used. status.json: transaction_theorems, fix_round_audit4, 9 assumptions lines, not_covered lines, counts, build. ENA: the mint rules (owner only, 365 days, 10 percent) stay per call; no sequence form was proved; said so in status.json (transaction_theorems.mint_rules_stay_per_call, not_covered).",
+     "theorems_added": [
+      "storageOnly_inv",
+      "code_size_ne_zero",
+      "code_not_indicator",
+      "code_not_delegated",
+      "inv_zeroBase",
+      "frameKeepsR",
+      "supply_message_any_depth",
+      "supply_transaction",
+      "supply_any_transactions (headline)",
+      "supply_from_zero",
+      "QMsg (abbrev)"
+     ],
+     "theorems_retired": "none. Seq.lean / PermitSeq.lean theorems (inv_calls, inv_callsP, process_step, process_step_all, ...) are kept and named in status.json as the older, weaker per-message model with the assumed Untouched step.",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create with Q := QMsg (per transaction, RUN-LOCAL): every message m that really enters the code at C during the run satisfies Sep (callKeys m) (keccak, NOT proved) and NoDelegation1 fork s for the state s its frame starts from (address 1 holds no EIP-7702 delegation code; NOT proved, assumed at each entry, used by the ecrecover selectors only and from Pectra only); every code a creation of the run really deposits with the keccak hash of CODE is CODE.",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code with the keccak hash of CODE.",
+      "Seq.TxClean.data: call data of a transaction sent to C below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork < Fork.glamsterdam. Message theorem and frameKeepsR: Paris <= fork < Glamsterdam (ENA: Shapella <= fork < Glamsterdam).",
+      "Start: Seq.Good C CODE (Inv C) on the block state before the first transaction; supply_from_zero: Seq.HoldsCode plus all-zero storage of C.",
+      "supply_message_any_depth only: Seq.Sane C CODE message."
+     ],
+     "files_written": {
+      "EnaVerify/Ena/Tx.lean": "new, 170 lines",
+      "EnaVerify.lean": "1 import line",
+      "config": "config/ena.json: axioms.imports + 1, axioms.after + 10",
+      "EnaVerify/Test/Axioms.lean": "regenerated (gen_axioms.py + kit_opens.py), 410 names (+10)",
+      "status.json": "updated"
+     },
+     "what_is_left": "Named in not_covered: block-level steps between transactions; forks before Dencun and from Glamsterdam; the constructor run / real start state; NoDelegation1 is assumed at each entry, not derived from the start state."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Test/Axioms.lean",
+    "token-kit/tokens/ena/EnaVerify/Ena/Tx.lean",
+    "token-kit/tokens/ena/EnaVerify.lean",
+    "token-kit/tokens/ena/config/ena.json",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-5": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 7,
+     "do": "Fork range. The one-counter gas meter is not the one EthLib runs from Glamsterdam. State fork < Glamsterdam in every theorem that needs it and in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": 7,
+     "recorded_status": "closed by wording; no older theorem was changed",
+     "theorems": [
+      "every new theorem about a run states fork < .glamsterdam: Instance.supply_m0, Instance.ecrecover_call_runs, Instance.permit_runs, Instance.supply_permit_m1, Instance.permit_runs_inv"
+     ],
+     "what_changed": "status.json has a new key fork_range (Shapella <= fork < Glamsterdam; transactions Dencun <= fork < Glamsterdam), lists which theorems state the upper bound and which do not, and why. assumptions, claims and docs/MAP.md carry the same range.",
+     "hypotheses_left": "The older generated theorems (block rules, path specs, ok_<fn>, supply_<fn>, supply_preserved, readable, Sanity) and Seq.lean still state only the lower bound. Not added: it must come from the generators in token-kit/scripts (not allowed in this round) and no proof uses it. The two-counter meter is not ported.",
+     "files": [
+      "token-kit/tokens/ena/status.json",
+      "token-kit/tokens/ena/docs/MAP.md"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/docs/MAP.md",
+    "token-kit/tokens/ena/status.json",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-6": {
+   "severity": "note",
+   "status": "open",
+   "reason": "Recorded as not done: nothing (optional witnesses for name, symbol, eip712Domain)",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": "none of 5 to 9",
+     "recorded_status": "not done",
+     "theorems": [],
+     "what_changed": "nothing (optional witnesses for name, symbol, eip712Domain)",
+     "hypotheses_left": "-",
+     "files": []
+    }
+   ],
+   "evidence": [
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-7": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix needed: no vacuous path found (suggested fix: none); the missing witnesses are ENA-3 and ENA-6.",
+   "steps": [],
+   "evidence": [
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-8": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": 9,
+     "recorded_status": "closed (records)",
+     "theorems": [],
+     "what_changed": "Stale notes replaced (kit now has Push0.lean and Precompile0.lean; which scripts are the source; hash test is an #eval); file and theorem counts refreshed from this build; to_merge_into_kit old entries marked PARTLY STALE.",
+     "hypotheses_left": "The token still uses its own copies of the PUSH0 lemmas; old script copies kept.",
+     "files": [
+      "token-kit/tokens/ena/status.json"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/status.json",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  },
+  "ENA-9": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-e",
+     "fix": 9,
+     "recorded_status": "closed (records)",
+     "theorems": [],
+     "what_changed": "Owner facts 1 to 10 added under status.json owner_facts.",
+     "hypotheses_left": "The value the constructor stored in slot 11 was not read from chain.",
+     "files": [
+      "token-kit/tokens/ena/status.json"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ena/status.json",
+    "logs/ena.log",
+    "logs/ena.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-b",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit applied to usdd, dai, usde, ena, uni with recipe B of kit-seq.json. All five: headline supply_any_transactions (+ supply_transaction, supply_message_any_depth, supply_from_zero), clean build exit 0, check_axioms green, regen_check SAME, Mac = box. No kit file edited, no new kit lemma needed."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-e",
+   "date": "2026-11-11/12 (UTC)",
+   "summary": {
+    "the ONDO fix round": "partly for all four: Sep is reduced to KeyFacts (5 facts usdd and dai, 7 facts usde and ena) with an exact iff; the start invariant and everything else are proved; the keccak facts cannot be proved",
+    "fix6": "a real permit run with a kernel-checked signature for all four (one success way each); NoDelegation1 discharged for concrete states, not shown kept by a run",
+    "fix7": "by wording (fork_range in every status.json); new theorems state the bound; older generated theorems not changed (generators are out of scope)",
+    "fix8": "ENA-2 and USDE-6 reworded as per call; no sequence theorem",
+    "fix9": "records, stale notes, claims lists, owner facts, usdd log and lakefile comment"
+   },
+   "build": "clean lake build exit 0, 'Build completed successfully (1437 jobs).', 323 s; check_axioms exit 0, 445 theorems, count matches: True, only propext / Classical.choice / Quot.sound: True; scan 14206 constants (13746 theorems); Mac and box trees identical: True (103 files); logs logs/ena.log and ena.axioms"
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "fix": 10,
+   "what": "the auditor scratch Lean file NoDelegation1Sat.lean built on the rebuild box: compiles (exit 0, no sorry)"
+  }
+ ]
+}

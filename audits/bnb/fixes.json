@@ -1,0 +1,457 @@
+{
+ "token": "BNB",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "QNT, BNB and WETH audit"
+ },
+ "last_clean_build": {
+  "log": "logs/bnb.log",
+  "axioms": "logs/bnb.axioms"
+ },
+ "findings": {
+  "BNB-1": {
+   "severity": "critical",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 1,
+     "do": "`hrunner` quantifies over every message and is machine-checked false for EthLib's real runner (BnbVerify.Audit.hrunner_false). Replace it by a local assumption in upstream's style (EthLib `KeepsOn` / `SentVia`, see UsdtVerify/Usdt/Invariant/Static.lean and docs/AUDIT.md): only about the one message the CALL in withdrawEther sends, from a caller state with the accounts, storage and code of the start state. Restate `withdrawEther_run` and `supply_withdrawEther` on it; delete or clearly retire every theorem that took the false hypothesis. Then discharge the new assumption for EthLib's real runner for (a) an owner with no code and (b) an owner whose code is a single STOP, as upstream's Sanity/Process.lean does. Bring withdrawEther back into the sequence theorems under the local assumption, add a full-run witness with the real runner and a nonzero amount, and cover amount 0 and the failure cases."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 1,
+     "source": "token-kit/kit-status.json fix_round.1",
+     "finding": "BNB-1 (critical)",
+     "recorded_status": "done",
+     "what": "The hypothesis `hrunner` (over every message of the runner, false for EthLib's processRunner) is gone. withdrawEther now rests on a local assumption in upstream's style: Withdraw.KeepsInv runChild message S := KeepsOn runChild (Payout message S) (InvKept message.currentTarget). It is only about the one message the CALL of withdrawEther sends (code address = the owner in slot 4, value = the amount, sender = the contract, gas = what the CALL forwards), from a caller state that reads as the start state (accounts, storage, code), and only when the runner ends that message with no error.",
+     "theorems_added": {
+      "tokens/bnb/BnbVerify/Bnb/Withdraw.lean": [
+       "Withdraw.Payout (def)",
+       "Withdraw.InvKept (def)",
+       "Withdraw.KeepsInv (def)",
+       "Withdraw.withdrawEther_to_call",
+       "Withdraw.withdrawEther_run (restated)",
+       "Withdraw.supply_withdrawEther (restated)",
+       "Withdraw.readsAs_storageAt",
+       "Withdraw.readsAs_getAccount",
+       "Withdraw.incorporateChild_state",
+       "Withdraw.toAddressMasked_ownerWord",
+       "Withdraw.askedWord_le",
+       "Supply.inv2_congr (moved here from Seq.lean)"
+      ],
+      "tokens/bnb/BnbVerify/Bnb/Seq.lean": [
+       "GoodWithdraw (def)",
+       "Calls.withdraw (new constructor)",
+       "inv_goodWithdraw",
+       "process_step_withdraw",
+       "process_step_all",
+       "process_step_inv_all"
+      ],
+      "tokens/bnb/BnbVerify/Bnb/Sanity/Withdraw.lean": [
+       "Withdraw.PlainOwner (def)",
+       "Withdraw.hdel_of_plain",
+       "Withdraw.processRunner_keepsInv",
+       "Withdraw.keepsInv_noCode (case a)",
+       "Withdraw.keepsInv_stop (case b)",
+       "Withdraw.supply_withdrawEther_plain",
+       "Withdraw.process_step_inv_plain",
+       "Withdraw.withdrawEther_pays",
+       "Withdraw.withdrawEther_pays_sample",
+       "Withdraw.withdrawEther_pays_closed",
+       "Withdraw.notPrecompile_sample",
+       "Withdraw.ne_sample"
+      ],
+      "TokenKit/Evm/CallOutcome.lean": [
+       "callStep_missing",
+       "callStep_value_poor",
+       "callStep_value_static",
+       "callStep_value_deep",
+       "Sent (def)",
+       "callGas_subCall_le",
+       "step_at_call",
+       "call_outcome"
+      ],
+      "TokenKit/Evm/Payee.lean": [
+       "Payee.STOP_CODE (def)",
+       "Payee.delegatedAddress_stop",
+       "Payee.delegatedAddress_empty",
+       "Payee.stop_message",
+       "Payee.payee_keeps_storage",
+       "Payee.noCode_message_runs"
+      ]
+     },
+     "theorems_retired": [
+      "Withdraw.withdrawEther_run in its old form (hypothesis hrunner): replaced by the restated theorem of the same name, no hrunner",
+      "Withdraw.supply_withdrawEther in its old form (hypothesis hrunner): replaced by the restated theorem of the same name, hypothesis hkeeps : KeepsInv runChild message state",
+      "No theorem of the kit takes hrunner any more (grep: only one retirement note in the header of Bnb/Withdraw.lean)."
+     ],
+     "hypotheses_now_assumed": [
+      "hkeeps : Withdraw.KeepsInv runChild message state (local, one message). PROVED for processRunner when the owner has no code or the code STOP and is no precompile, and the contract account holds code (processRunner_keepsInv, keepsInv_noCode, keepsInv_stop). Still an assumption for an owner with any other code.",
+      "hdel : the code of the owner is no EIP-7702 delegation (asked from Pectra only; proved for a plain owner: hdel_of_plain)",
+      "hglam : fork < Glamsterdam for withdrawEther (the fork range of EthLib's rules of CALL used here)",
+      "hfork : Berlin <= fork (Paris for the whole-message theorems); call data below 2^256 bytes",
+      "No keccak hypothesis for withdrawEther (it writes no mapping); Sep (callKeys message) stays assumed for the other selectors, as before."
+     ],
+     "satisfiable_for_real_runner": "Machine-checked: Withdraw.processRunner_keepsInv proves KeepsInv for processRunner at every bound for (a) an owner with no code and (b) an owner whose code is the one byte STOP. Withdraw.withdrawEther_pays_closed is a full run with processRunner and amount 1 with no hypothesis but Paris <= fork < Glamsterdam: it ends with no error, the owner has 1 wei more, the contract 1 wei less.",
+     "sequence_theorems": "withdrawEther is back: Calls has the constructor `withdraw` (GoodWithdraw), inv_calls covers it, process_step_withdraw / process_step_all / process_step_inv_all lift it to processMessage under hdel and KeepsInv for processRunner; process_step_inv_plain has no runner assumption at all for a plain owner.",
+     "amount_0_and_failure_cases": "Covered by generality, not by a separate witness: withdrawEther_run and supply_withdrawEther hold for every amount word (amount 0 included: the CALL then moves no value and KeepsInv is asked for that message) and for every run that ends with no error. A run that ends with an error (not the owner, nonzero value sent, contract too poor, call depth 1024, callee fails so the code reverts, out of gas) is rolled back by the message layer: untouched_process_failed, used in process_step_withdraw. NOT done: a separate closed full-run witness with amount 0; an owner with code other than STOP stays under the assumption.",
+     "lines_written": {
+      "tokens/bnb/BnbVerify/Bnb/Withdraw.lean": "581 (was 480, rewritten in part)",
+      "tokens/bnb/BnbVerify/Bnb/Seq.lean": "419 (was 252)",
+      "tokens/bnb/BnbVerify/Bnb/Sanity/Withdraw.lean": "414 (new)",
+      "TokenKit/Evm/CallOutcome.lean": "465 (new)",
+      "TokenKit/Evm/Payee.lean": "156 (new)"
+     },
+     "build_iterations": "about 14 builds on the box: shared files 4, Withdraw.lean + Seq.lean 1 after the rewrite, Sanity/Withdraw.lean 5, full BNB build 2, plus the first tries on Withdraw.lean",
+     "obstacles": [
+      "LawfulGasMeter instance stuck on `cases hpm : processMessage ...`: the meter must be given (`Meter := Nat`).",
+      "`decide` with a free variable in the sample state: goals restated with `show` first.",
+      "regen.sh runs kit_opens.py, which adds `open TokenKit.Complete` to hand-written files that import the kit: the files were rebuilt after it so that a regen leaves them unchanged."
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "token-kit/tokens/bnb/BnbVerify/Bnb/Withdraw.lean",
+    "token-kit/tokens/bnb/BnbVerify/Bnb/Seq.lean",
+    "token-kit/tokens/bnb/BnbVerify/Bnb/Sanity/Withdraw.lean",
+    "token-kit/TokenKit/Evm/CallOutcome.lean",
+    "token-kit/TokenKit/Evm/Payee.lean",
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  },
+  "BNB-2": {
+   "severity": "major",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "do": "In each of the four tokens' status data, list exactly which functions each sequence theorem covers and excludes, and what the `other` step assumes."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 1,
+     "source": "token-kit/kit-status.json fix_round.1",
+     "recorded_status": "done",
+     "sequence_theorems": "withdrawEther is back: Calls has the constructor `withdraw` (GoodWithdraw), inv_calls covers it, process_step_withdraw / process_step_all / process_step_inv_all lift it to processMessage under hdel and KeepsInv for processRunner; process_step_inv_plain has no runner assumption at all for a plain owner."
+    },
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "source": "token-kit/kit-status.json fix_round.6",
+     "recorded_status": "done",
+     "what": "tokens.<t>.sequence_scope written for shib, qnt, bnb and weth in this file: per sequence theorem, the functions covered and excluded, and what the `other` step assumes.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": 0,
+     "build_iterations": 0,
+     "obstacles": []
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "apply-c",
+     "entry": "BNB transaction level",
+     "id": "BNB transaction level",
+     "recorded_status": "done",
+     "what_changed": "New BnbVerify/Bnb/Tx.lean on the kit's TokenKit.Seq: the supply invariant Inv C and 'C holds the code of BNB' are kept by any call at any depth, by one whole transaction of EthLib's processTransaction, and by any finite list of transactions (Seq.Chain). withdrawEther is included: its frame uses the stipend theorem (the owner runs with at most 2300 gas and writes no storage), so no fact about the runner and no gas cap is assumed.",
+     "theorems_added": [
+      "BnbVerify.storageOnly_inv",
+      "code_size_ne_zero",
+      "code_not_indicator",
+      "code_not_delegated",
+      "inv_zeroBase",
+      "frameKeepsR",
+      "supply_message_any_depth",
+      "supply_transaction",
+      "supply_any_transactions (headline)",
+      "supply_from_zero"
+     ],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call with Q := QMsg (run-local: keccak separation Sep (callKeys m) for messages that enter the code at C, NOT proved; no EIP-7702 delegation on the callee of the stipend call from Prague)",
+      "Seq.TxClean.create (no keccak collision on deposited codes, NOT proved)",
+      "Seq.TxClean.auths (no authorization sets a code with the token's code hash, NOT proved)",
+      "Seq.TxClean.data (call data below 2^256 bytes)",
+      "Fork.dencun <= fork < Fork.glamsterdam for each transaction",
+      "Seq.Good at the start (or HoldsCode and all-zero storage in the _from_zero theorem)",
+      "QMsg for withdrawEther: from Prague, the code of the owner (slot 4) is no EIP-7702 delegation at frame start",
+      "supply_message_any_depth only: Seq.Sane, Seq.Clean, Berlin <= fork < Glamsterdam"
+     ],
+     "files": {
+      "token-kit/tokens/bnb/BnbVerify/Bnb/Tx.lean": "new, 183 lines (headline supply_any_transactions at line 164)",
+      "token-kit/tokens/bnb/BnbVerify.lean": "+1 import",
+      "token-kit/tokens/bnb/config/bnb.json": "axioms.imports + 16 names in axioms.after",
+      "token-kit/tokens/bnb/BnbVerify/Test/Axioms.lean": "regenerated from config, 160 to 176 headlines (not edited by hand)",
+      "token-kit/tokens/bnb/status.json": "new"
+     },
+     "left": [
+      "block-level steps between transactions (withdrawals, system calls) are not linked",
+      "the constructor run is not linked (supply_from_zero is the all-zero base case, not the real deployment state)",
+      "withdrawEther with an EIP-7702 delegated owner",
+      "forks before Dencun and from Glamsterdam at transaction level"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "token-kit/tokens/bnb/BnbVerify/Bnb/Tx.lean",
+    "token-kit/tokens/bnb/BnbVerify.lean",
+    "token-kit/tokens/bnb/config/bnb.json",
+    "token-kit/tokens/bnb/BnbVerify/Test/Axioms.lean",
+    "token-kit/tokens/bnb/status.json",
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  },
+  "BNB-3": {
+   "severity": "major",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 1,
+     "do": "`hrunner` quantifies over every message and is machine-checked false for EthLib's real runner (BnbVerify.Audit.hrunner_false). Replace it by a local assumption in upstream's style (EthLib `KeepsOn` / `SentVia`, see UsdtVerify/Usdt/Invariant/Static.lean and docs/AUDIT.md): only about the one message the CALL in withdrawEther sends, from a caller state with the accounts, storage and code of the start state. Restate `withdrawEther_run` and `supply_withdrawEther` on it; delete or clearly retire every theorem that took the false hypothesis. Then discharge the new assumption for EthLib's real runner for (a) an owner with no code and (b) an owner whose code is a single STOP, as upstream's Sanity/Process.lean does. Bring withdrawEther back into the sequence theorems under the local assumption, add a full-run witness with the real runner and a nonzero amount, and cover amount 0 and the failure cases."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 1,
+     "source": "token-kit/kit-status.json fix_round.1",
+     "recorded_status": "done",
+     "what": "The hypothesis `hrunner` (over every message of the runner, false for EthLib's processRunner) is gone. withdrawEther now rests on a local assumption in upstream's style: Withdraw.KeepsInv runChild message S := KeepsOn runChild (Payout message S) (InvKept message.currentTarget). It is only about the one message the CALL of withdrawEther sends (code address = the owner in slot 4, value = the amount, sender = the contract, gas = what the CALL forwards), from a caller state that reads as the start state (accounts, storage, code), and only when the runner ends that message with no error.",
+     "hypotheses_now_assumed": [
+      "hkeeps : Withdraw.KeepsInv runChild message state (local, one message). PROVED for processRunner when the owner has no code or the code STOP and is no precompile, and the contract account holds code (processRunner_keepsInv, keepsInv_noCode, keepsInv_stop). Still an assumption for an owner with any other code.",
+      "hdel : the code of the owner is no EIP-7702 delegation (asked from Pectra only; proved for a plain owner: hdel_of_plain)",
+      "hglam : fork < Glamsterdam for withdrawEther (the fork range of EthLib's rules of CALL used here)",
+      "hfork : Berlin <= fork (Paris for the whole-message theorems); call data below 2^256 bytes",
+      "No keccak hypothesis for withdrawEther (it writes no mapping); Sep (callKeys message) stays assumed for the other selectors, as before."
+     ],
+     "satisfiable_for_real_runner": "Machine-checked: Withdraw.processRunner_keepsInv proves KeepsInv for processRunner at every bound for (a) an owner with no code and (b) an owner whose code is the one byte STOP. Withdraw.withdrawEther_pays_closed is a full run with processRunner and amount 1 with no hypothesis but Paris <= fork < Glamsterdam: it ends with no error, the owner has 1 wei more, the contract 1 wei less.",
+     "amount_0_and_failure_cases": "Covered by generality, not by a separate witness: withdrawEther_run and supply_withdrawEther hold for every amount word (amount 0 included: the CALL then moves no value and KeepsInv is asked for that message) and for every run that ends with no error. A run that ends with an error (not the owner, nonzero value sent, contract too poor, call depth 1024, callee fails so the code reverts, out of gas) is rolled back by the message layer: untouched_process_failed, used in process_step_withdraw. NOT done: a separate closed full-run witness with amount 0; an owner with code other than STOP stays under the assumption."
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  },
+  "BNB-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 2,
+     "do": "`hmove` (an ether move keeps the contract's storage) should be a theorem about EthLib's value transfer, not a hypothesis. Prove it or reuse the upstream / EthLib lemma; if blocked, say exactly where."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 2,
+     "source": "token-kit/kit-status.json fix_round.2",
+     "recorded_status": "done",
+     "what": "`hmove` is no hypothesis any more. TokenKit.moveEther_keeps_storage (TokenKit/Evm/Move.lean) proves from EthLib's moveEther that a successful move of ether keeps every storage word of a contract whose account holds code. BNB's Seq.lean uses it as the theorem `untouched_move`.",
+     "theorems_added": [
+      "TokenKit.moveEther_keeps_storage",
+      "BnbVerify.untouched_move"
+     ],
+     "theorems_retired": [
+      "hypothesis hmove of process_step and process_step_inv (BNB): removed, the two theorems now take hcode instead"
+     ],
+     "hypotheses_now_assumed": [
+      "hcode : (state.getAccount message.currentTarget).codeHash is not EMPTY_CODE_HASH (the contract account holds code). Needed because EthLib's moveEther deletes an account that is empty after the move; an account with code is never empty. True for any deployed contract."
+     ],
+     "lines_written": {
+      "TokenKit/Evm/Move.lean": "51 (new)"
+     },
+     "build_iterations": 2,
+     "obstacles": []
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "token-kit/TokenKit/Evm/Move.lean",
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  },
+  "BNB-5": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix needed: the audit confirmed that no overflow is hidden (suggested fix: none).",
+   "steps": [],
+   "evidence": [
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  },
+  "ALL-1": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "do": "In each of the four tokens' status data, list exactly which functions each sequence theorem covers and excludes, and what the `other` step assumes."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "source": "token-kit/kit-status.json fix_round.6",
+     "recorded_status": "done",
+     "what": "tokens.<t>.sequence_scope written for shib, qnt, bnb and weth in this file: per sequence theorem, the functions covered and excluded, and what the `other` step assumes.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": 0,
+     "build_iterations": 0,
+     "obstacles": []
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  },
+  "ALL-2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "do": "For each opt-in switch the audit lists (BNB `frame`, WETH `stops` / `explicit_size`, axioms skip lists, the weak check_axioms.sh), either remove it, or keep it with a comment and a line in kit-status.json saying what it weakens and where it is used. The axioms test must cover every main theorem with no skip list hiding one."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "source": "token-kit/kit-status.json fix_round.5",
+     "recorded_status": "done",
+     "switches": [
+      {
+       "switch": "BNB functions[].frame = true (withdrawEther)",
+       "kept": true,
+       "weakens": "The generators write no path theorems to the end, no ok_/invariant theorem and no sanity witness for that function; its proofs are hand-written (Bnb/Withdraw.lean, Bnb/Sanity/Withdraw.lean).",
+       "where_used": "tokens/bnb/config/bnb.json (frame_comment, frame_theorems); scripts/gen_paths.py, gen_supply.py, gen_sanity.py, gen_axioms.py",
+       "guard": "gen_axioms.py now stops unless a frame function lists its hand-written theorems in frame_theorems; they are in the axioms test. gen_sanity.py prints that no witness was generated."
+      },
+      {
+       "switch": "WETH stops / segments (pcs 1648, 2724)",
+       "kept": true,
+       "weakens": "A path stops at the listed pc instead of the end of the frame; the rest of the function (totalSupplyTail, withdrawTail) is proved by hand (Weth/TotalSupply.lean, Weth/Withdraw.lean, Weth/WithdrawAll.lean).",
+       "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py (docstring line WEAKENS)",
+       "guard": "The hand-written tails are in the axioms test (axioms.after) and in the all-constants scan."
+      },
+      {
+       "switch": "WETH dispatch.explicit_size = true",
+       "kept": true,
+       "weakens": "Every per-function theorem ok_<fn> takes `4 <= message.data.size` as a hypothesis: with a payable fallback a successful run says nothing of the size of the call data. Calls with shorter data are the hand-written fallback entries (enterShort, enterOther).",
+       "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py, gen_loops.py, gen_readable.py, tokenlib.py (comment)",
+       "guard": "The hypothesis is visible in each statement; the short-data case is proved apart, so no call is left out."
+      },
+      {
+       "switch": "axioms.skip (BNB)",
+       "kept": false,
+       "weakens": "It left named theorems out of the axioms test.",
+       "where_used": "removed from tokens/bnb/config/bnb.json; gen_axioms.py now stops with an error if any config has axioms.skip"
+      },
+      {
+       "switch": "axioms.declared_only (WETH)",
+       "kept": true,
+       "weakens": "A generated theorem name that no Lean file declares is left out of the #print list (3 names: Sanity.transferFrom_runs, solvent_totalSupplyTail, solvent_withdrawTail; none exists, their content is in hand-written theorems).",
+       "where_used": "tokens/weth/config/weth.json (axioms.comment); scripts/gen_axioms.py prints the names left out and writes them in the head of Test/Axioms.lean",
+       "guard": "It cannot hide an existing theorem: the all-constants scan checks every constant of the project."
+      },
+      {
+       "switch": "scripts/check_axioms.sh (was weak)",
+       "kept": "rewritten",
+       "weakens": "Before: it passed on an empty log, on zero results, and missed axiom lists wrapped over several lines.",
+       "where_used": "scripts/check_axioms.sh is now a wrapper of scripts/check_axioms.py: fails on an empty log, zero results, any axiom outside the three standard ones (wrapped lists read whole), a sorry warning, a count that differs from the #print lines of Test/Axioms.lean, or a missing AXIOM SCAN OK line."
+      }
+     ],
+     "axioms_test_coverage": "Test/Axioms.lean of every token now imports every module of the root file and ends with a scan (Lean.collectAxioms) of EVERY constant of the project and of TokenKit: the build fails if one uses an axiom outside propext, Classical.choice, Quot.sound or if a module declares an axiom. So no theorem can be hidden by a list. BNB list: 153 named theorems, all new main theorems of fixes 1 and 2 included.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": {
+      "scripts/check_axioms.py": "86 (new)",
+      "scripts/gen_axioms.py": "161 (about 70 new)",
+      "scripts/check_axioms.sh": "8 (wrapper)",
+      "comments in gen_paths.py, tokenlib.py, gen_sanity.py, gen_solvent.py": "about 25"
+     },
+     "build_iterations": 3,
+     "obstacles": [
+      "Lean.CollectAxioms.collect is private in Lean 4.35: the scan uses the public Lean.collectAxioms per constant."
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "token-kit/tokens/bnb/BnbVerify/Bnb/Withdraw.lean",
+    "token-kit/tokens/bnb/BnbVerify/Bnb/Sanity/Withdraw.lean",
+    "token-kit/tokens/bnb/config/bnb.json",
+    "token-kit/scripts/gen_paths.py",
+    "token-kit/tokens/weth/config/weth.json",
+    "token-kit/scripts/gen_axioms.py",
+    "token-kit/tokens/bnb/BnbVerify/Test/Axioms.lean",
+    "token-kit/scripts/check_axioms.sh",
+    "token-kit/scripts/check_axioms.py",
+    "logs/bnb.log",
+    "logs/bnb.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "date": "2026-11-10",
+   "shared_changes": [
+    "NEW TokenKit/Evm/Move.lean, TokenKit/Evm/CallOutcome.lean, TokenKit/Evm/Payee.lean; imported in TokenKit.lean (19 imports). WETH's root file imports CallOutcome too. No existing shared Lean file changed.",
+    "scripts/gen_axioms.py: Test/Axioms.lean now has `import Lean`, imports every module of the root file, and ends with the all-constants scan; axioms.skip is refused; frame functions need frame_theorems. This changes the generated Test/Axioms.lean of all four tokens (same #print list, more imports, the scan). SHIB, QNT and WETH were regenerated (WETH by its own agent, same output) and all four rebuilt on the box lean-ethlib-build.",
+    "scripts/check_axioms.sh is now a wrapper of the new scripts/check_axioms.py (second argument: the Test/Axioms.lean to count against).",
+    "scripts/gen_paths.py, tokenlib.py: comments only (WEAKENS notes). scripts/gen_sanity.py, gen_solvent.py: one printed note each, generated Lean unchanged.",
+    "TokenKit/Evm/Stipend.lean (other agent) was synced to this box as it stood at 19:34 EST with tokens/weth and built there; it is not in TokenKit.lean (WETH imports it directly)."
+   ],
+   "build": {
+    "final_line": "Build completed successfully (1389 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 153 (count matches Test/Axioms.lean); AXIOM SCAN OK: 5516 constants (5310 theorems) of BnbVerify and TokenKit, axioms used: [Quot.sound, Classical.choice, propext]; only standard axioms"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "kit_theorems": {
+    "runner_level (every fork)": "Seq.processMessage_good_local (Run.lean): a sane call from a good state whose run is Clean ends good, with or without error, whatever code it runs and whatever it sends at any depth, re-entry included. Seq.processCreateMessage_good_local for creations at another address, Seq.processRunner_good_local for the runner, Seq.runFrame_keeps_local for one frame of the token under the real runner.",
+    "transaction (Dencun <= fork < Glamsterdam)": "Seq.processTransaction_good (Tx.lean): EthLib's processTransaction takes a block state where L is good to one where L is good: gas purchase, EIP-7702 authorizations, first frame, the message (call or creation), refunds, fee, end-of-transaction deletions, incorporation into the block state.",
+    "any finite list": "Seq.Chain + Seq.chain_good; Seq.ChainCap + Seq.chainCap_good for tokens with a gas cap.",
+    "base case": "Seq.ZeroBase, Seq.good_of_zero, Seq.chain_from_zero; per invariant family Seq.zeroBase_supply / zeroBase_supply2 / zeroBase_supplyMask.",
+    "fork_range_honest": "Message level: every fork (plus the token's own bound). Transaction level: Fork.dencun <= fork < Fork.glamsterdam. Before Dencun the end-of-transaction deletion could remove L after a SELFDESTRUCT at L; the kit avoids a per-token 'never SELFDESTRUCT' proof by tracking Unmarked, which only EIP-6780 gives."
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-c",
+   "date": "2026-11-11"
+  }
+ ]
+}

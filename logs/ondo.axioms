@@ -1,0 +1,7 @@
+theorems checked: 2202
+   2107 Classical.choice
+   2165 Quot.sound
+   2179 propext
+count matches Test/Axioms.lean: 2202
+AXIOM SCAN OK: 100319 constants (99693 theorems) of OndoVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms

@@ -1,0 +1,3 @@
+constants: 213 in dumps/qnt.orig.txt (131 of the axioms test), 213 in dumps/qnt.kit.txt (131 of the axioms test)
+different or missing: 0
+theorems of the axioms test that use a changed constant: 0

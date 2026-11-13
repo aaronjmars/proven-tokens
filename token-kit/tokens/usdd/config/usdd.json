@@ -1,0 +1,1061 @@
+{
+ "token": "USDD",
+ "address": "0x4f8e5de400de08b164e7421b3ee387f461becd1a",
+ "compiler": "solc 0.6.12, optimizer on (200 runs)",
+ "lean_root": "UsddVerify",
+ "lean_dir": "Usdd",
+ "hex": "data/usdd.runtime.hex",
+ "paths_json": "work/paths.json",
+ "dispatch": {
+  "generate": true,
+  "mode": "walk",
+  "memory_words": [
+   0,
+   0,
+   128
+  ],
+  "layout_doc": [
+   "Storage layout, read off the bytecode:",
+   "",
+   "- `wards[a]` at `mapSlot a 0` (1 = may mint, rely and deny).",
+   "- `totalSupply` at slot 1.",
+   "- `balanceOf[a]` at `mapSlot a 2`.",
+   "- `allowance[src][spender]` at `mapSlot spender (mapSlot src 3)`.",
+   "- `nonces[a]` at `mapSlot a 4`.",
+   "- `DOMAIN_SEPARATOR` at slot 5.",
+   "- name, symbol, version and `PERMIT_TYPEHASH` are constants of the code; decimals is 18."
+  ]
+ },
+ "paths": {
+  "raw_memory": "across_blocks",
+  "dead_rules": [
+   "sub_after_ge",
+   "caller_mask"
+  ],
+  "raw_words": true
+ },
+ "prune": "normalized",
+ "slots": {
+  "wards": 0,
+  "totalSupply": 1,
+  "balances": 2,
+  "allowances": 3,
+  "nonces": 4,
+  "domainSeparator": 5
+ },
+ "functions": [
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "wards",
+   "sig": "wards(address)"
+  },
+  {
+   "name": "nonces",
+   "sig": "nonces(address)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "domainSeparator",
+   "sig": "DOMAIN_SEPARATOR()"
+  },
+  {
+   "name": "permitTypehash",
+   "sig": "PERMIT_TYPEHASH()"
+  },
+  {
+   "name": "rely",
+   "sig": "rely(address)"
+  },
+  {
+   "name": "deny",
+   "sig": "deny(address)"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "push",
+   "sig": "push(address,uint256)"
+  },
+  {
+   "name": "pull",
+   "sig": "pull(address,uint256)"
+  },
+  {
+   "name": "move",
+   "sig": "move(address,address,uint256)"
+  },
+  {
+   "name": "mint",
+   "sig": "mint(address,uint256)"
+  },
+  {
+   "name": "burn",
+   "sig": "burn(address,uint256)"
+  }
+ ],
+ "fallbacks": [
+  {
+   "name": "valueSent",
+   "kind": "value"
+  },
+  {
+   "name": "short",
+   "kind": "short"
+  },
+  {
+   "name": "other",
+   "kind": "other"
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  },
+  {
+   "name": "version",
+   "sig": "version()"
+  }
+ ],
+ "generators": [
+  "code",
+  "dispatch",
+  "paths",
+  "loops",
+  "supply",
+  "readable",
+  "sanity",
+  "axioms"
+ ],
+ "paths_imports": [
+  "TokenKit.Evm.Opt06"
+ ],
+ "supply": {
+  "comment": "checked06: the SafeMath checks of Solidity 0.6 with the optimizer on (scripts/gen_supply.py); norm: every key to one form (mask on the left, the caller with no mask); disch: the side goals of the rules of Sep.lean.",
+  "checked06": true,
+  "what": "the sum of all balances is `totalSupply`",
+  "what_kept": "if the sum of all balances was `totalSupply` before, it is after.",
+  "norm": "and_mask_comm, mask_idem, mask_toU256', storageAt_readSlot",
+  "disch": "slot_side",
+  "rules": "Supply.D_read, D_bal hsep, D_tot hsep, D_allow hsep, D_ward hsep, D_nonce hsep, storageAt_readSlot"
+ },
+ "readable": {
+  "totalSupply": {
+   "doc": "totalSupply(). Success needs no value. Then: returns the word of slot 1 (`totalSupply`); no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (totalSupply message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "balanceOf": {
+   "doc": "balanceOf(a). Success needs no value and 36 bytes of call data (the argument is masked to an address, dirty high bits are ignored). Then: returns `balanceOf[a]`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {a})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "let": {
+    "a": "addrArg1 message"
+   }
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender). Success needs no value and 68 bytes of call data. Then: returns `allowance[owner][spender]`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   }
+  },
+  "wards": {
+   "doc": "wards(a). Success needs no value and 36 bytes of call data. Then: returns `wards[a]`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size"
+   ],
+   "ensures": [
+    "s.output = wordBytes (wardOf message state {a})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "let": {
+    "a": "addrArg1 message"
+   }
+  },
+  "nonces": {
+   "doc": "nonces(a). Success needs no value and 36 bytes of call data. Then: returns `nonces[a]`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size"
+   ],
+   "ensures": [
+    "s.output = wordBytes (nonceOf message state {a})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "let": {
+    "a": "addrArg1 message"
+   }
+  },
+  "decimals": {
+   "doc": "decimals(). Success needs no value. Then: returns 18; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 18",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "domainSeparator": {
+   "doc": "DOMAIN_SEPARATOR(). Success needs no value. Then: returns the word of slot 5; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (domainSeparator message state)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "permitTypehash": {
+   "doc": "PERMIT_TYPEHASH(). Success needs no value. Then: returns the constant 0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes PERMIT_TYPEHASH",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "rely": {
+   "doc": "rely(usr). Success needs: no value, 36 bytes of call data, a frame that may write, and `wards[caller] = 1`. Then: returns nothing; `wards[usr]` is 1; every other slot keeps its word; no log.",
+   "let": {
+    "usr": "addrArg1 message",
+    "caller": "callerW message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "wardOf message state {caller} = 1"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "wardOf message s.state {usr} = 1",
+    "\u2200 k, k \u2260 mapSlot {usr} 0 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "deny": {
+   "doc": "deny(usr). Success needs: no value, 36 bytes of call data, a frame that may write, and `wards[caller] = 1`. Then: returns nothing; `wards[usr]` is 0; every other slot keeps its word; no log.",
+   "let": {
+    "usr": "addrArg1 message",
+    "caller": "callerW message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "4 + 32 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "wardOf message state {caller} = 1"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "wardOf message s.state {usr} = 0",
+    "\u2200 k, k \u2260 mapSlot {usr} 0 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "approve": {
+   "doc": "approve(usr, wad) from the caller. Success needs: no value, 68 bytes of call data and a frame that may write. Then: returns 1; `allowance[caller][usr]` is `wad`; `totalSupply` and every other slot keep their word; exactly one log, Approval(caller, usr, wad).",
+   "let": {
+    "owner": "callerW message",
+    "spender": "addrArg1 message",
+    "value": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {owner} {spender} = {value}",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 3) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes {value}))"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(dst, wad) with `src` the caller. Success needs: no value, 68 bytes of call data, a frame that may write, `wad <= balanceOf[src]`, and (when `dst` is not `src`) no overflow of `balanceOf[dst]`. Then: returns 1; `balanceOf[src]` is the old word minus `wad` and `balanceOf[dst]` the old word plus `wad` (when `dst = src` the balance is unchanged); `totalSupply` and every other slot keep their word; exactly one log, Transfer(src, dst, wad) (no Approval log).",
+   "let": {
+    "from": "callerW message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 2 \u2192 k \u2260 mapSlot {to} 2 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "push": {
+   "doc": "push(usr, wad): a transfer from the caller (`src`) to `usr` (`dst`). Success needs: no value, 68 bytes of call data, a frame that may write, `wad <= balanceOf[src]`, and (when `dst` is not `src`) no overflow of `balanceOf[dst]`. Then: returns nothing; `balanceOf[src]` is the old word minus `wad` and `balanceOf[dst]` the old word plus `wad` (when `dst = src` the balance is unchanged); `totalSupply` and every other slot keep their word; exactly one log, Transfer(src, dst, wad) (no Approval log).",
+   "let": {
+    "from": "callerW message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 2 \u2192 k \u2260 mapSlot {to} 2 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(src, dst, wad). Success needs: no value, 100 bytes of call data, a frame that may write, `wad <= balanceOf[src]`, when the caller is not `src` and `allowance[src][caller]` is not the largest word: `wad <= allowance[src][caller]`, and (when `dst` is not `src`) no overflow of `balanceOf[dst]`. Then: returns 1; `balanceOf[src]` is the old word minus `wad` and `balanceOf[dst]` the old word plus `wad` (when `dst = src` the balance is unchanged); `allowance[src][caller]` is the old word minus `wad` when the caller is not `src` and the allowance is not the largest word, else it is unchanged; `totalSupply` and every other slot keep their word; exactly one log, Transfer(src, dst, wad) (no Approval log).",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "callerW message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 96 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{spender} \u2260 {from} \u2192 (allowance message state {from} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 {amount}.toNat \u2264 (allowance message state {from} {spender}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "{spender} \u2260 {from} \u2192 (allowance message state {from} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "{spender} = {from} \u2192 (allowance message s.state {from} {spender}) = (allowance message state {from} {spender})",
+    "(allowance message state {from} {spender}) = (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {from} {spender}) = (allowance message state {from} {spender})",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 2 \u2192 k \u2260 mapSlot {to} 2 \u2192 k \u2260 mapSlot {spender} (mapSlot {from} 3) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "move": {
+   "doc": "move(src, dst, wad): transferFrom with no return word. Success needs: no value, 100 bytes of call data, a frame that may write, `wad <= balanceOf[src]`, when the caller is not `src` and `allowance[src][caller]` is not the largest word: `wad <= allowance[src][caller]`, and (when `dst` is not `src`) no overflow of `balanceOf[dst]`. Then: returns nothing; `balanceOf[src]` is the old word minus `wad` and `balanceOf[dst]` the old word plus `wad` (when `dst = src` the balance is unchanged); `allowance[src][caller]` is the old word minus `wad` when the caller is not `src` and the allowance is not the largest word, else it is unchanged; `totalSupply` and every other slot keep their word; exactly one log, Transfer(src, dst, wad) (no Approval log).",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "callerW message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 96 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{spender} \u2260 {from} \u2192 (allowance message state {from} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 {amount}.toNat \u2264 (allowance message state {from} {spender}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "{spender} \u2260 {from} \u2192 (allowance message state {from} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "{spender} = {from} \u2192 (allowance message s.state {from} {spender}) = (allowance message state {from} {spender})",
+    "(allowance message state {from} {spender}) = (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {from} {spender}) = (allowance message state {from} {spender})",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 2 \u2192 k \u2260 mapSlot {to} 2 \u2192 k \u2260 mapSlot {spender} (mapSlot {from} 3) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "pull": {
+   "doc": "pull(usr, wad): transferFrom with `src = usr` and `dst` the caller. Success needs: no value, 68 bytes of call data, a frame that may write, `wad <= balanceOf[src]`, when the caller is not `src` and `allowance[src][caller]` is not the largest word: `wad <= allowance[src][caller]`, and (when `dst` is not `src`) no overflow of `balanceOf[dst]`. Then: returns nothing; `balanceOf[src]` is the old word minus `wad` and `balanceOf[dst]` the old word plus `wad` (when `dst = src` the balance is unchanged); `allowance[src][caller]` is the old word minus `wad` when the caller is not `src` and the allowance is not the largest word, else it is unchanged; `totalSupply` and every other slot keep their word; exactly one log, Transfer(src, dst, wad) (no Approval log).",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "callerW message",
+    "amount": "arg2 message",
+    "spender": "callerW message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{spender} \u2260 {from} \u2192 (allowance message state {from} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 {amount}.toNat \u2264 (allowance message state {from} {spender}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "{spender} \u2260 {from} \u2192 (allowance message state {from} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "{spender} = {from} \u2192 (allowance message s.state {from} {spender}) = (allowance message state {from} {spender})",
+    "(allowance message state {from} {spender}) = (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {from} {spender}) = (allowance message state {from} {spender})",
+    "totalSupply message s.state = totalSupply message state",
+    "\u2200 k, k \u2260 mapSlot {from} 2 \u2192 k \u2260 mapSlot {to} 2 \u2192 k \u2260 mapSlot {spender} (mapSlot {from} 3) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "mint": {
+   "doc": "mint(usr, wad). Success needs: no value, 68 bytes of call data, a frame that may write, `wards[caller] = 1`, and no overflow of `balanceOf[usr]` and of `totalSupply`. There is no other check: a ward mints any amount to any address. Then: returns nothing; `balanceOf[usr]` and `totalSupply` are the old words plus `wad`; every other slot keeps its word; exactly one log, Transfer(0, usr, wad).",
+   "let": {
+    "usr": "addrArg1 message",
+    "wad": "arg2 message",
+    "caller": "callerW message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "wardOf message state {caller} = 1",
+    "(balance message state {usr}).toNat + {wad}.toNat < 2 ^ 256",
+    "(totalSupply message state).toNat + {wad}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {usr}).toNat = (balance message state {usr}).toNat + {wad}.toNat",
+    "(totalSupply message s.state).toNat = (totalSupply message state).toNat + {wad}.toNat",
+    "\u2200 k, k \u2260 mapSlot {usr} 2 \u2192 k \u2260 1 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER 0 {usr} (wordBytes {wad}))"
+   ]
+  },
+  "burn": {
+   "doc": "burn(usr, wad). Success needs: no value, 68 bytes of call data, a frame that may write, `wad <= balanceOf[usr]`, when the caller is not `usr` and `allowance[usr][caller]` is not the largest word: `wad <= allowance[usr][caller]`, and `wad <= totalSupply`. No ward is needed. Then: returns nothing; `balanceOf[usr]` and `totalSupply` are the old words minus `wad`; `allowance[usr][caller]` is the old word minus `wad` when the caller is not `usr` and the allowance is not the largest word, else it is unchanged; every other slot keeps its word; exactly one log, Transfer(usr, 0, wad).",
+   "let": {
+    "usr": "addrArg1 message",
+    "wad": "arg2 message",
+    "spender": "callerW message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 \u2264 message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{wad}.toNat \u2264 (balance message state {usr}).toNat",
+    "{spender} \u2260 {usr} \u2192 (allowance message state {usr} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 {wad}.toNat \u2264 (allowance message state {usr} {spender}).toNat",
+    "{wad}.toNat \u2264 (totalSupply message state).toNat"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {usr}).toNat = (balance message state {usr}).toNat - {wad}.toNat",
+    "(totalSupply message s.state).toNat = (totalSupply message state).toNat - {wad}.toNat",
+    "{spender} \u2260 {usr} \u2192 (allowance message state {usr} {spender}) \u2260 (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {usr} {spender}).toNat = (allowance message state {usr} {spender}).toNat - {wad}.toNat",
+    "{spender} = {usr} \u2192 (allowance message s.state {usr} {spender}) = (allowance message state {usr} {spender})",
+    "(allowance message state {usr} {spender}) = (115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256) \u2192 (allowance message s.state {usr} {spender}) = (allowance message state {usr} {spender})",
+    "\u2200 k, k \u2260 mapSlot {usr} 2 \u2192 k \u2260 1 \u2192 k \u2260 mapSlot {spender} (mapSlot {usr} 3) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {usr} 0 (wordBytes {wad}))"
+   ]
+  }
+ },
+ "readable_opts": {
+  "comment": "facts: the condition shapes of Solidity 0.6 with the optimizer on (gen_readable.facts06); caller_key raw: the caller is a key of callKeys with no mask; close: the closing tactic; several_paths same_claims: every success path proves the same claims; simp: more rewrite rules; header/unfold: more abbreviations of the token.",
+  "facts": "checked06",
+  "caller_key": "raw",
+  "close": "readable_close08",
+  "several_paths": "same_claims",
+  "imports": [
+   "TokenKit.Evm.ReadableOpt",
+   "TokenKit.Evm.Opt06"
+  ],
+  "simp": [
+   "and_mask_comm",
+   "mask_toU256'"
+  ],
+  "unfold": [
+   "callerW",
+   "wardOf",
+   "nonceOf",
+   "domainSeparator",
+   "PERMIT_TYPEHASH"
+  ],
+  "header": [
+   "/-- The caller, as a word (an address word: below 2^160). -/\nabbrev callerW (m : Message fork) : U256 := m.caller.toU256",
+   "/-- `wards[a]` of the called contract in the state `S` (1: `a` may call rely, deny and mint). -/\nabbrev wardOf (m : Message fork) (S : State.TransactionState) (a : U256) : U256 :=\n  storageAt S m.currentTarget (mapSlot a 0)",
+   "/-- `nonces[a]` of the called contract in the state `S`. -/\nabbrev nonceOf (m : Message fork) (S : State.TransactionState) (a : U256) : U256 :=\n  storageAt S m.currentTarget (mapSlot a 4)",
+   "/-- `DOMAIN_SEPARATOR` of the called contract in the state `S`: the word of slot 5. -/\nabbrev domainSeparator (m : Message fork) (S : State.TransactionState) : U256 :=\n  storageAt S m.currentTarget 5",
+   "/-- `PERMIT_TYPEHASH`, a constant of the code. -/\nabbrev PERMIT_TYPEHASH : U256 :=\n  (105916522785188513640362517802612480037966763957092682311465172263008277174987 : U256)"
+  ],
+  "heartbeats": 4000000
+ },
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)"
+ },
+ "sanity": {
+  "comment": "The witness call of each success path (scripts/gen_sanity.py, form eval): the argument words and the words of the slots of the state. The caller is Witness.CALLER1 (word Witness.CALLER1W); amounts are 1 and the balances and allowances used are 5; wards[caller] is 1 where a ward is needed.",
+  "imports": [
+   "TokenKit.Evm.WitnessOpt"
+  ],
+  "doc": "`<path>_runs` (or `<fn>_runs` for a function with one success path): in the state with one\naccount at the contract `C` that holds the stated words at the stated slots (every other slot\n0), the stated call from the caller `Witness.CALLER1` meets every hypothesis of the success path\ntheorem; so the loop of the interpreter runs it from pc 0 to the end with no error, for every\nmessage runner and every gas bound that holds its gas, with the stated output and end state.\nEvery condition is computed by the kernel, the keccak of each mapping slot included: no\nhypothesis about keccak is used.",
+  "totalSupply": {
+   "args": [],
+   "slots": []
+  },
+  "decimals": {
+   "args": [],
+   "slots": []
+  },
+  "domainSeparator": {
+   "args": [],
+   "slots": []
+  },
+  "permitTypehash": {
+   "args": [],
+   "slots": []
+  },
+  "balanceOf": {
+   "args": [
+    2
+   ],
+   "slots": []
+  },
+  "wards": {
+   "args": [
+    2
+   ],
+   "slots": []
+  },
+  "nonces": {
+   "args": [
+    2
+   ],
+   "slots": []
+  },
+  "allowance": {
+   "args": [
+    2,
+    3
+   ],
+   "slots": []
+  },
+  "rely": {
+   "args": [
+    2
+   ],
+   "slots": [
+    [
+     "mapSlot Witness.CALLER1W 0",
+     1
+    ]
+   ]
+  },
+  "deny": {
+   "args": [
+    2
+   ],
+   "slots": [
+    [
+     "mapSlot Witness.CALLER1W 0",
+     1
+    ]
+   ]
+  },
+  "approve": {
+   "args": [
+    2,
+    7
+   ],
+   "slots": []
+  },
+  "transfer": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": [
+    [
+     "mapSlot Witness.CALLER1W 2",
+     5
+    ]
+   ]
+  },
+  "push": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": [
+    [
+     "mapSlot Witness.CALLER1W 2",
+     5
+    ]
+   ]
+  },
+  "mint": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": [
+    [
+     "mapSlot Witness.CALLER1W 0",
+     1
+    ]
+   ]
+  },
+  "transferFrom": {
+   "transferFrom_p7": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      5
+     ]
+    ]
+   },
+   "transferFrom_p10": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      115792089237316195423570985008687907853269984665640564039457584007913129639935
+     ]
+    ]
+   },
+   "transferFrom_p13": {
+    "args": [
+     "Witness.CALLER1W",
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot Witness.CALLER1W 2",
+      5
+     ]
+    ]
+   }
+  },
+  "move": {
+   "move_p7": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      5
+     ]
+    ]
+   },
+   "move_p10": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      115792089237316195423570985008687907853269984665640564039457584007913129639935
+     ]
+    ]
+   },
+   "move_p13": {
+    "args": [
+     "Witness.CALLER1W",
+     3,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot Witness.CALLER1W 2",
+      5
+     ]
+    ]
+   }
+  },
+  "pull": {
+   "pull_p7": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      5
+     ]
+    ]
+   },
+   "pull_p10": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      115792089237316195423570985008687907853269984665640564039457584007913129639935
+     ]
+    ]
+   },
+   "pull_p13": {
+    "args": [
+     "Witness.CALLER1W",
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot Witness.CALLER1W 2",
+      5
+     ]
+    ]
+   }
+  },
+  "burn": {
+   "burn_p7": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      5
+     ],
+     [
+      1,
+      5
+     ]
+    ]
+   },
+   "burn_p10": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 2",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 3)",
+      115792089237316195423570985008687907853269984665640564039457584007913129639935
+     ],
+     [
+      1,
+      5
+     ]
+    ]
+   },
+   "burn_p13": {
+    "args": [
+     "Witness.CALLER1W",
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot Witness.CALLER1W 2",
+      5
+     ],
+     [
+      1,
+      5
+     ]
+    ]
+   }
+  }
+ },
+ "axioms": {
+  "comment": "names: hand-written theorems checked before the generated ones; after: theorems of files that import the generated ones; declared_only: leave out a generated name that no Lean file declares.",
+  "declared_only": true,
+  "imports": [
+   "UsddVerify.Usdd.Invariant",
+   "UsddVerify.Usdd.Readable",
+   "UsddVerify.Usdd.Sanity.Zero",
+   "UsddVerify.Usdd.Seq",
+   "UsddVerify.Usdd.PermitSeq",
+   "UsddVerify.Usdd.Tx",
+   "UsddVerify.Usdd.Instance",
+   "UsddVerify.Usdd.PermitRun"
+  ],
+  "names": [
+   "valid_CODE",
+   "selector_cases",
+   "ends_ok_dispatch",
+   "runFrame_ok_dispatch"
+  ],
+  "after": [
+   "Supply.inv_congr",
+   "inv_goodCall",
+   "inv_untouched",
+   "inv_calls",
+   "goodCall_process",
+   "untouched_process_failed",
+   "process_value_fails",
+   "process_step",
+   "process_step_inv",
+   "calls_process",
+   "Witness.caller1_toU256",
+   "Witness.endsL_of_reaches",
+   "permit_p0",
+   "permit_p1",
+   "permit_p2",
+   "permit_p3",
+   "permit_p3_mem",
+   "ok_permit",
+   "ok_permitTail_ends",
+   "prefix1901",
+   "digest_bytes",
+   "permit_call",
+   "ok_permit_real",
+   "permitTail_state",
+   "supply_permit",
+   "inv_permitCall",
+   "callsP_of_calls",
+   "inv_callsP",
+   "permitCall_process",
+   "process_step_all",
+   "process_step_all_inv",
+   "callsP_process",
+   "isZero3",
+   "and255_idem",
+   "permitTail_facts",
+   "permit_readable",
+   "TokenKit.gas_outcome",
+   "TokenKit.staticcallStep_missing",
+   "TokenKit.step_at_staticcall",
+   "TokenKit.staticcall_outcome",
+   "TokenKit.returndatacopyG",
+   "TokenKit.bubble_no_ok",
+   "TokenKit.processMessage_precompile",
+   "TokenKit.runPrecompile_ecrecover",
+   "TokenKit.precompileAddress_one",
+   "TokenKit.ecrecover_ran",
+   "TokenKit.insertMany_self",
+   "TokenKit.incorporateChild_precompile",
+   "TokenKit.size_compute",
+   "TokenKit.load_ecrecover",
+   "TokenKit.extendMemory_two",
+   "TokenKit.size_ecrecover_write",
+   "TokenKit.read_ecrecover_other",
+   "TokenKit.ecrecover_call_ok",
+   "TokenKit.wordBytes_loadWord",
+   "TokenKit.load_rawW",
+   "TokenKit.load_rawW_self",
+   "TokenKit.readWord_raw",
+   "TokenKit.memoryReadBytes_add",
+   "TokenKit.read0_raw",
+   "TokenKit.read_rawW",
+   "TokenKit.read4_raw",
+   "TokenKit.keccakK",
+   "TokenKit.timestampL",
+   "storageOnly_inv",
+   "code_size_ne_zero",
+   "code_not_indicator",
+   "code_not_delegated",
+   "inv_zeroBase",
+   "frameKeepsR",
+   "supply_message_any_depth",
+   "supply_transaction",
+   "supply_any_transactions",
+   "supply_from_zero",
+   "Instance.holder_toU256",
+   "Instance.callKeys_m0",
+   "Instance.allow_ne_total",
+   "Instance.nonce_ne_total",
+   "Instance.allow_ne_nonce",
+   "Instance.ward_ne_total",
+   "Instance.mem3",
+   "Instance.sep_iff",
+   "Instance.sep_m0_iff",
+   "Instance.inv_start",
+   "Instance.noDelegation1_of_emptyHash",
+   "Instance.noDelegation1_before_pectra",
+   "Instance.codeHash_sState",
+   "Instance.noDelegation1_sState",
+   "Instance.supply_m0",
+   "Instance.processMessage_precompile_ok",
+   "Instance.mcg_facts",
+   "Instance.writeMax_le",
+   "Instance.ecrecover_call_runs",
+   "Instance.size_permitData",
+   "Instance.selector_permitData",
+   "Instance.arg1_permitData",
+   "Instance.arg2_permitData",
+   "Instance.arg3_permitData",
+   "Instance.arg4_permitData",
+   "Instance.arg5_permitData",
+   "Instance.arg6_permitData",
+   "Instance.arg7_permitData",
+   "Instance.arg8_permitData",
+   "Instance.callKeys_m1",
+   "Instance.recovered_m1",
+   "Instance.storageAt_recordAccountRead",
+   "Instance.hasAccount_recordAccountRead",
+   "Instance.permit_runs",
+   "Instance.supply_permit_m1",
+   "Instance.permit_runs_inv"
+  ]
+ },
+ "stops": [
+  2761
+ ],
+ "prefix_functions": [
+  {
+   "name": "permit",
+   "sig": "permit(address,address,uint256,uint256,bool,uint8,bytes32,bytes32)"
+  }
+ ],
+ "segments": [
+  {
+   "name": "permitTail",
+   "pc": 2763,
+   "stack": [
+    1,
+    610,
+    1,
+    "dg",
+    "sigS",
+    "sigR",
+    "sigV",
+    "allowed",
+    "expiry",
+    "nonce",
+    "spender",
+    "holder",
+    686,
+    "sel"
+   ],
+   "raw_mem": {
+    "size": 640,
+    "fp": 482,
+    "words": {
+     "450": "rec"
+    }
+   },
+   "post_def": true
+  }
+ ]
+}

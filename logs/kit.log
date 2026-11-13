@@ -1,0 +1,649 @@
+⚠ [1300/1329] Replayed UsdtVerify.Evm.At
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1302/1329] Replayed UsdtVerify.Evm.Gas
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1304/1329] Replayed UsdtVerify.Evm.Storage
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1305/1329] Replayed UsdtVerify.Evm.Write
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Base.Proofs.U256` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1307/1329] Replayed UsdtVerify.Evm.GasRules
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Log` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1308/1329] Replayed UsdtVerify.Evm.Steps
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1309/1329] Replayed UsdtVerify.Evm.Stuck
+warning: UsdtVerify/Evm/Stuck.lean: imports `EthLib.Base.Proofs.MapM` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1310/1329] Replayed UsdtVerify.Evm.NoAbort
+warning: UsdtVerify/Evm/NoAbort.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1311/1329] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1312/1329] Replayed UsdtVerify.Evm.MemRev
+warning: UsdtVerify/Evm/MemRev.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1320/1329] Replayed UsdtVerify.Evm.Route
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1321/1329] Replayed UsdtVerify.Evm.Runners
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1326/1386] Replayed UsdtVerify.Evm.Call
+warning: UsdtVerify/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1327/1386] Replayed UsdtVerify.Evm.Calldata
+warning: UsdtVerify/Evm/Calldata.lean: imports `EthLib.Base.Proofs.BigEndian` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1334/1386] Built EthLib.Base.Proofs.Address (1.2s)
+✔ [1335/1386] Built EthLib.Execution.Proofs.Evm.Logic.Copy (1.8s)
+⚠ [1336/1386] Built TokenKit.Evm.Stack (1.7s)
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1337/1386] Built TokenKit.Evm.Supply (1.8s)
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [1338/1386] Built EthLib.Execution.Proofs.Evm.Logic.Region (1.5s)
+⚠ [1339/1386] Built TokenKit.Evm.Stipend (3.4s)
+warning: TokenKit/Evm/Stipend.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Stipend.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Stipend.lean:537:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Stipend.lean:543:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1340/1386] Built TokenKit.Seq.Frame (3.6s)
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Message` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1341/1386] Built TokenKit.Evm.Mem (4.2s)
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1342/1386] Built TokenKit.Evm.Rules (1.7s)
+warning: TokenKit/Evm/Rules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Region` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1343/1386] Built TokenKit.Seq.Run (3.1s)
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Interpreter` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Reach` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1344/1386] Built TokenKit.Evm.Witness (1.4s)
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1345/1386] Built TokenKit.Evm.Logic (1.5s)
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.AccountData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Base.Proofs.Address` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1346/1386] Built TokenKit.Evm.Prune (1.5s)
+warning: TokenKit/Evm/Prune.lean: imports `EthLib.Execution.Evm.Instructions.Comparison` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Prune.lean:46:41: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Prune.lean:54:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1347/1386] Built TokenKit.Evm.Safe (1.5s)
+⚠ [1348/1386] Built TokenKit.Evm.Readable (1.7s)
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1349/1386] Built TokenKit.Evm.Witness2 (1.4s)
+warning: TokenKit/Evm/Witness2.lean:85:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness2.lean:93:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness2.lean:102:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1350/1386] Built TokenKit.Evm.Opt (1.6s)
+warning: TokenKit/Evm/Opt.lean:111:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Opt.lean:116:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Opt.lean:129:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Opt.lean:137:59: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Opt.lean:143:2: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1351/1386] Built TokenKit.Evm.RawMem (1.6s)
+warning: TokenKit/Evm/RawMem.lean:100:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:100:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:100:39: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:101:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/RawMem.lean:103:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:103:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:104:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/RawMem.lean:104:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/RawMem.lean:89:5: Variable name `hj` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hj
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [1352/1386] Built TokenKit.Evm.SupplyMask (1.5s)
+⚠ [1353/1386] Built TokenKit.Evm.Call (1.7s)
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1354/1386] Built TokenKit.Evm.Supply2 (1.7s)
+warning: TokenKit/Evm/Supply2.lean:84:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [1355/1386] Built TokenKit.Evm.Named (1.5s)
+⚠ [1356/1386] Built TokenKit.Seq.Tx (3.1s)
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Process` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Authorization` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean:151:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1357/1386] Built TokenKit.Evm.Dead (1.6s)
+warning: TokenKit/Evm/Dead.lean:37:35: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Dead.lean:49:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1358/1386] Built TokenKit.Evm.Readable2 (1.3s)
+warning: TokenKit/Evm/Readable2.lean:31:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1359/1386] Built TokenKit.Evm.SafeL (1.6s)
+✔ [1360/1386] Built TokenKit.Evm.Solvent (1.5s)
+⚠ [1361/1386] Built TokenKit.Evm.SupplyOpt (1.5s)
+warning: TokenKit/Evm/SupplyOpt.lean:31:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1362/1386] Built TokenKit.Evm.TopByte (1.7s)
+warning: TokenKit/Evm/TopByte.lean:50:4: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/TopByte.lean:51:39: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/TopByte.lean:60:4: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/TopByte.lean:55:49: Variable name `ha` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _ha
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: TokenKit/Evm/TopByte.lean:93:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/TopByte.lean:93:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/TopByte.lean:95:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/TopByte.lean:95:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/TopByte.lean:123:8: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/TopByte.lean:140:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/TopByte.lean:154:39: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1363/1386] Built TokenKit.Evm.CallOutcome (2.1s)
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean:118:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, keepReads, GasMeter.gasLeft, hE, h1, h2,
+    exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:169:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, keepReads, GasMeter.gasLeft,
+    GasMeter.drain, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:22: This simp argument is unused:
+  GasMeter.drain
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.drain, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:227:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callValueCost, hv', payCall,
+    messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads, GasMeter.gasLeft, GasMeter.drain,
+    GasMeter.reservoir, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:229:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callNewAccountStateGas,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads,
+    GasMeter.gasLeft, GasMeter.drain, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [1364/1386] Built TokenKit.Seq.Supply (1.4s)
+✔ [1365/1386] Built TokenKit.Evm.WitnessOpt (1.4s)
+⚠ [1366/1386] Built TokenKit.Evm.Ether (1.4s)
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.State.Frame` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean:65:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:66:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:94:40: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:96:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1367/1386] Built TokenKit.Evm.Env08 (1.5s)
+warning: TokenKit/Evm/Env08.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Copy` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1368/1386] Built TokenKit.Evm.ReadableOpt (1.5s)
+warning: TokenKit/Evm/ReadableOpt.lean:41:76: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:45:11: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:59:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:76:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:83:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:100:37: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [1369/1386] Built TokenKit.Evm.SupplyUnchecked (1.6s)
+⚠ [1370/1386] Built TokenKit.Evm.Opt06 (1.7s)
+warning: TokenKit/Evm/Opt06.lean:121:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Opt06.lean:167:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1371/1386] Built TokenKit.Evm.Move (1.2s)
+⚠ [1372/1386] Built TokenKit.Evm.Unopt05 (1.3s)
+warning: TokenKit/Evm/Unopt05.lean:33:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1373/1386] Built TokenKit.Evm.SupplyInv (1.5s)
+⚠ [1374/1386] Built TokenKit.Evm.Bits08 (1.4s)
+warning: TokenKit/Evm/Bits08.lean:98:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Bits08.lean:112:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Bits08.lean:124:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1375/1386] Built TokenKit.Evm.Bits96 (1.5s)
+warning: TokenKit/Evm/Bits96.lean:106:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1376/1386] Built TokenKit.Evm.Payee (1.3s)
+⚠ [1377/1386] Built TokenKit.Evm.Precompile (2.7s)
+warning: TokenKit/Evm/Precompile.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Copy` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Precompile.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Precompile.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Precompile.lean:357:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:362:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:420:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Precompile.lean:424:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:484:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Precompile.lean:492:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:498:25: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [memoryWrite]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1378/1386] Built TokenKit.Evm.Push0 (1.3s)
+warning: TokenKit/Evm/Push0.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Copy` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1379/1386] Built TokenKit.Evm.Note (1.5s)
+⚠ [1380/1386] Built TokenKit.Evm.EnvL (1.4s)
+warning: TokenKit/Evm/EnvL.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Copy` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1381/1386] Built TokenKit.Evm.CodeCopy (1.4s)
+⚠ [1382/1386] Built TokenKit.Evm.StaticCall (3.2s)
+warning: TokenKit/Evm/StaticCall.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/StaticCall.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1383/1386] Built TokenKit.Evm.Precompile0 (2.1s)
+✔ [1384/1386] Built TokenKit.Evm.Tail (1.6s)
+✔ [1385/1386] Built TokenKit (1.4s)
+Build completed successfully (1386 jobs).
+EXIT=0

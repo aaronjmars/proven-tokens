@@ -1,0 +1,366 @@
+⚠ [1301/1368] Replayed UsdtVerify.Evm.At
+⚠ [1303/1368] Replayed UsdtVerify.Evm.Gas
+⚠ [1305/1368] Replayed UsdtVerify.Evm.Storage
+⚠ [1306/1368] Replayed UsdtVerify.Evm.Write
+⚠ [1308/1368] Replayed UsdtVerify.Evm.GasRules
+⚠ [1309/1368] Replayed UsdtVerify.Evm.Steps
+⚠ [1310/1368] Replayed UsdtVerify.Evm.Calldata
+⚠ [1312/1368] Replayed UsdtVerify.Evm.Stuck
+⚠ [1313/1368] Replayed UsdtVerify.Evm.NoAbort
+⚠ [1314/1368] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1315/1368] Replayed UsdtVerify.Evm.MemRev
+⚠ [1323/1368] Replayed UsdtVerify.Evm.Route
+⚠ [1324/1368] Replayed UsdtVerify.Evm.Runners
+⚠ [1328/1368] Replayed TokenKit.Evm.Mem
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1329/1368] Replayed TokenKit.Evm.Rules
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1330/1368] Replayed TokenKit.Evm.Stack
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1331/1368] Replayed TokenKit.Evm.Supply
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1333/1368] Replayed TokenKit.Evm.Readable
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1335/1368] Replayed TokenKit.Evm.Witness
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1336/1368] Built ShibVerify.Shib.Code.Bytes (314ms)
+⚠ [1337/1368] Built ShibVerify.Shib.Code (1.0s)
+✔ [1338/1368] Built ShibVerify.Shib.Sep (1.1s)
+⚠ [1339/1368] Built ShibVerify.Test.Hash (1.1s)
+info: ShibVerify/Test/Hash.lean:30:0: CODE: 4852 bytes, keccak256 d0caa0f9bc744c523933d44e6d8d07f868803d10bf16c8129e12f670296175ad
+✔ [1340/1368] Built ShibVerify.Shib.Steps (1.6s)
+⚠ [1341/1368] Built ShibVerify.Shib.Map (2.4s)
+⚠ [1342/1368] Built ShibVerify.Shib.Spec.Dispatch (3.4s)
+✔ [1343/1368] Built ShibVerify.Shib.Enter (1.2s)
+✔ [1344/1368] Built ShibVerify.Shib.Complete.Dispatch (1.3s)
+✔ [1345/1368] Built ShibVerify.Shib.Gen.Loops (10s)
+✔ [1346/1368] Built ShibVerify.Shib.Gen.B0 (14s)
+✔ [1347/1368] Built ShibVerify.Shib.Gen.B3 (19s)
+✔ [1348/1368] Built ShibVerify.Shib.Gen.B2 (21s)
+✔ [1349/1368] Built ShibVerify.Shib.Gen.B1 (24s)
+✔ [1350/1368] Built ShibVerify.Shib.Gen.PTotalSupply (1.4s)
+✔ [1351/1368] Built ShibVerify.Shib.Gen.PDecimals (1.4s)
+✔ [1352/1368] Built ShibVerify.Shib.Gen.PBalanceOf (1.6s)
+✔ [1353/1368] Built ShibVerify.Shib.Gen.PAllowance (1.6s)
+✔ [1354/1368] Built ShibVerify.Shib.Gen.PApprove (2.0s)
+✔ [1355/1368] Built ShibVerify.Shib.Gen.PIncreaseAllowance (2.8s)
+✔ [1356/1368] Built ShibVerify.Shib.Gen.PTransfer (3.9s)
+✔ [1357/1368] Built ShibVerify.Shib.Gen.PDecreaseAllowance (2.8s)
+✔ [1358/1368] Built ShibVerify.Shib.Gen.PBurn (2.8s)
+✔ [1359/1368] Built ShibVerify.Shib.Gen.PTransferFrom (14s)
+✔ [1360/1368] Built ShibVerify.Shib.Gen (1.0s)
+✔ [1361/1368] Built ShibVerify.Shib.Invariant (1.3s)
+✔ [1362/1368] Built ShibVerify.Shib.Sanity.Zero (1.3s)
+⚠ [1363/1368] Built ShibVerify.Shib.Sanity.Moves (1.1s)
+warning: ShibVerify/Shib/Sanity/Moves.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1364/1368] Built ShibVerify.Shib.Seq (1.2s)
+✔ [1365/1368] Built ShibVerify.Shib.Readable (3.3s)
+ℹ [1366/1368] Built ShibVerify.Test.Axioms (1.1s)
+info: ShibVerify/Test/Axioms.lean:21:0: 'ShibVerify.valid_CODE' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:22:0: 'ShibVerify.prelude' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:23:0: 'ShibVerify.table' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:24:0: 'ShibVerify.dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:25:0: 'ShibVerify.enter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:26:0: 'ShibVerify.Nonpayable.spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:27:0: 'ShibVerify.Fallback.spec_unknown' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:28:0: 'ShibVerify.Fallback.spec_short' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:29:0: 'ShibVerify.Complete.ends_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:30:0: 'ShibVerify.Complete.runFrame_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:31:0: 'ShibVerify.Paths.totalSupply_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:32:0: 'ShibVerify.Paths.totalSupply_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:33:0: 'ShibVerify.Paths.ok_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:34:0: 'ShibVerify.Readable.totalSupply_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:35:0: 'ShibVerify.supply_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:36:0: 'ShibVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:37:0: 'ShibVerify.Paths.balanceOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:38:0: 'ShibVerify.Paths.balanceOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:39:0: 'ShibVerify.Paths.balanceOf_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:40:0: 'ShibVerify.Paths.ok_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:41:0: 'ShibVerify.Readable.balanceOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:42:0: 'ShibVerify.supply_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:43:0: 'ShibVerify.Sanity.balanceOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:44:0: 'ShibVerify.Paths.allowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:45:0: 'ShibVerify.Paths.allowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:46:0: 'ShibVerify.Paths.allowance_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:47:0: 'ShibVerify.Paths.ok_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:48:0: 'ShibVerify.Readable.allowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:49:0: 'ShibVerify.supply_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:50:0: 'ShibVerify.Sanity.allowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:51:0: 'ShibVerify.Paths.decimals_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:52:0: 'ShibVerify.Paths.decimals_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:53:0: 'ShibVerify.Paths.ok_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:54:0: 'ShibVerify.Readable.decimals_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:55:0: 'ShibVerify.supply_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:56:0: 'ShibVerify.Sanity.decimals_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:57:0: 'ShibVerify.Paths.transfer_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:58:0: 'ShibVerify.Paths.transfer_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:59:0: 'ShibVerify.Paths.transfer_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:60:0: 'ShibVerify.Paths.transfer_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:61:0: 'ShibVerify.Paths.transfer_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:62:0: 'ShibVerify.Paths.transfer_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:63:0: 'ShibVerify.Paths.transfer_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:64:0: 'ShibVerify.Paths.transfer_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:65:0: 'ShibVerify.Paths.ok_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:66:0: 'ShibVerify.Readable.transfer_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:67:0: 'ShibVerify.supply_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:68:0: 'ShibVerify.Sanity.transfer_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:69:0: 'ShibVerify.Paths.approve_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:70:0: 'ShibVerify.Paths.approve_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:71:0: 'ShibVerify.Paths.approve_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:72:0: 'ShibVerify.Paths.approve_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:73:0: 'ShibVerify.Paths.approve_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:74:0: 'ShibVerify.Paths.approve_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:75:0: 'ShibVerify.Paths.ok_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:76:0: 'ShibVerify.Readable.approve_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:77:0: 'ShibVerify.supply_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:78:0: 'ShibVerify.Sanity.approve_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:79:0: 'ShibVerify.Paths.transferFrom_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:80:0: 'ShibVerify.Paths.transferFrom_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:81:0: 'ShibVerify.Paths.transferFrom_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:82:0: 'ShibVerify.Paths.transferFrom_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:83:0: 'ShibVerify.Paths.transferFrom_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:84:0: 'ShibVerify.Paths.transferFrom_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:85:0: 'ShibVerify.Paths.transferFrom_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:86:0: 'ShibVerify.Paths.transferFrom_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:87:0: 'ShibVerify.Paths.transferFrom_p8' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:88:0: 'ShibVerify.Paths.transferFrom_p9' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:89:0: 'ShibVerify.Paths.ok_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:90:0: 'ShibVerify.Readable.transferFrom_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:91:0: 'ShibVerify.supply_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:92:0: 'ShibVerify.Sanity.transferFrom_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:93:0: 'ShibVerify.Paths.increaseAllowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:94:0: 'ShibVerify.Paths.increaseAllowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:95:0: 'ShibVerify.Paths.increaseAllowance_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:96:0: 'ShibVerify.Paths.increaseAllowance_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:97:0: 'ShibVerify.Paths.increaseAllowance_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:98:0: 'ShibVerify.Paths.increaseAllowance_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:99:0: 'ShibVerify.Paths.increaseAllowance_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:100:0: 'ShibVerify.Paths.ok_increaseAllowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:101:0: 'ShibVerify.Readable.increaseAllowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:102:0: 'ShibVerify.supply_increaseAllowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:103:0: 'ShibVerify.Sanity.increaseAllowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:104:0: 'ShibVerify.Paths.decreaseAllowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:105:0: 'ShibVerify.Paths.decreaseAllowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:106:0: 'ShibVerify.Paths.decreaseAllowance_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:107:0: 'ShibVerify.Paths.decreaseAllowance_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:108:0: 'ShibVerify.Paths.decreaseAllowance_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:109:0: 'ShibVerify.Paths.decreaseAllowance_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:110:0: 'ShibVerify.Paths.decreaseAllowance_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:111:0: 'ShibVerify.Paths.ok_decreaseAllowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:112:0: 'ShibVerify.Readable.decreaseAllowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:113:0: 'ShibVerify.supply_decreaseAllowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:114:0: 'ShibVerify.Sanity.decreaseAllowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:115:0: 'ShibVerify.Paths.burn_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:116:0: 'ShibVerify.Paths.burn_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:117:0: 'ShibVerify.Paths.burn_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:118:0: 'ShibVerify.Paths.burn_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:119:0: 'ShibVerify.Paths.burn_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:120:0: 'ShibVerify.Paths.burn_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:121:0: 'ShibVerify.Paths.burn_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:122:0: 'ShibVerify.Paths.ok_burn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:123:0: 'ShibVerify.Readable.burn_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:124:0: 'ShibVerify.supply_burn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:125:0: 'ShibVerify.Sanity.burn_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:126:0: 'ShibVerify.Loops.ro_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:127:0: 'ShibVerify.supply_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:128:0: 'ShibVerify.Loops.ro_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:129:0: 'ShibVerify.supply_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:130:0: 'ShibVerify.supply_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:131:0: 'ShibVerify.Sanity.Moves.transfer_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:132:0: 'TokenKit.Witness.caller1_ne' depends on axioms: [propext, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:133:0: 'TokenKit.Supply.inv_of_ro' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:134:0: 'ShibVerify.Supply.inv_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:135:0: 'ShibVerify.inv_goodCall' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:136:0: 'ShibVerify.inv_calls' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:137:0: 'ShibVerify.goodCall_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:138:0: 'ShibVerify.untouched_process_failed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:139:0: 'ShibVerify.process_value_fails' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:140:0: 'ShibVerify.process_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:141:0: 'ShibVerify.process_step_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: ShibVerify/Test/Axioms.lean:142:0: 'ShibVerify.calls_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [1367/1368] Built ShibVerify (1.0s)
+Build completed successfully (1368 jobs).
+EXIT=0

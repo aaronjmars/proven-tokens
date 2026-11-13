@@ -1,0 +1,179 @@
+{
+ "token": "USDD",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit of token-kit/tokens/usdd (USDD, 0x4f8e5de400de08b164e7421b3ee387f461becd1a, Lean 4 on EthLib). Nothing outside audits/usdd/ was written. Lean was not built: no Lean on this Mac, the box was not touched. Scratch Lean in the scratch Lean files (not kept) is written, not built. status.json has no 'claims' key; the headline claims were taken from theorem_counts, permit.main_theorems, assumptions and the README row. Date 2026-11-11.",
+ "checked_ok": [
+  "CODE_NAT literal equals survey/tokens/USDD/runtime.hex byte for byte (4063 bytes, CODE_SIZE 4063); data/usdd.runtime.hex is the same file. The 22 entries DUP1 PUSH4 k EQ PUSH2 d JUMPI found in the bytes equal ENTRIES of Usdd/Map.lean in order, every destination is a JUMPDEST, abi.json has 22 functions. No unknown opcode in the code before the 53 metadata bytes.",
+  "Dispatcher: ends_ok_dispatch / runFrame_ok_dispatch (Complete/Dispatch.lean:68, :85): from Berlin, any runner, any gas, a run with no error has 4 bytes or more, value 0 and a selector of the table. Proved from ok_short, ok_other, ok_valueSent; no extra hypothesis beyond data size < 2^256.",
+  "supply_preserved (Invariant.lean:668): 21 selectors, any runner, from Berlin; the only excluded selector is 0x8fcbaf0c, and supply_permit covers it for processRunner. So all 22 selectors have a frame level supply theorem inside paris <= fork < glamsterdam. name, symbol, version go through ro_* (no storage change at all).",
+  "Inv is Supply.Inv 2 1: integer sum over the 2^160 address words of storage[keccak(a, 2)] equals storage[1], no wrap. Slots match the bytes (wards 0, totalSupply 1, balanceOf 2, allowance 3, nonces 4, DOMAIN_SEPARATOR 5).",
+  "permit model against the bytes and EthLib: STATICCALL(GAS, 1, fp, 128, fp-32, 32) with the output word zeroed before the call; bubble idiom at 2763-2778; recovered word read at fp-32; check order holder != 0, recovered == holder, expiry, nonce. ecrecover_call_ok has no hypothesis on the runner or on the output; depth limit, out of gas, missing code and a failed child all end in an error and are excluded by hok. Ecrecover.compute is a plain definition over Secp256k1 recovery.",
+  "Constants: PERMIT_TYPEHASH = 0xea2aa0a1...1acb equals the PUSH32 at pc 2440; P1901 = 0x1901 << 240; APPROVAL = 0x8c5be1e5...b925; TRANSFER = 0xddf252ad...b3ef.",
+  "Message level lift: goodCall_process and permitCall_process use EthLib's own processMessage with processRunner; process_value_fails and untouched_process_failed cover value and error; hypotheses hmc (message.code = CODE) and noPrecompile are true for any real call to the token. No hypothesis restates the conclusion, none is false for processRunner.",
+  "Hygiene text scan of tokens/usdd and TokenKit: no sorry, admit, axiom, native_decide, bv_decide, unsafe, implemented_by, opaque, extern. set_option only autoImplicit false, three linter options, maxRecDepth 4096, maxHeartbeats. One instance (stepLiftLogic). No skip list (axioms.skip is refused by gen_axioms.py); axioms.declared_only leaves out 5 names that no file declares under that name.",
+  "Counts in status.json equal my recount (287, 262, 139, 66, 27, 26, 10, 13, 4, 18, 11).",
+  "regen.sh on a copy of tokens/usdd gives a tree identical to the committed one (diff empty): generated files were not hand-edited, and the weakening switches in use are exactly stops [2761], prefix_functions [permit], one segment permitTail, declared_only. The gap that stops/segments open (ok_permit only reaches pc 2761) is closed by the hand-written ok_permit_real."
+ ],
+ "findings": [
+  {
+   "id": "USDD-1",
+   "token": "USDD",
+   "severity": "major",
+   "claim": "README: 'supply invariant, with permit'. status.json permit.main_theorems: 'process_step_all / inv_callsP: top-level messages and finite sequences with permit included'. Read as: sum of balances = totalSupply always holds for the contract.",
+   "what_is_actually_proved": "Three separate things are proved, and the link between them and the chain is assumed. (1) One frame: a run of CODE from pc 0 that ends with no error keeps Inv (supply_preserved for 21 selectors and any runner, supply_permit for permit and processRunner). (2) One message: process_step_all says a processMessage run of a message whose code is CODE is a GoodCall, a PermitCall, or (on error) leaves the storage of C as it was. (3) inv_callsP is an induction over an abstract list of steps GoodCall | PermitCall | Untouched. The 'other' step is the bare assumption Untouched C S S' := every storage word of C is kept. Nothing proves that a transaction or a block is such a list: calls into the token from inside another contract's frame, the rollback of an outer frame after an inner successful call, transactions to other accounts, fees and creations are all put in 'other' by assumption (Seq.lean doc lines 26 to 29 say so: 'for the other changes it is the assumption of the step'). It is true in fact (the code has no DELEGATECALL, CALLCODE, SELFDESTRUCT or CREATE: opcode scan in check_code.py), but it is not a theorem. Also Inv is only preserved, never established: no theorem about the constructor or about any real state, so 'sum = totalSupply on chain' needs Inv at deployment as an extra premise. status.json 'assumptions' lists the fork, Sep, data size, NoDelegation1 and the top-level lift, but not the Untouched assumption and not the missing base case.",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Seq.lean:75-77 (def Untouched ... ∀ n, storageAt S' C n = storageAt S C n)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Seq.lean:79-83 (inductive Calls, constructor other : Untouched C S S' → ...)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/PermitSeq.lean:136-143 (inductive CallsP, same 'other'), :155 inv_callsP, :207 process_step_all",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Seq.lean:26-29 (doc: assumption of the step)",
+    "audits/check_code.py output: CALL [], CALLCODE [], DELEGATECALL [], SELFDESTRUCT [], CREATE [], CREATE2 []; one STATICCALL at pc 2762",
+    "token-kit/tokens/usdd/status.json:61-67 (assumptions: no line for Untouched or for Inv at deployment)"
+   ],
+   "suggested_fix": "Say in status.json: 'Inv is preserved by each successful message whose code is CODE; the chain model is a list of such messages plus steps assumed to keep the storage of C; Inv at deployment is not proved'. To close it: use upstream's transaction level lemmas (storage of C changes only through frames with currentTarget = C) to prove Untouched for messages to other code, and add a base case for the state after the constructor."
+  },
+  {
+   "id": "USDD-2",
+   "token": "USDD",
+   "severity": "minor",
+   "claim": "status.json permit.status: 'proved for EthLib's real runner (processRunner) ... no assumption on the output of the precompile'; ok_permit_real, permit_readable, supply_permit, PermitCall.",
+   "what_is_actually_proved": "The statements are real and I found no false hypothesis: ok_permit_real takes only the fork window, data size, the selector, hdel, the frame start and a finished run with processRunner; the precompile output is EthLib's own Ecrecover.compute (a real definition, no opaque), read through recoveredWord (0 when the output is not 32 bytes). I read the bytes 2689 to 2893 by hand: address 1, input 128 bytes at fp, output word at fp-32 that the code zeroes first (so 'h450 = 0' is a fact of the bytes), GAS as gas, the 16 byte bubble idiom, then holder check, expiry check, nonce check in that order. They match the theorem. BUT there is no witness: no Lean run of a successful permit exists, so ok_permit_real, permit_readable, supply_permit and every PermitCall step are not shown non-vacuous by a machine. Of the 4 success paths of permitTail (p5, p6, p10, p11) none has a Sanity theorem, while all 26 success paths of the other 18 functions do. Disclosed in status.json permit.not_covered.",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Permit.lean:208-271 (ok_permit_real, hypotheses hparis hglam hsize' hsel hdel start within hrun hok)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Permit.lean:142-168 (permit_call), token-kit/TokenKit/Evm/Precompile.lean:549 (ecrecover_call_ok), :456 (recoveredWord)",
+    "upstream/EthLib/EthLib/Execution/Evm/Precompiles/Ecrecover.lean:44-58 (output, compute: v must be 27 or 28, else empty)",
+    "usdd.dis.txt (audit scratch, not kept) pc 2689-2893",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Sanity/Zero.lean (26 theorems *_runs, none for permit); token-kit/tokens/usdd/work/paths.json permitTail paths 5, 6, 10, 11 kind ok",
+    "token-kit/tokens/usdd/status.json:56"
+   ],
+   "suggested_fix": "Build the witness once in the kit: a forward STATICCALL rule for processRunner (ecrecover_call_ok goes backward from a finished run) and one signature over permitDigest for a chosen slot 5 word. Scratch file with the statement and the first kernel fact is in scratch file PermitWitness.lean (not kept).",
+   "machine_check": "written, not built"
+  },
+  {
+   "id": "USDD-3",
+   "token": "USDD",
+   "severity": "minor",
+   "claim": "supply_<fn>, supply_preserved, supply_permit, the readable theorems of the writers, GoodCall / PermitCall: stated 'under Sep (callKeys message)'.",
+   "what_is_actually_proved": "All of them are conditional on Sep, which is never discharged anywhere (rg finds no proof of a Sep value). Sep is local and has the right shape: slot 1 is no balance slot (2^160 facts), the balance slot of each of the 3 call keys is unique among 2^160 addresses, and finitely many inequalities between allowance, wards and nonces slots of the call keys. It is not the false global form and I could not derive a contradiction from its fields, but it cannot be proved in Lean either (2^160 keccak values), so there is no machine-checked instance of any supply_* or of a writer's readable theorem. The 26 Sanity witnesses show the path theorems ok_<fn> are non-empty (they use no keccak hypothesis); they do not instantiate supply_* or *_readable. callKeys (caller, arg1 masked, arg2 masked) does cover every key the 11 writers hash: checked against transferFrom, move, pull, push, burn, mint, rely, deny, approve, permit. rely_readable and deny_readable need no Sep. Disclosed in status.json assumptions.",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Sep.lean:60-74 (structure Sep: total, uniq, allow, ward, nonce)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Sep.lean:52-57 (callKeys)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Invariant.lean:668-676 (supply_preserved ... (hsep : Sep (callKeys message)))",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/PermitSeq.lean:84 (hsep in supply_permit), :344 (permit_readable)",
+    "token-kit/TokenKit/Evm/Supply.lean:53-57 (NotBal, UniqBal)"
+   ],
+   "suggested_fix": "Keep, but say in docs/MAP.md that no instance of supply_* is machine-checked and that Sep fails only on a keccak collision or preimage (about 2^-96 per call under the random function view)."
+  },
+  {
+   "id": "USDD-4",
+   "token": "USDD",
+   "severity": "minor",
+   "claim": "status.json assumptions: 'Fork: path specs, ok_, supply, readable from Berlin; Seq from Paris; permit from Paris and before Glamsterdam.'",
+   "what_is_actually_proved": "True as written, and it means the 'every selector' result is narrow in forks. permit has a supply theorem, a readable theorem and a place in sequences only for paris <= fork < glamsterdam (10 forks of EthLib's list: paris to bpo5). For Berlin up to Paris there is no message level lift for any function (goodCall_process needs hparis because startState touches the target before Paris). From Glamsterdam: supply_preserved and process_step still type-check (only a lower bound) but they are about the one-counter Nat meter, and EthLib runs transactions with StateGasMeter there, so they say nothing about EthLib's real run; permit has no theorem at all. Whether mainnet at the survey block 26386793 is before Glamsterdam was not checked (see not_checked).",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Permit.lean:208 (hparis : .paris ≤ fork) (hglam : fork < .glamsterdam)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/PermitSeq.lean:207 (process_step_all same window)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Seq.lean:110 (goodCall_process hparis), :205 (process_step, no upper bound)",
+    "upstream/EthLib/EthLib/Execution/Transactions/Process.lean:438 (fork ≥ .glamsterdam then runTransaction StateGasMeter)",
+    "token-kit/TokenKit/Evm/Precompile.lean:81, 129 (staticcallStep_missing, staticcall_outcome need fork < .glamsterdam)"
+   ],
+   "suggested_fix": "State the window next to the headline ('Paris to BPO5, Nat meter'). Add fork < .glamsterdam to process_step and GoodCall too, or port the StateGasMeter rules."
+  },
+  {
+   "id": "USDD-5",
+   "token": "USDD",
+   "severity": "minor",
+   "claim": "status.json build: exit code 0, 'Build completed successfully (1407 jobs)', 'count matches Test/Axioms.lean: 287; AXIOM SCAN OK: 9911 constants (9660 theorems)', sha256 of 108 files identical on Mac and box.",
+   "what_is_actually_proved": "Not checkable from the repo. The log named is /home/user/logs/usdd.final.log on the box; logs/ holds dai, ena, link, sky, uni, usde, wbtc only, no usdd.* file, although e2b/verify_all.sh lists usdd. What I could check holds: Test/Axioms.lean has 287 '#print axioms' lines; my recount of the tree gives 262 block rules, 139 path theorems, 66 loop rules, 27 ok_ theorems, 26 witnesses, Seq 10, PermitSeq 13, Permit 4, Precompile 18, RawMem 11, all equal to status.json; text scan of tokens/usdd and TokenKit finds no sorry, admit, axiom, native_decide, bv_decide, unsafe, implemented_by, opaque, extern; a fresh run of regen.sh on a copy gives files byte-identical to the tree (so no generated file was edited by hand). The 9911 / 9660 scan numbers, the 1407 jobs and the sha256 sync are taken on trust.",
+   "evidence": [
+    "logs/ (no usdd.log, usdd.axioms, usdd.done)",
+    "e2b/verify_all.sh:4 (TOKENS includes usdd)",
+    "token-kit/tokens/usdd/status.json:14-24",
+    "token-kit/tokens/usdd/UsddVerify/Test/Axioms.lean (287 lines '#print axioms')",
+    "regen.log (audit scratch, not kept) (rc=0), regen/diff.txt (empty diff, diff_rc=0)"
+   ],
+   "suggested_fix": "Run e2b/verify_one.sh usdd and commit usdd.log, usdd.axioms and usdd.done next to the others."
+  },
+  {
+   "id": "USDD-6",
+   "token": "USDD",
+   "severity": "minor",
+   "claim": "status.json permit.hypotheses: 'NoDelegation1 fork state ... a fact of the state, true on chain'.",
+   "what_is_actually_proved": "It is a hypothesis on the start state of every permit step (PermitCall carries NoDelegation1 fork S), not proved for any state and not shown to be kept along CallsP: a sequence with two permits needs it twice, as two separate assumptions. It is satisfiable (any state where address 1 has no code) but no Lean theorem says so. It cannot be dropped: EthLib resolves an EIP-7702 delegation before the precompile check, so with a delegation at address 1 the STATICCALL would run arbitrary code (still static, so it could only change the returned word). It is used from Pectra only.",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/PermitSeq.lean:44-46 (def NoDelegation1)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/PermitSeq.lean:114-124 (PermitCall ... NoDelegation1 fork S ∧ ...)",
+    "token-kit/TokenKit/Evm/Precompile.lean:129-133 (hdel in staticcall_outcome)"
+   ],
+   "suggested_fix": "Add a lemma that NoDelegation1 holds when address 1 has the empty code hash, and one that GoodCall, PermitCall and a message to other code without a 7702 set-code step keep it. Scratch statement noDelegation1_empty in scratch file PermitWitness.lean (not kept).",
+   "machine_check": "written, not built"
+  },
+  {
+   "id": "USDD-7",
+   "token": "USDD",
+   "severity": "note",
+   "claim": "status.json theorem_counts.sanity_witnesses: 26; Sanity doc: 'every success path of USDD has a concrete run'.",
+   "what_is_actually_proved": "26 witnesses, one per success path of 18 functions (8 views, rely, deny, approve, transfer, push, mint, and 3 each for transferFrom, pull, move, burn). Each is a frame level run from pc 0, for every runner and every bound, computed by the kernel with no keccak hypothesis. Not witnessed: permit (USDD-2), name, symbol, version (ro_name, ro_symbol, ro_version have no *_runs theorem), and no witness at the processMessage level (goodCall_process, process_step_all have no instance). Path kinds 'stuck' (static frame at SSTORE) and duplicates of conditions between a stuck path and an ok path are split by message.isStatic, not contradictory. I did not find a path theorem with contradictory hypotheses in the samples I read (rely, transferFrom, permitTail); the 186 pruned branches are decided inside Lean ('have hd' lines with a tactic), not skipped.",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Sanity/Zero.lean (26 theorems)",
+    "token-kit/tokens/usdd/work/paths.json (_pruned: 163 entry, 14 sub_after_ge, 2 caller_mask, 7 earlier hypothesis)",
+    "token-kit/scripts/gen_paths.py:1648-1680 (dead_rule returns a tactic)"
+   ],
+   "suggested_fix": "Add name_runs, symbol_runs, version_runs and one processMessage level witness (mint or transfer through goodCall_process is not possible because of Sep; a witness of process_value_fails or of the frame run under processMessage would do)."
+  },
+  {
+   "id": "USDD-8",
+   "token": "USDD",
+   "severity": "note",
+   "claim": "Test/Axioms.lean: 'So a theorem whose name is not in the list below is still checked.'",
+   "what_is_actually_proved": "Holds as designed. The named list has 287 lines; Supply.inv_congr is left out by name (disclosed) and the small lemmas of Sep.lean, Code.lean, the 262 block rules and 66 loop rules are not named. The closing scan walks every constant of modules UsddVerify.* and TokenKit.* and fails on any axiom other than the three standard ones, and collectAxioms follows dependencies into UsdtVerify and EthLib, so an axiom used through upstream would show. The scan does not list constants of UsdtVerify and EthLib that the project does not use. check_axioms.py now reads wrapped lists, fails on an empty log and on a count mismatch (the QNT, BNB and WETH audit fix present). Small slips: lakefile.lean:4 says 'Properties of the deployed PEPE runtime bytecode'; status.json has no 'claims' key (headlines are spread over theorem_counts and permit.main_theorems).",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Test/Axioms.lean (scan at the end, prefix test on `UsddVerify and `TokenKit)",
+    "token-kit/scripts/check_axioms.py:1-70",
+    "token-kit/tokens/usdd/lakefile.lean:4"
+   ],
+   "suggested_fix": "Fix the lakefile comment; add a 'claims' list to status.json."
+  },
+  {
+   "id": "USDD-9",
+   "token": "USDD",
+   "severity": "note",
+   "claim": "status.json contract_findings (what the bytes do).",
+   "what_is_actually_proved": "Confirmed from the readable theorems and the bytes, for the owner: (a) mint(usr, wad) needs only wards[caller] == 1 (mint_readable); a ward can mint any amount to any address, the only limits are the overflow of balanceOf[usr] and totalSupply. rely and deny need the same, so any ward can add wards or remove every other ward. The proofs do not say who the wards are on chain (no state was read). (b) burn(usr, wad) needs no ward: caller == usr, or allowance[usr][caller] >= wad; an allowance of 2^256-1 is never reduced (burn_readable, transferFrom_readable). (c) permit is DAI style: allowed != 0 sets allowance to 2^256-1, allowed == 0 sets it to 0; expiry 0 means no expiry; the nonce must equal nonces[holder]. The domain separator is the word of storage slot 5, fixed at construction and not rebuilt from CHAINID (no CHAINID opcode in the code), so a signature is valid on any chain fork that carries the same storage. (d) Dirty inputs are accepted: address arguments are masked, 'allowed' is any nonzero word (the digest uses 0 or 1), v is masked to its low byte. The contract adds no check on s beyond the precompile's (EthLib: v in {27, 28}, r and s in range), so the mirrored signature (n - s, other v) also passes; the nonce stops a replay. (e) No zero address check in transfer, transferFrom, mint; tokens sent to address 0 stay in the sum. (f) Every function reverts on value; no CALL, DELEGATECALL, SELFDESTRUCT or CREATE in the code; the only outside call is the STATICCALL to address 1.",
+   "evidence": [
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Readable.lean:1028 (mint_readable: wardOf message state (callerW message) = 1)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/Readable.lean:328 (rely_readable), :1073 (burn_readable), :494 (transferFrom_readable)",
+    "token-kit/tokens/usdd/UsddVerify/Usdd/PermitSeq.lean:341-370 (permit_readable)",
+    "usdd.dis.txt (audit scratch, not kept) pc 2432-2435 (PUSH1 5, SLOAD), 2720-2722 (PUSH1 0xff AND), 2521-2523 (ISZERO ISZERO)",
+    "audits/check_code.py (CHAINID [])"
+   ],
+   "suggested_fix": "None for the proof. For the owner: list the wards on chain; treat the ward keys as full mint authority."
+  }
+ ],
+ "not_checked": [
+  "No Lean build and no '#print axioms' run by me: every 'proved' above means 'stated in the tree and claimed built'; the build log for usdd is not in the repo (USDD-5).",
+  "scratch file PermitWitness.lean (not kept) was not compiled.",
+  "EthLib, usdt-verify and Mathlib are trusted as the model; only the definitions named in the findings were read (processMessage, startState, precompileAddress, Ecrecover, the meter choice in Transactions/Process.lean).",
+  "Whether Ethereum mainnet at block 26386793 is before EthLib's .glamsterdam (decides whether the permit window covers the live chain).",
+  "The 262 block rules, 66 loop rules and the long generated statements of ok_permit, ok_permitTail and the 139 path theorems were not read one by one; ok_mint, the readable statements of mint, burn, rely, transfer, transferFrom, permit, and permitTail_ends were read.",
+  "Live chain state: who the wards are, the word in slot 5, whether Inv holds on chain. The constructor. Solidity source against the bytes (no source in the repo).",
+  "Gas constants against a reference client; the revert strings; the failing paths one by one.",
+  "eth_getCode today against runtime.hex (no network call made); the keccak in SOURCE.md was not recomputed.",
+  "The sha256 sync of 108 files between Mac and box, the 1407 jobs line and the 9911 / 9660 scan counts."
+ ],
+ "verdict": {
+  "code constant equals the on-chain runtime code, selector table matches": "holds (against survey/tokens/USDD/runtime.hex; chain not re-fetched)",
+  "dispatcher completeness (selector_cases, ends_ok_dispatch, runFrame_ok_dispatch)": "holds",
+  "path specs and completeness ok_<fn> for 21 functions and 3 fallbacks": "holds (frame level, Nat meter, from Berlin; non-empty by 26 witnesses; name, symbol, version not witnessed: USDD-7)",
+  "supply invariant kept by every successful call (supply_<fn>, supply_preserved)": "holds with caveat (under unproved Sep: USDD-3; permit excluded here and added by supply_permit; frame level)",
+  "readable theorems for 18 functions": "holds with caveat (writers under Sep: USDD-3)",
+  "permit proved for the real runner, no assumption on the precompile output (ok_permit_real, permit_readable, supply_permit)": "holds with caveat (no witness, so not shown non-vacuous: USDD-2; Paris to before Glamsterdam only: USDD-4; NoDelegation1 assumed: USDD-6)",
+  "top-level messages and finite sequences with permit included (process_step_all, inv_callsP)": "holds with caveat (a list-of-steps model: the 'other' step and Inv at deployment are assumed, not proved: USDD-1; fork window: USDD-4)",
+  "soundness hygiene (no sorry, axiom, native_decide, bv_decide)": "holds by text scan; the axiom scan was not re-run (USDD-5, USDD-8)",
+  "build and counts in status.json": "counts hold; build result not verifiable from the repo (USDD-5)",
+  "contract findings in status.json (mint, rely, burn, permit)": "holds (USDD-9)"
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "token": "WBT",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit of the WBT proof (token-kit/tokens/wbt, Lean 4 on EthLib at 62dbd687, usdt-verify at d0e684c5). Date 2026-11-11. Nothing outside audits/wbt/ was changed. Lean was NOT built (no Lean on this Mac): every statement below was read from the source, not re-checked by the kernel. Python checks only.",
+ "checked_ok": [
+  "CODE_NAT in WbtVerify/Wbt/Code/Bytes.lean equals survey/tokens/WBT/runtime.hex and data/wbt.runtime.hex byte for byte; CODE_SIZE 8392; keccak256 recomputed with scripts/keccak.py = 5c6a78ca...142b60, the value in Test/Hash.lean and SOURCE.md. (check_code.py)",
+  "Selector table: the 22 'DUP1 PUSH4 k EQ PUSH2 d JUMPI' entries in the bytes equal ENTRIES in Map.lean, keys, destinations and order. No PUSH4 outside the table before the metadata. The 22 ABI functions are the 22 entries. Five non-standard selectors and all six event topic constants of Readable.lean recomputed with keccak: all match.",
+  "Opcode census before the 53 metadata bytes: no CALL, CALLCODE, DELEGATECALL, STATICCALL, CREATE, CREATE2, SELFDESTRUCT, no unknown opcode; 15 SSTORE, 10 LOG, 1 CALLVALUE, 1 SHR, 6 SLT. So 'external_calls: none' is right and there is no reentrancy, callee, permit, ecrecover or delegation surface to model.",
+  "Regeneration: tokens/wbt + scripts + TokenKit copied to a scratch folder and regenerated with the kit scripts/regen.sh config/wbt.json: every file byte-identical to the repo (diff -rq empty). So no generated file was hand edited. Scratch copy deleted after.",
+  "Quantifiers of the frame theorems (ok_<fn>, delta_<fn>, delta_step, supply_preserved, total_le, <fn>_readable, ro_name, ro_symbol): every fork from Berlin, every message (any caller, any value, static or not, any depth, top level or nested), every gas, every bound and EVERY message runner (EndsL = EthLib's runFrame returns .ok). The only hypotheses are hfork, hsize' (data size < 2^256, harmless), the selector, the start frame At CODE message 0 [] .empty, the run, s.error = none, and Sep for writers. No runner hypothesis, no callee hypothesis, no hypothesis that restates the conclusion.",
+  "s.error = none really means success: EthLib's Halted sets error = some .revert for REVERT (Logic/Rules.lean:1261), so reverting runs are excluded, not counted as success.",
+  "delta_step, supply_preserved and total_le go through ends_ok_dispatch (Complete/Dispatch.lean:68) and match on all 22 indexes of Fin 22; value sent, short call data and unknown selector are proved to have no successful run (ok_valueSent, ok_short, ok_other). No selector is excluded.",
+  "The start frame is the real one: goodCall_process uses At.startFrame on EthLib's startFrame, and the run is processMessage's own runFrame with processRunner (Seq.lean:108-141).",
+  "Vacuity of success paths: Sanity/Zero.lean has 20 witnesses, one per success path, each for every fork from Berlin, every runner and every bound; amounts are nonzero where it matters (transfer 1 of 5, transferFrom 1 of 5 with allowance 5, burn 1 of 5, destroyBlackFunds of a balance of 5). They use the real keccak (decide +kernel), no Sep.",
+  "Failed and value-carrying top-level messages: untouched_process_failed (EthLib getStorage_processMessage_of_error) and process_value_fails are real theorems with no extra assumption, so process_step covers every processMessage result for code CODE from Paris.",
+  "Text scan of tokens/wbt and TokenKit: no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by, opaque, extern. set_option only autoImplicit false, two linters, maxRecDepth 4096, maxHeartbeats 1000000 (20 witnesses). Macros are tactic and term helpers. No em dash or en dash.",
+  "Test/Axioms.lean: 268 '#print axioms' lines (131 path theorems, 25 ok_, 23 delta_, 24 supply_, 20 readable, 20 witnesses, 25 others), equal to the count in its header and in status.json. The final scan walks every constant of WbtVerify and TokenKit modules with collectAxioms (transitive, so axioms reached through UsdtVerify or EthLib would be caught) and fails on any declared axiom. No skip list; the only names left out (declared_only) are supply_valueSent, supply_short, supply_other (do not exist) and Supply.inv_congr (covered by the scan). total_le_goodCall is also not in the named list (covered by the scan).",
+  "Counts: 1015 theorems in tokens/wbt, 515 block lemmas in Gen/B0..B12: both match status.json.",
+  "Contract findings in status.json checked against the readable statements: burn owner only and from the caller; destroyBlackFunds emits only DestroyedBlackFunds; blacklistAccount no log; transfer checks pause, caller and receiver blacklist; transferFrom checks pause, from and to but not the spender; approve, increaseAllowance, decreaseAllowance check neither pause nor blacklist; isOwner tests its argument; decimals reads slot 8."
+ ],
+ "findings": [
+  {
+   "id": "WBT-1",
+   "token": "WBT",
+   "severity": "major",
+   "claim": "status.json never_up: 'supply_never_grows: the same along any finite sequence of calls'; supply_statement and README: 'total supply never grows'; inv_calls: the invariant holds along any sequence.",
+   "what_is_actually_proved": "The frame theorem total_le is strong (any frame of CODE, any runner, nested or not). The sequence theorems are only about the relation Calls C, whose steps are (a) GoodCall: one successful frame of CODE at pc 0, or (b) Untouched: 'forall n, storageAt S' C n = storageAt S C n', which is ASSUMED, not proved, for everything that is not a direct message to the token. The only step linked to EthLib is a top-level processMessage whose code is CODE (process_step, from Paris). Not linked: a transaction to another contract (router, DEX, multisig) that calls the token inside it, which is how most token calls happen; the rollback of an outer frame after a successful inner token call (after a rolled back burn slot 5 goes back UP relative to the inner end state, so that step is neither GoodCall nor Untouched); fee, refund and block level steps; transactions to other accounts. So 'no sequence of calls can grow the supply' is proved for sequences of direct top-level calls plus steps the reader must take on trust. The statement is true in substance (CODE has no CALL, DELEGATECALL or SELFDESTRUCT, so only frames of CODE at C write its storage), but that EVM fact is not proved here. status.json lists the lift hypotheses (code = CODE, no precompile, no value) under assumptions but does not list Untouched, and not_covered does not mention nested calls. Calibration: the QNT, BNB and WETH audit rated the same Calls-model limit minor for QNT (QNT-2); it is major here by the brief's rule (unproved non-local assumption under a headline) and because the status file does not disclose it.",
+   "evidence": "token-kit/tokens/wbt/WbtVerify/Wbt/Seq.lean:71-83 (def Untouched, inductive Calls with constructor 'other : Untouched C S S' -> ...'), Seq.lean:21-24 doc ('for the other changes it is the assumption of the step'), Seq.lean:197-212 (process_step: only 'processMessage fork message state substate = .ok ended' with hmc : message.code = CODE), NoMint.lean:154-161 (supply_never_grows by induction on Calls; the 'other' case uses hu 5). status.json assumptions item 6 and never_up.",
+   "suggested_fix": "Prove a transaction-level theorem: for EthLib's processMessage of ANY message (any code), storage of C at the end is reached from the start by GoodCall steps or equals it, using that only frames with currentTarget = C and code CODE write C (needs: C's code is CODE in the state, and an induction over the runner). Until then say in the headline: 'along sequences of direct calls; calls made from inside other contracts and all other state changes are assumed to keep or roll back the storage'."
+  },
+  {
+   "id": "WBT-2",
+   "token": "WBT",
+   "severity": "minor",
+   "claim": "delta_<fn>, supply_<fn>, total_le hold 'for every successful call'; 'no mint'.",
+   "what_is_actually_proved": "Each of them, for the 12 writers and for total_le on every selector, takes hsep : Sep (callKeys message): keccak separation facts quantified over all 2^160 address words (slot 5 is no balance slot, the balance slots of the three call keys are unique, allowance and blacklist slots of the keys are no balance slot and not slot 5, slots 0 and 2 are no balance slot). Sep is never proved and never shown satisfiable for even one concrete call, so there is no closed theorem that says 'this burn lowered slot 5' or 'this run kept D': the Sanity witnesses give real runs but do not touch Sep, and GoodCall (which carries Sep) is never shown inhabited. The hypothesis is the right shape (per key, not global uniqueness, which would be doubtful over 2^160 inputs) and is almost surely true, and it is disclosed. total_le asks for more than it needs (it only needs slot 5 different from the two or three balance, allowance or blacklist slots actually written). Also supply_preserved and inv_calls need Inv in the start state, which is not established for the deployed storage (disclosed).",
+   "evidence": "token-kit/tokens/wbt/WbtVerify/Wbt/Sep.lean:61-74 (structure Sep), Invariant.lean:846-852 (delta_step ... (hsep : Sep (callKeys message))), NoMint.lean:40-52 (total_le), Seq.lean:60-68 (GoodCall contains 'Sep (callKeys message)'); TokenKit/Evm/Supply.lean:53-57 (NotBal, UniqBal over all x with x.toNat < 2^160). rg for 'Sep.mk' or an instance of Sep in tokens/wbt: none.",
+   "suggested_fix": "State total_le with only the inequalities it uses. Add one closed corollary per writer of the form 'Sep for the witness call implies the witness end state has slot 5 lower by 1' so the chain Sep -> conclusion is exercised on a real run."
+  },
+  {
+   "id": "WBT-3",
+   "token": "WBT",
+   "severity": "minor",
+   "claim": "status.json assumptions: 'Gas: the one-counter meter, before Glamsterdam' and 'from Paris for the lift to top-level messages'; README: proofs about the deployed bytecode on chain.",
+   "what_is_actually_proved": "Two gaps between the words and the statements. (1) No theorem has an upper fork bound: all are stated for every fork from Berlin with Meter := Nat. For Glamsterdam and later the real meter is the two-counter one, so the instances at those forks are about a configuration the chain does not run; the status says 'before Glamsterdam' but the reader has to know that the Nat meter is the limit. (2) The lift stops at processMessage called with its DEFAULT meter and held proof ('processMessage fork message state substate = .ok ended'). EthLib's transaction path (processMessageCall, Transactions/Process.lean:337) calls processMessage with first.meter from prepareFirstFrame, which is GasMeter.commit of the meter left after applyAuthorizations (EIP-7702 list), not syntactically the default; nothing in tokens/wbt links goodCall_process or process_step to processMessageCall or to a transaction. The frame theorems hold for any gas, so this is a missing glue lemma, not a wrong result.",
+   "evidence": "token-kit/tokens/wbt/WbtVerify/Wbt/Seq.lean:108-118 (goodCall_process: hparis, hmc, noValue, noPrecompile, hsize, K, hproc with no meter argument); upstream/EthLib/EthLib/Execution/Evm/Call/MessageCall.lean:282-287 (meter default); upstream/EthLib/EthLib/Execution/Transactions/Process.lean:279-312 and 337. Every theorem head in Invariant.lean, NoMint.lean, Readable.lean: '(hfork : .berlin <= fork)' only.",
+   "suggested_fix": "Generalise goodCall_process, process_value_fails and process_step over meter and held (the EthLib lemmas they use already are), then state one corollary for processMessageCall. Say 'Berlin up to but not including Glamsterdam' in the headline."
+  },
+  {
+   "id": "WBT-4",
+   "token": "WBT",
+   "severity": "minor",
+   "claim": "status.json build: lake build exit 0, 1401 jobs, 268 theorems, only standard axioms, AXIOM SCAN OK 13335 constants; README: 'Last clean rebuild log: in its status file'.",
+   "what_is_actually_proved": "Nothing I could check. The log is only on the box (/home/user/logs/wbt.final.log); logs/ has logs for dai, ena, link, sky, uni, usde, wbtc and none for wbt, although e2b/verify_all.sh lists wbt. The 268 count does match Test/Axioms.lean. The recorded build also predates later changes of the shared TokenKit library (kit-status.json usde_ena_merge: 'none was rebuilt by this work'), so there is no record in the repo that the current tokens/wbt builds against the current TokenKit. status.json is also stale about how the files are made: build.how_to_regenerate and to_merge_into_kit say the local scripts tokens/wbt/scripts/gen_paths.py, gen_supply.py, gen_readable.py are the generators, while config/wbt.json and kit-status.json wbt_merge say they are merged into the kit; the local copies still sit in tokens/wbt/scripts and differ from the kit ones (1232, 595 and 122 diff lines). I confirmed the kit regen.sh reproduces every file byte for byte, so the stale text is harmless, but the dead copies invite a wrong regeneration.",
+   "evidence": "ls logs/ (no wbt.*); e2b/verify_all.sh:4; token-kit/tokens/wbt/status.json build.log_on_box, build.how_to_regenerate, to_merge_into_kit; token-kit/tokens/wbt/config/wbt.json key regen; token-kit/kit-status.json wbt_merge and usde_ena_merge; token-kit/tokens/wbt/scripts/regen_wbt.sh.",
+   "suggested_fix": "Run e2b/verify_one.sh wbt and commit wbt.log and wbt.axioms to logs/. Update status.json (regeneration by the kit) and delete or mark the local generator copies."
+  },
+  {
+   "id": "WBT-5",
+   "token": "WBT",
+   "severity": "note",
+   "claim": "Path and completeness coverage: 131 paths, every function has one success path, name() and symbol() covered.",
+   "what_is_actually_proved": "As disclosed: for name() and symbol() only Loops.ro_name / ro_symbol (a successful run changes no storage word of any account, no account, adds no log); the returned string is not proved and there is no witness that they succeed. The 95 revert and 14 stuck paths have no witness, and there is no theorem 'every failing run is one of these', so a revert path may be empty; this does not weaken any headline because every headline is about successful runs and ok_<fn> proves the success end state from pc 0 for any run (a wrongly pruned branch would break that proof, so the 169 pruned branches are checked by Lean, not skipped). The three fallbacks are proved to have no successful run rather than left out.",
+   "evidence": "token-kit/tokens/wbt/WbtVerify/Wbt/Gen/Loops.lean:2147-2156 and 4266-4275; TokenKit/Evm/Safe.lean:37-46 (Ro); Gen/PBurn.lean:442-460 and 461-487 (ok_burn: by_cases over every branch, each failing branch closed by no_okLE or no_ok_stuckLE); Complete/Dispatch.lean:68-80.",
+   "suggested_fix": "None needed. A witness for name() and symbol() would close the last unwitnessed success claims."
+  },
+  {
+   "id": "WBT-6",
+   "token": "WBT",
+   "severity": "note",
+   "claim": "contract_findings in status.json (owner powers, blacklist and pause reach, no mint).",
+   "what_is_actually_proved": "They match the readable theorems. Things worth telling the owner or users, all read from proved statements: (1) There is no mint in the runtime code; supply can only fall, by burn (owner, from its own balance) and destroyBlackFunds (owner, any blacklisted address, whole balance, no Transfer event, works while paused). Under the invariant destroyBlackFunds cannot fail on the supply check. (2) The owner can blacklist any address with no event at all, then destroy its funds: two silent-or-nearly-silent steps. (3) transferFrom does not test the spender's blacklist flag, and approve / increaseAllowance / decreaseAllowance test neither blacklist nor pause, so a blacklisted address can still act as spender and still set allowances. (4) Only transfer and transferFrom are pausable. (5) status.json says that after renounceOwnership 'no owner function can succeed (the caller would have to be the address 0)'. Precisely: burn requires caller != 0, but blacklistAccount, destroyBlackFunds, pause, unpause, transferOwnership and renounceOwnership only require sender = ownerOf, with no caller != 0 requirement in the proved statements; so their safety after renounce rests on nobody being able to send from address 0, not on a check in the code. (6) burn lowers _totalSupply before it checks the caller's balance (the second check reverts the whole call, so no harm). (7) An address argument with dirty high bits reverts (arg1 = addrArg1 is a proved requirement).",
+   "evidence": "token-kit/tokens/wbt/WbtVerify/Wbt/Readable.lean:629-648 (burn_readable: 'sender message = ownerOf message state', '(sender message) != 0'), 713-732 (destroyBlackFunds_readable: log2 DESTROYED only), 674-690 (blacklistAccount_readable: 's.substate.logs = substate.logs', requirements without sender != 0), 457-483 (transferFrom_readable: blacklisted of addrArg1 and addrArg2 only), 418-434 (approve_readable: no pausedOf, no blacklisted), 827-841 and 866-877 (ownership); Gen/PBurn.lean:452-453 (hc5 on slot 5 before hc6 on the balance read after the write of slot 5).",
+   "suggested_fix": "Reword finding 2 of status.json ('after renounceOwnership...') to say which functions check caller != 0."
+  }
+ ],
+ "not_checked": [
+  "No Lean build: every theorem is trusted as stated in the source; build exit code, job count, axiom lists and the scan output are from status.json only (see WBT-4).",
+  "On-chain code: runtime.hex was compared with the Lean constant, not refetched from mainnet. The live storage (owner, paused, whether the sum of balances equals totalSupply today) and the constructor were not checked.",
+  "EthLib and usdt-verify themselves (trusted as the model), and TokenKit lemma proofs (covered only by the axiom scan the status file reports).",
+  "Readable corollaries: statements read for 14 of 20 functions; proofs not re-derived. The 131 path theorem statements were not read one by one (ok_burn and its 8 paths in full, the others by name and count).",
+  "The 15 SSTORE keys were not traced by hand in the disassembly; the claim that only burn and destroyBlackFunds write slot 5 is taken from the Lean statements (total_le), under Sep.",
+  "Whether Sep can fail for some real address (a keccak collision or preimage); cannot be decided.",
+  "Gas constants of the path theorems against a reference client.",
+  "Whether applyAuthorizations really changes the Nat meter in a way that makes first.meter differ from the default (WBT-3 only says the lift is not stated for it).",
+  "Solidity source: not fetched (status.json says the same); slot names come from the bytes and the ABI."
+ ],
+ "verdict": {
+  "WBT": {
+   "code constant equals the surveyed runtime code, selector table matches": "holds",
+   "path theorems and completeness for all 22 selectors and the three fallbacks": "holds (name and symbol: entry path and read-only only, disclosed)",
+   "success paths not vacuous (20 witnesses)": "holds (not for name, symbol; revert paths unwitnessed, disclosed)",
+   "delta_<fn> / delta_step: sum of balances minus totalSupply unchanged by every successful call, no assumption on the start state": "holds with caveat (Sep, unproved keccak separation; WBT-2)",
+   "supply_preserved: invariant kept by every successful call": "holds with caveat (Sep; Inv at start not established for the deployed storage)",
+   "total_le: no successful call makes totalSupply larger (no mint)": "holds with caveat (Sep; frame level, every caller, every runner, forks from Berlin with the one-counter meter)",
+   "supply_never_grows / inv_calls: along any finite sequence of calls": "holds with caveat (only inside the Calls model: direct top-level calls from Paris, every other step ASSUMED to keep the storage; nested calls and outer rollbacks not linked; WBT-1, WBT-3)",
+   "readable corollaries and contract_findings": "holds (one wording fix, WBT-6 point 5)",
+   "no sorry, no extra axiom, 268 theorems in the axioms test": "holds with caveat (text scan and count confirmed; build and axiom output not checkable here, WBT-4)",
+   "build exit 0 on the box": "not checked (no log in the repo)"
+  }
+ }
+}

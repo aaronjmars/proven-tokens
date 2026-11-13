@@ -1,0 +1,8 @@
+theorems checked: 342
+    311 Classical.choice
+    325 Quot.sound
+    331 propext
+count matches Test/Axioms.lean: 342
+AXIOM SCAN OK: 11309 constants (10873 theorems) of DaiVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

@@ -1,0 +1,8 @@
+theorems checked: 333
+    304 Classical.choice
+    316 Quot.sound
+    322 propext
+count matches Test/Axioms.lean: 333
+AXIOM SCAN OK: 10427 constants (9998 theorems) of UsddVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

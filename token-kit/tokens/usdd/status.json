@@ -1,0 +1,318 @@
+{
+ "token": "USDD",
+ "project": "tokens/usdd",
+ "namespace": "UsddVerify",
+ "config": "tokens/usdd/config/usdd.json",
+ "date": "2026-11-11",
+ "bytecode": {
+  "bytes": 4063,
+  "compiler": "solc 0.6.12, optimizer on",
+  "selectors": 22,
+  "writers": 11,
+  "source": "runtime bytes and ABI only (ETHERSCAN_KEY not set, verified source not fetched)"
+ },
+ "build": {
+  "where": "E2B box lean-fix-e (removed at the end), /home/user/token-kit/tokens/usdd, Lean v4.35.0, usdt-verify d0e684c5, 8 vCPU, 8 GB, LEAN_NUM_THREADS=2 (fix round of the ten-token audit, agent close-e)",
+  "kit": "the COMMITTED kit (git archive HEAD token-kit, commit 03b9421), then tokens/usdd from the working tree. Kit library: lake build in /home/user/token-kit: Build completed successfully (1386 jobs). The kit files on the box (TokenKit, scripts, TokenKit.lean, lakefile.lean) equal git HEAD (one sha1 over all of them, compared after the builds).",
+  "command": "lake build from a removed tokens/usdd/.lake/build (target UsddVerify, the root that imports every module and Test/Axioms)",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1420 jobs).",
+  "elapsed_seconds": 451,
+  "log": "logs/usdd.log (axioms output: logs/usdd.axioms)",
+  "axioms_check": "bash scripts/check_axioms.sh /home/user/logs/usdd.log UsddVerify/Test/Axioms.lean: exit 0, 'theorems checked: 333', 'count matches Test/Axioms.lean: 333', 'only standard axioms' (Classical.choice 304, Quot.sound 316, propext 322 of the 333). The scan printed 'AXIOM SCAN OK: 10427 constants (9998 theorems) of UsddVerify and TokenKit'.",
+  "regeneration_check": "bash scripts/regen_check.sh usdd on the Mac after the change: SAME (the generators write every generated file as it is in the tree, the regenerated Test/Axioms.lean included)",
+  "banned_things": "no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by in the files of tokens/usdd/UsddVerify (text search, the new Usdd/Instance.lean and Usdd/PermitRun.lean included); no 'sorry' or 'declaration uses' line in the build log; the axiom scan covers every constant. No em dash or en dash.",
+  "mac_equals_box": "63 files of tokens/usdd (no .lake, no __pycache__), sha1 on the Mac and on the box after the final build: identical; status.json and docs/MAP.md were written after the build (they are not Lean inputs) and copied to the box, then the comparison was run."
+ },
+ "theorem_counts": {
+  "bytecode_and_hash": "Usdd/Code.lean 5 theorems (CODE_eq, size_CODE, getElem_CODE, byteAt_CODE, valid_CODE) + Test/Hash.lean (keccak of CODE, run by the interpreter)",
+  "jump_destinations": "valid_CODE (1)",
+  "dispatcher": "3 (selector_cases, ends_ok_dispatch, runFrame_ok_dispatch) over 22 selectors",
+  "block_rules": 262,
+  "path_specs": 139,
+  "loop_rules_name_symbol_version": 66,
+  "completeness_ok": "27 generated ok_<fn> (21 functions through ok_ or ro_, the 3 fallbacks, ok_permit to the call, ok_permitTail and ok_permitTail_ends after it) + ok_permit_real (hand-written join)",
+  "supply": "22 generated (supply_<fn> for 21 functions + supply_preserved) + supply_permit",
+  "readable": "18 generated <fn>_readable (8 views, rely, deny, approve, transfer, transferFrom, push, pull, move, mint, burn) + permit_readable; name/symbol/version: ro_name, ro_symbol, ro_version (no storage write, no log)",
+  "sanity_witnesses": "26 in Sanity/Zero.lean, each in one frame (the ten-token audit, USDD-7: name, symbol, version have none; no witness at processMessage level) + the permit witness Instance.permit_runs (real runner, real signature; 1 of the 4 success ways of permit)",
+  "sequences": "Seq.lean 10 (without permit) + PermitSeq.lean 13 (with permit: PermitCall, CallsP, inv_callsP, process_step_all, process_step_all_inv, callsP_process)",
+  "permit_files": "Permit.lean 4, PermitSeq.lean 13, TokenKit/Evm/Precompile.lean 18, TokenKit/Evm/RawMem.lean 11",
+  "axioms_test": "333 named theorems + scan of every constant of UsddVerify and TokenKit",
+  "transactions (Tx.lean)": "10 (storageOnly_inv, code_size_ne_zero, code_not_indicator, code_not_delegated, inv_zeroBase, frameKeepsR, supply_message_any_depth, supply_transaction, supply_any_transactions, supply_from_zero)",
+  "closed instance and permit witness (Usdd/Instance.lean, Usdd/PermitRun.lean; by hand, the ten-token audit fixes 5 and 6)": "15 + 21 theorems: sep_iff, sep_m0_iff, inv_start, noDelegation1_of_emptyHash, noDelegation1_before_pectra, noDelegation1_sState, supply_m0, ecrecover_call_runs, recovered_m1, permit_runs, supply_permit_m1, permit_runs_inv and their helpers"
+ },
+ "permit": {
+  "status": "proved for EthLib's real runner (processRunner), approach 1 of 3, no assumption on the output of the precompile",
+  "main_theorems": {
+   "ok_permit_real": "Usdd/Permit.lean. A run of a fresh frame of CODE with selector 0x8fcbaf0c that ends with no error: no value, 260 bytes of data, holder not 0, gas covered the prefix and 3000 for ECRECOVER, and Paths.permitTail_ends (4 ways: allowed 0 or not, expiry 0 or not) with the recovered-word check, expiry versus TIMESTAMP, nonce versus storage, the two exact writes (nonce + 1, allowance 0 or 2^256-1), the Approval log and the exact gas.",
+   "permit_readable": "Usdd/PermitSeq.lean. Same in plain terms: MASK160 & permitRecovered message state = holder, holder != 0, expiry = 0 or timestamp <= expiry, nonce = nonces[holder]; then nonces[holder] + 1, allowance[holder][spender] = 0 or max, every other slot unchanged, one log Approval(holder, spender, word).",
+   "supply_permit": "a successful permit keeps sum of balances = totalSupply (changes neither)",
+   "process_step_all / inv_callsP": "the older, weaker per-message model: top-level messages and finite sequences with permit included, where every other step is ASSUMED Untouched. The headline is now supply_any_transactions (Tx.lean, see transaction_theorems)."
+  },
+  "recovered_address": "permitRecovered = TokenKit.recoveredWord (permitInput (permitDigest (storage slot 5) (permitStruct holder spender nonce expiry allowed01)) (v & 255) r s); recoveredWord data = the 32 bytes of EthLib's Precompiles.Ecrecover.compute data read as a word, or 0 when compute returns nothing (bad v, r, s or no recovery). Nothing is assumed about compute. The domain separator is read from storage slot 5 (not from code).",
+  "hypotheses": [
+   ".paris <= fork and fork < .glamsterdam (EthLib rules of STATICCALL and of processMessage; from Paris a message does not touch its target)",
+   "message.data.size < 2^256",
+   "NoDelegation1 fork state: the account at address 1 holds no EIP-7702 delegation code (only used from Pectra; a fact of the state; NOT read from chain; EthLib resolves delegation before the precompile check, so it can not be dropped)",
+   "Sep (callKeys message) only for supply_permit, permit_readable and sequences"
+  ],
+  "not_covered": [
+   "Witness of permit: one successful run is proved (permit.witness). It covers one of the 4 success ways of the code after the call (allowed != 0, expiry == 0); the other 3 have no witness. The reverting ways of permit have no witness.",
+   "supply_preserved and Seq.lean GoodCall keep the explicit exclusion selector != 0x8fcbaf0c (they hold for any child runner and from Berlin); permit is added back in PermitSeq.lean (supply_permit, PermitCall, CallsP) for the real runner from Paris and before Glamsterdam.",
+   "No path spec for the reverting ways of permit (not asked: specs are for success paths)."
+  ],
+  "witness": {
+   "audit": "the ten-token audit, fix 6 (USDD-2, USDD-6): closed for one branch",
+   "file": "UsddVerify/Usdd/PermitRun.lean (written by hand)",
+   "theorem": "Instance.permit_runs: for Paris <= fork < Glamsterdam, every block b and transaction environment t, every address C, every substate and every bound >= 100000, the call m1 with 100000 gas under EthLib's real runner processRunner ends in a frame with no error; in its state the allowance of (K, K) is 2^256 - 1 and the nonce of K is 1. No other hypothesis.",
+   "call": "permit(holder K, spender K, nonce 0, expiry 0, allowed 1, v 27, r, s) sent by HOLDER to any address C, state: one account at C with all-zero storage (so the domain separator word of slot 5 is 0)",
+   "signature": "a real secp256k1 signature by the public test key 0x11...11 (nonce k = 0x22...22), computed outside Lean. Lean checks it: Instance.recovered_m1 is proved by decide +kernel, the kernel runs EthLib's own Precompiles.Ecrecover.compute and keccak on the digest the code builds and gets K. Nothing about ECRECOVER is assumed; no native_decide.",
+   "forward_rule": "Instance.ecrecover_call_runs: the forward rule for GAS STATICCALL to address 1 under processRunner (with enough gas and an empty code hash at address 1, the interpreter goes on after the call with 1 pushed and the output of Ecrecover.compute in memory). The kit had only the backward rule ecrecover_call_ok.",
+   "covers": "one of the 4 success ways of the code after the call (allowed != 0, expiry == 0); the other 3 have no witness"
+  },
+  "no_delegation1": "The ten-token audit fix 6: NoDelegation1 is now DISCHARGED for concrete states: Instance.noDelegation1_of_emptyHash (it holds in every state where the account at address 1 has the hash of the empty code), Instance.noDelegation1_sState (so in every state sState C kvs, at every fork), Instance.noDelegation1_before_pectra (before Pectra it holds in every state). Still NOT proved: that a run keeps it (a 7702 set-code step could install a delegation at address 1), so the transaction theorems still assume it at each entry into the token. The words \"true on chain\" of earlier versions were a claim about live state that no theorem here checks; they are removed."
+ },
+ "assumptions": [
+  "Fork range (see fork_range): every claim is for Paris <= fork < Glamsterdam; transactions Dencun <= fork < Glamsterdam. The frame-level generated theorems are proved from Berlin and do not state the upper bound; they are about the one-counter gas meter (Nat), which EthLib runs only before Glamsterdam. The EIP-8037 two-counter meter is not ported.",
+  "Sep (callKeys message): keccak separation of the slots a call uses (assumed, not proved), for supply, readable and sequences. No closed instance of Sep exists (see closed_instance): it fails only on a keccak collision or preimage, about 2^-96 per fact under the random-function view, but that is a heuristic, not a proof. Read every \"every message\" or \"every successful call\" of this file as \"every message whose mapping slots do not collide\".",
+  "message.data.size < 2^256 in every completeness theorem.",
+  "NoDelegation1 for permit (see permit.hypotheses and permit.no_delegation1: discharged for states where address 1 has the empty code hash, not shown to be kept by a run).",
+  "Top-level lift: message.code = CODE, precompileAddress fork message = none (the message itself is not to a precompile).",
+  "Transaction theorems (supply_transaction, supply_any_transactions, supply_from_zero), run-local hypothesis Seq.TxClean.call / .create with Q := QMsg, part 1: every message m that really enters the code at C during this transaction satisfies Sep (callKeys m) (keccak separation for its caller and first two argument words, NOT proved). Nothing is assumed about messages outside the run. supply_message_any_depth assumes the same as Seq.Clean of its run.",
+  "Transaction theorems (supply_transaction, supply_any_transactions, supply_from_zero), Seq.TxClean.call / .create with Q := QMsg, part 2 (NoDelegation1, used by frameKeepsR for permit (selector 0x8fcbaf0c) only, and from Pectra only): in the state that the frame of each such message starts from, the account at address 1 (the precompile ECRECOVER) holds no EIP-7702 delegation code. A fact of the state, NOT proved and not shown to be kept from one entry to the next: it is assumed at each entry into the token during the run. It cannot be dropped: EthLib resolves a delegation before the precompile check.",
+  "Transaction theorems (supply_transaction, supply_any_transactions, supply_from_zero), Seq.TxClean.create: every code that a creation of this transaction really deposits, when it has the keccak hash of the code of USDD, is that code (no keccak collision on these codes, NOT proved).",
+  "Transaction theorems, Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of the code of USDD. Only a keccak collision breaks it; NOT proved.",
+  "Transaction theorems, Seq.TxClean.data: the call data of a transaction sent to C is below 2^256 bytes.",
+  "Transaction theorems, fork range: each transaction has Fork.dencun <= fork < Fork.glamsterdam (supply_transaction, the cons of Seq.Chain). supply_message_any_depth and frameKeepsR: Fork.paris <= fork < Fork.glamsterdam.",
+  "Transaction theorems, start state: Seq.Good C CODE (Inv C) on the block state before the first transaction: C holds the code of USDD (its code hash is keccak256 of the code and not the empty hash) and the invariant holds (supply_any_transactions, supply_transaction); supply_from_zero assumes Seq.HoldsCode and all-zero storage of C instead.",
+  "Transaction theorems, supply_message_any_depth only: Seq.Sane C CODE message (if the top message runs at C, it is a call that runs the code of USDD with call data below 2^256 bytes). The transaction theorems prove this from HoldsCode.",
+  "Older per-message model only (Seq.lean and PermitSeq.lean (inv_calls, inv_callsP, process_step, process_step_all, process_step_all_inv, calls_process, callsP_process)): the step `other` ASSUMES Untouched C S S' (every storage word of C kept) for everything that is not a direct top-level message to C. Not used by Tx.lean.",
+  "Closed instance only (Instance.supply_m0, Instance.supply_permit_m1, Instance.permit_runs_inv): KeyFacts, 5 facts about keccak, NOT proved, each over the 2^160 address words: KeyFacts.total: slot 1 (the total supply) is the balance slot keccak(a, 2) of no address word a; KeyFacts.uniq: no address word other than K has the balance slot of K; KeyFacts.allow: the allowance slot of (K, K) is the balance slot of no address word; KeyFacts.nonce: the nonce slot of K (mapping at slot 4) is the balance slot of no address word; KeyFacts.ward: the wards slot of K (mapping at slot 0) is the balance slot of no address word. Instance.sep_iff proves that this list is exactly Sep for the keys [K, K, K]. Instance.permit_runs itself has no hypothesis but the fork range."
+ ],
+ "not_covered": [
+  "permit witness: only one of the 4 success ways of the code after the call (allowed != 0, expiry == 0); the other 3 have no witness (Instance.permit_runs). It starts from all-zero storage, not from the chain state.",
+  "Axioms.lean leaves out by name supply_valueSent, supply_short, supply_other, supply_permitTail (no such theorem exists) and Supply.inv_congr (the name scan of gen_axioms does not see a dotted declaration); the scan of every constant still checks it. The named list does not name the small lemmas of Sep.lean and Code.lean, the block rules and the loop rules; the scan covers them.",
+  "Verified Solidity source not compared (no ETHERSCAN_KEY); all statements are about the deployed bytes.",
+  "Transaction level: what a block does between transactions is not linked (withdrawals, the system calls of EIP-4788, 2935, 7002, 7251, rewards). Seq.Chain strings transactions only.",
+  "Transaction level: forks before Dencun. There the end of a transaction can delete an account that ran SELFDESTRUCT, and it is not proved here that the code of USDD never runs it (the library tracks instead that C is not created in the transaction and not marked for deletion, which EIP-6780 gives from Dencun).",
+  "Transaction level: Glamsterdam and later (two-counter gas meter).",
+  "Transaction level: the base case of supply_from_zero is all-zero storage; the constructor run that leaves the real start state is not linked, so nothing is proved about the real chain state.",
+  "Transaction level: NoDelegation1 at each entry into the token is assumed, not derived from a start state (no theorem that a run keeps address 1 free of delegation code).",
+  "No closed instance of Sep and of any theorem under Sep (see closed_instance): the keccak facts are reduced to the 5 named facts of KeyFacts and left as a hypothesis.",
+  "NoDelegation1 is not shown to be kept by a run or by a sequence (see permit.no_delegation1).",
+  "The ten-token audit, USDD-7 (not in this fix round): no witness for name, symbol, version; no witness at processMessage level."
+ ],
+ "contract_findings": [
+  "SCOPE of this list: every item is read from the bytes and proved PER CALL (one successful call implies ...). No item is a theorem over a sequence of calls, and nothing here reads the live chain state (who holds a role today is not known to the proofs).",
+  "mint(usr, wad): only wards[caller] == 1. A ward mints any amount to any address; the only checks are the overflow of balanceOf[usr] and of totalSupply. No cap, no zero-address check.",
+  "rely(usr) / deny(usr): only wards[caller] == 1; they write wards[usr] = 1 / 0. A ward can add or remove any ward, itself included.",
+  "burn(usr, wad): no ward needed. The caller is usr, or has allowance[usr][caller] >= wad (an allowance of 2^256-1 is not reduced). balanceOf[usr] and totalSupply go down by wad.",
+  "transferFrom / move / pull / push: DAI style; an allowance of 2^256-1 is not reduced; no zero-address checks.",
+  "permit: DAI style (holder, spender, nonce, expiry, allowed, v, r, s). Check order in the bytes: holder != 0, ecrecover == holder, expiry == 0 or now <= expiry, nonce == nonces[holder]; then nonces[holder] + 1 and allowance[holder][spender] = 0 or 2^256-1. The domain separator is the word of storage slot 5 (set at construction, not recomputed with CHAINID). v is masked to its low byte before the call.",
+  "Every function reverts on a nonzero value. name, symbol, version write nothing and log nothing."
+ ],
+ "generator_changes": [
+  {
+   "file": "scripts/gen_paths.py",
+   "switch": "paths.raw_words",
+   "what": "keeps size and known words of a raw memory (words at offsets that are not multiples of 32) across blocks; KECCAK256 over raw bytes with side goals"
+  },
+  {
+   "file": "scripts/gen_paths.py",
+   "switch": "prefix_functions + stops",
+   "what": "a function whose path stops at a given pc (the frame before GAS STATICCALL), ok_<fn> ends in that frame and the rest of the run"
+  },
+  {
+   "file": "scripts/gen_paths.py",
+   "switch": "segments[].raw_mem",
+   "what": "a path that starts mid-code from a frame with a memory given by size, free pointer and known words"
+  },
+  {
+   "file": "scripts/gen_paths.py",
+   "switch": "segments[].post_def",
+   "what": "emits def <seg>_ends and ok_<seg>_ends so hand-written files can name the end of the segment"
+  },
+  {
+   "file": "scripts/gen_paths.py",
+   "switch": "paths.dead_rules",
+   "what": "rules for dead-end branches of the old optimizer"
+  },
+  {
+   "file": "scripts/gen_supply.py",
+   "switch": "supply.checked06, supply.norm",
+   "what": "solc 0.6 checked add/sub shapes; exact supply change for mint and burn"
+  },
+  {
+   "file": "scripts/gen_readable.py",
+   "switch": "readable_opts.facts = checked06, readable_opts.caller_key = raw",
+   "what": "readable facts for the 0.6 shapes; caller used as a key without a mask"
+  },
+  {
+   "file": "scripts/tokenlib.py",
+   "switch": "(shared helpers for the switches above)",
+   "what": "no change of output without the switches"
+  }
+ ],
+ "library_changes": [
+  {
+   "file": "TokenKit/Evm/Opt06.lean",
+   "new": true,
+   "what": "solc 0.6 optimizer shapes (masks, checked arithmetic)"
+  },
+  {
+   "file": "TokenKit/Evm/RawMem.lean",
+   "new": true,
+   "what": "known words of a raw memory: load_rawW, read_rawW, read0_raw, read4_raw, memoryReadBytes_add, keccakK, timestampL"
+  },
+  {
+   "file": "TokenKit/Evm/Precompile.lean",
+   "new": true,
+   "what": "STATICCALL to precompile 1 under the real runner: staticcall_outcome, bubble_no_ok, processMessage_precompile, ecrecover_ran, incorporateChild_precompile, recoveredWord, load_ecrecover, ecrecover_call_ok"
+  },
+  {
+   "file": "TokenKit.lean",
+   "what": "three import lines added; no existing declaration edited"
+  }
+ ],
+ "regression": "shib, qnt, bnb, weth, pepe regenerated with the edited scripts in a temp copy: every file byte-identical, except Test/Axioms.lean of bnb and weth (the known one open line from kit_opens.py; left unregenerated in the tree).",
+ "reuse_notes": {
+  "all": "The call model is in TokenKit/Evm/Precompile.lean: ecrecover_call_ok takes the frame at GAS, the bytes of GAS STATICCALL and of the 16-byte revert-bubble idiom of solc (ISZERO DUP1 ISZERO PUSH2 JUMPI RETURNDATASIZE PUSH1 0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0 REVERT) and gives the frame after the call with EthLib's compute in memory. Per token: config prefix_functions + stops at the GAS pc, one segment from the pc after STATICCALL with raw_mem + post_def, then a hand file like Usdd/Permit.lean (digest_bytes, permit_call, ok_permit_real; about 250 lines, mostly statement).",
+  "DAI": "solc 0.5.12, optimizer off: same DAI-style permit and storage, but the call sequence differs (the unoptimized code pushes gas with GAS then SUB or a literal, and checks with ISZERO ISZERO before the bubble). ecrecover_call_ok fixes the 16 idiom bytes and gas = GAS; a variant with the 0.5 byte pattern is needed (staticcall_outcome, ecrecover_ran and incorporateChild_precompile are reused as they are). Memory is aligned in 0.5 unoptimized code only up to abi.encodePacked of 0x1901: raw_words is still needed. DOMAIN_SEPARATOR is in storage as here.",
+  "SKY": "solc 0.8 with PUSH0 (from Shanghai): needs PUSH0 in the generator rules (bubble idiom uses PUSH0 instead of PUSH1 0: a second idiom lemma next to bubble_no_ok), EIP-2612 permit (owner, spender, value, deadline, v, r, s) with the domain separator rebuilt from CHAINID and ADDRESS when the chain id changed (CHAINID and ADDRESS rules, a branch), and an ERC-1271 path: when the signer has code the contract STATICCALLs it (isValidSignature). That call is to arbitrary code and can not be closed with the precompile model; state it with the result of the child run as a parameter or exclude that branch in a listed way.",
+  "USDE_ENA": "OpenZeppelin ERC20Permit, solc 0.8 with PUSH0: ECDSA.recover checks s <= n/2 and v in {27, 28} before the call and reverts with custom errors; _domainSeparatorV4 compares CHAINID and ADDRESS with immutables in the code (cached separator in code, not storage). Needs PUSH0, CHAINID, ADDRESS rules, the PUSH0 bubble idiom, nonces via a Counters mapping, and permitStruct with value instead of allowed. The STATICCALL lemmas are reused; the fork lower bound becomes Shanghai.",
+  "witness": "A Sanity witness for any permit needs a forward STATICCALL rule for processRunner and a kernel run of Ecrecover.compute on one real signature; build it once in the kit."
+ },
+ "transaction_theorems": {
+  "file": "UsddVerify/Usdd/Tx.lean (171 lines, 10 theorems, 1 abbrev QMsg), on the shared library TokenKit/Seq (Frame, Run, Tx, Supply)",
+  "headline": "supply_any_transactions: after any finite list of transactions (Seq.Chain) that EthLib's processTransaction runs, whoever sends them, whatever they call and however deep (calls back into USDD included), C still holds the code of USDD and the supply invariant Inv C holds, when both held on the block state before the first one. Every selector is included: supply_permit (PermitSeq.lean) for permit, supply_preserved (Invariant.lean) for every other selector.",
+  "supply_message_any_depth": "one call run by EthLib's processMessage, to any account and any code, at any depth: 'C holds the code of USDD and the invariant holds' is kept, with or without an error. Paris <= fork < Glamsterdam. Assumes Seq.Sane (a call that runs at C runs CODE), Seq.Good at the start, Seq.Clean of this run with Q := QMsg fork.",
+  "supply_transaction": "one whole transaction run by EthLib's processTransaction (gas purchase, EIP-7702 authorizations, the message, call or creation, refunds, fee, deletion of accounts): block state before to block state after. Dencun <= fork < Glamsterdam. Assumes Seq.TxClean of this transaction and Seq.Good at the start.",
+  "supply_any_transactions": "the same after any finite list of transactions (Seq.Chain), each at its own fork (Dencun <= fork < Glamsterdam) and in its own block environment.",
+  "supply_from_zero": "the same from the base case shape: C holds the code and every storage word of C is zero (inv_zeroBase); conclusion Inv C after the list. This is NOT the real deployment state of USDD (the constructor run is not verified).",
+  "frameKeepsR": "the per-frame premise of the library (Seq.FrameKeepsR: a frame that runs CODE at C under EthLib's real runner processRunner and ends with no error keeps Inv C), proved from the existing all-selector theorems: supply_permit (PermitSeq.lean) for permit, supply_preserved (Invariant.lean) for every other selector. Paris <= fork < Glamsterdam, any gas cap. No hypothesis on the runner is left: the STATICCALL to the ecrecover precompile is a message of the run like any other and the library induction covers it.",
+  "fork_range": "transaction theorems: Fork.dencun <= fork < Fork.glamsterdam for each transaction. Message theorem: Fork.paris <= fork < Fork.glamsterdam.",
+  "start_state": "Seq.Good C CODE (Inv C) on the block state before the first transaction (assumed, see assumptions); supply_from_zero: Seq.HoldsCode plus all-zero storage of C.",
+  "older_model_kept": "Seq.lean and PermitSeq.lean (inv_calls, inv_callsP, process_step, process_step_all, process_step_all_inv, calls_process, callsP_process): top-level messages only, where every other step is ASSUMED to keep the storage of C (the constructor `other` with `Untouched`). This is the weaker per-message model. It is kept because other files and the axioms list use it; the theorems of Tx.lean do not use that assumption."
+ },
+ "fix_round_audit4": {
+  "finding": "USDD-1 (the ten-token audit): the sequence theorems covered direct top-level messages only and assumed every other step keeps the storage of C (Untouched); no link to transactions; no base case.",
+  "status": "done by agent apply-b (fix 2, recipe B of audits/usdd/fixes.json): see audits/usdd/fixes.json",
+  "files": "UsddVerify/Usdd/Tx.lean (new, 171 lines), UsddVerify.lean (1 import), config/usdd.json (axioms.imports + 1, axioms.after + 10), Test/Axioms.lean (regenerated, 297 names). No other generated file changed (scripts/regen_check.sh usdd: SAME).",
+  "retired": "nothing; Seq.lean and PermitSeq.lean (inv_calls, inv_callsP, process_step, process_step_all, process_step_all_inv, calls_process, callsP_process) are kept as the older, weaker per-message model",
+  "to_merge_into_kit": "nothing: recipe B needed no new lemma (no precompile-call frame lemma). The definition NoDelegation1 is the same in usdd, dai, usde, ena (PermitSeq.lean) and uni (Seq.lean) and could move to TokenKit/Evm/Precompile.lean."
+ },
+ "fork_range": {
+  "headline": "Every claim of this file is for Paris <= fork < Glamsterdam (transactions: Dencun <= fork < Glamsterdam). Nothing is claimed for Glamsterdam or later.",
+  "why": "The proofs use the one-counter gas meter (Evm fork Nat). EthLib runs that meter only before Glamsterdam; from Glamsterdam it runs the two-counter meter of EIP-8037, which is not ported.",
+  "stated_in_the_theorem": "fork < .glamsterdam is a hypothesis of: ok_permit_real, permit_readable, supply_permit, process_step_all, process_step_all_inv, permitCall_process, callsP_process, frameKeepsR, supply_message_any_depth, supply_transaction, supply_any_transactions, supply_from_zero (Tx.lean), and of every theorem of Instance.lean and PermitRun.lean that is about a run (supply_m0, ecrecover_call_runs, permit_runs, supply_permit_m1, permit_runs_inv).",
+  "not_stated_in_the_theorem": "The older generated theorems (block rules, path specs, ok_<fn>, supply_<fn>, supply_preserved, <fn>_readable, the Sanity witnesses) and the hand-written older per-message model of Seq.lean (process_step, process_step_inv, calls_process) carry only the lower bound (Berlin <= fork; Seq.lean from Paris). They are statements about the one-counter model and are true as stated at every such fork, but they describe what EthLib really runs only before Glamsterdam. The bound was NOT added to them: it would have to come from the generators in token-kit/scripts (shared by every token, outside the scope of this fix round), and adding a hypothesis that the proofs do not use would change no proof. Read each of them with fork < Glamsterdam; every headline that reaches a message or a transaction (the lists above) states it.",
+  "audit": "the ten-token audit, fix 7 (USDD-4)"
+ },
+ "closed_instance": {
+  "audit": "the ten-token audit, fix 5 (USDD-3): PARTLY closed",
+  "plain_answer": "There is NO closed instance of Sep, and so no theorem under Sep (supply_<fn>, supply_preserved, supply_permit, the readable theorems of the writers, the sequence and transaction theorems) has an instance with every hypothesis proved. Each open fact of Sep says that a given slot is the balance slot keccak(a, 2) of no address word a: a statement over 2^160 values of keccak. keccak is a real function here, but no proof can run it 2^160 times and no shorter argument is known (it is preimage and collision resistance). Under the usual random-function view each fact fails with chance about 2^-96.",
+  "file": "UsddVerify/Usdd/Instance.lean (written by hand)",
+  "state_and_call": "state sState C []: one account at the contract C, every storage word 0. Call m0: allowance(K, K) sent by HOLDER, the address with the word K = 0x19e7e376e7c213b7e7e7e46cc70a5dd086daff2a (the address of the public test key 0x11...11), so the three mapping keys of the call are K, K, K.",
+  "proved_with_no_hypothesis": [
+   "inv_start: the start invariant Inv holds in that state (sum of balances 0, total supply 0)",
+   "callKeys_m0, callKeys_m1: the keys of the two calls are [K, K, K]",
+   "computed by the kernel with the real keccak: allow_ne_total, nonce_ne_total, allow_ne_nonce, ward_ne_total",
+   "sep_iff, sep_m0_iff: Sep [K, K, K] holds exactly when KeyFacts holds (both directions), so the list of 5 facts below is the whole open part and cannot be made shorter",
+   "noDelegation1_of_emptyHash, noDelegation1_sState, noDelegation1_before_pectra (see permit)"
+  ],
+  "left_as_hypothesis": [
+   "KeyFacts.total: slot 1 (the total supply) is the balance slot keccak(a, 2) of no address word a",
+   "KeyFacts.uniq: no address word other than K has the balance slot of K",
+   "KeyFacts.allow: the allowance slot of (K, K) is the balance slot of no address word",
+   "KeyFacts.nonce: the nonce slot of K (mapping at slot 4) is the balance slot of no address word",
+   "KeyFacts.ward: the wards slot of K (mapping at slot 0) is the balance slot of no address word"
+  ],
+  "closed_modulo_KeyFacts": [
+   "supply_m0: every run of m0 from sState C [] that ends with no error ends in a state where Inv holds. Hypotheses: Berlin <= fork < Glamsterdam and KeyFacts; nothing else.",
+   "supply_permit_m1 (PermitRun.lean): the same for the permit call m1 under the real runner. Hypotheses: Paris <= fork < Glamsterdam and KeyFacts; nothing else (the start invariant, NoDelegation1, the size of the call data and the selector are discharged).",
+   "permit_runs_inv: the run of permit_runs exists and, under KeyFacts, ends in a state where Inv holds."
+  ],
+  "not_done": "No base case was added to the sequence or transaction theorems beyond the existing supply_from_zero / inv_zeroBase (all-zero storage); inv_start is that base case for the concrete state. The real chain state is not used."
+ },
+ "owner_facts": {
+  "source": "the ten-token audit, finding USDD-9: facts about the deployed bytes that the auditor confirmed and that matter to an owner or a user. Each is per call; none is a statement about live chain state.",
+  "facts": [
+   "USDD-9.a: mint(usr, wad) needs only wards[caller] == 1; a ward can mint any amount to any address. rely and deny need the same, so any ward can add wards or remove every other ward. Treat every ward key as full mint authority. The proofs do not say who the wards are on chain (no state was read): list the wards on chain.",
+   "USDD-9.b: burn(usr, wad) needs no ward: caller == usr, or allowance[usr][caller] >= wad; an allowance of 2^256-1 is never reduced.",
+   "USDD-9.c: permit is DAI style: allowed != 0 sets the allowance to 2^256-1, allowed == 0 sets it to 0; expiry 0 means no expiry; the nonce must equal nonces[holder]. The domain separator is the word of storage slot 5, fixed at construction and not rebuilt from CHAINID (no CHAINID opcode in the code), so a signature is valid on any chain fork that carries the same storage.",
+   "USDD-9.d: dirty inputs are accepted: address arguments are masked, 'allowed' is any nonzero word, v is masked to its low byte. The contract adds no check on s beyond the precompile's, so the mirrored signature (n - s, other v) also passes; the nonce stops a replay.",
+   "USDD-9.e: no zero address check in transfer, transferFrom, mint; tokens sent to address 0 stay in the sum.",
+   "USDD-9.f: every function reverts on value; no CALL, DELEGATECALL, SELFDESTRUCT or CREATE in the code; the only outside call is the STATICCALL to address 1."
+  ]
+ },
+ "claims": [
+  {
+   "claim": "CODE is the deployed runtime bytecode",
+   "theorems": "Test/Hash.lean (an #eval test run by the build, not a theorem), valid_CODE",
+   "under": "nothing"
+  },
+  {
+   "claim": "every selector is dispatched; a run that ends with no error took one of the listed paths",
+   "theorems": "selector_cases, ends_ok_dispatch, runFrame_ok_dispatch, ok_<fn>",
+   "under": "Berlin <= fork; read with fork < Glamsterdam (fork_range)"
+  },
+  {
+   "claim": "per call: a successful call of a function did exactly the stated checks, writes and logs",
+   "theorems": "Readable.<fn>_readable, permit_readable",
+   "under": "Sep (callKeys message) for the writers (keccak, NOT proved); fork_range"
+  },
+  {
+   "claim": "per call: a successful call keeps sum of balances = totalSupply",
+   "theorems": "supply_<fn>, supply_preserved, supply_permit",
+   "under": "Sep (callKeys message), the invariant before the call; permit: NoDelegation1 and the real runner; fork_range"
+  },
+  {
+   "claim": "every transaction and every finite chain of transactions keeps the invariant",
+   "theorems": "supply_transaction, supply_any_transactions, supply_from_zero (Tx.lean)",
+   "under": "Seq.TxClean (Sep and NoDelegation1 at each entry into the token, no keccak collision on codes, NOT proved), Dencun <= fork < Glamsterdam, the start state (see assumptions)"
+  },
+  {
+   "claim": "a permit call can succeed (the success case is not empty)",
+   "theorems": "Instance.permit_runs",
+   "under": "Paris <= fork < Glamsterdam only; one branch (permit.witness)"
+  },
+  {
+   "claim": "the hypotheses of the invariant theorems can hold together for one concrete state and call",
+   "theorems": "Instance.supply_m0, Instance.supply_permit_m1, Instance.permit_runs_inv",
+   "under": "KeyFacts (5 keccak facts, NOT proved): PARTLY closed, see closed_instance"
+  },
+  {
+   "claim": "no theorem uses an axiom beyond propext, Classical.choice, Quot.sound",
+   "theorems": "Test/Axioms.lean: the named list and the scan of every constant of the project and of TokenKit",
+   "under": "the scan does not list constants of UsdtVerify and EthLib that the project does not use (the ten-token audit, USDD-8)"
+  },
+  {
+   "claim": "NOT claimed",
+   "theorems": "-",
+   "under": "anything about the live chain state (who holds a role, the real storage), anything over time that is not in Tx.lean (for example who can mint tomorrow), Glamsterdam or later, the constructor"
+  }
+ ],
+ "to_merge_into_kit": [
+  {
+   "file": "tokens/usdd/UsddVerify/Usdd/PermitRun.lean",
+   "change": "processMessage_precompile_ok, mcg_facts, writeMax_le, ecrecover_call_runs (the forward rule for GAS STATICCALL to ECRECOVER under processRunner), storageAt_recordAccountRead, hasAccount_recordAccountRead",
+   "reason": "the ten-token audit fix 6: generic, the same text in usdd, dai, usde, ena; belongs in TokenKit/Evm/Precompile.lean next to the backward rule ecrecover_call_ok"
+  },
+  {
+   "file": "tokens/usdd/UsddVerify/Usdd/Instance.lean",
+   "change": "noDelegation1_of_emptyHash, noDelegation1_before_pectra, codeHash_sState, noDelegation1_sState",
+   "reason": "the ten-token audit fix 6: generic once the definition NoDelegation1 moves to the kit (it is the same in usdd, dai, usde, ena, uni)"
+  }
+ ],
+ "notes": [
+  "The ten-token audit, USDD-5: the build log of USDD was missing. It is there now: logs/usdd.log and logs/usdd.axioms (full clean rebuild).",
+  "The ten-token audit, USDD-8: lakefile.lean said 'PEPE'; fixed to USDD. The 'claims' key is new.",
+  "This fix round (close-e) edited no file under token-kit/TokenKit or token-kit/scripts and no other token."
+ ],
+ "fix_round_audit4_close_e": {
+  "findings": "USDD-2, 3, 4, 5, 6, 8, 9",
+  "status": "see audits/usdd/fixes.json (per finding: closed, partly or not done)",
+  "files": "UsddVerify/Usdd/Instance.lean (new, by hand), UsddVerify/Usdd/PermitRun.lean (new, by hand), UsddVerify.lean (2 imports), config/usdd.json (axioms.imports + 2, axioms.after + 36), Test/Axioms.lean (regenerated, 333 names), status.json, docs/MAP.md (section \"Limits of the proofs\"), lakefile.lean (comment). No other generated file changed (scripts/regen_check.sh usdd: SAME).",
+  "retired": "nothing; every older theorem is kept as it was"
+ }
+}

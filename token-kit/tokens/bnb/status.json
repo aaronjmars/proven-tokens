@@ -1,0 +1,56 @@
+{
+ "token": "BNB",
+ "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+ "date": "2026-11-11",
+ "result": "done: the supply invariant of BNB is proved after any transaction and any finite list of transactions run by EthLib's real transaction function, withdrawEther included, with the assumptions and limits listed below",
+ "build": {
+  "where": "E2B box lean-fix-c, /home/user/token-kit/tokens/bnb, kit = git archive HEAD token-kit (committed kit), Lean v4.35.0",
+  "command": "lake build from a removed tokens/bnb/.lake/build (target BnbVerify, the root that imports every module and Test/Axioms), LEAN_NUM_THREADS=2",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1402 jobs).",
+  "log": "logs/bnb.log (axioms output: logs/bnb.axioms)",
+  "axioms_check": "scripts/check_axioms.sh on that log: count matches Test/Axioms.lean: 176; only standard axioms (propext, Classical.choice, Quot.sound); AXIOM SCAN OK: 5993 constants (5614 theorems) of BnbVerify and TokenKit",
+  "regen_check": "SAME bnb (generated files equal a fresh regeneration from config/bnb.json)"
+ },
+ "theorem_counts": {
+  "theorems_in_tokens_bnb": 480,
+  "headlines_in_Test_Axioms": 176,
+  "headlines_before_this_round": 160,
+  "new_in_Tx_lean": 10
+ },
+ "headline": "supply_any_transactions (BnbVerify/Bnb/Tx.lean): the supply invariant Inv C holds, and the contract still holds its code, after ANY finite list of transactions run by EthLib's processTransaction (Seq.Chain), whoever sends them and whatever they call at any depth: calls back into BNB, withdrawEther and the code its owner runs, creations, failed and reverted calls included. From a block state where it holds. Assumptions: the 'Transaction theorems' lines of `assumptions`; limits: the 'Transaction level' lines of `not_covered`.",
+ "claims": {
+  "supply_message_any_depth": "one call run by EthLib's processMessage, to any account and any code, at any depth: 'C holds the code of BNB and the invariant holds' is kept, with or without an error. Berlin <= fork < Glamsterdam. Assumes Seq.Sane, Seq.Good at the start, Seq.Clean of this run with Q := QMsg.",
+  "supply_transaction": "one whole transaction run by EthLib's processTransaction (gas purchase, EIP-7702 authorizations, the message, refunds, fee, deletion of accounts): block state before to block state after. Dencun <= fork < Glamsterdam. Assumes Seq.TxClean of this transaction and Seq.Good at the start.",
+  "supply_any_transactions": "the same after any finite list of transactions (Seq.Chain), each at its own fork and block environment.",
+  "supply_from_zero": "the same from the base case shape: C holds the code and every storage word of C is zero (inv_zeroBase). This is NOT the real deployment state of BNB (the constructor mints the supply).",
+  "frameKeepsR": "the code of BNB meets the interface Seq.FrameKeepsR of the kit for EthLib's real runner. The frame of withdrawEther uses the stipend theorem (Withdraw.supply_withdrawEther_process): the owner runs with at most 2300 gas and writes no storage word, so no fact about the runner and no cap on gas is needed.",
+  "facts_for_the_library": "storageOnly_inv, code_size_ne_zero, code_not_indicator, code_not_delegated, inv_zeroBase: proved, no hypothesis.",
+  "older_model_kept": "Seq.lean (Calls, Untouched): top-level messages only, where every other step is ASSUMED to keep the storage of C. Kept; the theorems of Tx.lean do not use that assumption."
+ },
+ "assumptions": [
+  "Transaction theorems (supply_transaction, supply_any_transactions, supply_from_zero), run-local hypothesis Seq.TxClean.call with Q := QMsg: every message that really enters the code at C during this transaction satisfies QMsg. Part 1: when its selector is not withdrawEther, Sep (callKeys m) (keccak separation for its caller and first two argument words, NOT proved). Part 2: when its selector is withdrawEther and the fork is Prague or later, the code of the owner (slot 4) is no EIP-7702 delegation in the state the frame starts from (EthLib's rule for the CALL step used by Withdraw.withdrawEther_run does not cover a delegated target). Nothing is assumed about messages outside the run. supply_message_any_depth assumes the same as Seq.Clean of its run.",
+  "Transaction theorems (same three), Seq.TxClean.create: every code that a creation of this transaction really deposits, when it has the keccak hash of the code of BNB, is that code (no keccak collision, NOT proved).",
+  "Transaction theorems (same three), Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code with the keccak hash of the code of BNB. Only a keccak collision breaks it; NOT proved.",
+  "Transaction theorems (same three), Seq.TxClean.data: the call data of a transaction sent to C is below 2^256 bytes.",
+  "Transaction theorems, fork range: each transaction has Fork.dencun <= fork < Fork.glamsterdam (supply_transaction, the cons of Seq.Chain used by supply_any_transactions and supply_from_zero). supply_message_any_depth and frameKeepsR: Fork.berlin <= fork < Fork.glamsterdam.",
+  "Transaction theorems, start state: Seq.Good C CODE (Inv C) on the block state before the first transaction: C holds the code of BNB and the invariant holds (supply_any_transactions, supply_transaction); supply_from_zero assumes Seq.HoldsCode and all-zero storage of C instead.",
+  "supply_message_any_depth only: Seq.Sane C CODE message (if the top message runs at C, it is a call that runs the code of BNB with call data below 2^256 bytes). The transaction theorems prove this from HoldsCode.",
+  "Older theorems (before this round) keep their own hypotheses as stated in their files (Seq.lean: Untouched for every step that is not a top-level message; Stipend.lean and Withdraw.lean: fork before Glamsterdam, owner code not delegated)."
+ ],
+ "not_covered": [
+  "Transaction level: what a block does between transactions is not linked (withdrawals, the system calls of EIP-4788, 2935, 7002, 7251, block rewards). The chain predicate strings transactions only.",
+  "Transaction level: forks before Dencun (there the end of a transaction can delete an account that ran SELFDESTRUCT; the library uses EIP-6780 from Dencun instead).",
+  "Transaction level: Glamsterdam and later (two-counter gas meter).",
+  "Transaction level: the constructor run that leaves the real start state of BNB is not linked (its storage after deployment is not all zero: the constructor mints the supply). supply_from_zero is the all-zero base case only.",
+  "withdrawEther when the owner account carries an EIP-7702 delegation (Prague and later): excluded by QMsg part 2, not proved either way."
+ ],
+ "fix_round_audit4": {
+  "finding": "BNB (the ten-token audit, fix 2 applied to BNB): the sequence theorems covered top-level messages only and assumed every other step keeps the storage of C.",
+  "status": "done",
+  "part": "apply-c, see audits/bnb/fixes.json",
+  "files": "BnbVerify/Bnb/Tx.lean (new, 183 lines), BnbVerify.lean (1 import), config/bnb.json (axioms.imports, 16 names in axioms.after), BnbVerify/Test/Axioms.lean (regenerated, 160 to 176), status.json (new)",
+  "retired": "nothing; Seq.lean is kept as the older, weaker model",
+  "to_merge_into_kit": "nothing (the generic part is already in TokenKit/Seq)"
+ }
+}

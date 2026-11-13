@@ -1,0 +1,356 @@
+{
+ "token": "BNB",
+ "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
+ "compiler": "solc 0.4.12, optimizer off",
+ "lean_root": "BnbVerify",
+ "lean_dir": "Bnb",
+ "hex": "data/bnb.runtime.hex",
+ "paths_json": "work/bnb.paths.json",
+ "dispatch": {
+  "comment": "Numbers of the hand-written theorem `enter` (Enter.lean): gas of the prelude, gas of one table entry, the memory words after the prelude (free memory pointer 0x60), the least call data size of `enter` (the code has no test for 4 bytes), and the line of ok_<fn> that proves it.",
+  "prelude_gas": 59,
+  "entry_gas": 22,
+  "memory_words": [
+   0,
+   0,
+   96
+  ],
+  "min_size": 1,
+  "size_proof": "have hsize : 1 ≤ message.data.size := size_of_selector hsel (by decide)"
+ },
+ "prune": "normalized",
+ "paths": {
+  "comment": "memory_lemmas named: the block lemmas use the lemmas named after the offset of the free memory pointer (memW_ext96, memW_write96, memW_read96, size_memW4) where they apply, as the first build of this token did; without the key the lemmas for any aligned word are used (memW_set, memW_readWord, size_memWn).",
+  "memory_lemmas": "named"
+ },
+ "paths_imports": [
+  "TokenKit.Evm.Dead"
+ ],
+ "dead_branches": [
+  {
+   "function": "transfer",
+   "pc": 5252,
+   "visit": 1,
+   "side": "fall",
+   "by": "dead_credit hc4 hc5",
+   "why": "the credit after the debit cannot overflow (Evm/Dead.lean)"
+  },
+  {
+   "function": "transfer",
+   "pc": 5295,
+   "visit": 2,
+   "side": "taken",
+   "by": "dead_add2",
+   "why": "second check of SafeMath add"
+  },
+  {
+   "function": "transferFrom",
+   "pc": 5252,
+   "visit": 1,
+   "side": "fall",
+   "by": "dead_credit hc4 hc5",
+   "why": "the credit after the debit cannot overflow (Evm/Dead.lean)"
+  },
+  {
+   "function": "transferFrom",
+   "pc": 5295,
+   "visit": 2,
+   "side": "taken",
+   "by": "dead_add2",
+   "why": "second check of SafeMath add"
+  },
+  {
+   "function": "freeze",
+   "pc": 5295,
+   "visit": 2,
+   "side": "taken",
+   "by": "dead_add2",
+   "why": "second check of SafeMath add"
+  },
+  {
+   "function": "unfreeze",
+   "pc": 5295,
+   "visit": 2,
+   "side": "taken",
+   "by": "dead_add2",
+   "why": "second check of SafeMath add"
+  }
+ ],
+ "slots": {
+  "name": 0,
+  "symbol": 1,
+  "decimals": 2,
+  "totalSupply": 3,
+  "owner": 4,
+  "balanceOf": 5,
+  "freezeOf": 6,
+  "allowance": 7
+ },
+ "functions": [
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "owner",
+   "sig": "owner()"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "freezeOf",
+   "sig": "freezeOf(address)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "burn",
+   "sig": "burn(uint256)"
+  },
+  {
+   "name": "freeze",
+   "sig": "freeze(uint256)"
+  },
+  {
+   "name": "unfreeze",
+   "sig": "unfreeze(uint256)"
+  },
+  {
+   "name": "withdrawEther",
+   "sig": "withdrawEther(uint256)",
+   "frame": true,
+   "frame_comment": "frame: true = the path of this function stops at its CALL (gen_paths.py has no rule for a message). What it weakens: no generated ok_withdrawEther (completeness for successful runs), no generated supply_withdrawEther, no generated witness; supply_preserved takes the hypothesis selector != 0x3bed33ce. What stands for them, hand-written and in the axioms test: frame_theorems (Bnb/Withdraw.lean), the sequence theorems of Bnb/Seq.lean and the witnesses of Bnb/Sanity/Withdraw.lean.",
+   "frame_theorems": [
+    "Withdraw.withdrawEther_run",
+    "Withdraw.supply_withdrawEther"
+   ]
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  }
+ ],
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "BURN": "Burn(address,uint256)",
+  "FREEZE": "Freeze(address,uint256)",
+  "UNFREEZE": "Unfreeze(address,uint256)"
+ },
+ "axioms": {
+  "comment": "names: hand-written theorems checked before the generated ones; after: theorems of files that import the generated ones; imports: modules Test/Axioms.lean imports first (gen_axioms.py adds every module of the root file, and a scan of every constant of them). There is no skip list: withdrawEther (frame: true) has no generated ok_ and supply_ theorem, and names the hand-written ones under frame_theorems.",
+  "imports": [
+   "BnbVerify.Bnb.Complete.Dispatch",
+   "BnbVerify.Bnb.Gen.Loops",
+   "BnbVerify.Bnb.Readable",
+   "BnbVerify.Bnb.Sanity.Runs",
+   "BnbVerify.Bnb.Withdraw",
+   "BnbVerify.Bnb.Seq",
+   "BnbVerify.Bnb.Sanity.Withdraw",
+   "BnbVerify.Bnb.Stipend",
+   "BnbVerify.Bnb.Tx"
+  ],
+  "names": [
+   "CODE_eq",
+   "size_CODE",
+   "Nonpayable.valueRevert",
+   "Nonpayable.table_entry",
+   "Nonpayable.spec",
+   "Fallback.spec_unknown",
+   "Fallback.spec_empty",
+   "enter",
+   "selector_cases",
+   "ends_ok_dispatch",
+   "ends_ok_fallback",
+   "runFrame_ok_dispatch"
+  ],
+  "after": [
+   "Readable.totalSupply_readable",
+   "Readable.decimals_readable",
+   "Readable.owner_readable",
+   "Readable.balanceOf_readable",
+   "Readable.freezeOf_readable",
+   "Readable.allowance_readable",
+   "Readable.approve_readable",
+   "Readable.transfer_readable",
+   "Readable.transferFrom_readable",
+   "Readable.burn_readable",
+   "Readable.freeze_readable",
+   "Readable.unfreeze_readable",
+   "inv_calls",
+   "process_step",
+   "process_step_novalue",
+   "process_step_inv",
+   "inv_goodCall",
+   "inv_goodWithdraw",
+   "inv_untouched",
+   "untouched_process_failed",
+   "untouched_move",
+   "process_step_withdraw",
+   "process_step_all",
+   "process_step_inv_all",
+   "Calls.append",
+   "Withdraw.tail_ok",
+   "Withdraw.tail_rev",
+   "Withdraw.withdrawEther_needs",
+   "Withdraw.withdrawEther_only_owner",
+   "Withdraw.withdrawEther_only_owner_run",
+   "Withdraw.withdrawEther_to_call",
+   "Withdraw.withdrawEther_reaches_call",
+   "Withdraw.processRunner_keepsInv",
+   "Withdraw.keepsInv_noCode",
+   "Withdraw.keepsInv_stop",
+   "Withdraw.supply_withdrawEther_plain",
+   "Withdraw.process_step_inv_plain",
+   "Withdraw.withdrawEther_pays",
+   "Withdraw.withdrawEther_pays_sample",
+   "Withdraw.withdrawEther_pays_closed",
+   "Withdraw.payout_keeps_storage",
+   "Withdraw.processRunner_keepsInv_any",
+   "Withdraw.supply_withdrawEther_process",
+   "process_step_withdraw_process",
+   "process_step_all_process",
+   "process_step_inv_all_process",
+   "Stipend.processMessage_quiet",
+   "moveEther_keeps_storage",
+   "call_outcome",
+   "Payee.stop_message",
+   "Payee.payee_keeps_storage",
+   "Payee.noCode_message_runs",
+   "storageOnly_inv",
+   "code_size_ne_zero",
+   "code_not_indicator",
+   "code_not_delegated",
+   "inv_zeroBase",
+   "frameKeepsR",
+   "supply_message_any_depth",
+   "supply_transaction",
+   "supply_any_transactions",
+   "supply_from_zero",
+   "Seq.storageOnly_supply2",
+   "Seq.zeroBase_supply2",
+   "Seq.processMessage_good_local",
+   "Seq.processTransaction_good",
+   "Seq.chain_good",
+   "Seq.chain_from_zero"
+  ]
+ },
+ "supply": {
+  "what": "the sum of all `balanceOf` plus the sum of all `freezeOf` is `totalSupply`",
+  "what_kept": "if the sum of all `balanceOf` plus the sum of all `freezeOf` was `totalSupply` before, it is after.",
+  "unfold": "Inv Supply.Inv2",
+  "disch": "slot_side",
+  "rules": "Supply.D2_read, D_bal hsep, D_frz hsep, D_tot hsep, D_allow hsep, storageAt_readSlot",
+  "ro": "Supply.inv2_of_ro",
+  "dispatch": "  rcases ends_ok_dispatch hfork hsize' start hrun hok with ⟨_, h⟩ | ⟨_, _, h⟩ | ⟨_, _, i, hi⟩\n  · rw [h.2.2.2.1]\n    exact hinv\n  · rw [h.2.2.2.1]\n    exact hinv\n"
+ },
+ "generators": [
+  "code",
+  "paths",
+  "loops",
+  "supply",
+  "sanity",
+  "axioms"
+ ],
+ "token_generators": [
+  "scripts/bnb_readable.py"
+ ],
+ "sanity": {
+  "comment": "The witness call of each function (scripts/gen_sanity.py). A list: the argument words, on the state with every slot 0. A dict: args, and state = the slots that hold the word 5 (MASK is the 160 bit mask); every amount is 1.",
+  "imports": [
+   "TokenKit.Evm.Witness2"
+  ],
+  "doc": "`<fn>_runs`: in a state with one account at the contract `C`, where the slots listed in\n`config/bnb.json` (`sanity.<fn>.state`) hold the word 5 and every other slot 0, the call of `<fn>`\nwith the argument words below (every amount is 1, so tokens really move) meets every hypothesis\nof the success path theorem of `<fn>`; so there is a run from pc 0 that ends with no error and\nwith the stated output. No fact about keccak is used: a slot is the term `mapSlot ...`, whatever\nits number is, and the proofs hold whether or not two of these slots are the same slot.",
+  "totalSupply": [],
+  "decimals": [],
+  "owner": [],
+  "balanceOf": [
+   1
+  ],
+  "freezeOf": [
+   1
+  ],
+  "allowance": [
+   1,
+   2
+  ],
+  "approve": {
+   "args": [
+    1,
+    1
+   ],
+   "state": []
+  },
+  "transfer": {
+   "args": [
+    1,
+    1
+   ],
+   "state": [
+    "mapSlot (bitwiseAnd MASK (bitwiseAnd MASK caller.toU256)) (5 : U256)"
+   ]
+  },
+  "transferFrom": {
+   "args": [
+    2,
+    1,
+    1
+   ],
+   "state": [
+    "mapSlot (bitwiseAnd MASK (bitwiseAnd MASK (bitwiseAnd MASK (2 : U256)))) (5 : U256)",
+    "mapSlot (bitwiseAnd MASK (bitwiseAnd MASK caller.toU256)) (mapSlot (bitwiseAnd MASK (bitwiseAnd MASK (bitwiseAnd MASK (2 : U256)))) (7 : U256))"
+   ]
+  },
+  "burn": {
+   "args": [
+    1
+   ],
+   "state": [
+    "mapSlot (bitwiseAnd MASK (bitwiseAnd MASK caller.toU256)) (5 : U256)",
+    "(3 : U256)"
+   ]
+  },
+  "freeze": {
+   "args": [
+    1
+   ],
+   "state": [
+    "mapSlot (bitwiseAnd MASK (bitwiseAnd MASK caller.toU256)) (5 : U256)"
+   ]
+  },
+  "unfreeze": {
+   "args": [
+    1
+   ],
+   "state": [
+    "mapSlot (bitwiseAnd MASK (bitwiseAnd MASK caller.toU256)) (6 : U256)"
+   ]
+  },
+  "file": "Runs"
+ }
+}

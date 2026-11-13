@@ -1,0 +1,424 @@
+{
+ "token": "WBTC",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/wbtc.log",
+  "axioms": "logs/wbtc.axioms"
+ },
+ "findings": {
+  "WBTC-1": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 8,
+     "do": "Claims proved per call but worded as lasting facts. WBTC: restate supply_all with the local callee assumption (scratch: scratch file SupplyAllCallee.lean (not kept)). ENA mint limits, SKY wards, USDE minter, WBTC roles: add the sequence theorem or reword the claim as per call."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "done",
+     "what_changed": "The audit's scratch theorem (scratch file SupplyAllCallee.lean (not kept)) is now the headline supply_all_calleeKeeps in Any.lean: all 24 selectors, reclaimToken under the LOCAL ReclaimCalleeKeeps, no HoldsCode. The old supply_all is renamed supply_all_runnerKeeps and proved as a corollary of it; status.json names both and lists RunnerKeeps as an assumption.",
+     "theorems_added": [
+      "supply_all_calleeKeeps"
+     ],
+     "theorems_renamed": {
+      "supply_all": "supply_all_runnerKeeps"
+     },
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "Sep (callKeys message)",
+      "ReclaimCalleeKeeps for reclaimToken, fork < Glamsterdam",
+      "supply_all_runnerKeeps only: RunnerKeeps (every sane message of the runner) and HoldsCode; it is the interface of the induction, not a headline"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/Any.lean lines 71-126",
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/AnyLocal.lean (name change)",
+      "config/axioms_names.json",
+      "token-kit/tokens/wbtc/config/wbtc.json",
+      "token-kit/tokens/wbtc/WbtcVerify/Test/Axioms.lean",
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "nothing"
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 8,
+     "recorded_status": "closed",
+     "what_changed": "Checked: supply_all_calleeKeeps (Any.lean) is the headline in status.json main_theorems.supply; supply_all_runnerKeeps is named as the interface of the induction only.",
+     "theorems": [
+      "supply_all_calleeKeeps"
+     ],
+     "hypotheses_still_assumed": [
+      "Sep (callKeys message)",
+      "ReclaimCalleeKeeps for reclaimToken",
+      "Berlin <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/Any.lean",
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/AnyLocal.lean",
+    "token-kit/tokens/wbtc/config/wbtc.json",
+    "token-kit/tokens/wbtc/WbtcVerify/Test/Axioms.lean",
+    "token-kit/tokens/wbtc/status.json",
+    "logs/wbtc.log",
+    "logs/wbtc.axioms"
+   ]
+  },
+  "WBTC-2": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "done",
+     "what_changed": "status.json says 'follows from Sep of the top message' instead of 'satisfiable' (assumptions, main_theorems.reclaimToken, global_keccak_hypotheses.satisfiable) and states that Sep is never inhabited. A closed instance of the non-keccak part is added: emptyState holds CODE with all balances 0 and totalSupply_ 0.",
+     "theorems_added": [
+      "Sanity.sumTo_zero, Sanity.codeHash_codeState_self, Sanity.holdsCode_emptyState, Sanity.inv_emptyState (no hypothesis), Sanity.good_emptyState, Sanity.inv_runL_emptyState"
+     ],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "hH : hashOf CODE != EMPTY_CODE_HASH in holdsCode_emptyState, good_emptyState, inv_runL_emptyState"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/Sanity/Base.lean (new, 97 lines)",
+      "token-kit/tokens/wbtc/WbtcVerify.lean",
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "Sep is not proved for any list (cannot be: keccak over 2^160 keys)."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "reenter",
+     "entry": "WBTC (same gap as LINK-4, reclaimToken)",
+     "recorded_status": "done for one closed run through the run-local theorems; three keccak facts stay as named hypotheses; ReclaimCalleeKeeps not shown for the token",
+     "what_changed": "Four new files in WbtcVerify/Wbtc/ReclaimWit/. The owner-chosen token holds the same contract RE; reclaimToken(0x1000) from the owner calls token.balanceOf and token.transfer, and each of the two calls calls back WBTC.transfer(0x2000, 1) before it returns (token balance 2 -> 0, 0x2000 ends with 2). Real processMessage run from a closed start state; CleanFrameW and CleanW shown; supply_all_real_local, process_good_local, inv_runL applied. No old theorem changed.",
+     "theorems_added": {
+      "ReclaimWit/Re.lean": 24,
+      "ReclaimWit/SentSeg.lean": 5,
+      "ReclaimWit/ReRun.lean": 11,
+      "ReclaimWit/ReClosed.lean": 23,
+      "headline": [
+       "re_call_runs",
+       "reclaim_re_core",
+       "supply_reclaim_re_frame",
+       "process_reclaim_re",
+       "msgL_reclaim_re",
+       "reclaim_reenter_closed"
+      ],
+      "added_to_Test_Axioms": 35
+     },
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "hA : Sep RE_KEYS, RE_KEYS = [CALLER1W, 0x1000, 0x2000, 1, 0] (keccak slot separation for five words)",
+      "hH : hashOf CODE != EMPTY_CODE_HASH",
+      "hRE : hashOf RE != hashOf CODE",
+      "Paris <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/Re.lean",
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/SentSeg.lean",
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/ReRun.lean (reclaim_re_core)",
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/ReClosed.lean (reclaim_reenter_closed is the last theorem)",
+      "token-kit/tokens/wbtc/WbtcVerify.lean (4 imports)",
+      "config/axioms_names.json (35 names)",
+      "token-kit/tokens/wbtc/config/wbtc.json (generated)",
+      "token-kit/tokens/wbtc/WbtcVerify/Test/Axioms.lean (generated, 364 -> 399)",
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "what_is_left": "Sep RE_KEYS, hH and hRE are not proved (keccak). ReclaimCalleeKeeps (hypothesis of supply_all_calleeKeeps) is not shown for RE; the same end result Inv comes from the run-local theorems. Only one token, balances 2 and 0, one start state; no token that calls another WBTC function (claimOwnership, reclaimToken again), no deeper nesting, no failing run."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 5,
+     "recorded_status": "partly",
+     "what_changed": "Checked, no Lean change: good_emptyState (link-wbtc) and reclaim_reenter_closed (reenter) are the closed instances.",
+     "theorems": [
+      "Sanity.good_emptyState",
+      "reclaim_reenter_closed"
+     ],
+     "hypotheses_still_assumed": [
+      "hH",
+      "hA : Sep RE_KEYS (five words)",
+      "hRE"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "Sep stays a hypothesis."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/Sanity/Base.lean",
+    "token-kit/tokens/wbtc/WbtcVerify.lean",
+    "token-kit/tokens/wbtc/status.json",
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/Re.lean",
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/SentSeg.lean",
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/ReRun.lean",
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/ReclaimWit/ReClosed.lean",
+    "token-kit/tokens/wbtc/config/wbtc.json",
+    "token-kit/tokens/wbtc/WbtcVerify/Test/Axioms.lean",
+    "logs/wbtc.log",
+    "logs/wbtc.axioms"
+   ]
+  },
+  "WBTC-3": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "partly",
+     "what_changed": "Shared kit part done: generic runner theorem (any message at any depth keeps 'holds CODE + invariant', success or failure), transaction link (EthLib processTransaction) and any finite list of transactions, base case shape, all run-local (no SepAll, no NoCollision). The token itself was not edited by this agent. The end-of-transaction deletions asked by the finding are proved in the kit (kept_deleteAccounts with Unmarked).",
+     "theorems_added": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Apply recipe C (capped chain with GasCap GAS_CAP; the token's own frameKeepsQ ports by renaming). The token is owned by another fix agent this round."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "partly",
+     "what_changed": "status.json not_covered now has: the constructor and Inv at deployment; no closed instance; Sane of the top message assumed and not tied to the state; Other not proved. assumptions name where Sane and hH are used.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "Sane of the top message",
+      "Other",
+      "hH",
+      "CleanW",
+      "creation at L excluded"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "NOT DONE: deriving Sane for a top-level call from HoldsCode and EthLib's transaction layer, and proving Other for end-of-transaction deletions. The kit agent is adding a transaction-level sequence theorem in TokenKit; these should come from there."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbtc/status.json",
+    "logs/wbtc.log",
+    "logs/wbtc.axioms"
+   ]
+  },
+  "WBTC-4": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 8,
+     "do": "Claims proved per call but worded as lasting facts. WBTC: restate supply_all with the local callee assumption (scratch: scratch file SupplyAllCallee.lean (not kept)). ENA mint limits, SKY wards, USDE minter, WBTC roles: add the sequence theorem or reword the claim as per call."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "minor",
+     "recorded_status": "partly",
+     "what_changed": "Wording only, as the task allows: status.json main_theorems.roles says the Roles theorems are PER CALL, exclude a reclaimToken frame (hsel3) and need AllowFixed for the six slot theorems; findings_contract no longer says 'minting can never be finished' as a proved fact; not_covered has 'Roles over time'.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [
+      "hsel3 : selector != 0x17ffc320",
+      "Roles.AllowFixed",
+      "Sep (callKeys message)"
+     ],
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "NOT DONE: the sequence form (Trace.processMessage_good_local with P := 'the mintingFinished byte of slot 5 is 0', same for decimals). It needs a FrameKeepsQ proof for that P over all 24 selectors and the reclaimToken segments."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 8,
+     "recorded_status": "partly",
+     "what_changed": "Role claims are worded PER CALL everywhere in status.json (checked); a note records the decision. The sequence form was not added: not short (a FrameKeepsQ proof of the role predicate over 24 selectors and the reclaimToken segments).",
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "sequence form of the Roles theorems (mintingFinished stays 0, decimals stays 8, only the owner mints) over RunL."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbtc/status.json",
+    "logs/wbtc.log",
+    "logs/wbtc.axioms"
+   ]
+  },
+  "WBTC-5": {
+   "severity": "note",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 9,
+     "do": "Records. Add the missing build logs (the full clean rebuild of 2026-11-11 gives them), fix stale notes, comments and counts in the status files, and add the contract facts the auditors found (for example PEPE holding limits are buy-side only)."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "note",
+     "recorded_status": "partly",
+     "what_changed": "(b) status.json bytecode.call_sites: the CALL byte at 4526 and CALLCODE at 4508 are inside the Transfer topic constant 4507..4538, metadata starts at 4539. (c) Map.lean doc: the first entry has the form PUSH4 key DUP2 EQ; fixed through the local gen_dispatch.py and the config option dispatch.split_doc, regenerated. (d) noted in status.json notes.fix_round_4. Counts recounted: 1123 theorems, 364 in the axioms test.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [],
+     "files": [
+      "token-kit/tokens/wbtc/status.json",
+      "token-kit/tokens/wbtc/scripts/gen_dispatch.py",
+      "token-kit/tokens/wbtc/scripts/mk_config.py",
+      "token-kit/tokens/wbtc/config/wbtc.json",
+      "token-kit/tokens/wbtc/WbtcVerify/Wbtc/Map.lean"
+     ],
+     "left": "(a) README.md of the repo quotes 1,119 (commit message) and 1,116 (status file) theorems for WBTC; the status file count is 1123 now. README.md is not a file of this part: for the caller to fix."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "Counts rechecked against the files (1186 theorems, 399 in the axioms test: both right); call_sites text is right; fork_range and the fix 7 explanation added.",
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "README.md count for WBTC is for the caller (not my file)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbtc/status.json",
+    "token-kit/tokens/wbtc/scripts/gen_dispatch.py",
+    "token-kit/tokens/wbtc/scripts/mk_config.py",
+    "token-kit/tokens/wbtc/config/wbtc.json",
+    "token-kit/tokens/wbtc/WbtcVerify/Wbtc/Map.lean",
+    "logs/wbtc.log",
+    "logs/wbtc.axioms"
+   ]
+  },
+  "WBTC-6": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "link-wbtc",
+     "severity": "note",
+     "recorded_status": "done",
+     "what_changed": "status.json notes.fix_round_4 says the owner facts are single-frame facts with real witnesses, none over time.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_still_assumed": [],
+     "files": [
+      "token-kit/tokens/wbtc/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbtc/status.json",
+    "logs/wbtc.log",
+    "logs/wbtc.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "link-wbtc",
+   "date": "2026-11-11",
+   "build": {
+    "box": "lean-fix-link",
+    "command": "lake build from a clean tokens/wbtc/.lake/build",
+    "final_line": "Build completed successfully (1443 jobs).",
+    "exit_code": 0,
+    "seconds": 154,
+    "axioms": "check_axioms.sh rc=0: theorems checked 364, count matches Test/Axioms.lean 364, AXIOM SCAN OK 11687 constants (11214 theorems), only propext, Classical.choice, Quot.sound",
+    "log": "logs/wbtc.log",
+    "axioms_file": "logs/wbtc.axioms"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "reenter",
+   "date": "2026-11-11",
+   "design": {
+    "receiver_code": "RE, 45 bytes, hand-written: 63a9059cbb 6000 52 612000 6020 52 6001 6040 52 6000 6000 6044 601c 6000 33 62030d40 f1 6001 6000 52 6020 6000 f3. It builds the call data transfer(0x2000, 1), CALLs msg.sender with 200000 gas and no value, then returns the word 1.",
+    "wbtc": "reclaimToken(token) where the token holds RE: balanceOf and transfer both call back WBTC.transfer(0x2000, 1)."
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-d",
+   "date": "2026-11-11",
+   "scope": "fixes 5 to 9 of audits/wbtc/fixes.json",
+   "build": {
+    "box": "lean-fix-d",
+    "command": "lake build from a removed tokens/wbtc/.lake/build, kit = git archive HEAD token-kit, LEAN_NUM_THREADS=2",
+    "exit_code": 0,
+    "seconds": 218,
+    "final_line": "Build completed successfully (1447 jobs).",
+    "axioms": "check_axioms.sh exit 0: theorems checked 399, count matches Test/Axioms.lean 399, AXIOM SCAN OK 11902 constants (11393 theorems), only propext, Classical.choice, Quot.sound",
+    "log": "logs/wbtc.log",
+    "axioms_file": "logs/wbtc.axioms"
+   },
+   "fork_range": "same as link"
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "fix": 10,
+   "what": "the auditor scratch Lean file SupplyAllCallee.lean built on the rebuild box: compiles (exit 0, no sorry): supply for all 24 selectors with only the local callee assumption. The WBTC-1 fix is ready to move into the token."
+  }
+ ]
+}

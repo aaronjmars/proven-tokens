@@ -1,0 +1,232 @@
+{
+ "token": "QNT",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "QNT, BNB and WETH audit"
+ },
+ "last_clean_build": {
+  "log": "logs/qnt.log",
+  "axioms": "logs/qnt.axioms"
+ },
+ "findings": {
+  "QNT-1": {
+   "severity": "minor",
+   "status": "open",
+   "reason": "Not in the fix list: no closed corollary for mint(1, 7) was added. The break stays conditional on Sep (goodCall_mint_D), as status.json says.",
+   "steps": [],
+   "evidence": [
+    "logs/qnt.log",
+    "logs/qnt.axioms"
+   ]
+  },
+  "QNT-2": {
+   "severity": "minor",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "apply-a",
+     "entry": "fix 2 for shib and qnt (not audited in the ten-token audit, same gap)",
+     "recorded_status": "done",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create per transaction, RUN-LOCAL: every message that really enters the token code during the run satisfies Q (Sep (callKeys m), keccak separation, NOT proved; for QNT part 2 also 'caller is not the crowdsale address'), and no keccak collision on the codes the run deposits (NOT proved)",
+      "Seq.TxClean.auths (no EIP-7702 authorization sets a code with the hash of the token code), Seq.TxClean.data (call data of a transaction to the token below 2^256 bytes)",
+      "Fork.dencun <= fork < Fork.glamsterdam for each transaction (message-level theorems: Fork.berlin <= fork, one-counter meter)",
+      "Start: Seq.Good (HoldsCode + invariant), or HoldsCode only for the WBT delta / never-grows and QNT fixed_mono theorems, or HoldsCode + all-zero storage for the from-zero theorems"
+     ]
+    }
+   ],
+   "evidence": [
+    "logs/qnt.log",
+    "logs/qnt.axioms"
+   ]
+  },
+  "ALL-1": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "do": "In each of the four tokens' status data, list exactly which functions each sequence theorem covers and excludes, and what the `other` step assumes."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "source": "token-kit/kit-status.json fix_round.6",
+     "recorded_status": "done",
+     "what": "tokens.<t>.sequence_scope written for shib, qnt, bnb and weth in this file: per sequence theorem, the functions covered and excluded, and what the `other` step assumes.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": 0,
+     "build_iterations": 0,
+     "obstacles": []
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "logs/qnt.log",
+    "logs/qnt.axioms"
+   ]
+  },
+  "ALL-2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "do": "For each opt-in switch the audit lists (BNB `frame`, WETH `stops` / `explicit_size`, axioms skip lists, the weak check_axioms.sh), either remove it, or keep it with a comment and a line in kit-status.json saying what it weakens and where it is used. The axioms test must cover every main theorem with no skip list hiding one."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "source": "token-kit/kit-status.json fix_round.5",
+     "recorded_status": "done",
+     "switches": [
+      {
+       "switch": "BNB functions[].frame = true (withdrawEther)",
+       "kept": true,
+       "weakens": "The generators write no path theorems to the end, no ok_/invariant theorem and no sanity witness for that function; its proofs are hand-written (Bnb/Withdraw.lean, Bnb/Sanity/Withdraw.lean).",
+       "where_used": "tokens/bnb/config/bnb.json (frame_comment, frame_theorems); scripts/gen_paths.py, gen_supply.py, gen_sanity.py, gen_axioms.py",
+       "guard": "gen_axioms.py now stops unless a frame function lists its hand-written theorems in frame_theorems; they are in the axioms test. gen_sanity.py prints that no witness was generated."
+      },
+      {
+       "switch": "WETH stops / segments (pcs 1648, 2724)",
+       "kept": true,
+       "weakens": "A path stops at the listed pc instead of the end of the frame; the rest of the function (totalSupplyTail, withdrawTail) is proved by hand (Weth/TotalSupply.lean, Weth/Withdraw.lean, Weth/WithdrawAll.lean).",
+       "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py (docstring line WEAKENS)",
+       "guard": "The hand-written tails are in the axioms test (axioms.after) and in the all-constants scan."
+      },
+      {
+       "switch": "WETH dispatch.explicit_size = true",
+       "kept": true,
+       "weakens": "Every per-function theorem ok_<fn> takes `4 <= message.data.size` as a hypothesis: with a payable fallback a successful run says nothing of the size of the call data. Calls with shorter data are the hand-written fallback entries (enterShort, enterOther).",
+       "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py, gen_loops.py, gen_readable.py, tokenlib.py (comment)",
+       "guard": "The hypothesis is visible in each statement; the short-data case is proved apart, so no call is left out."
+      },
+      {
+       "switch": "axioms.skip (BNB)",
+       "kept": false,
+       "weakens": "It left named theorems out of the axioms test.",
+       "where_used": "removed from tokens/bnb/config/bnb.json; gen_axioms.py now stops with an error if any config has axioms.skip"
+      },
+      {
+       "switch": "axioms.declared_only (WETH)",
+       "kept": true,
+       "weakens": "A generated theorem name that no Lean file declares is left out of the #print list (3 names: Sanity.transferFrom_runs, solvent_totalSupplyTail, solvent_withdrawTail; none exists, their content is in hand-written theorems).",
+       "where_used": "tokens/weth/config/weth.json (axioms.comment); scripts/gen_axioms.py prints the names left out and writes them in the head of Test/Axioms.lean",
+       "guard": "It cannot hide an existing theorem: the all-constants scan checks every constant of the project."
+      },
+      {
+       "switch": "scripts/check_axioms.sh (was weak)",
+       "kept": "rewritten",
+       "weakens": "Before: it passed on an empty log, on zero results, and missed axiom lists wrapped over several lines.",
+       "where_used": "scripts/check_axioms.sh is now a wrapper of scripts/check_axioms.py: fails on an empty log, zero results, any axiom outside the three standard ones (wrapped lists read whole), a sorry warning, a count that differs from the #print lines of Test/Axioms.lean, or a missing AXIOM SCAN OK line."
+      }
+     ],
+     "axioms_test_coverage": "Test/Axioms.lean of every token now imports every module of the root file and ends with a scan (Lean.collectAxioms) of EVERY constant of the project and of TokenKit: the build fails if one uses an axiom outside propext, Classical.choice, Quot.sound or if a module declares an axiom. So no theorem can be hidden by a list. BNB list: 153 named theorems, all new main theorems of fixes 1 and 2 included.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": {
+      "scripts/check_axioms.py": "86 (new)",
+      "scripts/gen_axioms.py": "161 (about 70 new)",
+      "scripts/check_axioms.sh": "8 (wrapper)",
+      "comments in gen_paths.py, tokenlib.py, gen_sanity.py, gen_solvent.py": "about 25"
+     },
+     "build_iterations": 3,
+     "obstacles": [
+      "Lean.CollectAxioms.collect is private in Lean 4.35: the scan uses the public Lean.collectAxioms per constant."
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "token-kit/tokens/bnb/config/bnb.json",
+    "token-kit/scripts/gen_paths.py",
+    "token-kit/tokens/weth/config/weth.json",
+    "token-kit/scripts/gen_axioms.py",
+    "token-kit/tokens/qnt/QntVerify/Test/Axioms.lean",
+    "token-kit/scripts/check_axioms.sh",
+    "token-kit/scripts/check_axioms.py",
+    "logs/qnt.log",
+    "logs/qnt.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "date": "2026-11-10",
+   "shared_changes": [
+    "NEW TokenKit/Evm/Move.lean, TokenKit/Evm/CallOutcome.lean, TokenKit/Evm/Payee.lean; imported in TokenKit.lean (19 imports). WETH's root file imports CallOutcome too. No existing shared Lean file changed.",
+    "scripts/gen_axioms.py: Test/Axioms.lean now has `import Lean`, imports every module of the root file, and ends with the all-constants scan; axioms.skip is refused; frame functions need frame_theorems. This changes the generated Test/Axioms.lean of all four tokens (same #print list, more imports, the scan). SHIB, QNT and WETH were regenerated (WETH by its own agent, same output) and all four rebuilt on the box lean-ethlib-build.",
+    "scripts/check_axioms.sh is now a wrapper of the new scripts/check_axioms.py (second argument: the Test/Axioms.lean to count against).",
+    "scripts/gen_paths.py, tokenlib.py: comments only (WEAKENS notes). scripts/gen_sanity.py, gen_solvent.py: one printed note each, generated Lean unchanged.",
+    "TokenKit/Evm/Stipend.lean (other agent) was synced to this box as it stood at 19:34 EST with tokens/weth and built there; it is not in TokenKit.lean (WETH imports it directly)."
+   ],
+   "build": {
+    "final_line": "Build completed successfully (1372 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 131; AXIOM SCAN OK: 5001 constants (4828 theorems); only standard axioms"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "kit_theorems": {
+    "runner_level (every fork)": "Seq.processMessage_good_local (Run.lean): a sane call from a good state whose run is Clean ends good, with or without error, whatever code it runs and whatever it sends at any depth, re-entry included. Seq.processCreateMessage_good_local for creations at another address, Seq.processRunner_good_local for the runner, Seq.runFrame_keeps_local for one frame of the token under the real runner.",
+    "transaction (Dencun <= fork < Glamsterdam)": "Seq.processTransaction_good (Tx.lean): EthLib's processTransaction takes a block state where L is good to one where L is good: gas purchase, EIP-7702 authorizations, first frame, the message (call or creation), refunds, fee, end-of-transaction deletions, incorporation into the block state.",
+    "any finite list": "Seq.Chain + Seq.chain_good; Seq.ChainCap + Seq.chainCap_good for tokens with a gas cap.",
+    "base case": "Seq.ZeroBase, Seq.good_of_zero, Seq.chain_from_zero; per invariant family Seq.zeroBase_supply / zeroBase_supply2 / zeroBase_supplyMask.",
+    "fork_range_honest": "Message level: every fork (plus the token's own bound). Transaction level: Fork.dencun <= fork < Fork.glamsterdam. Before Dencun the end-of-transaction deletion could remove L after a SELFDESTRUCT at L; the kit avoids a per-token 'never SELFDESTRUCT' proof by tracking Unmarked, which only EIP-6780 gives."
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-a",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit applied to shib, qnt, wbt with recipe A_no_outside_call. Each token has <Root>Verify/<Tok>/Tx.lean with its invariant after any transaction and any finite list of transactions run by EthLib's processTransaction. All three build clean against the committed kit; axioms counts match; only the three standard axioms. The first build attempt of every file passed; no kit lemma was missing.",
+   "build": {
+    "status": "done, with honest names (no unconditional supply invariant exists for QNT)",
+    "file": "token-kit/tokens/qnt/QntVerify/Qnt/Tx.lean (302 lines, 19 theorems; definitions SepMsg, NoCrowdMsg, Floor)",
+    "pattern": "two lifts. Part 1, state predicate Floor C d w1 w3 (d <= D, slot 1 = w1, slot 3 = w3), kept by every frame by supply_step, instantiated at the start state: slots 1 and 3 fixed and D never goes down, no assumption on start storage. Part 2, Q := NoCrowdMsg (Sep and caller word != low 160 bits of slot 3 in the state the frame starts from), P := Inv: Inv kept; the mint case is refuted by mint_caller.",
+    "theorems_added": [
+     "code_size_ne_zero",
+     "code_not_indicator",
+     "code_not_delegated",
+     "D_of_getStorage",
+     "storageOnly_floor",
+     "floor_self",
+     "frameKeepsQ_floor",
+     "floor_message_any_depth",
+     "floor_transaction",
+     "floor_any_transactions",
+     "fixed_mono_transaction",
+     "fixed_mono_any_transactions (headline 1)",
+     "storageOnly_inv",
+     "inv_zeroBase",
+     "frameKeepsQ_noCrowd",
+     "noCrowd_message_any_depth",
+     "inv_transaction_no_crowdsale",
+     "inv_any_transactions_no_crowdsale (headline 2)",
+     "inv_from_zero_no_crowdsale"
+    ],
+    "theorems_retired": "none",
+    "extra_hypothesis": "part 2 only: run-local 'no message that enters QNT comes from the crowdsale address' (inside TxClean via NoCrowdMsg). Stronger than needed: only a successful mint of a nonzero amount changes D.",
+    "build": "exit 0, Build completed successfully (1384 jobs); check_axioms 157 = 157, only standard axioms, AXIOM SCAN OK 5477 constants",
+    "axioms_names": "131 -> 157",
+    "status_json": "token-kit/tokens/qnt/status.json (NEW file: qnt had none; the older record stays in kit-status.json tokens.qnt)"
+   }
+  }
+ ]
+}

@@ -1,0 +1,143 @@
+{
+ "token": "SHIB",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "first SHIB audit",
+  "date_note": "not recorded in the audit file; inferred from the next audit (QNT, BNB and WETH, 2026-11-10), which it came before"
+ },
+ "paths_note": "Evidence paths name the files as they were when audited. qnt-verify, bnb-verify, weth-verify and shib-verify were the first per-token projects; they were merged into token-kit/tokens/<t> (same file names), so their paths are given there. Later fixes changed some of these files, so line numbers can be off. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "audited": "shib-verify (box copy byte-identical, sha256 of all .lean/.py/.hex compared)",
+ "verdict": {
+  "M1 code, selector table, dispatch completeness": "holds",
+  "M2 view functions totalSupply, balanceOf, allowance, decimals (name, symbol skipped)": "holds",
+  "M3 six write functions: paths with exact writes, logs, gas": "holds with caveat (F3 one vacuous revert path, F4 raw terms, F5 gas gap)",
+  "M4 completeness ok_<fn> for 10 of 12 functions": "holds (frame level, Nat meter: F2)",
+  "M4 supply invariant supply_<fn>, supply_preserved": "holds with caveat (conditional on unproved but local and plausible Sep: F1; frame level: F2; name and symbol excluded: F6)",
+  "soundness hygiene (no sorry, axiom, native_decide, bv_decide)": "holds",
+  "non-vacuity of the success theorems": "holds for transfer (witnesses built in Lean); the other 9 success paths were read but no witness was built; none possible for supply_* because of Sep"
+ },
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "minor",
+   "claim": "supply_<fn> and supply_preserved: a successful call keeps sum of balances = totalSupply.",
+   "what_is_actually_proved": "Proved only under hsep : Sep (callKeys message), which is never discharged anywhere. Sep is local (13 facts per call: NotBal 0 2; UniqBal for the 3 masked call keys; 9 allowance slots that are no balance slot and not slot 2), each comparing one slot with the 2^160 balance slots. It is not the false global form of upstream finding 1; under the random-function heuristic it fails with probability about 13 * 2^-96 per call. But it cannot be proved in Lean (2^160 keccak evaluations), so there is no machine-checked instance of any supply_* theorem, not even for the empty key list (Sep.total is needed always). The claim is disclosed in pilot-status.json (hsep ASSUMED not proved).",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Sep.lean:53-60",
+    "ShibVerify/Evm/Supply.lean:53-57 of the first SHIB project (not kept)",
+    "Audit/Ax.lean on the box: #print ShibVerify.Sep; EthLib.Execution.Evm.keccak is a real definition (no opaque, no axiom)",
+    "callKeys covers every key the 10 functions hash: caller, arg1, arg2 masked (Sep.lean:45-50); the supply proofs go through with only these"
+   ],
+   "suggested_fix": "Keep it, but say in MAP.md that no instance of supply_* is machine-checked and give the heuristic failure odds. Optional: restate Inv as a sum over the image of the address words to drop UniqBal."
+  },
+  {
+   "id": "F2",
+   "severity": "minor",
+   "claim": "Theorems hold \"from Berlin\" for calls to SHIB.",
+   "what_is_actually_proved": "Every statement is about one frame of the one-counter Nat meter from At CODE message 0 ... to Ends. There is no link to processMessage or a transaction (upstream has runner-level and sequence theorems; this project has only runFrame_ok_dispatch via Ends.run). EthLib runs transactions with the Nat meter only up to BPO5; from Glamsterdam it uses StateGasMeter, so for those forks the theorems are about a meter EthLib does not use, although hfork : .berlin <= fork admits them. state is the frame start state (after the runner has set it up), and on a revert the halted state still holds the writes done before the revert (rollback is the job of the caller), so \"the invariant is kept by every call\" needs runner facts that are not here. Disclosed in not_proved, but \"like upstream\" undersells the gap.",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Complete/Dispatch.lean:84-93 (only use of Ends.run)",
+    "grep of ShibVerify for StateGasMeter, processMessage, processRunner: no hit",
+    "upstream/usdt-verify/README.md:73",
+    "upstream/usdt-verify/UsdtVerify/Evm/Gas.lean:232 (Ends)"
+   ],
+   "suggested_fix": "Add runFrame forms of ok_<fn> and supply_preserved (Ends.run), state the fork range as Berlin to BPO5 for real runs, and reuse upstream Meter.lean and the processRunner link if transaction-level claims are wanted."
+  },
+  {
+   "id": "F3",
+   "severity": "minor",
+   "claim": "M3: transferFrom has 9 proved revert paths (56 paths in total).",
+   "what_is_actually_proved": "transferFrom_p8 is vacuous: hc3 says the masked from-word is not 0 and hc8 says the same term is 0. The generator enumerates the second sender check (inside _approve) as a path although _transfer already excluded it. So 8 feasible reverts, 55 non-vacuous paths. Harmless for completeness (the case is discharged with no_okE), but it is counted as a result. Paths that need caller = 0 (transfer_p2, burn_p2, transferFrom_p9, the zero-owner reverts of approve, increaseAllowance, decreaseAllowance) are satisfiable in the model but not on mainnet.",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Gen/PTransferFrom.lean:229 (transferFrom_p8, hc3 vs hc8)",
+    "paths.json (generator output of the first SHIB project, not kept) transferFrom path 8"
+   ],
+   "suggested_fix": "Have gen_paths.py drop a branch whose condition repeats an earlier one with the other sign, and report feasible path counts."
+  },
+  {
+   "id": "F4",
+   "severity": "minor",
+   "claim": "ok_<fn>: exact conditions, storage writes and logs of the success path.",
+   "what_is_actually_proved": "True as terms, and the final state is fully determined (nested writeSlot/readSlot, nothing left free). But conditions and written values are raw opcode terms over intermediate states: the recipient balance in transfer is read through the write of the sender slot, and the allowance check of transferFrom is read through two balance writes. Reading them as \"balance[to] before\" or \"allowance[from][caller] before the call >= amount\" needs slot separation, which ok_* does not assume. So no readable ERC-20 post-condition (new balances as a function of the old ones) is proved. I read all 10 success paths by hand against the Solidity source and found no wrong reading. Disclosed in not_proved.",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Gen/PTransferFrom.lean (ok_transferFrom, hc7)",
+    "token-kit/tokens/shib/ShibVerify/Shib/Gen/PTransfer.lean (ok_transfer, hc6)",
+    "show2.py (audit scratch, not kept) (abbreviating printer used for the reading)"
+   ],
+   "suggested_fix": "Add one corollary per write function under Sep with the conditions and the final storageAt of each touched slot over the pre-state."
+  },
+  {
+   "id": "F5",
+   "severity": "note",
+   "claim": "Exact gas; gas bound TOTAL + 2300 < gas on writing paths.",
+   "what_is_actually_proved": "Success is proved for gas > TOTAL + 2300; completeness gives only TOTAL <= gas. For TOTAL <= gas <= TOTAL + 2300 nothing says whether the call succeeds (it depends on the EIP-2200 stipend check at each SSTORE). Gas used is exact whenever the run succeeds. Not an iff, and disclosed as \"sufficient\".",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Gen/PTransfer.lean transfer_p7 (hg) vs ok_transfer (cost <= gas)",
+    "upstream/usdt-verify/UsdtVerify/Evm/Exact.lean:41-50"
+   ],
+   "suggested_fix": "Optional: per-SSTORE stipend bounds as upstream did (sstore_low_stuck) to get an iff."
+  },
+  {
+   "id": "F6",
+   "severity": "note",
+   "claim": "name() and symbol() are excluded; nothing else is.",
+   "what_is_actually_proved": "Honest: supply_preserved takes hname and hsymbol, and nothing at all is proved about the two functions, including that they write no storage. So there is no whole-contract invariant. A byte census (mine, not Lean) shows 5 SSTORE (3135, 3794, 3941, 4554, 4701, all in _approve, _transfer, _burn), 3 LOG3, no CALL, DELEGATECALL, CALLCODE, STATICCALL, CREATE, SELFDESTRUCT, GAS. Nothing else is silently excluded: ok_* take any calldata of the selector (short, long, dirty upper bits), any value, static or not, account or not, any gas. Failing runs are not classified (disclosed).",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Invariant.lean (supply_preserved)",
+    "token-kit/tokens/shib/ShibVerify/Shib/Complete/Dispatch.lean:63-79 (ends_ok_dispatch: success implies size >= 4, value 0, selector in the 12 entries)"
+   ],
+   "suggested_fix": "Prove at least \"name() and symbol() reach no SSTORE\" (a loop invariant on the copy loop) to close the invariant for all 12."
+  },
+  {
+   "id": "F7",
+   "severity": "note",
+   "claim": "Hash test: CODE is the fetched mainnet code.",
+   "what_is_actually_proved": "The test is an #eval at build time, not a theorem, and EXPECTED_HASH comes from the same fetch. Independently confirmed: CODE_NAT literal = data/shib.runtime.hex = survey/tokens/SHIB/runtime.hex (4852 bytes); Etherscan eth_getCode today returns the same bytes; pure-Python keccak gives d0caa0f9...75ad; the test passes on the box. The 12 selectors equal keccak of the 12 ABI signatures, and the two LOG topics are keccak of the Transfer and Approval signatures.",
+   "evidence": [
+    "token-kit/tokens/shib/ShibVerify/Test/Hash.lean:29-39",
+    "code.json (audit copy, not kept)",
+    "box: lake env lean ShibVerify/Test/Hash.lean prints CODE: 4852 bytes, keccak256 d0caa0f9..."
+   ],
+   "suggested_fix": "None needed. Optional: a decide-checked theorem on the hash."
+  },
+  {
+   "id": "F8",
+   "severity": "note",
+   "claim": "Generators produce the statements from the bytes mechanically.",
+   "what_is_actually_proved": "Mostly yes: gen_paths.py runs the bytes symbolically and Lean rechecks every block lemma against CODE, and it raises on an unknown opcode or shape instead of skipping. Hand-written inputs that would need care for another token: FUNCS/DEST (names, selectors, table indices) in both generators, ENTRIES in Map.lean (checked against CODE by theorem table), the slot numbers 0, 1, 2 and the calldata offsets 4 and 36 in Sep.lean, and gen_supply.py picking sub_fact/add_fact by the text prefix of a condition. A wrong slot layout would make the supply proofs fail rather than pass. Function names are labels: nothing in Lean ties 0xa9059cbb to \"transfer\" (I checked 12/12 against the ABI).",
+   "evidence": [
+    "token-kit/scripts/gen_paths.py:559-565",
+    "token-kit/scripts/gen_supply.py:7-13, 79-84",
+    "token-kit/tokens/shib/ShibVerify/Shib/Map.lean:111-141"
+   ],
+   "suggested_fix": "Derive FUNCS/DEST from map.py output and the ABI instead of typing them."
+  },
+  {
+   "id": "F9",
+   "severity": "note",
+   "claim": "Docs and counts.",
+   "what_is_actually_proved": "Small mismatches: survey/tokens/SHIB/MAP.md lists entry pcs 55..176 and 2270 instructions, docs/MAP.md lists 54..175 and 2292; Test/Axioms.lean says it is generated by scripts/gen_axioms.py, which is not in scripts/; check_axioms.sh works by grep on a build log. The 87 count is right (rerun on the box: 87 lines, all [propext, Classical.choice, Quot.sound]).",
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "survey/tokens/SHIB/MAP.md",
+    "token-kit/tokens/shib/ShibVerify/Test/Axioms.lean:11"
+   ],
+   "suggested_fix": "Align the two MAP files and add the missing generator."
+  }
+ ],
+ "checked_ok": [
+  "Q7 hygiene: no sorry, axiom, native_decide, bv_decide, unsafe, implemented_by, opaque, extern in ShibVerify; set_option only autoImplicit false, two linters off, maxRecDepth 4096; decide +kernel is kernel-checked. Environment scan on the box: no axiom declared in ShibVerify, UsdtVerify or EthLib, no opaque in ShibVerify or UsdtVerify, no ShibVerify name shadowing At, Ends, selector, Halted, SpecG, mapSlot, storageAt, writeSlot, loadWord. All 87 listed theorems plus my own picks depend only on propext, Classical.choice, Quot.sound.",
+  "Q3 non-vacuity: Audit/Witness.lean (transfer(1, 0) on the empty state: transfer_p7 hypotheses all hold, run Ends with no error and output 1, ok_transfer applies) and Audit/Witness2.lean (transfer(1, 1) with balance 5, no keccak fact used) compile with standard axioms only. The caller is any address with a nonzero word (caller1_ne gives one); block and transaction environments are parameters. inv_zero: Inv holds in the empty state.",
+  "Q2 Inv: integer sum over the 2^160 address words of storage[keccak(a, 0)] minus storage[2], no wrap. Layout matches the source order (_balances 0, _allowances 1, _totalSupply 2, _name 3, _symbol 4, _decimals 5) and the slots the proved paths read. Allowance slot keccak(spender, keccak(owner, 1)) is right. Inv is preserved, not established (disclosed).",
+  "Q2 Sep: local per call, satisfiable in principle, no contradiction derivable from its fields; not the global false form.",
+  "Q4 CODE = runtime.hex = on-chain code; selector table complete: theorem table plus ends_ok_dispatch show any successful run has calldata >= 4 bytes, value 0 and one of the 12 selectors; fallback, short calldata and value sent all revert (spec_short, spec_unknown, Nonpayable.spec).",
+  "Q5 static frame and missing account are handled inside completeness by the stuck SSTORE path (no extra hypothesis); dirty upper bits of address arguments are masked by the bytecode and by the specs (solc 0.5.0 does not revert on them); longer calldata is accepted.",
+  "Q6 source comparison, all six write functions: zero-address checks (sender and recipient in _transfer, owner and spender in _approve, account in _burn), SafeMath sub and add checks, order of writes (burn writes totalSupply first), transferFrom allowance decrease with Approval event, Transfer(caller, 0, value) on burn, return value 1 (burn returns nothing), decimals = low byte of slot 5. No mismatch found. Revert strings were not decoded byte by byte.",
+  "Q1 definitions read: UsdtVerify.At (12 frame fields, no return data), Gas.Ends, SpecG, Halted, Stuck, no_okE, ok_exactE, readSlot, writeSlot, storageAt, mapSlot, selector, loadWord, hasAccount, logSub. No False hidden in hypotheses of the ok_* or supply_* theorems."
+ ],
+ "not_checked": [
+  "EthLib itself (the EVM model) and Mathlib are trusted as given",
+  "the 159 generated block lemmas were not read one by one (Lean checks them; only their use in paths was read)",
+  "exact bytes of the Error(string) revert data"
+ ]
+}

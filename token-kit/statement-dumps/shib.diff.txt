@@ -1,0 +1,9 @@
+constants: 191 in dumps/shib.orig.txt (122 of the axioms test), 191 in dumps/shib.kit.txt (122 of the axioms test)
+CHANGED K.Ro.mk
+    ## K.Ro.mk DEP constructor typehash=3450769071 bodyhash=0 uses: K.Ro ∀ {C : EthLib.Base.Address} {S : EthLib.Execution.State.TransactionState} {ss : EthLib.Execution.Evm.Substate} {S' : EthLib.Execution.State.TransactionState} {ss' : EthLib.Execution.Evm.Substate}, (∀ (c : EthLib.Base.Address) (k : EthLib.Base.U256), storageAt S' c k = storageAt S c k) → (hasAccount S' C ↔ hasAccount S C) → ss'.logs = ss.logs → Ro C S ss S' ss'
+    ## K.Ro.mk DEP constructor typehash=1578253176 bodyhash=0 uses: K.Ro ∀ {C : EthLib.Base.Address} {S : EthLib.Execution.State.TransactionState} {ss : EthLib.Execution.Evm.Substate} {S' : EthLib.Execution.State.TransactionState} {ss' : EthLib.Execution.Evm.Substate}, (∀ (c : EthLib.Base.Address) (k : EthLib.Base.U256), storageAt S' c k = storageAt S c k) → (hasAccount S' C ↔ hasAccount S C) → ss'.logs = ss.logs → (∀ (a : EthLib.Base.Address), S'.getAccount a = S.getAccount a) → Ro C S ss S' ss'
+different or missing: 1
+theorems of the axioms test that use a changed constant: 3
+    K.Loops.ro_name
+    K.Loops.ro_symbol
+    K.Supply.inv_of_ro

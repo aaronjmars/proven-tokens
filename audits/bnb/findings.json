@@ -1,0 +1,113 @@
+{
+ "token": "BNB",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "QNT, BNB and WETH audit"
+ },
+ "paths_note": "Evidence paths name the files as they were when audited. qnt-verify, bnb-verify, weth-verify and shib-verify were the first per-token projects; they were merged into token-kit/tokens/<t> (same file names), so their paths are given there. Later fixes changed some of these files, so line numbers can be off. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent audit of qnt-verify, bnb-verify, weth-verify (Lean 4 on EthLib). Local projects not modified. Lean experiments run on box lean-weth in <project>/Audit/, copies in the scratch Lean files (not kept). Date 2026-11-10.",
+ "findings": [
+  {
+   "id": "BNB-1",
+   "token": "BNB",
+   "severity": "critical",
+   "claim": "supply_withdrawEther / withdrawEther_run: a successful withdrawEther keeps 'sum balanceOf + sum freezeOf = totalSupply', under the named runner hypothesis hrunner (status.json lists it as 'needs hrunner', not as false).",
+   "what_is_actually_proved": "Nothing about EthLib's real runner. hrunner says: for EVERY caller frame, EVERY message and EVERY child, if the runner returns ok and Inv holds in caller.state then Inv holds after incorporateChild. That is false for processRunner: a message whose code is PUSH1 1, PUSH1 3, SSTORE, STOP and whose currentTarget is the token address rewrites totalSupply. I proved the negation in Lean (hrunner_false, standard axioms only), from Paris, for any non-precompile C, given only the project's own separation facts NotBal 5 3 and NotBal 6 3. So with runChild := processRunner the theorem is vacuous, and the BNB invariant has no real coverage of withdrawEther at all.",
+   "evidence": "token-kit/tokens/bnb/BnbVerify/Bnb/Withdraw.lean (hrunner in withdrawEther_run and supply_withdrawEther, about lines 387 to 411). Lean check: scratch file BnbRunnerFalse.lean (not kept), on the box /home/user/Audit/RunnerFalse.lean of the first BNB project (not kept), theorem BnbVerify.Audit.hrunner_false, '#print axioms' = [propext, Classical.choice, Quot.sound]. Same defect as upstream docs/AUDIT.md finding 2 (Keeps* false for processRunner).",
+   "suggested_fix": "Replace hrunner by a hypothesis about the one message really sent (the WETH CallSend / Ran pattern: msg.caller = C, target = owner, data empty, code = owner's code, caller.state = state at the CALL). Then prove it for an owner with no code using the WETH lemmas noCode_message and moveEther_outOf (ether leaves C, storage of C untouched). Add withdrawEther to GoodCall once that is done."
+  },
+  {
+   "id": "BNB-2",
+   "token": "BNB",
+   "severity": "major",
+   "claim": "supply_preserved / inv_calls: the invariant holds after every successful call and along every sequence of calls.",
+   "what_is_actually_proved": "14 of 15 table entries. supply_preserved carries the hypothesis selector != 0x3bed33ce and GoodCall excludes that selector (hnw), so any history that contains one successful withdrawEther is outside the theorem. The exclusion is disclosed in status.json but 'every function' style summaries would be wrong. Also in the Calls model every step that is not a top-level call of CODE is ASSUMED Untouched (storage of C kept): nested calls into the token from other contracts and rollbacks of outer frames are not linked to the model. Paris or later only for the processMessage lift.",
+   "evidence": "token-kit/tokens/bnb/BnbVerify/Bnb/Invariant.lean:350-361 (hsel hypothesis), Bnb/Seq.lean:62-71 (GoodCall, hnw), generator_divergence.json flag 1.",
+   "suggested_fix": "After BNB-1 is fixed, lift withdrawEther into GoodCall. State in the headline: '14 of 15 functions; withdrawEther open'."
+  },
+  {
+   "id": "BNB-3",
+   "token": "BNB",
+   "severity": "major",
+   "claim": "withdrawEther is 'partial (named hypotheses)'.",
+   "what_is_actually_proved": "withdrawEther_run needs 8 side hypotheses: amount != 0 (amount 0 is not covered at all), frame not static, contract ether >= amount, owner code readable, owner code not an EIP-7702 delegation from Pectra (hdel), depth below the limit, enough gas, fork < Glamsterdam; plus hrunner (false, BNB-1). There is no witness of a full successful run: withdrawEther_reaches_call only reaches pc 3010 (the CALL) with amount 1. So the 8 hypotheses plus hrunner are not shown to be satisfiable together, and by BNB-1 they are not for the real runner.",
+   "evidence": "token-kit/tokens/bnb/BnbVerify/Bnb/Withdraw.lean:387-451 and doc lines 41-54; bnb gen_sanity.py:210-211 (silent skip).",
+   "suggested_fix": "Add a witness under processRunner with an owner with no code and amount > 0 (possible once BNB-1 is restated). Cover amount 0 (the bytes still CALL with value 0)."
+  },
+  {
+   "id": "BNB-4",
+   "token": "BNB",
+   "severity": "minor",
+   "claim": "hmove (the ether move of a message with value keeps the contract's storage) is listed as not proved.",
+   "what_is_actually_proved": "It is a hypothesis of the sequence lift. It is true and provable for the real moveEther when caller != C and C has code (WETH proves the same fact as moveEther_into). It is only false for ill-formed states. So this one is an avoidable assumption, not a false one.",
+   "evidence": "token-kit/tokens/bnb/BnbVerify/Bnb/Seq.lean (hmove); WethVerify/Evm/Ether.lean of the first WETH project (not kept; the kit form is token-kit/TokenKit/Evm/Ether.lean) (moveEther_into).",
+   "suggested_fix": "Port moveEther_into from WETH and discharge hmove."
+  },
+  {
+   "id": "BNB-5",
+   "token": "BNB",
+   "severity": "note",
+   "claim": "Integer formulation of the invariant might hide overflow.",
+   "what_is_actually_proved": "No overflow is hidden. Inv2 5 6 3 is over Int sums of the 2^160 slot words, and each supply_<fn> is derived from the exact post-state of the path theorems, which are proved against the bytes. All 12 SSTOREs in the bytes: keys are keccak outputs over base 5, 6 or 7, except pc 3280 (literal slot 3, burn). The 13 pruned branches (second SafeMath checks) are proved dead in Lean (dead_credit, dead_add2, decided), not skipped. transferFrom_p7 (assert after the writes) is a proved revert path, not shown dead (disclosed).",
+   "evidence": "disassembly BNB.txt (not kept); BnbVerify/Evm/Dead.lean:28-59 and Evm/Prune.lean:49-65 of the first BNB project (not kept; the kit forms are token-kit/TokenKit/Evm/Dead.lean and token-kit/TokenKit/Evm/Prune.lean); Gen/PTransfer.lean:193-197; generator_divergence.json config_exclusions.bnb.",
+   "suggested_fix": "None."
+  },
+  {
+   "id": "ALL-1",
+   "token": "QNT, BNB, WETH",
+   "severity": "minor",
+   "claim": "Invariant theorems hold 'for every call'.",
+   "what_is_actually_proved": "Each write theorem needs Sep (callKeys message): keccak slots of the addresses in the call do not collide with each other or with fixed slots. Never proved (cannot be, short of a keccak model). Disclosed. One gas counter only (no EIP-8037). Frame theorems from Berlin, message lift from Paris. Static frames: handled (a successful run with SSTORE implies not static, derived in ok_<fn>). Value to non-payable functions: proved to revert. Dirty upper address bits: handled by the masks in the path terms. Short call data: QNT reverts (spec_short), BNB payable fallback stops for 1 to 3 bytes and empty data, WETH enterShort = deposit.",
+   "evidence": "*/Sep.lean; */Complete/Dispatch.lean (selector_cases); Gen/P*.lean ok_<fn> statements.",
+   "suggested_fix": "None beyond wording."
+  },
+  {
+   "id": "ALL-2",
+   "token": "QNT, BNB, WETH",
+   "severity": "minor",
+   "claim": "check_axioms.sh shows only standard axioms.",
+   "what_is_actually_proved": "The result is right (see checked_ok: I scanned every constant), but the script is weak: axiom names on wrapped continuation lines are not checked, an empty log passes, the count is not compared, sorry warnings are not read. QNT and BNB versions give a false alarm on macOS grep.",
+   "evidence": "generator_divergence.json flag 3; */scripts/check_axioms.sh:5-11.",
+   "suggested_fix": "Replace by a Lean-side scan over all constants of the project (scratch file AllAxioms*.lean (not kept) does this)."
+  }
+ ],
+ "verdict": {
+  "code constant equals on-chain runtime code": "holds",
+  "path theorems and completeness for 14 functions": "holds",
+  "invariant sum balanceOf + sum freezeOf = totalSupply for approve, transfer, transferFrom, burn, freeze, unfreeze and reads": "holds with caveat (Sep; Calls model; hmove assumed)",
+  "invariant preserved by withdrawEther (supply_withdrawEther)": "does not hold (hypothesis hrunner is false for the real runner: machine-checked)",
+  "invariant along every sequence of calls": "holds with caveat (sequences with withdrawEther excluded)"
+ },
+ "checked_ok": [
+  "CODE literal equals survey/tokens/<SYM>/runtime.hex and data/*.runtime.hex in all three (5155, 5355, 3124 bytes); keccak matches Test/Hash.lean; eth_getCode at latest from Etherscan equals runtime.hex for all three addresses.",
+  "lake build on the box: qnt-verify rc 0, bnb-verify rc 0, weth-verify 'Build completed successfully (1379 jobs)'; box copies byte-identical to local (sha256).",
+  "Axioms test lines match status.json: QNT 131, BNB 132, WETH 133, standard axioms only.",
+  "Whole-environment scan (every constant whose module starts with the project name): QNT 5005 constants / 4827 theorems, BNB 5323 / 5157, WETH 3003 / 2832. Union of axioms = propext, Classical.choice, Quot.sound. No axiom declaration, no opaque, no implemented_by, no extern.",
+  "Text scan: no sorry, native_decide, bv_decide, unsafe, implemented_by, opaque, axiom. set_option only autoImplicit false, two linter options, maxRecDepth 4096. One instance (stepLiftLogic). Macros are tactic helpers only.",
+  "All SSTORE sites in the three bytecodes listed and their keys traced (QNT 10, BNB 12, WETH 6).",
+  "All pruned branches (QNT 3, BNB 13, WETH 3) are proved inside the path theorems, none merely skipped.",
+  "SHIB regeneration with each project's scripts is byte-identical (23 of 23 files); each project regenerates to its committed files (no hand edit of generated files)."
+ ],
+ "not_checked": [
+  "EthLib itself and the shared usdt-verify library (trusted as the model).",
+  "Solidity source to bytecode correspondence; slot names taken from layout knowledge and the bytes, Etherscan source not diffed.",
+  "Whether the BNB owner on mainnet is an EOA; any live chain state; constructors.",
+  "Readable corollaries were read for shape only, not each re-derived.",
+  "Failing paths (revert, invalid, stuck) one by one; gas constants against a reference client.",
+  "Shadowed names beyond the environment scan (no duplicate definitions of EthLib names found by the build; not exhaustively searched)."
+ ],
+ "generator_divergence": {
+  "summary": "No generator change silently weakens a default code path: SHIB output is byte-identical with all three script sets. The weakenings are opt-in config features.",
+  "weakening_flags": [
+   "BNB frame:true drops withdrawEther from completeness and turns it into a selector hypothesis on supply_preserved (gen_paths.py:480-482, gen_supply.py:61-66).",
+   "BNB gen_sanity skips withdrawEther with no message: no full-run witness.",
+   "WETH axioms.declared_only and BNB axioms.skip can drop names from the axioms test silently (today only non-existent names).",
+   "check_axioms.sh in all projects misses wrapped lines, empty logs and counts.",
+   "BNB Readable.lean comes from bnb_readable.py outside regen.sh."
+  ],
+  "not_weakening": [
+   "QNT decide_equivalent, BNB prune/dead_branches, WETH equal_self: proved in Lean.",
+   "BNB min_size = 1 widens the path theorems; WETH Ro.accounts strengthens Ro."
+  ]
+ }
+}

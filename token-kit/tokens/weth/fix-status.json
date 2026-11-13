@@ -1,0 +1,138 @@
+{
+ "fix_round_weth": {
+  "date": "2026-11-10",
+  "scope": "fixes 3 (WETH-1) and 4 (WETH-3) of audits/weth/fixes.json, tokens/weth only",
+  "final_build": {
+   "box": "lean-weth (E2B)",
+   "command": "cd /home/user/token-kit/tokens/weth && lake build",
+   "final_line": "Build completed successfully (1386 jobs).",
+   "exit_code": 0,
+   "log_on_box": "/home/user/wb2.log",
+   "axioms_check": "scripts/check_axioms.sh on that log: theorems checked: 157, only standard axioms (propext, Classical.choice, Quot.sound)",
+   "axioms_count_weth": 157,
+   "axioms_count_before": 133,
+   "forbidden_scan": "no sorry, no axiom, no native_decide, no bv_decide, no em dash or en dash in the files written or changed"
+  },
+  "fix_3a": {
+   "status": "done",
+   "what": "The loose assumption CalleeKeeps is gone. The new assumption CalleeQuiet is about the one message that the CALL of this run of withdraw sends (CallSend: exact gas from the bytes, value wad, code, caller, target, and a sender frame whose state is the start state with the balance slot lowered). It says: no storage word of the contract changes and its ether falls by at most wad. It does not mention the invariant.",
+   "theorems_added": [
+    "WethVerify.CalleeQuiet (def, Weth/Invariant.lean)",
+    "WethVerify.wSubCall_le (the message gets at most 2300 gas)",
+    "WethVerify.calleeQuiet_process (CalleeQuiet for processRunner and EVERY callee code)",
+    "WethVerify.calleeQuiet_noCode (no-code caller)",
+    "WethVerify.calleeQuiet_stop (one-byte STOP contract, STOP_CODE)",
+    "WethVerify.calleeQuiet_accept (contract that only accepts ether, ACCEPT_CODE)",
+    "WethVerify.withdrawReady_eoa (restated)",
+    "WethVerify.withdrawReady_prePrague"
+   ],
+   "theorems_restated": [
+    "solvent_withdraw (hkeep is now CalleeQuiet for the code the state gives)",
+    "solvent_preserved (hw = WithdrawReady and CalleeQuiet)",
+    "GoodCall, goodCall_of_run (CalleeQuiet)",
+    "goodCall_process, process_step, process_step_solvent, calls_process (hw = WithdrawReady only; callee part discharged by calleeQuiet_process)"
+   ],
+   "theorems_retired": [
+    "CalleeKeeps",
+    "calleeKeeps_noCode",
+    "withdrawHyp_eoa"
+   ],
+   "satisfiability": "CalleeQuiet is a theorem for the real runner (calleeQuiet_process), and Sanity.withdraw_runs_closed gives a real run where the message of the CALL ends with no error."
+  },
+  "fix_3b": {
+   "status": "done",
+   "what": "Real reentrancy theorem with no assumption on the callee code. A message that starts with at most 2300 gas changes no account and no storage word apart from the move of its own value, whatever its code and however deep its own calls go. Proved by strong induction on the gas of the message and fun_induction over EthLib's runFrame.",
+   "main_theorems": [
+    "TokenKit.Stipend.processMessage_quiet (TokenKit/Evm/Stipend.lean)",
+    "TokenKit.Stipend.quiet_processMessage_noValue",
+    "TokenKit.Stipend.lowResult_step",
+    "TokenKit.Stipend.sstoreStep_ne_ok_of_low",
+    "WethVerify.calleeQuiet_process",
+    "WethVerify.solvent_preserved_process (solvent kept through every run, withdraw with reentry included; hw is only WithdrawReady)"
+   ],
+   "gas_rules_checked": {
+    "SSTORE": "fails when gas left is at most 2300 (EIP-2200 sentry, from Istanbul), before any read or write",
+    "CALL / CALLCODE with value": "pay more than 2300 before the message is sent (callExtraGas_bounds), so a sent call has value 0",
+    "CREATE / CREATE2": "pay 32000 (12000 from Glamsterdam) first: more than 2300 on every fork",
+    "SELFDESTRUCT": "5000 from Tangerine Whistle",
+    "warm CALL of 100": "allowed; the inner message has less gas than the frame, so the induction covers it (this is the reentry)",
+    "TSTORE": "changes transient storage only, not in Quiet",
+    "precompiles": "keep the state",
+    "EIP-7702": "a delegated callee runs any code with the gas of the call, covered since the code is arbitrary"
+   },
+   "forks": "Stipend.processMessage_quiet: every fork from Istanbul, any lawful gas meter. calleeQuiet_process: from Berlin. solvent_preserved_process: from Berlin, and WithdrawReady asks fork < Glamsterdam, so Berlin, London, Paris, Shanghai, Cancun, Prague, Osaka.",
+   "what_quiet_does_not_cover": "transient storage, logs, substate, records of reads"
+  },
+  "fix_4": {
+   "status": "done",
+   "failing_cases": {
+    "file": "tokens/weth/WethVerify/Weth/WithdrawAll.lean",
+    "main": "WethVerify.Paths.ok_withdraw_all: every run that ends with no error had the code of the sender readable, depth below the limit, gas paying for the CALL, value 0, wad at most the token balance and at most the ether, and a callee frame with no error. hcode, hdepth and hcall are no longer hypotheses.",
+    "theorems_added": [
+     "Paths.callStep_value_deep_mem",
+     "Paths.call_bad",
+     "Paths.ok_withdraw_all",
+     "Paths.withdraw_fails_value (from Berlin, every fork)",
+     "Paths.withdraw_fails_balance (insufficient token balance; from Berlin, every fork)",
+     "Paths.withdraw_fails_ether (contract ether below wad)",
+     "Paths.withdraw_fails_depth (depth limit)",
+     "Paths.withdraw_fails_gas (out of gas before or at the CALL)",
+     "Paths.withdraw_fails_noCode (state does not give the code of the sender)",
+     "Paths.withdraw_fails_callee (the CALL fails)"
+    ],
+    "each_says": "the frame the loop returns has an error, for every runner and every bound; processMessage then rolls the writes back (other_process_failed)"
+   },
+   "withdraw_ready": "WithdrawReady now has two fields only: glam (fork < Glamsterdam) and del (from Prague, the code of the caller is no EIP-7702 delegation). Fields code, depth, gas removed. Before Prague it is only the fork bound (withdrawReady_prePrague).",
+   "witness": {
+    "file": "tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean",
+    "theorems_added": [
+     "Sanity.callValueOn (CALL rule in EthLib's HoareOn form, names the message the runner may fail on)",
+     "Sanity.withdraw_on",
+     "Sanity.withdraw_succeeds (for every state: withdraw of a nonzero wad to a no-code caller returns a frame with no error under processRunner)",
+     "Sanity.withdraw_runs (sample state wS: contract holds 5 wei, caller holds 5 tokens, withdraw(1))",
+     "Sanity.caller1_noPre",
+     "Sanity.withdraw_runs_closed (addresses fixed, no hypothesis left but the fork range)"
+    ],
+    "theorems_retired": [
+     "Sanity.stubRunner",
+     "Sanity.meets_stub",
+     "old Sanity.withdraw_runs (stub runner, wad = 0)"
+    ]
+   },
+   "forks": "Berlin, London, Paris, Shanghai, Cancun, Prague, Osaka. Not Glamsterdam: EthLib's rules of the CALL step (callValue, callStep_value, callExtra) are proved for the one-counter gas rules that Glamsterdam (EIP-8037) replaces. Stated in the headers of WithdrawAll.lean, Reenter.lean and Sanity/Withdraw.lean."
+  },
+  "hypotheses_still_assumed": [
+   "hglam: fork < Glamsterdam (in WithdrawReady)",
+   "del: from Prague, the caller of withdraw is not an EIP-7702 delegated account (EthLib's CALL step rule does not cover a delegated target)",
+   "hsep: keccak separation of the mapping slots (unchanged, not proved)",
+   "hcodeC: the account of the contract has code in the start state (needed so that moving ether out does not delete it)",
+   "top-level message hypotheses of Seq.lean unchanged: Paris or later, no precompile, caller is not the contract, data shorter than 2^256"
+  ],
+  "lines_written": {
+   "TokenKit/Evm/Stipend.lean": 600,
+   "tokens/weth/WethVerify/Weth/WithdrawAll.lean": 432,
+   "tokens/weth/WethVerify/Weth/Reenter.lean": 193,
+   "tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean": "441 (rewritten, was 127)",
+   "edited": "Invariant.lean, Seq.lean, Withdraw.lean (comments), ReadableHand.lean (comment), WethVerify.lean (imports), config/weth.json (axioms list), Test/Axioms.lean (regenerated by scripts/gen_axioms.py, not hand edited)"
+  },
+  "build_iterations": "WETH package: 6 after the Stipend file (4 failed, last 2 green). Stipend.lean alone: several single-file builds before that, exact count not kept across the context reset.",
+  "obstacles": [
+   "EthLib's HoareUnder rules do not say on which message a failing runner failed, so a real-runner witness could not be derived from withdraw_path. Solved with EthLib's HoareOn form (callValueOn) and moveEther_isOk_iff.",
+   "callStep_value_deep of TokenKit/Evm/CallOutcome.lean does not give the memory after the step, which the generated tail lemma needs. A copy with the memory (callStep_value_deep_mem) lives in WithdrawAll.lean.",
+   "call_outcome of CallOutcome.lean does not say which case held, so call_bad redoes its case split to prove each failing case."
+  ],
+  "needed_shared_changes": [
+   "TokenKit.lean: add `import TokenKit.Evm.Stipend` (new shared file, not imported by the root module yet; WETH imports it directly).",
+   "tokens/weth now imports TokenKit/Evm/CallOutcome.lean, a shared file written by the other agent. I did not edit it. I copied it unchanged (md5 afda8abf9bd8a644823cf35e63f9a904, 19:14) to box lean-weth so WETH builds there. WETH uses step_at_call, callStep_missing, callStep_value_poor from it: if those change, WithdrawAll.lean must follow.",
+   "CallOutcome.lean: callStep_value_deep could also give `after.memory`; then WETH's callStep_value_deep_mem can be dropped.",
+   "kit-status.json and any status text for WETH: the entries that list CalleeKeeps as an open assumption, the stub-runner witness and the unproved failing cases of withdraw are now out of date.",
+   "scripts/gen_axioms.py now writes `open TokenKit` (was `open TokenKit TokenKit.Complete`) in Test/Axioms.lean; the build is green with it, no action needed, noted only.",
+   "scripts/regen.sh: Invariant.lean, Seq.lean, Reenter.lean, WithdrawAll.lean and Sanity/Withdraw.lean of WETH are hand-written; a regen must not overwrite them (check the gen_supply step for a token with backing = ether)."
+  ],
+  "not_done": [
+   "Glamsterdam is not covered by any theorem that goes through the CALL of withdraw.",
+   "A caller of withdraw that is an EIP-7702 delegated account (from Prague) is not covered.",
+   "Sanity witnesses for the STOP and accept-ether callees as full runs were not written; for them CalleeQuiet is proved, and the full-run witness is for the no-code caller."
+  ]
+ }
+}

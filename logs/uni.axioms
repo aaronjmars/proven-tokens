@@ -1,0 +1,8 @@
+theorems checked: 862
+    788 Classical.choice
+    825 Quot.sound
+    832 propext
+count matches Test/Axioms.lean: 862
+AXIOM SCAN OK: 64142 constants (63658 theorems) of UniVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

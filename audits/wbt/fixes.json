@@ -1,0 +1,307 @@
+{
+ "token": "WBT",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/wbt.log",
+  "axioms": "logs/wbt.axioms"
+ },
+ "findings": {
+  "WBT-1": {
+   "severity": "major",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "partly",
+     "what_changed": "Shared kit part done: generic runner theorem (any message at any depth keeps 'holds CODE + invariant', success or failure), transaction link (EthLib processTransaction) and any finite list of transactions, base case shape, all run-local (no SepAll, no NoCollision). The token itself was not edited by this agent.",
+     "theorems_added": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Apply recipe A to this token (copy pepe Tx.lean, about 150 lines, no new proof idea), regenerate Test/Axioms.lean, update status.json, rebuild. wbt regression build with the new kit: regression, clean build with the new kit: exit 0, 'Build completed successfully (1401 jobs).'; check_axioms: 268 = 268, only standard axioms, AXIOM SCAN OK (13335 constants). Logs: logs/wbt.log, kit.wbt.axioms. No file of tokens/wbt was changed."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "apply-a",
+     "recorded_status": "done",
+     "what_changed": "supply_never_grows_any_transactions, delta_any_transactions, supply_any_transactions over EthLib's processTransaction; no Untouched assumption. status.json now lists the Untouched assumption of the old model.",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create per transaction, RUN-LOCAL: every message that really enters the token code during the run satisfies Q (Sep (callKeys m), keccak separation, NOT proved; for QNT part 2 also 'caller is not the crowdsale address'), and no keccak collision on the codes the run deposits (NOT proved)",
+      "Seq.TxClean.auths (no EIP-7702 authorization sets a code with the hash of the token code), Seq.TxClean.data (call data of a transaction to the token below 2^256 bytes)",
+      "Fork.dencun <= fork < Fork.glamsterdam for each transaction (message-level theorems: Fork.berlin <= fork, one-counter meter)",
+      "Start: Seq.Good (HoldsCode + invariant), or HoldsCode only for the WBT delta / never-grows and QNT fixed_mono theorems, or HoldsCode + all-zero storage for the from-zero theorems"
+     ],
+     "what_is_left": "block-level steps between transactions, the constructor state, forks before Dencun and from Glamsterdam (in not_covered)"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbt/WbtVerify/Test/Axioms.lean",
+    "logs/wbt.log",
+    "logs/wbt.axioms"
+   ]
+  },
+  "WBT-2": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "apply-a",
+     "entry": "WBT-2 (fix 5, base case)",
+     "recorded_status": "partly",
+     "what_changed": "base case shape: inv_zeroBase, supply_from_zero (also shib; qnt inv_from_zero_no_crowdsale)",
+     "what_is_left": "a closed instance where Sep holds for a concrete call (not in this part)"
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 5,
+     "recorded_status": "partly",
+     "what_changed": "Closed instance for burn: under hA : Sep W_KEYS (W_KEYS = [CALLER1W, 1, 0], 30 named keccak facts) and hH, the start state (WBT at its mainnet address holding its code, owner = caller, supply 5) is Seq.Good, processMessage ends burn(1) with no error, slot 5 goes 5 to 4 and the owner balance 5 to 4, the run meets Seq.Clean, the end state is Seq.Good.",
+     "theorems": [
+      "Sanity.burn_closed (headline)",
+      "Sanity.good_wState",
+      "Sanity.inv_wState",
+      "Sanity.holdsCode_wState",
+      "Sanity.spec_process",
+      "Sanity.clean_of_spec",
+      "9 more helpers, all in Test/Axioms.lean"
+     ],
+     "hypotheses_still_assumed": [
+      "hA : Sep W_KEYS (three named words; keccak facts over 2^160 address words; cannot be proved in the model)",
+      "hH : hashOf CODE != EMPTY_CODE_HASH (true by the #eval hash test; kernel keccak of the whole code not tried, it ran a box out of memory for WBTC)",
+      "Paris <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/wbt/WbtVerify/Wbt/Sanity/Closed.lean",
+      "token-kit/tokens/wbt/WbtVerify.lean",
+      "token-kit/tokens/wbt/config/wbt.json",
+      "token-kit/tokens/wbt/WbtVerify/Test/Axioms.lean",
+      "token-kit/tokens/wbt/status.json"
+     ],
+     "left": "Sep not shown satisfiable (not possible). total_le not restated with fewer inequalities. No closed instance for the other 11 writers, none for TxClean / Chain."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbt/WbtVerify/Test/Axioms.lean",
+    "token-kit/tokens/wbt/WbtVerify/Wbt/Sanity/Closed.lean",
+    "token-kit/tokens/wbt/WbtVerify.lean",
+    "token-kit/tokens/wbt/config/wbt.json",
+    "token-kit/tokens/wbt/status.json",
+    "logs/wbt.log",
+    "logs/wbt.axioms"
+   ]
+  },
+  "WBT-3": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 7,
+     "do": "Fork range. The one-counter gas meter is not the one EthLib runs from Glamsterdam. State fork < Glamsterdam in every theorem that needs it and in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "apply-a",
+     "entry": "WBT-3 (fix 7, fork range)",
+     "recorded_status": "partly",
+     "what_changed": "transaction theorems state Dencun <= fork < Glamsterdam and go through processTransaction with its real first-frame meter; status.json says the older frame / per-message theorems have no upper bound in their statement",
+     "what_is_left": "adding fork < Glamsterdam to the generated frame theorems (generator change, not in this part)"
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 7,
+     "recorded_status": "partly",
+     "what_changed": "Same as PEPE-7: fork_range key, explanation, burn_closed states fork < Glamsterdam; status.json wording is now 'from Berlin up to but not including Glamsterdam'. The glue to the transaction path is Tx.lean (apply-a).",
+     "files": [
+      "token-kit/tokens/wbt/status.json"
+     ],
+     "left": "generated statements have no upper bound (kit generator change)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbt/status.json",
+    "logs/wbt.log",
+    "logs/wbt.axioms"
+   ]
+  },
+  "WBT-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 9,
+     "do": "Records. Add the missing build logs (the full clean rebuild of 2026-11-11 gives them), fix stale notes, comments and counts in the status files, and add the contract facts the auditors found (for example PEPE holding limits are buy-side only)."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "Logs in the repo. status.json to_merge_into_kit entries say MERGED; config/wbt.json keys generated_by and the heads of Invariant.lean, Readable.lean, NoMint.lean now name the kit scripts (kit regen reproduces them: regen_check.sh wbt SAME); the six local scripts are marked SUPERSEDED and regen_wbt.sh stops with a message.",
+     "files": [
+      "token-kit/tokens/wbt/status.json",
+      "token-kit/tokens/wbt/config/wbt.json",
+      "token-kit/tokens/wbt/scripts/*",
+      "token-kit/tokens/wbt/WbtVerify/Wbt/Invariant.lean",
+      "token-kit/tokens/wbt/WbtVerify/Wbt/Readable.lean",
+      "token-kit/tokens/wbt/WbtVerify/Wbt/NoMint.lean",
+      "logs/wbt.log",
+      "logs/wbt.axioms"
+     ],
+     "left": "the dead copies are still in the folder (marked, not deleted)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbt/config/wbt.json",
+    "token-kit/tokens/wbt/status.json",
+    "token-kit/tokens/wbt/WbtVerify/Wbt/Invariant.lean",
+    "token-kit/tokens/wbt/WbtVerify/Wbt/Readable.lean",
+    "token-kit/tokens/wbt/WbtVerify/Wbt/NoMint.lean",
+    "logs/wbt.log",
+    "logs/wbt.axioms"
+   ]
+  },
+  "WBT-5": {
+   "severity": "note",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "partly",
+     "what_changed": "not_covered says success of name() / symbol() is not witnessed.",
+     "files": [
+      "token-kit/tokens/wbt/status.json"
+     ],
+     "left": "no witness written."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbt/status.json",
+    "logs/wbt.log",
+    "logs/wbt.axioms"
+   ]
+  },
+  "WBT-6": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "contract_findings: after renounceOwnership only burn checks caller != 0, the other owner functions rest on nobody sending from address 0 (also in not_covered); approve family ignores blacklist and pause; two-step silent removal of funds; burn lowers supply before the balance check. Supply.inv_congr now in the axioms list (dotted_decl).",
+     "files": [
+      "token-kit/tokens/wbt/status.json",
+      "token-kit/tokens/wbt/config/wbt.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/wbt/status.json",
+    "token-kit/tokens/wbt/config/wbt.json",
+    "logs/wbt.log",
+    "logs/wbt.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "build": "regression, clean build with the new kit: exit 0, 'Build completed successfully (1401 jobs).'; check_axioms: 268 = 268, only standard axioms, AXIOM SCAN OK (13335 constants). Logs: logs/wbt.log, kit.wbt.axioms. No file of tokens/wbt was changed."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-a",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit applied to shib, qnt, wbt with recipe A_no_outside_call. Each token has <Root>Verify/<Tok>/Tx.lean with its invariant after any transaction and any finite list of transactions run by EthLib's processTransaction. All three build clean against the committed kit; axioms counts match; only the three standard axioms. The first build attempt of every file passed; no kit lemma was missing.",
+   "build": {
+    "status": "done",
+    "file": "token-kit/tokens/wbt/WbtVerify/Wbt/Tx.lean (300 lines, 20 theorems; definitions SepMsg, Level)",
+    "pattern": "pepe as is for Inv = Supply.Inv 3 5 (supply_preserved takes EndsL). Plus state predicate Level C d n (D = d and slot 5 <= n), kept by every frame by delta_step and total_le, instantiated at the start state: delta and never-grows with no assumption on start storage. Tx.lean imports NoMint (for total_le), so its root import is after NoMint.",
+    "theorems_added": [
+     "storageOnly_inv",
+     "code_size_ne_zero",
+     "code_not_indicator",
+     "code_not_delegated",
+     "inv_zeroBase",
+     "frameKeepsQ",
+     "supply_message_any_depth",
+     "supply_transaction",
+     "supply_any_transactions (headline 1)",
+     "supply_from_zero",
+     "storageOnly_level",
+     "level_self",
+     "frameKeepsQ_level",
+     "level_message_any_depth",
+     "level_transaction",
+     "level_any_transactions",
+     "delta_transaction",
+     "supply_never_grows_transaction",
+     "delta_any_transactions (headline 2)",
+     "supply_never_grows_any_transactions (headline 3, closes WBT-1)"
+    ],
+    "theorems_retired": "none; supply_never_grows / inv_calls kept and described as the weaker per-message model",
+    "build": "exit 0, Build completed successfully (1412 jobs); check_axioms 295 = 295, only standard axioms, AXIOM SCAN OK 13761 constants",
+    "axioms_names": "268 -> 295",
+    "status_json": "token-kit/tokens/wbt/status.json updated (headline, claims, assumptions, not_covered, counts, fix_round_audit4, build; old build kept as build_before_fix4)"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-d",
+   "date": "2026-11-11",
+   "scope": "fixes 5 to 9 of audits/wbt/fixes.json",
+   "build": {
+    "box": "lean-fix-d",
+    "command": "lake build from a removed tokens/wbt/.lake/build, kit = git archive HEAD token-kit, LEAN_NUM_THREADS=2",
+    "exit_code": 0,
+    "seconds": 297,
+    "final_line": "Build completed successfully (1413 jobs).",
+    "axioms": "check_axioms.sh exit 0: theorems checked 311, count matches Test/Axioms.lean 311, AXIOM SCAN OK 13798 constants (13420 theorems), only propext, Classical.choice, Quot.sound",
+    "log": "logs/wbt.log",
+    "axioms_file": "logs/wbt.axioms"
+   },
+   "fork_range": "same as pepe (burn_closed)"
+  }
+ ]
+}

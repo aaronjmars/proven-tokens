@@ -1,0 +1,8 @@
+theorems checked: 176
+    169 Classical.choice
+    172 Quot.sound
+    176 propext
+count matches Test/Axioms.lean: 176
+AXIOM SCAN OK: 5993 constants (5614 theorems) of BnbVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

@@ -1,0 +1,375 @@
+{
+ "token": "PEPE",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/pepe.log",
+  "axioms": "logs/pepe.axioms"
+ },
+ "findings": {
+  "PEPE-1": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 5,
+     "recorded_status": "partly",
+     "what_changed": "One closed instance at message level. Sep cannot be proved, so it is reduced to Sep W_KEYS, W_KEYS = [CALLER1W, 2, 1]: 33 named keccak facts. Under it and hH: the start state wState (PEPE at its mainnet address holding its code, supply 5 on one holder) is Seq.Good, EthLib's processMessage ends transfer(2, 1) with no error and output true, balances end 4 and 1, the run meets Seq.Clean (SepMsg), and the end state is Seq.Good by supply_message_any_depth.",
+     "theorems": [
+      "Sanity.transfer_closed (headline)",
+      "Sanity.good_wState",
+      "Sanity.inv_wState",
+      "Sanity.holdsCode_wState",
+      "Sanity.spec_process",
+      "Sanity.clean_of_spec",
+      "9 more helpers, all in Test/Axioms.lean"
+     ],
+     "hypotheses_still_assumed": [
+      "hA : Sep W_KEYS (three named words; keccak facts over 2^160 address words; cannot be proved in the model)",
+      "hH : hashOf CODE != EMPTY_CODE_HASH (true by the #eval hash test; kernel keccak of the whole code not tried, it ran a box out of memory for WBTC)",
+      "Paris <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/pepe/PepeVerify/Pepe/Sanity/Closed.lean",
+      "token-kit/tokens/pepe/PepeVerify.lean",
+      "token-kit/tokens/pepe/config/pepe.json",
+      "token-kit/tokens/pepe/PepeVerify/Test/Axioms.lean",
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "Sep is not shown satisfiable (not possible in the model). Seq.TxClean / Seq.Chain have no closed instance: that needs a signed transaction accepted by processTransaction. Only one function (transfer) has a closed instance."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/PepeVerify/Test/Axioms.lean",
+    "token-kit/tokens/pepe/PepeVerify/Pepe/Sanity/Closed.lean",
+    "token-kit/tokens/pepe/PepeVerify.lean",
+    "token-kit/tokens/pepe/config/pepe.json",
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "done",
+     "what_changed": "PEPE pilot: tokens/pepe/PepeVerify/Pepe/Tx.lean. The Untouched assumption of Seq.lean is no longer needed for the headline: supply_message_any_depth, supply_transaction, supply_any_transactions, supply_from_zero are about EthLib's real runner and processTransaction. Old theorems of Seq.lean kept as they are (inv_calls, process_step, ...).",
+     "theorems_added": {
+      "kit": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+      "pepe": [
+       "SepMsg (abbrev)",
+       "storageOnly_inv",
+       "code_size_ne_zero",
+       "code_not_indicator",
+       "code_not_delegated",
+       "inv_zeroBase",
+       "frameKeepsQ",
+       "supply_message_any_depth",
+       "supply_transaction",
+       "supply_any_transactions (headline)",
+       "supply_from_zero"
+      ]
+     },
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Block-level steps between transactions and the constructor state (named in not_covered)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/PepeVerify/Pepe/Tx.lean",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-3": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 5,
+     "recorded_status": "closed",
+     "what_changed": "Message-level witness (processMessage, gas limit 1000000, account holding the code) and a state where Inv holds (inv_wState under hA). The base case supply_from_zero already existed.",
+     "theorems": [
+      "Sanity.transfer_closed",
+      "Sanity.inv_wState"
+     ],
+     "hypotheses_still_assumed": [
+      "hA : Sep W_KEYS (three named words; keccak facts over 2^160 address words; cannot be proved in the model)",
+      "hH : hashOf CODE != EMPTY_CODE_HASH (true by the #eval hash test; kernel keccak of the whole code not tried, it ran a box out of memory for WBTC)",
+      "Paris <= fork < Glamsterdam"
+     ],
+     "files": [
+      "token-kit/tokens/pepe/PepeVerify/Pepe/Sanity/Closed.lean"
+     ],
+     "left": "revert and stuck paths still have no witness (disclosed)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/PepeVerify/Pepe/Sanity/Closed.lean",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-4": {
+   "severity": "minor",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "partly",
+     "what_changed": "status.json not_covered now says that success of name() and symbol() is not witnessed and ro_name / ro_symbol could be empty.",
+     "theorems": [],
+     "files": [
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "no witness of a successful name() written."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-5": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 9,
+     "do": "Records. Add the missing build logs (the full clean rebuild of 2026-11-11 gives them), fix stale notes, comments and counts in the status files, and add the contract facts the auditors found (for example PEPE holding limits are buy-side only)."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "Clean build log and axioms output are in the repo; status.json build block and all counts updated (929 theorems, 351 in the axioms test).",
+     "files": [
+      "logs/pepe.log",
+      "logs/pepe.axioms",
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-6": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "status.json says 'sufficient gas bound' (cost + 2301 for a writing path).",
+     "files": [
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-7": {
+   "severity": "note",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 7,
+     "recorded_status": "partly",
+     "what_changed": "fork_range key and a full explanation in assumptions. New theorem transfer_closed states fork < Glamsterdam; supply_transaction and Seq.Chain already do. The generated frame theorems keep only Berlin <= fork: they are true at every fork as statements about the Nat-meter frame runner, the bound would be an unused hypothesis, and the generator is a kit file I may not edit.",
+     "files": [
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "if the bound must be in every generated statement, it is a change of token-kit/scripts (gen_paths, gen_supply, gen_readable, gen_sanity) and a regeneration of every token."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-8": {
+   "severity": "note",
+   "status": "open",
+   "reason": "Recorded as not done: generate total_le for PEPE: the kit gen_nomint.py has the texts of WBT (slot 5, blacklist mapping) and needs a kit change.",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "not done",
+     "what_changed": "Only disclosed: no single no-mint theorem; contract_findings and not_covered say the claim is read from 20 corollaries.",
+     "files": [
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "generate total_le for PEPE: the kit gen_nomint.py has the texts of WBT (slot 5, blacklist mapping) and needs a kit change."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-9": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "Finding reworded ('no transaction can change it', an argument about real senders); the 10 caller-0 paths are named model-only in not_covered.",
+     "files": [
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-10": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "config axioms.dotted_decl = true (existing kit switch); Test/Axioms.lean regenerated: the head no longer says no file declares Supply.inv_congr, and the name is in the list. regen_check.sh pepe: SAME.",
+     "files": [
+      "token-kit/tokens/pepe/config/pepe.json",
+      "token-kit/tokens/pepe/PepeVerify/Test/Axioms.lean"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/PepeVerify/Test/Axioms.lean",
+    "token-kit/tokens/pepe/config/pepe.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  },
+  "PEPE-11": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-d",
+     "fix": 9,
+     "recorded_status": "closed",
+     "what_changed": "contract_findings: holding limits are buy-side only (from = pair, receiver balance); transferFrom does not check the spender's blacklist and the approve family has no blacklist check; min > max and blacklist(pair).",
+     "files": [
+      "token-kit/tokens/pepe/status.json"
+     ],
+     "left": "nothing"
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/pepe/status.json",
+    "logs/pepe.log",
+    "logs/pepe.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "build": "lake build in tokens/pepe from a removed .lake/build: exit 0, 'Build completed successfully (1408 jobs).', 12 min. Log: logs/pepe.log. bash scripts/check_axioms.sh /home/user/logs/pepe.log PepeVerify/Test/Axioms.lean: exit 0, 'theorems checked: 335', 'count matches Test/Axioms.lean: 335', 'only standard axioms' (Classical.choice 330, Quot.sound 333, propext 335 of the 335). The scan printed 'AXIOM SCAN OK: 15084 constants (14706 theorems) of PepeVerify and TokenKit'. Output: logs/pepe.axioms"
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-d",
+   "date": "2026-11-11",
+   "scope": "fixes 5 to 9 of audits/pepe/fixes.json",
+   "build": {
+    "box": "lean-fix-d",
+    "command": "lake build from a removed tokens/pepe/.lake/build, kit = git archive HEAD token-kit, LEAN_NUM_THREADS=2",
+    "exit_code": 0,
+    "seconds": 590,
+    "final_line": "Build completed successfully (1409 jobs).",
+    "axioms": "check_axioms.sh exit 0: theorems checked 351, count matches Test/Axioms.lean 351, AXIOM SCAN OK 15127 constants (14741 theorems), only propext, Classical.choice, Quot.sound",
+    "log": "logs/pepe.log",
+    "axioms_file": "logs/pepe.axioms"
+   },
+   "fork_range": "transactions: Dencun <= fork < Glamsterdam; transfer_closed: Paris <= fork < Glamsterdam; generated frame theorems: Berlin <= fork, no upper bound in the statement"
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "fix": 10,
+   "what": "the auditor scratch Lean file InvEmpty.lean built on the rebuild box: compiles (exit 0, no sorry)"
+  }
+ ]
+}

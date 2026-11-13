@@ -1,0 +1,158 @@
+{
+ "token": "PEPE",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": {
+  "token": "PEPE",
+  "address": "0x6982508145454ce325ddbe47a25d4ec3d2311933",
+  "date": "2026-11-11",
+  "what": "Read-only independent audit of the Lean proof in token-kit/tokens/pepe against its status.json, the bytes in survey/tokens/PEPE and the EVM model in upstream/EthLib and upstream/usdt-verify.",
+  "method": "Read every hand-written and root file in full (PepeVerify.lean, Code.lean, Map.lean, Steps.lean, Complete/Dispatch.lean, Sep.lean, Seq.lean, Test/Axioms.lean, Test/Hash.lean), the theorem statements of the generated files (Invariant, Readable, Sanity/Zero, Gen/P*, Gen/Loops) by search, TokenKit/Evm/SafeL.lean, Supply.lean, Safe.lean (Ro), WitnessOpt.lean, the generator switches used by config/pepe.json, and EthLib's processMessage, runFrame, startState, precompileAddress, the Nat gas meter and processTransaction. Three read-only Python scripts recheck the bytes, the selector table, the hash and the path conditions.",
+  "limits": "Lean was not built (no Lean on this Mac). Nothing here is a machine check of a Lean statement. No E2B box was touched. No network call was made."
+ },
+ "checked_ok": [
+  "Code constant: CODE_NAT in PepeVerify/Pepe/Code/Bytes.lean has the same hex digits as survey/tokens/PEPE/runtime.hex and as tokens/pepe/data/pepe.runtime.hex (no lost leading zero; first byte 0x60), CODE_SIZE = 4517 = byte count. My own keccak256 of the survey bytes is 4bcc3abe...386ab6, equal to EXPECTED_HASH in Test/Hash.lean and to SOURCE.md.",
+  "Selector table: the bytes hold exactly 22 'DUP1 PUSH4 key EQ PUSH2 dest JUMPI' entries; they equal ENTRIES in Map.lean in the same order; every destination is a JUMPDEST; the 22 keys are exactly keccak(signature)[:4] of the 22 functions of survey/tokens/PEPE/abi.json. docs/MAP.md equals survey/tokens/PEPE/MAP.md and data/abi.json equals the survey ABI.",
+  "Opcode census of the code before the metadata (pc < 4463): 11 SSTORE, 32 SLOAD, 21 SHA3, 4 LOG3, 1 RETURN, 1 STOP, 14 REVERT; no CALL, CALLCODE, DELEGATECALL, STATICCALL, CREATE, CREATE2, SELFDESTRUCT, GAS, PUSH0, TIMESTAMP, CHAINID. The only INVALID (0xfe) is the metadata delimiter. The three PUSH32 log topics are Transfer (2 sites), Approval, OwnershipTransferred. So 'no external call, no delegatecall, no selfdestruct' is true of the bytes.",
+  "supply_preserved (Invariant.lean:761) covers all 22 selectors: ends_ok_dispatch gives i : Fin 22 and each of the 22 cases is closed by supply_<fn>; name and symbol are closed by Loops.ro_name / ro_symbol (no Sep needed). No selector, caller, static flag or call depth is excluded. It is stated for every gas bound and every MessageRunner, so it holds for EthLib's real processRunner (PEPE makes no child call, so no runner hypothesis is needed at all).",
+  "EndsL (TokenKit/Evm/SafeL.lean:39) is 'exists within, Evm.runFrame (step fork) (step_decreases fork) bound runChild l within = .ok s': EthLib's real frame loop, not a weaker relation. At (usdt-verify Evm/At.lean:46) fixes code, jump table, message, pc, stack, memory, gas, running, no error, empty output, state, substate; At.startFrame shows the frame processMessage builds satisfies it.",
+  "process_step (Seq.lean:199) is about EthLib's processMessage itself (which also runs child messages), for every message with message.code = CODE that is no precompile, from Paris: no error gives GoodCall, an error gives Untouched (EthLib's getStorage_processMessage_of_error). The value case is handled (process_value_fails), static and delegate contexts are not excluded. For the Nat meter GasMeter.start g r = g and FirstFrame.ofMeter sets message.gas := gasHeld meter, so the default-meter form of the statement matches the call processMessageCall makes (read, not proved in the project).",
+  "Vacuity of path theorems: check_paths.py finds 0 of 189 paths with a condition and its negation after normalization (the SHIB-style duplicate sender check is pruned here). 183 branches were pruned by the generator; this cannot hide a path because ok_<fn> is proved in Lean by case split and would not close if a feasible branch were missing.",
+  "Sanity witnesses: 32 theorems <path>_runs, one per success path (10 views, 5 transfer, 5 transferFrom, 5 burn, 7 single-path writers), each an EndsL run for every runner and bound, with nonzero amounts (amount 1, balances and allowances 5), keccak computed by the kernel, no Sep. They are real witnesses of the 32 success path theorems.",
+  "Readable corollaries: the requires/ensures strings come from config/pepe.json but each theorem is proved in Lean from ok_<fn>; transfer, transferFrom and burn cover their 5 success paths. The statements I read (transfer, transferFrom, burn, setRule) match the path conditions printed by show_paths.py.",
+  "Hygiene: text search for sorry, admit, native_decide, bv_decide, unsafe, implemented_by, opaque, extern, csimp, ofReduceBool and for axiom declarations in tokens/pepe and TokenKit finds none in code (one hit is a doc comment in Test/Axioms.lean). No skip list in the scan: Test/Axioms.lean scans every constant of modules PepeVerify.* and TokenKit.* with Lean.collectAxioms (transitive, so a sorry or native_decide inside usdt-verify or EthLib that a PEPE theorem uses would also be caught). Test/Axioms.lean imports every module the root imports.",
+  "Counts against the files: 904 theorems in tokens/pepe; 306 '#print axioms' lines; 422 block lemmas; 189 path theorems (133 revert, 32 ok, 22 stuck, 2 at); 25 ok_ theorems; 136 in Loops; 23 in Invariant; 20 in Readable; 52 in Sanity/Zero; 10 in Seq; 18 in Sep; 5 in Code; 3 in Complete/Dispatch. All equal status.json.",
+  "Generator switches used by config/pepe.json: dispatch.mode walk, paths.raw_memory, prune normalized, supply.checked08, axioms.declared_only. None adds a hypothesis to a theorem or drops a function; never_ok, dead_branches, frame and skip switches are not used. There is no tokens/pepe/scripts local copy."
+ ],
+ "findings": [
+  {
+   "id": "PEPE-1",
+   "token": "PEPE",
+   "severity": "minor",
+   "claim": "supply_<fn>, supply_preserved, the sequence theorems and 13 readable corollaries: a successful call keeps sum of balances = totalSupply and has the stated storage effect.",
+   "what_is_actually_proved": "All of them under hsep : Sep (callKeys message), which is never discharged and never shown satisfiable for any message. Sep (Sep.lean:58) is 5 fields that unfold to about 33 atomic keccak facts per call: NotBal 1 3; UniqBal 1 x for the 3 call keys; for all 9 ordered pairs of keys the allowance slot is no balance slot and is not 3; for the 3 keys the blacklist slot is no balance slot and is not 3; NotBal 1 for slots 0, 6, 7, 8, 9. Each NotBal and UniqBal quantifies over all 2^160 address words, so none can be decided by the kernel. The facts are local and would only fail on a keccak collision, so this is a standard assumption, not a false one; but there is no witness that the hypothesis set of any supply_ theorem (Sep plus Inv) is non-empty. Sep is also larger than needed (for burn the second key is the masked amount word, and all 9 allowance pairs are asked for every function). Disclosed in status.json assumptions.",
+   "evidence": "PepeVerify/Pepe/Sep.lean:50 'def callKeys', :58 'structure Sep (A : List U256) : Prop where total : Supply.NotBal 1 3; uniq : forall x in A, Supply.UniqBal 1 x; allow : forall o in A, forall s in A, Supply.NotBal 1 (mapSlot s (mapSlot o 2)) and mapSlot s (mapSlot o 2) != 3; black ...; fixed ...'. Invariant.lean:761 supply_preserved '(hsep : Sep (callKeys message)) (hinv : Inv message.currentTarget state)'. TokenKit/Evm/Supply.lean:52 'def NotBal (b n : U256) : Prop := forall x : U256, x.toNat < 2 ^ 160 -> n != mapSlot x b'. rg for 'Sep' in Sanity/Zero.lean: no use.",
+   "suggested_fix": "Keep the assumption but say in status.json that no instance of Sep is exhibited. Optionally cut Sep per function to the slots that function writes."
+  },
+  {
+   "id": "PEPE-2",
+   "token": "PEPE",
+   "severity": "minor",
+   "claim": "status.json 'sequences': inv_calls and process_step lift the invariant to top-level messages and to any finite sequence of steps.",
+   "what_is_actually_proved": "Per message: from Paris, one run of processMessage on a message whose code is CODE keeps Inv (process_step_inv). The sequence theorem inv_calls is over an inductive model Calls with two kinds of step: GoodCall, and 'other', where Untouched C S S' (every storage word of C unchanged) is the premise of the step, not a proved fact. Only a failed message is proved Untouched (untouched_process_failed). Not proved: that a step which is not a run of CODE at C leaves C's storage alone (other contracts, CREATE at the address, fees); that message.code = CODE whenever the target is C (the account code is not linked to the message); the rollback of an outer frame that reverts after a successful nested call to PEPE (the state goes back to an earlier state, which is not an Untouched step from the current one); nothing over processMessageCall, runTransaction or a block. So 'Inv holds for ever on chain if it held after the constructor' is not a theorem. The Lean doc comment says the 'other' step is an assumption; status.json 'assumptions' does not list it (it lists only code = CODE, no precompile, no value). Same shape as QNT-2 in the QNT, BNB and WETH audit.",
+   "evidence": "PepeVerify/Pepe/Seq.lean:70 'def Untouched (C : Address) (S S' : State.TransactionState) : Prop := forall n, storageAt S' C n = storageAt S C n'; :74 'inductive Calls ... | other {S S' S''} : Untouched C S S' -> Calls C S' S'' -> Calls C S S'''; header lines 17 to 20: 'for the other changes it is the assumption of the step'. :199 process_step hypotheses '(hparis : .paris <= fork) (hmc : message.code = CODE) (noPrecompile : precompileAddress fork message = none) (hsize ...) (K : Sep (callKeys message)) (hproc : processMessage fork message state substate = .ok ended)'. rg for processMessageCall, runTransaction, processTransaction, prepareFirstFrame in tokens/pepe and TokenKit: no hit.",
+   "suggested_fix": "Add to status.json assumptions: 'steps that are not a run of CODE at C are assumed to keep C's storage; nested calls under a reverting parent and whole transactions are not linked'. A real fix is a theorem over runFrame with processRunner for an arbitrary caller frame (child calls to C keep Inv, everything else keeps C's storage), which EthLib's frame lemmas should allow since CODE has no CALL."
+  },
+  {
+   "id": "PEPE-3",
+   "token": "PEPE",
+   "severity": "minor",
+   "claim": "status.json: '32 witnesses in Sanity/Zero.lean, one per success path'; vacuity is covered.",
+   "what_is_actually_proved": "True for the 32 frame-level success path theorems. Not covered: (a) no witness at message level. The witness messages are built with sMsg, whose gas field is 0; the witness picks the frame gas freely, apart from the message. So no theorem shows processMessage ending with no error on CODE, and the GoodCall branch of process_step / goodCall_process has no witness. It would follow from the frame witness (EndsL holds for processRunner) with a message of enough gas, but it is not stated. (b) No state is shown to satisfy Inv; the witness states do not (for example transfer_p10 runs with balance 5 and totalSupply 0), which is fine for the path theorems but leaves supply_ theorems with no instance of their hypotheses (see PEPE-1). (c) The witness state has one account whose code map is empty (the code comes from the message only) and one fixed caller. (d) 133 revert and 22 stuck paths have no witness (disclosed).",
+   "evidence": "upstream/usdt-verify/UsdtVerify/Evm/Sample.lean:84 'def sMsg ... gas := 0, value := 0'; :42 'def sState ... code := (empty)'. Sanity/Zero.lean:541 transfer_p10_runs: 'exists (gas : Nat) (evm s : Evm fork Nat), At CODE (m_transfer_p10 b t C) 0 [] .empty gas (sState C [(0, 2), (mapSlot Witness.CALLER1W 1, 5)]) ss evm and (forall {bound} (runChild : MessageRunner fork Nat bound), GasMeter.gasHeld evm.gas <= bound -> EndsL runChild evm s) and s.error = none ...'. No theorem in tokens/pepe has a conclusion of the form 'processMessage ... = .ok ...'.",
+   "suggested_fix": "Add one message-level witness (processMessage on a transfer with message.gas large, ended.val.error = none) and one lemma that Inv holds in some state. Scratch for the second: scratch file InvEmpty.lean (not kept).",
+   "machine_check": "written, not built"
+  },
+  {
+   "id": "PEPE-4",
+   "token": "PEPE",
+   "severity": "minor",
+   "claim": "Result line: 'every theorem family of SHIB is proved'; 22 selectors, 20 functions with a success path.",
+   "what_is_actually_proved": "For name() and symbol() only: every run that ends with no error changes no storage word, no account and adds no log (Loops.ro_name, Loops.ro_symbol), plus the entry path to the loop head (pc 327 / 627). There is no success path theorem, no output, no gas, no readable corollary and no Sanity witness for these two, so nothing shows that a call of name() or symbol() can end with no error in the model: ro_name and ro_symbol could be vacuous. The invariant use (supply_name, supply_symbol) is sound either way. Disclosed as 'exact return data not proved'; the missing success witness is not said.",
+   "evidence": "Gen/Loops.lean:1730 'theorem ro_name (hfork) (hsize') (hsel : selector message.data = 0x06fdde03) ... (hrun : EndsL runChild evm s) (hok : s.error = none) : Ro message.currentTarget state substate s.state s.substate'. Gen/PNameEntry.lean:80 ok_nameEntry ends at 'At CODE message 327 [...] ... z and EndsL runChild z s'. Sanity/Zero.lean has no name_runs or symbol_runs (list of 32 _runs theorems). work/paths.json: nameEntry and symbolEntry have kinds revert 1, at 1.",
+   "suggested_fix": "Add a Sanity witness of a successful name() on a state with a short string in slot 4 (one loop pass), or say in not_covered that success of name()/symbol() is not witnessed."
+  },
+  {
+   "id": "PEPE-5",
+   "token": "PEPE",
+   "severity": "minor",
+   "claim": "status.json build: exit code 0, 'Build completed successfully (1397 jobs)', axioms check on 306 theorems, scan 'AXIOM SCAN OK: 14669 constants (14454 theorems)', Mac equals box by sha1.",
+   "what_is_actually_proved": "Not checkable from this repo. There is no PEPE build log or axioms output on the Mac: logs/ holds files for dai, ena, link, sky, uni, usde, wbtc only; the PEPE log is said to be on the box (/home/user/logs/pepe.final.log). The README table points to the status file itself as the 'last clean rebuild log'. What I could confirm by text: every count in theorem_counts, the 306 lines, no banned keyword, and that e2b/verify_all.sh includes pepe. kit-status.json lead_rebuild lists only shib, qnt, bnb, weth.",
+   "evidence": "ls logs/: dai.*, ena.*, link.*, sky.*, uni.*, usde.*, wbtc.*; find for '*pepe*' outside token-kit/tokens/pepe and survey: nothing. status.json build.log_on_box '/home/user/logs/pepe.final.log'. README.md Status table row PEPE: 'in its status file'.",
+   "suggested_fix": "Copy pepe.log, pepe.axioms and the done marker of a clean rebuild into logs/ like the seven later tokens."
+  },
+  {
+   "id": "PEPE-6",
+   "token": "PEPE",
+   "severity": "note",
+   "claim": "Each path theorem gives the exact gas of the path.",
+   "what_is_actually_proved": "For a writing success path the path theorem needs gas >= cost + 2301 (the EIP-2200 stipend check at SSTORE), while completeness ok_<fn> gives only cost <= gas. For cost <= gas < cost + 2301 nothing says whether the call succeeds. Gas used is exact whenever the run succeeds. Read paths have bound = cost. Same as SHIB F5.",
+   "evidence": "work/paths.json approve_p6, renounceOwnership_p3, burn_p8: 'bound' is 'cost' followed by ' + 2301' (printed by an ad hoc read of paths.json). Gen/PApprove.lean:241 approve_p6 '{gas : Nat} (hg : (2629 + (Gas.writeCost fork ...)) + 2300 < gas)' (the same bound, written as a strict inequality); :289 ok_approve gives '(2629 + (Gas.writeCost ...)) <= gas'.",
+   "suggested_fix": "Say 'sufficient gas bound' in status.json, as SHIB does."
+  },
+  {
+   "id": "PEPE-7",
+   "token": "PEPE",
+   "severity": "note",
+   "claim": "Theorems hold 'from Berlin' (frames) and 'from Paris' (messages).",
+   "what_is_actually_proved": "The statements have a lower fork bound only and are over the one-counter meter (Evm fork Nat). EthLib's processTransaction uses the Nat meter only below Glamsterdam, StateGasMeter from Glamsterdam, and returns an error from Hegota. So for forks from Glamsterdam the theorems are true statements about a runner EthLib does not use for transactions. Disclosed in assumptions ('before Glamsterdam') but no theorem carries fork < glamsterdam.",
+   "evidence": "upstream/EthLib/EthLib/Execution/Transactions/Process.lean:436 to 439 'if .hegota <= fork then .error (.forkNotYetSpecified fork) else if fork >= .glamsterdam then runTransaction StateGasMeter env block included tx else runTransaction Nat env block included tx'. Seq.lean:199 process_step '(hparis : .paris <= fork)' with 'ended : { evm : Evm fork Nat // ... }'.",
+   "suggested_fix": "None needed beyond keeping the disclosure; port to StateGasMeter when wanted."
+  },
+  {
+   "id": "PEPE-8",
+   "token": "PEPE",
+   "severity": "note",
+   "claim": "contract_findings: 'No function mints: no success path raises totalSupply.'",
+   "what_is_actually_proved": "There is no single theorem that says totalSupply after <= totalSupply before for every successful call (the kit has gen_nomint.py but it is not in the generators list of config/pepe.json). The fact follows by reading 20 readable corollaries plus Ro for name and symbol: 10 views keep every slot; transfer, transferFrom, approve, increaseAllowance, decreaseAllowance state totalSupply unchanged under Sep; burn lowers it; blacklist changes only mapSlot account 10, which differs from slot 3 only by the keccak fact Sep.black (the blacklist corollary itself takes no Sep, so it does not say slot 3 is kept); setRule, transferOwnership, renounceOwnership write literal slots 6, 7, 8, 9, 0. The success paths agree: among the 32 success paths of work/paths.json only the five burn paths have a write of literal slot 3 in their end state.",
+   "evidence": "config/pepe.json generators: ['code', 'dispatch', 'paths', 'loops', 'supply', 'sanity', 'readable', 'axioms']. rg -i 'nomint|never grows' in tokens/pepe/PepeVerify: no hit. Readable.lean:1072 burn_readable '(totalSupply message s.state).toNat = (totalSupply message state).toNat - (arg1 message).toNat'; config readable.blacklist 'sep: false' with ensures 'forall k, k != mapSlot account 10 -> storageAt s.state ... k = storageAt state ... k'.",
+   "suggested_fix": "Generate the no-mint theorem (as for WBT) so the claim is one checked statement under Sep."
+  },
+  {
+   "id": "PEPE-9",
+   "token": "PEPE",
+   "severity": "note",
+   "claim": "189 paths; contract finding 'if the owner renounces while uniswapV2Pair is still 0, every transfer between non-zero addresses fails for ever'.",
+   "what_is_actually_proved": "10 revert paths need the caller word to be 0 (transfer_p3, approve_p3, transferFrom_p12, p18, p26, p33, p39, increaseAllowance_p4, decreaseAllowance_p4, burn_p2). They are satisfiable in the model, which does not exclude caller = 0, but no signed transaction reaches them. For the same reason 'for ever' is an argument, not a theorem: in the model a caller with address 0 passes the owner check of setRule when slot 0 is 0 and could set the pair. On a real chain nobody can send from address 0, so the finding stands as an argument. The 22 stuck paths are the 'static frame or no account at the first SSTORE' cases (hbad : message.isStatic = true or not hasAccount), which is a sound reading of EthLib.",
+   "evidence": "check_paths.py output 'paths that need caller = 0'. Gen/PApprove.lean:195 approve_p5 '(hbad : message.isStatic = true or not hasAccount state message.currentTarget) ... Logic.HoareG fork (At CODE message 0 [] .empty gas state substate) Logic.Stuck'. Readable.lean:1252 setRule_readable requires 'ownerOf message state = sender message' with no 'sender != 0'.",
+   "suggested_fix": "Word the finding as 'no transaction can change it' and name the caller-0 paths as model-only in not_covered."
+  },
+  {
+   "id": "PEPE-10",
+   "token": "PEPE",
+   "severity": "note",
+   "claim": "Docs and tests: Test/Axioms.lean header, Test/Hash.lean, Map.lean.",
+   "what_is_actually_proved": "(a) The header of Test/Axioms.lean says Supply.inv_congr is a name 'that no Lean file declares'; Seq.lean:46 does declare 'theorem Supply.inv_congr' (as PepeVerify.Supply.inv_congr). It is only missing from the #print list; the scan covers it. status.json says this correctly. (b) Test/Hash.lean is an #eval at build time, not a theorem, and EXPECTED_HASH comes from the same fetch; I recomputed the hash independently. (c) The destinations in ENTRIES (Map.lean) are used by no proof ('listed for the reader'); the selector to body link is proved inside each path, which walks the dispatcher from pc 0. My script confirms the destinations against the bytes. (d) check_axioms.py is the fixed version from the QNT, BNB and WETH audit (wrapped lists, empty log, count, sorry warning all handled).",
+   "evidence": "Test/Axioms.lean header: 'Generated names that no Lean file declares, left out of the list (axioms.declared_only): supply_valueSent, supply_short, supply_other, Supply.inv_congr.' Seq.lean:46 'theorem Supply.inv_congr {b t : U256} ...'. Map.lean header: 'The proofs use the keys of ENTRIES only; the destinations are listed for the reader.' Test/Hash.lean: '#eval show IO Unit from do ...'.",
+   "suggested_fix": "Fix the header sentence (gen_axioms matches on the dotted name); nothing else."
+  },
+  {
+   "id": "PEPE-11",
+   "token": "PEPE",
+   "severity": "note",
+   "claim": "What the proofs show about the real contract (for the owner and for integrators).",
+   "what_is_actually_proved": "Read from the readable corollaries and the path conditions (frame level, mapping facts under Sep): (1) No function can raise totalSupply; only burn changes it (down). (2) The owner (slot 0) alone can call blacklist, setRule, transferOwnership, renounceOwnership. setRule writes limited, pair, max, min with no check at all: the pair can be set back to 0 (closes trading for everyone but the owner), and min > max makes every buy from the pair revert while limited is on. blacklist(pair, true) blocks every transfer to or from the pair; blacklist emits no log. (3) The holding limits apply only when from = pair and limited is on, and only to the receiver's balance; wallet to wallet transfers are never limited. (4) transferFrom checks the blacklist of from and to, not of the spender; approve, increaseAllowance and decreaseAllowance have no blacklist check. (5) transferFrom always lowers the allowance (no infinite allowance) and emits Approval after Transfer; balances move before the allowance check. (6) burn(amount) burns the caller's own tokens through the same hook with to = 0: it fails if address 0 is blacklisted, and while the pair is 0 it needs caller = owner or owner = 0. (7) Every function reverts on value and on dirty address or bool words. (8) After renounceOwnership the owner slot is 0 and none of the owner powers can be used by a transaction. Whether the owner has renounced on mainnet, and the live values of pair, limited, max, min, was not checked (no chain read).",
+   "evidence": "Readable.lean:399 transfer_readable, :696 transferFrom_readable (requires list has 'blacklisted message state (addrArg2 message) = 0' and '(addrArg1 message)' only, none for sender), :1072 burn_readable ('blacklisted message state 0 = 0', 'pairOf message state = 0 -> (sender = ownerOf or 0 = ownerOf)'), :1252 setRule_readable (four slot equations, no bound), :1213 blacklist_readable ('s.substate.logs = substate.logs'). show_paths.py burn output for the pair and limited branches.",
+   "suggested_fix": "None; status.json contract_findings already has most of these. Items 3 (limit is buy-side only) and 4 (spender not blacklist-checked) are not listed there."
+  }
+ ],
+ "not_checked": [
+  "No Lean build: every statement about what Lean proves rests on the files as text plus the build claim in status.json (PEPE-5). lean/InvEmpty.lean is written, not built.",
+  "EthLib itself (step, SHL, SLT, SSTORE gas, keccak) and the usdt-verify library are trusted as the model.",
+  "Whether the bytes are the code on mainnet today: SOURCE.md records one eth_getCode at block 26386793; I made no network call. The hash was recomputed from the local file only.",
+  "Live chain state (owner, pair, limited, blacklist entries) and the constructor.",
+  "Solidity source to bytecode correspondence; storage names follow the ABI getters (no Etherscan source in the repo).",
+  "The 422 block lemmas, the 136 loop lemmas and the 133 revert and 22 stuck paths were not read one by one; only statements of a sample (approve, transfer, burn, nameEntry) and all conditions through check_paths.py.",
+  "The 16 readable corollaries other than transfer, transferFrom, burn, setRule were read through config/pepe.json only, not their Lean text.",
+  "Exact bytes of the Error(string) and Panic revert data.",
+  "TokenKit/Evm/Opt.lean, SupplyOpt.lean, ReadableOpt.lean proofs (Lean checks them; statements not audited one by one).",
+  "The sha1 'mac_equals_box' claim and the regeneration check (not rerun)."
+ ],
+ "verdict": {
+  "code constant equals the fetched runtime bytes; selector table matches the bytes and the ABI": "holds (rechecked by script; on-chain equality not rechecked)",
+  "dispatcher completeness (ends_ok_dispatch, runFrame_ok_dispatch): a run with no error has 4 or more bytes, value 0 and one of the 22 keys": "holds (frame level, from Berlin, Nat meter)",
+  "189 path theorems with exact writes, logs, output and gas": "holds with caveat (gas bound on writing paths is cost + 2301: PEPE-6; 10 paths need caller = 0: PEPE-9; revert and stuck paths not witnessed)",
+  "completeness ok_<fn> for the 20 functions with a success path, and the three fallbacks": "holds",
+  "name() and symbol() only read (ro_name, ro_symbol)": "holds with caveat (no success path, output or witness: possibly vacuous, PEPE-4)",
+  "supply invariant: supply_<fn> for 20 functions, supply_name, supply_symbol, supply_preserved for any selector": "holds with caveat (under Sep, never discharged and with no instance: PEPE-1; frame level; assumes Inv at the start)",
+  "readable corollaries (20)": "holds with caveat (13 under Sep; necessary conditions and effects of a successful run, not an iff; gas not restated)",
+  "sanity: one witness per success path (32)": "holds with caveat (frame level only, message gas 0, single-account state, no message-level or Inv witness: PEPE-3)",
+  "sequences (inv_calls, process_step, process_step_inv, calls_process)": "holds with caveat (per processMessage from Paris; the 'other' step and everything between messages is assumed, not proved, and this is missing from status.json assumptions: PEPE-2; Nat meter only: PEPE-7)",
+  "soundness hygiene (no sorry, axiom, native_decide, bv_decide; scan of every constant)": "holds by text search; the scan result itself is on the box only (PEPE-5)",
+  "counts and build claims in status.json": "counts hold (recounted); build exit code, job count and axioms output could not be checked (no PEPE log in the repo: PEPE-5)",
+  "contract findings (no mint, owner powers, burn rules, no external call)": "holds with caveat (true of the bytes and of the readable theorems; 'no mint' is not one theorem: PEPE-8; 'for ever' is an argument: PEPE-9)"
+ }
+}

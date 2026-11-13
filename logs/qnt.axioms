@@ -1,0 +1,8 @@
+theorems checked: 157
+    153 Classical.choice
+    156 Quot.sound
+    157 propext
+count matches Test/Axioms.lean: 157
+AXIOM SCAN OK: 5477 constants (5129 theorems) of QntVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

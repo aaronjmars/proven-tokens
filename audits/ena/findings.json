@@ -1,0 +1,186 @@
+{
+ "token": "ENA",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit of token-kit/tokens/ena (Lean 4 on EthLib 62dbd687 and usdt-verify d0e684c5). Nothing outside audits/ena/ was written. Lean was NOT built (no Lean on this machine): every statement about what Lean accepts rests on the stored log logs/ena.*; my own checks are Python scripts over repo files and reading of statements. Date 2026-11-11.",
+ "checked_ok": [
+  "CODE_NAT literal in EnaVerify/Ena/Code/Bytes.lean = survey/tokens/ENA/runtime.hex = tokens/ena/data/ena.runtime.hex, 7713 bytes, CODE_SIZE 7713; pure-Python keccak = 0da00342...f00c = EXPECTED_HASH in Test/Hash.lean = SOURCE.md; the log shows the build-time hash test passing.",
+  "Selector table: 26 PUSH4/EQ/PUSH2/JUMPI entries in the bytes = the 26 ENTRIES of Map.lean (keys and destinations) = keccak of the 26 ABI function signatures (26/26). Event topics (Transfer, Approval, Mint, OwnershipTransferred, OwnershipTransferStarted) and the error selectors ea0c9af5, c507dd3b, 185b73b1 equal keccak of the ABI names.",
+  "Constants of Permit.lean recomputed: PERMIT_TYPEHASH, EIP712Domain type hash, keccak('ENA'), keccak('1'), ENA_ADDRESS, CACHED_DOMAIN = keccak(type hash, name hash, version hash, 1, address), P1901 = 0x1901 << 240, half curve order, 40-bit masks, 31536000 = 365 days; each appears in the bytes.",
+  "Hygiene: no sorry, admit, axiom, native_decide, bv_decide, unsafe, implemented_by, opaque, extern, partial in tokens/ena/EnaVerify or TokenKit (text scan). set_option only autoImplicit false, three linter options, maxRecDepth 4096, maxHeartbeats. Macros are tactic helpers. No instance, notation, elab or attribute lines in the hand-written token files.",
+  "Test/Axioms.lean lists the main theorems (ok_permit_real, supply_permit, process_step_all, process_step_all_inv, inv_callsP, callsP_process, mint_readable, mint_runs, permit_readable, supply_preserved, inv_calls, process_step, ok_mint, renounceOwnership_never; ecrecover_call_ok0 and bubble_no_ok0 under TokenKit.) and ends with a scan of every constant of EnaVerify and TokenKit modules that fails the build on a declared axiom or a non-standard one. Log: 400 lines, AXIOM SCAN OK, only propext, Classical.choice, Quot.sound.",
+  "All 31 ok_<fn> completeness theorems have only hfork, hsize' (or the fallback condition), hsel, start, hrun, hok as hypotheses; none has a runner, callee, gas or separation hypothesis. ok_permit stops at pc 6111 for any runner; ok_permit_real joins it to the tails under processRunner.",
+  "supply_preserved covers all 26 table entries (permit by hsel6 then supply_permit; renounceOwnership by False); ends_ok_dispatch rules out short data, unknown selectors and value.",
+  "Mint bytes (pc 1366-1693) match mint_p11 / mint_readable term by term: owner check, checked SUB then LT 0x01e13380, checked MUL by 10 then DIV by 100, GT, SSTORE of slot 11 with the 40-bit pack, _mint, LOG2.",
+  "Permit bytes around the call (pc 6046-6126) match Permit.lean: output word zeroed before the call, input of 128 bytes, GAS, STATICCALL, ISZERO DUP1 ISZERO PUSH2 JUMPI RETURNDATASIZE PUSH0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH0 REVERT (the 14 bytes ecrecover_call_ok0 asks for).",
+  "EthLib's ECRECOVER model is real (Ecdsa.recover, v in {27, 28}, empty output on a rejected signature, 3000 gas); no opaque or extern in EthLib's Execution or Cryptography definitions used here.",
+  "Clean rebuild log: 67 EnaVerify modules Built, EXIT=0, 1424 jobs, no sorry warning, DONE 110s.",
+  "upstream/EthLib is at 62dbd687 and upstream/usdt-verify at d0e684c5, the pinned commits."
+ ],
+ "findings": [
+  {
+   "id": "ENA-1",
+   "token": "ENA",
+   "severity": "minor",
+   "claim": "status.json mint.main / permit.readable / permit.invariant: mint_readable, permit_readable, supply_<fn>, supply_preserved, supply_permit hold for every successful call.",
+   "what_is_actually_proved": "Each of these takes hsep : Sep (callKeys message), a keccak hypothesis that is never discharged and never shown satisfiable (it would need 2^160 keccak evaluations). So no closed instance of mint_readable, permit_readable or any supply_* theorem exists; the Sanity witnesses (mint_runs and Sanity/Zero) witness only the raw path theorems, which do not need Sep. Sep is local to the three address words of the call and I found no contradiction among its fields, so this is the usual disclosed caveat, not a false hypothesis. One thing the status wording hides: Sep says nothing about an allowance slot or a nonce slot being slot 0, 1 or 11 (only: not a balance slot, not slot 4, allowance != nonce). The per-call statements stay honest (approve_readable and permit_readable only say 'every slot other than the written ones is kept'), but any reading such as 'approve or permit never changes the owner or lastMintTimestamp' needs that extra keccak fact, which is not in Sep.",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/Sep.lean:68-81 (structure Sep: total, uniq, allow, nonce, fixed; 'fixed : Supply.NotBal 2 0 ∧ Supply.NotBal 2 1 ∧ Supply.NotBal 2 11' is about balance slots only)",
+    "token-kit/tokens/ena/EnaVerify/Ena/ReadableMint.lean:78-81 (mint_readable ... (hsep : Sep (callKeys message)))",
+    "token-kit/tokens/ena/EnaVerify/Ena/PermitSeq.lean:300-305 (permit_readable ... (hsep : Sep (callKeys message))) and :337-339 (other slots kept only for k != nonce slot, k != allowance slot)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Invariant.lean:671-675 (supply_preserved hsep)",
+    "status.json assumptions[0] (disclosed: 'Hypothesis on keccak, not proved')"
+   ],
+   "suggested_fix": "Add to Sep (or a second structure) that allowance and nonce slots of the call keys are not 0, 1, 11, and state it in status.json. Say in the status file that no closed instance of a Sep theorem exists."
+  },
+  {
+   "id": "ENA-2",
+   "token": "ENA",
+   "severity": "minor",
+   "claim": "status.json contract_findings: 'at most once per 365 days', 'supply can grow by at most 10 percent per 365 days through mint', 'only the owner can mint'. README headline: 'mint rules'.",
+   "what_is_actually_proved": "The mint rules are proved per call only. mint_readable: IF one frame of CODE with selector 0x40c10f19 ends with no error THEN caller = low 160 bits of slot 0, lastMint + 31536000 <= block time, amount <= 10 * totalSupply / 100, and the exact writes and logs. That part is solid and matches the bytes (pc 1366 to 1693: onlyOwner at 0x120c, TIMESTAMP - (slot11 & 0xffffffffff) < 0x01e13380 reverts ea0c9af5, amount > totalSupply * 10 / 100 reverts c507dd3b, SSTORE slot 11, _mint at 0x128e, LOG2 Mint). What is NOT a theorem: (a) any statement over a sequence of calls about slot 11 or slot 4, so 'at most 10 percent per 365 days' and 'once per 365 days' are inferences, not Lean results; (b) a single theorem that no other function raises totalSupply or writes slot 11 or slot 0 (the kit has gen_nomint.py; ENA does not use it; it follows function by function from the readable theorems only with Sep plus the extra keccak facts of ENA-1); (c) the failing side (the 11 revert paths exist one by one, with no 'a mint that breaks a rule reverts with this error' summary; disclosed). My byte census agrees with the informal claim: 12 SSTORE, slot 11 written only at pc 1599, slot 4 only at pc 4895 (_mint) and 5390 (_burn), _mint (0x128e) is jumped to only from pc 1605, and the mint body (0x556) only from the dispatcher (pc 622).",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/ReadableMint.lean:78-112 (mint_readable statement)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Gen/PMint.lean:532 (mint_p11), :600 (ok_mint)",
+    "ENA.txt (audit scratch, not kept) pc 1366-1693, 4875-4942, 5382-5390; grep 'PUSH2 128e' gives one site (pc 1605)",
+    "token-kit/scripts/gen_nomint.py exists; tokens/ena/config/ena.json generators = code, dispatch, paths, loops, supply, readable, sanity, axioms (no nomint)",
+    "status.json contract_findings[1], [2]"
+   ],
+   "suggested_fix": "Either mark the two rate sentences as 'read from the bytes, per call; no sequence theorem', or add a sequence theorem: along CallsP, totalSupply at the end <= totalSupply at the start * 1.1^(number of mint steps), and two successful mints are at least 31536000 seconds apart (needs block time in the step and the keccak facts of ENA-1)."
+  },
+  {
+   "id": "ENA-3",
+   "token": "ENA",
+   "severity": "minor",
+   "claim": "status.json permit.main: ok_permit_real proves permit under EthLib's real runner with nothing assumed about the precompile; permit.invariant: every top-level message with any selector, permit included.",
+   "what_is_actually_proved": "Proved in one direction only: IF a fresh frame of CODE with selector 0xd505accf ends with no error under processRunner, with .shapella <= fork < .glamsterdam and hdel (no EIP-7702 delegation code at address 1), THEN the checks hold and PermitDone holds (recovered word = EthLib's Precompiles.Ecrecover.compute on digest, v, r, s; not 0; equal to owner; nonce + 1; allowance = value; one Approval log). The digest is faithful: I recomputed PERMIT_TYPEHASH, the domain type hash, keccak('ENA'), keccak('1'), CACHED_DOMAIN = rebuilt hash for chain 1 and the deployed address, P1901, half n; all are in the bytes. EthLib's compute is real secp256k1 recovery (not a stub, no opaque). But: (a) there is no witness and no forward theorem, so nothing in Lean shows that a successful permit exists in the model; ok_permit_real, supply_permit, permit_readable, PermitCall and the permit arm of process_step_all could all be vacuous as far as the kernel knows (I do not believe they are: permit_p8/p10/p12 and the tail success paths are forward theorems, only the forward call rule and a signature are missing); (b) hdel / NoDelegation1 is never discharged for any state; (c) runs where hdel fails or fork >= glamsterdam are outside every permit theorem, including the 'any selector' sequence theorems (process_step_all needs hglam and hdel even for non-permit selectors). All three are disclosed in not_covered / assumptions; the gap is that 'permit included' reads stronger than 'a conditional with no instance'.",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/Permit.lean:397-405 (ok_permit_real hypotheses: hfork, hglam, hsize', hsel, hdel, start, within, hrun, hok)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Permit.lean:222-225 (permitRec := recoveredWord (permitInput ...)), 361 (PermitDone)",
+    "token-kit/tokens/ena/EnaVerify/Ena/PermitSeq.lean:44-46 (NoDelegation1), 231-236 (process_step_all: hglam, hdel, K), 138-147 (PermitCall)",
+    "upstream/EthLib/EthLib/Execution/Evm/Precompiles/Ecrecover.lean:47-59 (output, compute: real recovery, v must be 27 or 28)",
+    "check_consts.py (audit scratch, not kept) output: all constants True",
+    "status.json not_covered[0]"
+   ],
+   "suggested_fix": "Prove the forward direction across the call (from permit_p8 + an ecrecover forward rule + the tail success path: if recoveredWord input = owner != 0 and gas is enough, the run ends with no error), so that non-vacuity reduces to one fact about Ecrecover.compute. Discharge NoDelegation1 once for a state with empty code at address 1 (scratch file).",
+   "machine_check": "written, not built (scratch file NoDelegation1Sat.lean (not kept): NoDelegation1 holds when the code of address 1 is empty)"
+  },
+  {
+   "id": "ENA-4",
+   "token": "ENA",
+   "severity": "minor",
+   "claim": "status.json permit.invariant and Seq.lean: the supply invariant holds 'along every sequence' / for 'every top-level message'.",
+   "what_is_actually_proved": "True inside the Calls / CallsP model. A step is (1) GoodCall: a fresh frame of CODE run by processRunner that ends with no error, any selector but permit, with Sep; (2) PermitCall; or (3) 'other': Untouched, which is ASSUMED (every storage word of C kept). process_step and process_step_all show that one processMessage run with message.code = CODE and precompileAddress = none is a step of kind 1, 2 or (on error, proved by rollback) 3. Not linked: a whole transaction (EthLib's processTransaction), an outer frame that reverts after a successful inner call to the token, and anything else that is not such a message, all of which the user must put in 'other' by assumption. Inv at the start of a sequence is assumed, never established (no deployment or constructor state; disclosed). All 26 selectors are covered: supply_preserved matches on the 26 entries, renounceOwnership by ok_renounceOwnership : False, short data, unknown selector and value sent by ends_ok_dispatch, permit by supply_permit. Nothing is excluded by selector, which is better than BNB in the QNT, BNB and WETH audit.",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/Seq.lean:64-73 (GoodCall), 76-77 (Untouched), 80-84 (Calls.other takes Untouched as a premise), 205-223 (process_step)",
+    "token-kit/tokens/ena/EnaVerify/Ena/PermitSeq.lean:160-168 (CallsP), 231-251 (process_step_all)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Invariant.lean:671-756 (supply_preserved, 26 cases)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Complete/Dispatch.lean (ends_ok_dispatch: 4 <= size, value = 0, one of 26 selectors)"
+   ],
+   "suggested_fix": "State the model limits next to the headline. Optional: lift to processTransaction, or prove Untouched for a message whose target is not C and that makes no call."
+  },
+  {
+   "id": "ENA-5",
+   "token": "ENA",
+   "severity": "minor",
+   "claim": "status.json assumptions[1]: 'every theorem needs .shapella <= fork'; only permit is bounded by fork < .glamsterdam.",
+   "what_is_actually_proved": "All non-permit theorems (mint_readable, supply_preserved, ok_<fn>, process_step, inv_calls) are stated for Evm fork Nat, the one-counter meter, for every fork from Shapella with no upper bound. EthLib runs forks from Glamsterdam with StateGasMeter (and step-level rules change there: checkGas), so for fork >= .glamsterdam these theorems are about a meter EthLib does not use for real execution. They are true statements, but they do not describe ENA on a Glamsterdam chain. Mainnet at the audited block is before Glamsterdam, so nothing is wrong today. Same finding as SHIB F2.",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/Invariant.lean:39 (variable runChild : MessageRunner fork Nat bound), 671 (supply_preserved, hfork only)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Seq.lean:66-72 (GoodCall: evm s : Evm fork Nat, .shapella <= fork, no upper bound)",
+    "upstream/EthLib/EthLib/Execution/Blocks/SystemCall.lean:167-168 (Meter := StateGasMeter from Glamsterdam, else Nat)",
+    "upstream/EthLib/EthLib/Execution/Evm/Step.lean:116-117 (checkGas: fork >= .glamsterdam)"
+   ],
+   "suggested_fix": "Add fork < .glamsterdam to the headline wording (or to the theorems), as permit already has."
+  },
+  {
+   "id": "ENA-6",
+   "token": "ENA",
+   "severity": "note",
+   "claim": "status.json not_covered[1]: name(), symbol(), eip712Domain() change no storage and add no log.",
+   "what_is_actually_proved": "As disclosed. name_readable, symbol_readable, eip712Domain_readable are 'a run that ends with no error changes no storage word of any account and adds no log' (Loops.ro_*). No return data, no gas, and no Sanity witness, so they may be vacuous as far as Lean shows. supply_preserved uses them without Sep. Fine for the invariant.",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/ReadableMore.lean:89-125",
+    "token-kit/tokens/ena/EnaVerify/Ena/Invariant.lean:636-668 (supply_name, supply_symbol, supply_eip712Domain)",
+    "Sanity/Zero.lean has no name/symbol/eip712Domain witness"
+   ],
+   "suggested_fix": "Optional: one witness each."
+  },
+  {
+   "id": "ENA-7",
+   "token": "ENA",
+   "severity": "note",
+   "claim": "Vacuity of the path theorems and of the success theorems.",
+   "what_is_actually_proved": "No textual contradiction in the 165 path theorems (631 conditions scanned by script, with isZero normalised; this is a weak check, not a proof). Success paths with a kernel witness: 21 generated (Sanity/Zero: amounts 1, balances and allowances 5, so not only zero amounts; both success paths of transferFrom and burnFrom), mint (mint_runs: mint(2, 1), supply 10, last mint 0, time 31536000), DOMAIN_SEPARATOR three branches. No witness: permit (ENA-3), name, symbol, eip712Domain (ENA-6). The 193 pruned branches cannot hide a path: each ok_<fn> completeness theorem is kernel checked and has only hfork, hsize', hsel, start, hrun, hok as hypotheses (I listed all 31). mint_runs does not satisfy Inv (sum of balances 0, supply 10), which is fine for a path witness.",
+   "evidence": [
+    "check_vacuous.py (audit scratch, not kept) (output: path theorems 165 conditions 631 textually contradictory 0)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Sanity/Mint.lean:53-58",
+    "token-kit/tokens/ena/EnaVerify/Ena/Sanity/Zero.lean (21 *_runs)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Sanity/Domain.lean (3 *_runs)",
+    "tokens/ena/work/paths.json _pruned: 193"
+   ],
+   "suggested_fix": "None."
+  },
+  {
+   "id": "ENA-8",
+   "token": "ENA",
+   "severity": "note",
+   "claim": "status.json build / notes / counts.",
+   "what_is_actually_proved": "Counts match: Test/Axioms.lean has 400 #print lines; the log has 396 'depends on axioms' + 4 'does not depend'; ena.axioms says 400 checked, AXIOM SCAN OK 13685 constants (13404 theorems), AXRC=0; final line 'Build completed successfully (1424 jobs)', EXIT=0; 67 EnaVerify modules were Built (not replayed), so the log is a clean token rebuild. The scan covers every constant of EnaVerify and TokenKit modules, so the names left out by axioms.declared_only (6 supply_* names that do not exist) and the 440 block rules are still covered. Small stale points: status notes say 'Nothing under the kit's scripts/ or TokenKit/ was edited or added' and that the Mac EthLib copy is newer than the box; today the kit has TokenKit/Evm/Push0.lean and Precompile0.lean with the same theorems, the token still uses its own copies under namespace TokenKit (EnaVerify/Ena/Lib.lean, Precompile0.lean), and upstream/EthLib is at 62dbd687. The token folder has 101 files, status says 100. tokens/ena/scripts differs from token-kit/scripts in 9 generator files; kit-status.json says the kit scripts regenerate ENA byte-identical (not rerun by me). The hash test is an #eval, not a theorem; my own check agrees.",
+   "evidence": [
+    "logs/ena.log (lines 504, 6601, 7002, 7005-7007), ena.axioms, ena.done",
+    "token-kit/tokens/ena/EnaVerify/Ena/../Test/Axioms.lean:36-44, 453-476",
+    "token-kit/tokens/ena/status.json notes[0], notes[1], build.sync",
+    "token-kit/kit-status.json usde_ena_merge (lines 832-862)"
+   ],
+   "suggested_fix": "Refresh the notes; drop the local script copies or say which set is the source."
+  },
+  {
+   "id": "ENA-9",
+   "token": "ENA",
+   "severity": "note",
+   "claim": "Worth telling the owner (true behaviour of the deployed bytes, confirmed by the proofs and by my reading of the bytes).",
+   "what_is_actually_proved": "1. Only the address in slot 0 can mint; there is no other minter role and no other entry to _mint. 2. A mint needs block time >= lastMintTimestamp + 365 days and amount <= floor(totalSupply * 10 / 100) at call time; the cap compounds (each mint raises the next cap) and a burn lowers it. 3. mint(to, 0) is allowed and restarts the 365-day wait, so the owner can burn a year's mint right with one call. 4. If lastMintTimestamp is ever above the block time the mint reverts with Panic 0x11 (checked subtraction). The first allowed mint time depends on the value the constructor stored in slot 11, which the proof does not model and I did not read from chain. 5. lastMintTimestamp keeps only 40 bits of the block time (wraps in year 36812, no practical effect). 6. renounceOwnership() always reverts (after the owner check), so the mint right can not be dropped that way; ownership moves only by transferOwnership then acceptOwnership by the pending owner. transferOwnership has no zero-address check: transferOwnership(0) just clears the pending owner. 7. totalSupply add in mint is checked; the receiver balance add and the totalSupply sub in burn are unchecked and safe only because sum of balances = totalSupply. 8. burnFrom and transferFrom do not lower an allowance of 2^256 - 1. 9. permit: nonce is incremented before the ECRECOVER call; high s and a zero recovered address are rejected; the domain separator is rebuilt when chain id or address differ from the cached ones. 10. No pause, blacklist, fee or hook; the only outside call in the whole code is the STATICCALL to address 1.",
+   "evidence": [
+    "token-kit/tokens/ena/EnaVerify/Ena/ReadableMint.lean:78-112",
+    "token-kit/tokens/ena/EnaVerify/Ena/ReadableMore.lean:79-84 (renounceOwnership_never)",
+    "token-kit/tokens/ena/EnaVerify/Ena/Readable.lean (transferOwnership_readable, acceptOwnership_readable, burnFrom_readable)",
+    "ENA.txt (audit scratch, not kept) pc 1366-1693 (mint), 1707-1750 (renounce), 6111-6126 (STATICCALL and bubble)",
+    "audits/check_code.py output (opcode census: 12 SSTORE, 1 STATICCALL at 6112, no CALL, DELEGATECALL, CALLCODE, CREATE, SELFDESTRUCT in reachable code; the f5 byte at 7682 is inside the 53 metadata bytes)"
+   ],
+   "suggested_fix": "None."
+  }
+ ],
+ "not_checked": [
+  "Nothing was built or re-run in Lean. The scratch file lean/NoDelegation1Sat.lean is written, not built.",
+  "That the Mac tree equals the tree the box built (status.json says same md5; I can not see the box).",
+  "Regeneration: I did not rerun regen_ena.sh or the kit regen_check.sh (they write into the token folder). The 9 local generator copies that differ from token-kit/scripts were not diffed line by line.",
+  "EthLib itself, Mathlib and usdt-verify are trusted as the model; EthLib's secp256k1 recovery was not compared with a reference.",
+  "The 440 block rules, the 300 loop theorems and each generated readable theorem were not read one by one (statements sampled: mint, permit, burnFrom, transferOwnership, acceptOwnership, domainSeparator).",
+  "Whether Sep is consistent (no model of it can be exhibited); whether any path theorem has a non-textual contradiction among its hypotheses.",
+  "Live chain state: the current owner, the value of slot 11, whether the owner is an EOA or a contract. Constructor and deployment.",
+  "Solidity source against bytecode (no source in survey/tokens/ENA beyond the ABI). Exact gas constants (4303, 1577, 1829, 1819) against a reference client.",
+  "Failing paths one by one and their revert data."
+ ],
+ "verdict": {
+  "ENA": {
+   "code constant equals the on-chain runtime code; 26 selectors": "holds",
+   "dispatch and completeness (ends_ok_dispatch, ok_<fn> for every function)": "holds (frame level, one-counter meter)",
+   "mint: who, wait, cap, effect (mint_readable from ok_mint)": "holds with caveat (per call and success side only; needs Sep, unproved; stated with the Nat meter for all forks from Shapella: ENA-1, ENA-2, ENA-5)",
+   "mint witness (Sanity.mint_runs)": "holds",
+   "MAX_INFLATION = 10, MINT_WAIT_PERIOD = 31536000, renounceOwnership always reverts": "holds",
+   "contract_findings: at most one mint per 365 days and at most 10 percent per 365 days": "holds with caveat (true of the bytes by my census, but not a Lean theorem: no sequence statement about slot 11 or slot 4: ENA-2)",
+   "permit under the real runner (ok_permit_real), nothing assumed about ECRECOVER": "holds with caveat (one direction only, no witness, Shapella to before Glamsterdam, hdel never discharged: ENA-3)",
+   "permit domain separator, both branches": "holds",
+   "permit_readable": "holds with caveat (as ok_permit_real, plus Sep)",
+   "supply invariant for every selector, permit included (supply_preserved, supply_permit)": "holds with caveat (Sep; Inv assumed at the start)",
+   "invariant over top-level messages and sequences (process_step_all_inv, inv_callsP)": "holds with caveat (Calls model: 'other' steps assumed Untouched, no link to a transaction; permit arm before Glamsterdam with hdel: ENA-4)",
+   "name, symbol, eip712Domain change nothing": "holds with caveat (no witness, no return data; disclosed)",
+   "soundness hygiene and axioms test": "holds",
+   "build and count claims (400, 1424 jobs, 13685 / 13404)": "holds (small stale notes: ENA-8)"
+  }
+ }
+}

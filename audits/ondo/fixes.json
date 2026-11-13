@@ -1,0 +1,377 @@
+{
+ "token": "ONDO",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-12",
+  "round": "ONDO audit"
+ },
+ "last_clean_build": {
+  "log": "logs/ondo.log",
+  "axioms": "logs/ondo.axioms"
+ },
+ "findings": {
+  "ONDO-1": {
+   "severity": "major",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "done",
+     "what_changed": "New Tx.lean on the shared library TokenKit.Seq (as the 11 other tokens): supply_any_transactions over any finite list of whole transactions (EthLib processTransaction), at any depth, delegateBySig and mint included. Seq.lean (Calls.other assumption) kept and relabeled as the older weaker model in status.json.",
+     "theorems_added": [
+      "storageOnly_inv",
+      "code_size_ne_zero",
+      "code_not_indicator",
+      "code_not_delegated",
+      "inv_zeroBase",
+      "frameKeepsR",
+      "supply_message_any_depth",
+      "supply_transaction",
+      "supply_any_transactions",
+      "supply_from_zero"
+     ],
+     "theorems_retired": [],
+     "hypotheses": [
+      "Seq.TxClean per transaction with Q = QMsg = RealSep m s and NoDelegation1 fork s (run-local: only the messages that really enter C in this run; no hypothesis over every message of the runner)",
+      "no keccak collision on codes deposited or authorized in the run (inside TxClean)",
+      "call data to C below 2^256 bytes (inside TxClean)",
+      "fork of each transaction from Dencun and before Glamsterdam",
+      "start: C holds CODE and Inv holds (or all-zero storage, supply_from_zero)"
+     ],
+     "files_lines": [
+      "token-kit/tokens/ondo/OndoVerify/Ondo/Tx.lean:1-177 (headline supply_any_transactions at :158)"
+     ],
+     "left": "What a block does between transactions (withdrawals, system calls) and the constructor are not covered."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/OndoVerify/Ondo/Tx.lean",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-2": {
+   "severity": "minor",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "done",
+     "what_changed": "New Instance.lean: one concrete state (sState C [], all storage 0) and call (allowance(K, K) from Witness.CALLER1). inv_start proves the start invariant; noDelegation1_sState proves NoDelegation1 for every sState; sigSigner_m0 proves the ECRECOVER signer word is 0 (v = 0); 26 slot facts computed by the kernel; realSep_m0_iff proves RealSep for this call is exactly KeyFacts (21 facts, each \"this slot is the balance slot of no address word\", over 2^160 keccak values, cannot be computed); supply_m0 is the closed instance of supply_preserved_real; qMsg_m0 for Tx.lean.",
+     "theorems_added": [
+      "inv_start",
+      "noDelegation1_of_emptyHash",
+      "noDelegation1_before_pectra",
+      "noDelegation1_sState",
+      "codeHash_sState",
+      "recoveredWord_v0",
+      "sigSigner_m0",
+      "realKeys_m0",
+      "realCk_m0",
+      "role_m0",
+      "sep_iff",
+      "realSep_m0_iff",
+      "qMsg_m0",
+      "supply_m0",
+      "+ 35 slot and helper lemmas (see Test/Axioms.lean, Instance.*)"
+     ],
+     "theorems_retired": [],
+     "hypotheses": [
+      "supply_m0, qMsg_m0, realSep_m0_iff: KeyFacts (21 named keccak facts, NOT proved, believed true)",
+      "supply_m0: Paris <= fork < Glamsterdam"
+     ],
+     "files_lines": [
+      "token-kit/tokens/ondo/OndoVerify/Ondo/Instance.lean:1-443 (KeyFacts :216, realSep_m0_iff :362, inv_start :377, supply_m0 :427)"
+     ],
+     "left": "The 21 KeyFacts stay assumptions (not computable in Lean)."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/OndoVerify/Test/Axioms.lean",
+    "token-kit/tokens/ondo/OndoVerify/Ondo/Instance.lean",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-3": {
+   "severity": "minor",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "partly done",
+     "what_changed": "New Runs.lean (generator /tmp helper, plain Lean checked in): real runs that end with no error through the shared segments, composed with Reaches.trans and endsL_join: transfer_runs (transfer_p4, tt0_p6, vest0_p20, core0_p3, mvSrc2_p5), transferFrom_runs (spender = src: transferFrom_p9, tt2_p6, vest2_p20, core8_p3, mvSrc10_p5), delegate_runs (delegate_p4, mvSrc0_p3, mvDst0_p0, wck2_p7, writes a checkpoint). Votes.lean adds mint_votes_runs.",
+     "theorems_added": [
+      "Instance.transfer_runs",
+      "Instance.transferFrom_runs",
+      "Instance.delegate_runs",
+      "Instance.writeMax_le",
+      "Instance.writeCost_le22100",
+      "Instance.endsL_join",
+      "Instance.size_SEL_transfer",
+      "Instance.size_SEL_transferFrom",
+      "Instance.size_SEL_delegate"
+     ],
+     "theorems_retired": [],
+     "hypotheses": [
+      "all runs: Berlin <= fork < Glamsterdam",
+      "delegate_runs: b.number < 2^32"
+     ],
+     "files_lines": [
+      "token-kit/tokens/ondo/OndoVerify/Ondo/Runs.lean (transfer_runs :110, transferFrom_runs, delegate_runs)"
+     ],
+     "left": "delegateBySig has no run: it needs a real secp256k1 signature for the ONDO EIP-712 domain at 0xfaba...9be3 on chain 1 and a port of the forward ECRECOVER rule (UNI PermitRun ecrecover_call_runs). Not done in this round; stated in status.json not_covered. Also no run for transferFrom with spender != src, getFreedBalance, getVestedBalance, getPriorVotes."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/OndoVerify/Ondo/Runs.lean",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-4": {
+   "severity": "minor",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "done",
+     "what_changed": "New Vesting.lean: lockedAt and VestRule state the plain-word rule (locked part B before the cliff, 0 after cliff + 60566400, tranche 0 and 1 linear over 15811200 / 47433600 s, seed B - (B/3 + 2*(B*(now-c)/60566400)/3)); 8 word-level case lemmas vcase0..7 cover the 8 cases of vest0/1/2_ends; vest0/1/2_rule combine them; headlines transfer_vesting and transferFrom_vesting: after a successful call, B = 0, or c + 60566400 < 2^256, tranche <= 2 while not past, lockedAt <= balance, amount <= balance - lockedAt.",
+     "theorems_added": [
+      "vcase0",
+      "vcase1",
+      "vcase2",
+      "vcase3",
+      "vcase4",
+      "vcase5",
+      "vcase6",
+      "vcase7",
+      "m160_m160",
+      "vest0_rule",
+      "vest1_rule",
+      "vest2_rule",
+      "transfer_vesting",
+      "transferFrom_vesting"
+     ],
+     "theorems_retired": [],
+     "hypotheses": [
+      "from Berlin (path theorems)",
+      "transferFrom_vesting: hne1, hne2, hne3 (the allowance slot of the call is not investorBalances[src], not slot 1, not balances[src]; keccak facts, NOT proved)"
+     ],
+     "files_lines": [
+      "token-kit/tokens/ondo/OndoVerify/Ondo/Vesting.lean (lockedAt :55, VestRule :63, vest0_rule :434, transfer_vesting :547, transferFrom_vesting :573)"
+     ],
+     "left": "The return values of getFreedBalance / getVestedBalance are not restated."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/OndoVerify/Ondo/Vesting.lean",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-5": {
+   "severity": "minor",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "done (recorded as false)",
+     "what_changed": "The \"votes add up\" plan is false and is not claimed. Votes.lean proves the closed counterexample mint_votes_counterexample (from a concrete state, mint(2, 7) runs with no error, and after every such run the balance of 2 is 7, its delegate is K, K has 0 checkpoints) and the true general fact mint_votes_gap. status.json not_covered rewritten.",
+     "theorems_added": [
+      "Instance.mint_keeps_checkpoint",
+      "Instance.mint_keeps_numCheckpoints",
+      "Instance.mint_votes_gap",
+      "Instance.mint_votes_runs",
+      "Instance.mint_votes_counterexample"
+     ],
+     "theorems_retired": [],
+     "hypotheses": [
+      "mint_keeps_*, mint_votes_gap: the named checkpoint slot is not slot 4 and not balances[dst] (keccak facts); mint_votes_gap also hne",
+      "mint_votes_counterexample: only Berlin <= fork"
+     ],
+     "files_lines": [
+      "token-kit/tokens/ondo/OndoVerify/Ondo/Votes.lean (mint_votes_gap :99, mint_votes_counterexample :213)"
+     ],
+     "left": "The weaker true invariant (votes minus delegated balances kept by every function but mint) is not proved."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/OndoVerify/Ondo/Votes.lean",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-6": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "note, stated in status.json contract_findings",
+     "what_changed": "Lock once per address, TIMELOCK can lock any unlocked address up to 2^96 - 1, admin can move the cliff (re-lock, or revert every locked transfer above 2^256 - 1 - 60566400), locks apply to later receipts.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses": [],
+     "files_lines": [
+      "token-kit/tokens/ondo/scripts/mk_status.py",
+      "token-kit/tokens/ondo/status.json"
+     ],
+     "left": ""
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/scripts/mk_status.py",
+    "token-kit/tokens/ondo/status.json",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-7": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "note, stated in status.json contract_findings",
+     "what_changed": "Role gate is on msg.sender (the spender) in transferFrom; transfers cannot be switched off again.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses": [],
+     "files_lines": [
+      "token-kit/tokens/ondo/scripts/mk_status.py",
+      "token-kit/tokens/ondo/status.json"
+     ],
+     "left": ""
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/scripts/mk_status.py",
+    "token-kit/tokens/ondo/status.json",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-8": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "done (wording)",
+     "what_changed": "status.json assumptions: the path and readable layer is stated from Berlin with no upper bound and the one-counter meter; its meaning is per call, before Glamsterdam; only real-runner theorems carry fork < Glamsterdam. No theorem statement changed (would need a regen of every path file).",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses": [],
+     "files_lines": [
+      "token-kit/tokens/ondo/scripts/mk_status.py",
+      "token-kit/tokens/ondo/status.json"
+     ],
+     "left": "Adding fork < Glamsterdam to the readable statements themselves is not done."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/scripts/mk_status.py",
+    "token-kit/tokens/ondo/status.json",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-9": {
+   "severity": "note",
+   "status": "partly",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "note, stated in status.json not_covered",
+     "what_changed": "Digest item reworded: EIP-712 constants checked (check_eip712.out); no authorization theorem; delegate/delegateBySig readable theorems give frames and checks, not the new delegate or nonce.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses": [],
+     "files_lines": [
+      "token-kit/tokens/ondo/scripts/mk_status.py",
+      "token-kit/tokens/ondo/status.json"
+     ],
+     "left": "delegate_writes / delegateBySig_writes not added."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/scripts/mk_status.py",
+    "token-kit/tokens/ondo/status.json",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  },
+  "ONDO-10": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ONDO fix round",
+     "part": "ondo",
+     "recorded_status": "done (records)",
+     "what_changed": "Stale UNI Sep note removed; \"the fallback\" replaced by \"the three revert paths (valueSent, short, other)\"; regeneration stated as tokens/ondo/scripts/regen_ondo.sh only.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses": [],
+     "files_lines": [
+      "token-kit/tokens/ondo/scripts/mk_status.py",
+      "token-kit/tokens/ondo/status.json"
+     ],
+     "left": "Merging the ONDO generator changes into the kit (NEXT.md item) is for the lead."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/ondo/scripts/regen_ondo.sh",
+    "token-kit/tokens/ondo/scripts/mk_status.py",
+    "token-kit/tokens/ondo/status.json",
+    "logs/ondo.log",
+    "logs/ondo.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "kit_theorems": {
+    "runner_level (every fork)": "Seq.processMessage_good_local (Run.lean): a sane call from a good state whose run is Clean ends good, with or without error, whatever code it runs and whatever it sends at any depth, re-entry included. Seq.processCreateMessage_good_local for creations at another address, Seq.processRunner_good_local for the runner, Seq.runFrame_keeps_local for one frame of the token under the real runner.",
+    "transaction (Dencun <= fork < Glamsterdam)": "Seq.processTransaction_good (Tx.lean): EthLib's processTransaction takes a block state where L is good to one where L is good: gas purchase, EIP-7702 authorizations, first frame, the message (call or creation), refunds, fee, end-of-transaction deletions, incorporation into the block state.",
+    "any finite list": "Seq.Chain + Seq.chain_good; Seq.ChainCap + Seq.chainCap_good for tokens with a gas cap.",
+    "base case": "Seq.ZeroBase, Seq.good_of_zero, Seq.chain_from_zero; per invariant family Seq.zeroBase_supply / zeroBase_supply2 / zeroBase_supplyMask.",
+    "fork_range_honest": "Message level: every fork (plus the token's own bound). Transaction level: Fork.dencun <= fork < Fork.glamsterdam. Before Dencun the end-of-transaction deletion could remove L after a SELFDESTRUCT at L; the kit avoids a per-token 'never SELFDESTRUCT' proof by tracking Unmarked, which only EIP-6780 gives."
+   }
+  },
+  {
+   "round": "ONDO fix round",
+   "part": "ondo",
+   "date": "2026-11-12",
+   "build": {
+    "result": "EXIT=0, Build completed successfully (1742 jobs)., clean build (rm .lake/build) on lean-fix5-ondo in 2583s; check_axioms.sh: count matches 2202, only standard axioms",
+    "theorem_count": {
+     "checked_in_Test_Axioms_before": 2115,
+     "checked_in_Test_Axioms_after": 2202,
+     "added": {
+      "Tx.lean": 10,
+      "Instance.lean": 49,
+      "Votes.lean": 5,
+      "Runs.lean": 9,
+      "Vesting.lean": 14
+     }
+    },
+    "logs": "logs/ondo.log, logs/ondo.axioms"
+   }
+  }
+ ]
+}

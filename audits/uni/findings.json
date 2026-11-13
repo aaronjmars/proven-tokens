@@ -1,0 +1,140 @@
+{
+ "token": "UNI",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit of the UNI proof (token-kit/tokens/uni, Lean 4 on EthLib 62dbd687 and usdt-verify d0e684c5, both pins confirmed in upstream/). No Lean was built here (no Lean on this machine); nothing outside audits/uni/ was written. Evidence is the Lean sources, the bytes in survey/tokens/UNI, and the stored rebuild log logs/uni.*. Gen/ files were read by theorem statement only. Date 2026-11-11.",
+ "checked_ok": [
+  "Code: CODE_NAT in Uni/Code/Bytes.lean is the same hex string as survey/tokens/UNI/runtime.hex and data/uni.runtime.hex; CODE_SIZE 12567 = byte count. keccak256 computed here with my own Python keccak = deba17f1...0868 = EXPECTED_HASH in Test/Hash.lean = SOURCE.md, and the log line 557 prints the same hash from the build.",
+  "Selector table: the 27 'DUP1 PUSH4 k EQ PUSH2 d JUMPI' entries found in the bytes equal ENTRIES in Uni/Map.lean (same order, same destinations, every destination is a JUMPDEST). The 27 keys equal keccak of the 27 ABI function signatures, equal the selectors of config functions + readonly_loops + prefix_functions, and equal the 27 selectors of the case split of delta_step. No function is left out.",
+  "Outside calls in the bytes: exactly 2 STATICCALL (pc 4072, 4887, each after GAS at 4071, 4886 = config 'stops'); no CALL, CALLCODE, DELEGATECALL, CREATE, CREATE2, SELFDESTRUCT. So there is no reentrancy surface; the only callee is the precompile at address 1.",
+  "ECRECOVER model: TokenKit/Evm/Precompile.lean ecrecover_call_ok is stated for processRunner (EthLib's real runner), output = Precompiles.Ecrecover.compute, which in upstream EthLib is a real secp256k1 recovery (Ecdsa.recover, v in {27,28}), not a stub. recoveredWord = 0 for an empty output. Nothing is assumed about the recovered address. Depth limit and low gas cases are inside ok_delegateBySig_real / ok_permit_real (a successful run implies the call was made and had 3000 gas).",
+  "supply_preserved (Invariant.lean:1232) and delta_step (1135): statement read in full. Hypotheses: Berlin <= fork, data size < 2^256, selector not 0xc3cda520 and not 0xd505accf, Sep (callKeys message), Inv before, At CODE message 0 [] .empty, EndsL for ANY runner, no error. Matches the status text.",
+  "supply_preserved_real (SigSupply.lean:202) and delta_step_real (180): all 27 selectors plus the three fallbacks, runner fixed to processRunner, Paris <= fork < Glamsterdam, hdel, Sep. No hypothesis restates the conclusion. Matches the status text.",
+  "process_step (Seq.lean:211), process_step_inv (232), goodCall_process (115), untouched_process_failed (157), process_value_fails (167): read in full. They are about EthLib's processMessage itself (rollback included). processMessage is the same function EthLib uses for nested messages, so process_step_inv also holds for a nested call into UNI, not only a top-level one.",
+  "Chain of _moveDelegates: ok_transfer / ok_mint / ok_transferFrom / delegateBySigTail end in mvSrc<i>_ends, a predicate DEFINED as the proved conclusion of ok_mvSrc<i> (Gen/PMvSrc*.lean), and Frame.lean proves from it that every non checkpoint slot is unchanged. Nothing about the shared segment is assumed; the entry frame shape (stack, memory size 448, free pointer) is a hypothesis of ok_mvSrc<i>_ends that the caller's proof discharges.",
+  "mint_readable (Readable.lean:184), setMinter_readable (111), approve_readable (138), transfer_readable (260): statements read in full; each conclusion is what status.json says (mint: caller = minter, slot 2 <= timestamp, dst != 0, amount < 2^96 and <= 2*totalSupply/100, totalSupply + amount, slot 2 = timestamp + 31536000, balance of dst + amount). mint_readable needs Sep and the extra hck2 (disclosed).",
+  "Soundness hygiene: rg over tokens/uni and TokenKit finds no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by, opaque, extern (only the word 'externalBaseCost'). set_option: autoImplicit false, two linter options, maxRecDepth 4096, maxHeartbeats. 'decide +kernel' is used 4901 times; it is kernel evaluation and adds no axiom (the log shows none).",
+  "Test/Axioms.lean: 764 '#print axioms' lines; the log has 764 answers, each on the matching line with the matching name; only propext, Classical.choice, Quot.sound. The last command scans every constant of modules UniVerify.* and TokenKit.* and fails on a declared axiom: log says 'AXIOM SCAN OK: 63437 constants (63174 theorems)'. Every theorem of Sep, Seq, SigSupply, Sig, Readable, Frame and Dispatch is listed by name.",
+  "Counts: 3201 theorem declarations counted here = 2177 (B) + 617 (P, 80 of them ok_*) + 234 (Loops) + 22 + 18 + 52 + 10 + 5 + 10 + 9 + 38 + 3 + 6, all equal to status.json theorem_counts. 20 witness theorems (<fn>_runs).",
+  "Build log logs/uni.log: 128 UniVerify modules 'Built', 'Build completed successfully (1493 jobs)', EXIT=0, no 'sorry' and no 'error' line, DONE 3733s, AXRC=0. Root file UniVerify.lean imports every hand-written file; Gen.lean imports 110 of the 111 Gen files and the root imports the last one (Loops).",
+  "The axioms.declared_only skip list (supply_valueSent, supply_short, supply_other, supply_delegateBySigTail, supply_permitMaxTail, supply_permitTail) only drops names that no file declares; no existing theorem is skipped.",
+  "Domain separator: the three memory words are the 67 bytes of 'EIP712Domain(string name,uint256 chainId,address verifyingContract)', the literal 6955...8213 is keccak256('Uniswap'), then chain id and the contract address; the digest prefix word starts 0x1901. So the shape is the EIP-712 one (not proved equal to abi.encode in Lean, as disclosed)."
+ ],
+ "findings": [
+  {
+   "id": "UNI-1",
+   "token": "UNI",
+   "severity": "major",
+   "claim": "status.json main_theorems: 'process_step_inv / calls_process: Top-level messages (process) and finite sequences of calls keep Inv'. README: 'supply invariant for every selector'.",
+   "what_is_actually_proved": "One message at a time. process_step_inv: a processMessage of a message whose code is CODE (not a precompile target) keeps Inv of message.currentTarget. inv_calls: Inv along a chain of steps, where each step is either such a GoodCall or 'Untouched' (every storage word of C the same). Untouched is PROVED only for a failed message (untouched_process_failed). For every other change of state it is ASSUMED by the constructor Calls.other. That assumption is not in the 'assumptions' list of status.json (it is only in the header of Seq.lean). It is also the wrong shape for the most common real event: a transaction sent to another contract (a router, a pool, the governor) that calls UNI inside. Seen from the top, that step changes UNI storage, so it is not Untouched, and its top-level code is not CODE, so it is not a GoodCall. No theorem says 'a processMessage of ANY message keeps Inv C'. So 'finite sequences of calls' covers only histories made of direct calls to UNI plus changes that are assumed not to touch UNI. Nothing is proved at transaction or block level either (fees, EIP-7702 authorizations, system calls).",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Seq.lean:79 'def Untouched', :83-87 'inductive Calls ... | other : Untouched C S S' -> Calls C S' S'' -> Calls C S S''', :23 'for the other changes it is the assumption of the step', :211 process_step needs '(hmc : message.code = CODE)'. status.json 'assumptions' has no entry for Untouched. Bytes: no CALL, DELEGATECALL, SELFDESTRUCT in CODE (check_code.py), so the missing lemma is true in spirit: only a frame with currentTarget = C can write C's storage, and such a frame runs CODE.",
+   "suggested_fix": "Prove the lift once in TokenKit: for EthLib's runner, by induction on the gas bound, 'if every frame whose currentTarget is C runs CODE, then processMessage of any message keeps Inv C' (a child message is again a processMessage, so process_step_inv is the inductive step for UNI frames and SSTORE of other frames cannot reach C). Until then add to status.json assumptions: 'every state change that is not a direct message to UNI is assumed to leave UNI storage unchanged; calls into UNI from other contracts are covered only frame by frame, not through their parent'."
+  },
+  {
+   "id": "UNI-2",
+   "token": "UNI",
+   "severity": "minor",
+   "claim": "supply_preserved, supply_preserved_real, mint_readable, transfer_readable hold 'under Sep (callKeys message)', a hypothesis about keccak.",
+   "what_is_actually_proved": "All writer theorems are implications from Sep, which is never proved and is not shown satisfiable for any key list: no theorem in the project constructs a 'Sep A', and no witness uses it. For UNI the hypothesis is much larger than for the earlier tokens: besides the finite facts for the three call keys, four fields quantify over EVERY address word and (for checkpoints) every index below 2^32, about 2^192 facts: no delegates, numCheckpoints, nonces or checkpoints slot is a balance slot or slot 0. They are closed statements about EthLib's concrete keccak, believed true (each failure is a 64-byte keccak collision or a preimage of 0 or 4) and out of reach of proof. This is disclosed. What is not said: the invariant theorems for transfer, transferFrom, mint, delegate, delegateBySig, permit therefore have no closed instance at all, and mint_readable needs one more keccak fact outside Sep (hck2 : not CkSlot 2), so 'under Sep' alone does not give the mint statement.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Sep.lean:76-95 (structure Sep; ':87 deleg : forall d : U256, d.toNat < 2 ^ 160 -> ...', ':94 ck : forall d i : U256, d.toNat < 2 ^ 160 -> i.toNat < 2 ^ 32 -> ...'), :25 'it is NOT proved'. token-kit/tokens/uni/UniVerify/Uni/Readable.lean:187 '(hsep : Sep (callKeys message)) (hck2 : not CkSlot 2)'. rg for a term of type Sep in Sanity/Zero.lean: none.",
+   "suggested_fix": "Make the delegation part depend on the state: require the facts only for the delegates actually read (delegates[src], delegates[dst], the recovered address) and their current checkpoint index, as upstream SepOn does; that is a finite list per call. Put 'not CkSlot 2' (and 1) into Sep so one hypothesis covers mint_readable. Say in the README line that the result is conditional on keccak separation."
+  },
+  {
+   "id": "UNI-3",
+   "token": "UNI",
+   "severity": "minor",
+   "claim": "README: 'supply invariant for every selector'; status.json: path specs with completeness for transfer, transferFrom, mint, delegate, delegateBySig, permit; mint_readable gives the exact change of a mint.",
+   "what_is_actually_proved": "Completeness theorems (ok_<fn>: a successful run satisfies one of the listed cases) are sound whatever the cases are, so the invariant theorems cannot be false through vacuity. But no machine-checked run shows that any balance-changing or vote-moving function can succeed in the model: the 20 witnesses cover only getters, approve, setMinter and getCurrentVotes. There is no witness for transfer, transferFrom, mint, delegate, delegateBySig, permit, name, symbol, getPriorVotes. So for exactly the functions the headline is about, 'a successful call keeps Inv' and mint_readable are not shown to speak about at least one run. The witnesses that exist run in a synthetic one-account state with an arbitrary runner; none goes through processMessage or the real runner. This is disclosed in not_covered, not in the README. By reading the conditions of ok_mint (caller = minter, timestamp >= slot 2, dst != 0, amount < 2^96, amount <= 2*supply/100, sums below 2^96) and ok_transfer I see no contradiction; that is my reading, not a proof.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Sanity/Zero.lean: 20 theorems *_runs (totalSupply ... setMinter), header 'in the state with one account at the contract C and every slot 0'. config/uni.json 'sanity' has no entry for transfer, transferFrom, mint, delegate. status.json not_covered item 2. Statements read: Gen/PMint.lean ok_mint (2 success cases), Gen/PTransfer.lean ok_transfer (1 case), Gen/PTransferFrom.lean ok_transferFrom (3 cases).",
+   "suggested_fix": "Hand-write two witnesses: transfer between two accounts with no delegate (mvSrc0 last case, delegates equal, no vote move) and mint(dst, 0) or a mint in a state with supply > 0, minter set and dst without delegate (mvSrc3 third case). For delegateBySig or permit a witness needs one valid signature evaluated by Ecdsa.recover; if too heavy, say so in the README line."
+  },
+  {
+   "id": "UNI-4",
+   "token": "UNI",
+   "severity": "minor",
+   "claim": "The invariant holds for the deployed token ('supply invariant for every selector'); status: 'Paris to before Glamsterdam' for the real-runner and sequence theorems, 'from Berlin' for the rest.",
+   "what_is_actually_proved": "Fork window and meter are narrower than a reader of the README would guess. (a) supply_preserved_real, ok_permit_real, ok_delegateBySig_real and all of Seq.lean need Paris <= fork < Glamsterdam; the frame theorems need Berlin and are stated for the one-counter gas meter (Evm fork Nat). EthLib has a second meter (StateGasMeter) for Glamsterdam; nothing is proved for it. If mainnet has passed Glamsterdam at the audited block, no sequence or signature theorem speaks about current blocks (I could not check the fork of block 26386793). (b) UNI was deployed in 2020, before Berlin; the theorems say nothing about its first years, and Inv is never established: not for the constructor, not for any real state. It is a hypothesis of every theorem. So what is proved is 'if Inv held at some point in the window, it holds after each covered step', not 'Inv holds on chain'. Both points are disclosed in assumptions; the README line omits them.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/SigSupply.lean:202 '(hparis : .paris <= fork) (hglam : fork < .glamsterdam)', '(hinv : Inv message.currentTarget state)'; token-kit/tokens/uni/UniVerify/Uni/Seq.lean:67-76 GoodCall; upstream/EthLib/EthLib/Execution/Evm/Machine/Frame.lean:129 'instance : GasMeter Nat', :179 'instance : GasMeter StateGasMeter'; upstream/EthLib/EthLib/Base/Fork.lean:153-162 ('EthLib does not hold all its rules yet'). status.json assumptions items 3, 4, 6.",
+   "suggested_fix": "README line: 'kept by every successful call, Paris to before Glamsterdam, given keccak separation; start state assumed'. Optionally check Inv at the snapshot block off chain is not possible (2^160 addresses), so prove the constructor instead, or state the start as an assumption in the headline."
+  },
+  {
+   "id": "UNI-5",
+   "token": "UNI",
+   "severity": "minor",
+   "claim": "status assumptions: 'hdel / NoDelegation1 (the account at address 1 holds no EIP-7702 delegation code)' and 'Inv is assumed before the call'.",
+   "what_is_actually_proved": "Neither state hypothesis is shown satisfiable inside the UNI project (other tokens of the kit have such lemmas, for example sky hdel_state1, bnb hdel_of_plain). Both are clearly satisfiable: NoDelegation1 holds when address 1 has empty code (true on chain: nobody can sign for address 1), Inv holds in the all-zero state. Two more hypotheses of process_step are not in the assumptions list but are harmless: 'precompileAddress fork message = none' and 'message.code = CODE'. process_step also asks for hdel and Sep even in the error case, where they are not used. I wrote the two missing lemmas as a scratch file.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Seq.lean:61-63 'def NoDelegation1 ... forall c, S.getCode (S.getAccount (toAddressMasked 1)).codeHash = .ok c -> .pectra <= fork -> delegatedAddress c = none'; :211-219 process_step hypotheses. rg in tokens/uni for a theorem that concludes NoDelegation1 or Inv of a concrete state: none.",
+   "suggested_fix": "Add inv_zero and noDelegation1_of_empty (scratch file AuditUni.lean (not kept)) to Seq.lean or Sanity, and list the two small hypotheses in status.json.",
+   "machine_check": "written, not built"
+  },
+  {
+   "id": "UNI-6",
+   "token": "UNI",
+   "severity": "note",
+   "claim": "delegateBySig and permit are covered 'under the real runner, no assumption on its output'.",
+   "what_is_actually_proved": "True for the supply invariant: whatever ECRECOVER returns, the code after the call writes only nonces, delegates, checkpoints or one allowance, never a balance or slot 0. It is NOT a statement that only the owner can permit or only the signer can delegate. The digest is 'keccak of the memory bytes the code built' (delegDigest, permitDigest, permitDigestMax), not shown equal to the EIP-712 encoding, the two domain separator terms (domainSepName, domainSepCopy) are not proved equal, and there is no theorem that links the recovered word to a signature by the owner's key. All disclosed. The paths do show: recovered address != 0; permit requires recovered = owner and timestamp <= deadline; delegateBySig requires nonce = nonces[recovered] and timestamp <= expiry.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Sig.lean:68-97 (domainSepName, domainSepCopy, delegDigest, permitDigest), :282 ok_delegateBySig_real, :327 ok_permit_real; Gen/PDelegateBySigTail.lean 'def delegateBySigTail_ends' first three conditions; Gen/PPermitTail.lean 'def permitTail_ends' first three conditions. check_eip712.py.",
+   "suggested_fix": "One lemma domainSepName m = domainSepCopy m, and one that rewrites delegDigest to keccak(0x1901 ++ domainSep ++ keccak(abi words)). Wording only otherwise."
+  },
+  {
+   "id": "UNI-7",
+   "token": "UNI",
+   "severity": "note",
+   "claim": "27 functions covered; votes are part of the token.",
+   "what_is_actually_proved": "For name(), symbol() and getPriorVotes only 'no storage write, no log' (ro_name, ro_symbol, ro_getPriorVotes conclude Ro ...): nothing about the returned value, so the binary search of getPriorVotes is unverified. No theorem states what happens to votes: Frame.lean says what the vote code leaves unchanged, not that the latest checkpoint of a delegate moves by the amount. The votes invariant (votes of a delegate = sum of delegators' balances) is not done. No readable corollary for transferFrom, delegate, delegateBySig, permit, or transfer to self. All disclosed in not_covered.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Gen/Loops.lean:1076, 2120, 5823 (conclusion 'Ro message.currentTarget state substate s.state s.substate'); token-kit/tokens/uni/UniVerify/Uni/Frame.lean:161 mvSrc0_frame; status.json not_covered items 1, 3, 5, 6.",
+   "suggested_fix": "None beyond what not_covered already lists; keep 'votes are not specified' visible next to the headline."
+  },
+  {
+   "id": "UNI-8",
+   "token": "UNI",
+   "severity": "note",
+   "claim": "Build and axioms claims of status.json.",
+   "what_is_actually_proved": "The stored log supports them (see checked_ok). Small print: (a) the 25 delta_<fn> theorems, the 4 Code lemmas, pushData_CODE and the size_SEL_* lemmas are not in the by-name list; they are covered by the whole-environment scan and by delta_step, which is listed. (b) In the stored rebuild the 22 TokenKit modules were 'Replayed' from cache, not rebuilt (verify_one.sh deletes only tokens/uni/.lake/build); their constants are still scanned for axioms. (c) status.json names log u22.log on the box; the repo holds the later verify log, same job count 1493. (d) Hash.lean is an #eval test, not a theorem, as it says. (e) I could not rerun regen_check.sh (it writes files) or compare the box copy with the local copy.",
+   "evidence": "logs/uni.log (22 lines 'Replayed TokenKit', 128 lines 'Built UniVerify'), e2b/verify_one.sh line 7, token-kit/tokens/uni/UniVerify/Test/Axioms.lean:806-830.",
+   "suggested_fix": "None needed. For a fully clean record run verify_all.sh once with the kit build removed too."
+  },
+  {
+   "id": "UNI-9",
+   "token": "UNI",
+   "severity": "note",
+   "claim": "What the proofs show about the real contract (for the owner).",
+   "what_is_actually_proved": "(1) Only the address in slot 1 (minter) can mint, at most once per 365 days (slot 2 is set to timestamp + 31536000 on every mint), at most 2 percent of the current totalSupply per mint, to any nonzero address; the mint also moves votes to the recipient's delegate. (2) setMinter can be called only by the minter and has NO zero-address check (ok_setMinter has four conditions: no value, call data size, clean address word, caller = minter): the minter can hand the role to any address, including address 0, which ends minting for good. (3) There is no owner, pause, blacklist, burn or upgrade path in the bytes: 27 selectors, no DELEGATECALL, no SELFDESTRUCT. (4) transferFrom skips the allowance when the spender is the source or the allowance is the largest uint96; approve and permit turn the largest 256-bit amount into the largest uint96. (5) permit raises nonces[owner] before the signature check (the check failing reverts it); delegateBySig compares the given nonce with nonces of the recovered address. (6) Vote checkpoints need block number < 2^32 (safe32), and the checkpoint count is an unchecked uint32. (7) With totalSupply 0 only mint of 0 succeeds. Items 1, 2, 4, 5, 7 are read from proved statements; 3 from the bytes; 6 from the mvSrc0_ends conditions.",
+   "evidence": "token-kit/tokens/uni/UniVerify/Uni/Readable.lean:184 mint_readable, :111 setMinter_readable; Gen/PSetMinter.lean ok_setMinter; Gen/PMint.lean ok_mint (first case has 'storageAt ... 0 = 0' and amount not > 0); Gen/PTransferFrom.lean ok_transferFrom (3 cases: caller = src; allowance = max; allowance lowered); token-kit/tokens/uni/UniVerify/Uni/Sig.lean:100 permitS1; Gen/PMvSrc0.lean mvSrc0_ends ('lessThan (BitVec.ofNat 256 message.blockEnv.number) 4294967296 != 0'); check_code.py.",
+   "suggested_fix": "None; tell the owner that item 2 (setMinter to address 0 is allowed) is the one irreversible admin action."
+  }
+ ],
+ "not_checked": [
+  "No Lean was built or run; the scratch file lean/AuditUni.lean is unbuilt. All 'proved' statements rely on the stored log logs/uni.log being a build of the files I read (I could not hash the box copy).",
+  "EthLib and usdt-verify themselves (trusted as the model); only processMessage, the Ecrecover precompile, delegatedAddress and the fork list were read.",
+  "The 2177 block lemmas and 617 path theorems were not read one by one; I read the statements of ok_transfer, ok_mint, ok_setMinter, ok_transferFrom (conditions only), ok_mvSrc0_ends, mvSrc0_ends, mvSrc3_ends, delegateBySigTail_ends, permitTail_ends, ro_*.",
+  "The 20 SSTORE sites were not traced by hand to their keys; I relied on the proved path statements and frame theorems.",
+  "Whether mainnet at block 26386793 is before or after Glamsterdam (decides if the Paris to Glamsterdam window includes today's blocks).",
+  "regen_check.sh (generated files equal a fresh generation) was not rerun: it writes into the repo. Generator scripts were grepped for switches, not read in full; since Lean checks every generated statement and delta_step covers all 27 selectors, a switch cannot make a listed theorem false, only narrower, and I found no narrowing beyond readonly_loops and the missing witnesses.",
+  "Solidity source to bytecode correspondence; live chain state (current minter, mintingAllowedAfter, whether Inv holds on chain); the constructor.",
+  "Revert paths one by one, revert data bytes, and gas constants against a reference client.",
+  "The claims in status.json 'contract_findings' about balance words keeping their high 160 bits (seen in the write terms of ok_transfer, not re-derived)."
+ ],
+ "verdict": {
+  "UNI": {
+   "code constant equals on-chain runtime code (12567 bytes, hash)": "holds",
+   "selector table and dispatcher completeness (27 selectors, value / short / unknown revert)": "holds",
+   "supply_preserved: one frame, any selector but delegateBySig and permit, from Berlin": "holds with caveat (Sep unproved, UNI-2; Inv assumed at start; no witness for the writers, UNI-3)",
+   "supply_preserved_real: every selector, real runner and real ECRECOVER": "holds with caveat (Paris to before Glamsterdam, one-counter meter, hdel, Sep; UNI-2, UNI-4, UNI-5)",
+   "delta_step / delta_step_real: Dsum unchanged by a successful call": "holds with caveat (same as the two lines above)",
+   "process_step_inv: a message to UNI run by processMessage keeps Inv": "holds with caveat (Paris to before Glamsterdam, Sep, hdel)",
+   "calls_process / inv_calls: finite sequences of calls keep Inv": "holds with caveat, much narrower than it reads (only direct messages of CODE; every other step, including a call into UNI from another contract seen from its parent, is assumed Untouched; UNI-1)",
+   "mint_readable (who, wait, cap, exact change)": "holds with caveat (Sep plus hck2, both unproved; no mint witness)",
+   "setMinter_readable, approve_readable": "holds",
+   "transfer_readable": "holds with caveat (Sep; caller != recipient only; no transfer witness)",
+   "delegateBySig and permit covered with no assumption on ECRECOVER": "holds with caveat (for the supply invariant only; digest not tied to EIP-712, no authorization theorem; UNI-6)",
+   "sanity: 20 witnesses": "holds (as counted; none for transfer, transferFrom, mint, delegate, delegateBySig, permit)",
+   "build exit 0, 764 theorems checked, only standard axioms, no sorry": "holds (from the stored log; not rebuilt here)",
+   "theorem counts in status.json (3201 total and per file)": "holds",
+   "README line 'supply invariant for every selector'": "holds with caveat (per successful call, under Sep, Paris to before Glamsterdam, start state assumed; not a statement about whole transactions, UNI-1)"
+  }
+ }
+}

@@ -1,0 +1,463 @@
+{
+ "token": "QNT",
+ "address": "0x4a220e6096b25eadb88358cb44068a3248254675",
+ "compiler": "solc 0.4.21, optimizer off",
+ "lean_root": "QntVerify",
+ "lean_dir": "Qnt",
+ "hex": "data/qnt.runtime.hex",
+ "paths_json": "work/paths.json",
+ "dispatch": {
+  "comment": "generate: the dispatcher files are written by scripts/gen_dispatch.py from the bytes. prelude_gas, entry_gas and memory_words are checked against the bytes there.",
+  "generate": true,
+  "prelude_gas": 62,
+  "entry_gas": 22,
+  "memory_words": [
+   0,
+   0,
+   96
+  ],
+  "layout_doc": [
+   "Storage layout, read off the bytecode (see docs/MAP.md):",
+   "",
+   "- `balances[a]` at `mapSlot a 0`.",
+   "- `totalSupply_` at slot 1.",
+   "- `allowed[owner][spender]` at `mapSlot spender (mapSlot owner 2)`.",
+   "- `crowdsale` in the low 160 bits of slot 3."
+  ]
+ },
+ "slots": {
+  "balances": 0,
+  "totalSupply": 1,
+  "allowances": 2,
+  "crowdsale": 3
+ },
+ "functions": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "mint",
+   "sig": "mint(address,uint256)"
+  },
+  {
+   "name": "DECIMAL_ZEROS",
+   "sig": "DECIMAL_ZEROS()"
+  },
+  {
+   "name": "decreaseApproval",
+   "sig": "decreaseApproval(address,uint256)"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  },
+  {
+   "name": "crowdsale",
+   "sig": "crowdsale()"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "increaseApproval",
+   "sig": "increaseApproval(address,uint256)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  }
+ ],
+ "readonly_loops": [],
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)"
+ },
+ "paths": {
+  "comment": "decide_equivalent: a branch whose condition equals an earlier one up to ISZERO pairs and reads of slots is decided by it (no vacuous path).",
+  "decide_equivalent": true
+ },
+ "supply": {
+  "comment": "mode delta: mint adds to a balance and never writes totalSupply_ (slot 1), so the plain invariant is not kept; each function gets the exact change of D = sum of balances - slot 1. fixed_slots: slots no successful call changes (totalSupply_, crowdsale).",
+  "mode": "delta",
+  "fixed_slots": [
+   1,
+   3
+  ],
+  "delta": {
+   "mint": "((loadWord message.data 36 32).toNat : Int)"
+  }
+ },
+ "readable": {
+  "name": {
+   "doc": "name(): no value; returns the ABI encoding of the string \"Quant\" (offset 32, length 5, the five bytes then zeros), a constant of the code; reads no slot, writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = memW [32, 5, 0x5175616e74000000000000000000000000000000000000000000000000000000]",
+    "s.state = state",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "symbol": {
+   "doc": "symbol(): no value; returns the ABI encoding of the string \"QNT\" (offset 32, length 3, the three bytes then zeros), a constant of the code; reads no slot, writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = memW [32, 3, 0x514e540000000000000000000000000000000000000000000000000000000000]",
+    "s.state = state",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "decimals": {
+   "doc": "decimals(): no value; returns 18, a constant of the code; reads no slot, writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 18",
+    "s.state = state",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "DECIMAL_ZEROS": {
+   "doc": "DECIMAL_ZEROS(): no value; returns 10^18, a constant of the code; reads no slot, writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1000000000000000000",
+    "s.state = state",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "totalSupply": {
+   "doc": "totalSupply(): no value; returns `totalSupply_` (slot 1); writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (totalSupply message state)",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "crowdsale": {
+   "doc": "crowdsale(): no value; returns the low 160 bits of slot 3; writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (bitwiseAnd (1461501637330902918203684832716283019655932542975 : U256) (storageAt state message.currentTarget 3))",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "balanceOf": {
+   "doc": "balanceOf(a): no value (no check of the call data size: a missing argument reads as 0); returns `balances[a]`; writes nothing and logs nothing.",
+   "let": {
+    "a": "addrArg1 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {a})",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender): no value; returns `allowed[owner][spender]`; writes nothing and logs nothing.",
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "approve": {
+   "doc": "approve(spender, value) from the caller `owner`. Success needs: no value, a frame that may write (no check that `spender` is not 0, no check of the old allowance). Then: returns 1; `allowed[owner][spender]` is `value`; `totalSupply_` and every other slot keep their word; exactly one log, Approval(owner, spender, value).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "value": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {owner} {spender} = {value}",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {spender} (mapSlot {owner} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes {value}))"
+   ]
+  },
+  "increaseApproval": {
+   "doc": "increaseApproval(spender, added) from the caller `owner`. Success needs: no value, a frame that may write, no overflow of `allowed[owner][spender] + added` (an overflow ends in INVALID, not REVERT). Then: returns 1; the allowance is the old word plus `added`; `totalSupply_` and every other slot keep their word; exactly one log, Approval(owner, spender, new allowance).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "added": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "(allowance message state {owner} {spender}).toNat + {added}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat + {added}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {spender} (mapSlot {owner} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (add (allowance message state {owner} {spender}) {added})))"
+   ]
+  },
+  "decreaseApproval": {
+   "doc": "decreaseApproval(spender, subtracted) from the caller `owner`, on both success paths (subtracted above the old allowance: the allowance becomes 0; else it is the old word minus `subtracted`). Success needs: no value, a frame that may write. Then: returns 1; the allowance is the old one minus `subtracted`, stopping at 0 (natural number subtraction); `totalSupply_` and every other slot keep their word; exactly one log, Approval(owner, spender, new allowance).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "subtracted": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat - {subtracted}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {spender} (mapSlot {owner} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (allowance message s.state {owner} {spender})))"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(to, amount) from the caller `from`. Success needs: no value, a frame that may write, `to` not 0, `amount <= balances[from]`, and (when `to` is not `from`) no overflow of `balances[to]`. Then: returns 1; `balances[from]` is the old word minus `amount` and `balances[to]` the old word plus `amount` (when `to = from` the balance is unchanged); `totalSupply_` and every other slot keep their word; exactly one log, Transfer(from, to, amount).",
+   "let": {
+    "from": "sender message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{to} ≠ 0",
+    "{amount}.toNat ≤ (balance message state {from}).toNat",
+    "{to} ≠ {from} → (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} ≠ {from} → (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat ∧ (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} → balance message s.state {from} = balance message state {from}",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {from} 0 → k ≠ mapSlot {to} 0 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(from, to, amount) by the caller `spender`. Success needs: no value, a frame that may write, `to` not 0, `amount <= balances[from]`, `amount <= allowed[from][spender]`, and (when `to` is not `from`) no overflow of `balances[to]`. Then: returns 1; the balances move as in transfer (unchanged when `to = from`); `allowed[from][spender]` is the old word minus `amount`; `totalSupply_` and every other slot keep their word; exactly one log, Transfer(from, to, amount) (no Approval log).",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "sender message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{to} ≠ 0",
+    "{amount}.toNat ≤ (balance message state {from}).toNat",
+    "{amount}.toNat ≤ (allowance message state {from} {spender}).toNat",
+    "{to} ≠ {from} → (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} ≠ {from} → (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat ∧ (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} → balance message s.state {from} = balance message state {from}",
+    "(allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {from} 0 → k ≠ mapSlot {to} 0 → k ≠ mapSlot {spender} (mapSlot {from} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "mint": {
+   "doc": "mint(to, amount). Success needs: no value, a frame that may write, the caller equal to the address in slot 3 (`crowdsale`), and no overflow of `balances[to]` (an overflow ends in INVALID). There is no cap and no mint-finished flag. Then: returns nothing (STOP); `balances[to]` is the old word plus `amount`; `totalSupply_` (slot 1) is NOT changed, nor any other slot; exactly one log, Transfer(0, to, amount).",
+   "let": {
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "sender message = bitwiseAnd (1461501637330902918203684832716283019655932542975 : U256) (storageAt state message.currentTarget 3)",
+    "(balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {to} 0 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER 0 {to} (wordBytes {amount}))"
+   ]
+  }
+ },
+ "readable_opts": {
+  "comment": "more rewrite rules for the readable proofs: the read of an address at offset 0 of a slot (DIV by 1), the number of the word 0. several_paths same_claims: a function with several success paths proves the same claims on each path (the default closes, on each path, the cases that the path excludes).",
+  "simp": [
+   "Readable.div_one",
+   "Readable.toNat_zero"
+  ],
+  "several_paths": "same_claims"
+ },
+ "sanity": {
+  "comment": "The argument words of the witness call of each function (scripts/gen_sanity.py): address arguments not 0, amounts 0. mint and the first path of decreaseApproval need a state that is not all 0: their witnesses are hand-written in Sanity/Moves.lean.",
+  "name": [],
+  "approve": [
+   1,
+   0
+  ],
+  "totalSupply": [],
+  "transferFrom": [
+   1,
+   2,
+   0
+  ],
+  "decimals": [],
+  "DECIMAL_ZEROS": [],
+  "decreaseApproval": {
+   "decreaseApproval_p4": [
+    1,
+    0
+   ]
+  },
+  "balanceOf": [
+   1
+  ],
+  "symbol": [],
+  "crowdsale": [],
+  "transfer": [
+   1,
+   0
+  ],
+  "increaseApproval": [
+   1,
+   0
+  ],
+  "allowance": [
+   1,
+   2
+  ]
+ },
+ "axioms": {
+  "comment": "names: theorems of the dispatcher files, checked before the generated ones; after: theorems of files that import the generated ones; imports: the modules Test/Axioms.lean imports.",
+  "imports": [
+   "QntVerify.Qnt.Invariant",
+   "QntVerify.Qnt.Readable",
+   "QntVerify.Qnt.Sanity.Moves",
+   "QntVerify.Qnt.Seq",
+   "QntVerify.Qnt.Tx"
+  ],
+  "names": [
+   "valid_CODE",
+   "prelude",
+   "table",
+   "dispatch",
+   "enter",
+   "Nonpayable.spec",
+   "Fallback.spec_unknown",
+   "Fallback.spec_short",
+   "ends_ok_dispatch",
+   "runFrame_ok_dispatch"
+  ],
+  "after": [
+   "Sanity.Moves.transfer_moves",
+   "Sanity.Moves.mint_runs",
+   "Sanity.Moves.decreaseApproval_p2_runs",
+   "Witness.caller1_ne",
+   "mint_caller",
+   "Supply.D_congr",
+   "goodCall_step",
+   "goodCall_mint_D",
+   "calls_fixed",
+   "calls_D_mono",
+   "calls_D_no_crowdsale",
+   "inv_calls_no_crowdsale",
+   "goodCall_process",
+   "untouched_process_failed",
+   "process_value_fails",
+   "process_step",
+   "process_step_inv",
+   "calls_process",
+   "code_size_ne_zero",
+   "code_not_indicator",
+   "code_not_delegated",
+   "D_of_getStorage",
+   "storageOnly_floor",
+   "floor_self",
+   "frameKeepsQ_floor",
+   "floor_message_any_depth",
+   "floor_transaction",
+   "floor_any_transactions",
+   "fixed_mono_transaction",
+   "fixed_mono_any_transactions",
+   "storageOnly_inv",
+   "inv_zeroBase",
+   "frameKeepsQ_noCrowd",
+   "noCrowd_message_any_depth",
+   "inv_transaction_no_crowdsale",
+   "inv_any_transactions_no_crowdsale",
+   "inv_from_zero_no_crowdsale",
+   "Seq.frameKeepsR_of_all",
+   "Seq.storageOnly_supply",
+   "Seq.zeroBase_supply",
+   "Seq.processMessage_good_local",
+   "Seq.processTransaction_good",
+   "Seq.chain_good",
+   "Seq.chain_from_zero"
+  ]
+ }
+}

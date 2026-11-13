@@ -1,0 +1,677 @@
+✔ [1255/1401] Built WethVerify.Weth.Code.Bytes (339ms)
+⚠ [1302/1401] Replayed UsdtVerify.Evm.At
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1304/1401] Replayed UsdtVerify.Evm.Gas
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1306/1401] Replayed UsdtVerify.Evm.Storage
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1307/1401] Replayed UsdtVerify.Evm.Write
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Base.Proofs.U256` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1309/1401] Replayed UsdtVerify.Evm.GasRules
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Log` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1310/1401] Replayed UsdtVerify.Evm.Steps
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1311/1401] Replayed UsdtVerify.Evm.Calldata
+warning: UsdtVerify/Evm/Calldata.lean: imports `EthLib.Base.Proofs.BigEndian` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1313/1401] Replayed UsdtVerify.Evm.Stuck
+warning: UsdtVerify/Evm/Stuck.lean: imports `EthLib.Base.Proofs.MapM` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1314/1401] Replayed UsdtVerify.Evm.NoAbort
+warning: UsdtVerify/Evm/NoAbort.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1315/1401] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1316/1401] Replayed UsdtVerify.Evm.MemRev
+warning: UsdtVerify/Evm/MemRev.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1324/1401] Replayed UsdtVerify.Evm.Route
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1325/1401] Replayed UsdtVerify.Evm.Runners
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1329/1401] Replayed TokenKit.Evm.Mem
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1330/1401] Replayed TokenKit.Evm.Rules
+warning: TokenKit/Evm/Rules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Region` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1331/1401] Replayed TokenKit.Evm.Stack
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1333/1401] Replayed TokenKit.Evm.Supply
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1336/1401] Replayed TokenKit.Evm.Logic
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.AccountData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Base.Proofs.Address` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1337/1401] Replayed TokenKit.Evm.Call
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1339/1401] Replayed UsdtVerify.Evm.Call
+warning: UsdtVerify/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1340/1401] Replayed TokenKit.Evm.CallOutcome
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean:118:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, keepReads, GasMeter.gasLeft, hE, h1, h2,
+    exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:169:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, keepReads, GasMeter.gasLeft,
+    GasMeter.drain, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:22: This simp argument is unused:
+  GasMeter.drain
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.drain, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:227:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callValueCost, hv', payCall,
+    messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads, GasMeter.gasLeft, GasMeter.drain,
+    GasMeter.reservoir, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:229:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callNewAccountStateGas,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads,
+    GasMeter.gasLeft, GasMeter.drain, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1342/1401] Replayed TokenKit.Evm.Ether
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.State.Frame` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean:65:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:66:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:94:40: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:96:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1343/1401] Replayed TokenKit.Evm.Stipend
+warning: TokenKit/Evm/Stipend.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Stipend.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Stipend.lean:537:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Stipend.lean:543:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1344/1401] Replayed TokenKit.Evm.Readable
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1346/1401] Replayed TokenKit.Evm.Witness
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1347/1401] Replayed TokenKit.Seq.Frame
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Message` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1348/1401] Replayed TokenKit.Seq.Run
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Interpreter` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Reach` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1354/1401] Replayed TokenKit.Seq.Tx
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Process` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Authorization` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean:151:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1355/1401] Replayed TokenKit.Evm.Supply2
+warning: TokenKit/Evm/Supply2.lean:84:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1358/1401] Built WethVerify.Weth.Code (1.3s)
+warning: WethVerify/Weth/Code.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NatCode` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1359/1401] Built WethVerify.Weth.Sep (1.4s)
+⚠ [1360/1401] Built WethVerify.Test.Hash (1.2s)
+warning: WethVerify/Test/Hash.lean: imports `EthLib.Execution.Evm.Instructions.Keccak` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+info: WethVerify/Test/Hash.lean:30:0: CODE: 3124 bytes, keccak256 d0a06b12ac47863b5c7be4185c2deaad1c61557033f56c7d4ea74429cbb25e23
+⚠ [1361/1401] Built WethVerify.Weth.TxFrame (2.6s)
+warning: WethVerify/Weth/TxFrame.lean:393:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: WethVerify/Weth/TxFrame.lean:401:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1362/1401] Built WethVerify.Weth.Steps (1.0s)
+✔ [1363/1401] Built WethVerify.Weth.TxRun (2.6s)
+⚠ [1364/1401] Built WethVerify.Weth.Map (2.7s)
+warning: WethVerify/Weth/Map.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: WethVerify/Weth/Map.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1365/1401] Built WethVerify.Weth.TxChain (2.1s)
+warning: WethVerify/Weth/TxChain.lean:94:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1366/1401] Built WethVerify.Weth.Enter (1.9s)
+✔ [1367/1401] Built WethVerify.Weth.Complete.Dispatch (1.4s)
+✔ [1368/1401] Built WethVerify.Weth.Gen.B2 (7.1s)
+✔ [1369/1401] Built WethVerify.Weth.Gen.Loops (10s)
+✔ [1370/1401] Built WethVerify.Weth.Gen.B0 (16s)
+✔ [1371/1401] Built WethVerify.Weth.Gen.B1 (23s)
+✔ [1372/1401] Built WethVerify.Weth.Gen.PTotalSupply (1.7s)
+✔ [1373/1401] Built WethVerify.Weth.Gen.PAllowance (1.6s)
+✔ [1374/1401] Built WethVerify.Weth.Gen.PBalanceOf (1.7s)
+✔ [1375/1401] Built WethVerify.Weth.Gen.PDeposit (1.9s)
+✔ [1376/1401] Built WethVerify.Weth.Gen.PDecimals (2.1s)
+✔ [1377/1401] Built WethVerify.Weth.Gen.PApprove (2.1s)
+✔ [1378/1401] Built WethVerify.Weth.Gen.PTotalSupplyTail (1.5s)
+✔ [1379/1401] Built WethVerify.Weth.Gen.PFallbackShort (1.9s)
+✔ [1380/1401] Built WethVerify.Weth.Gen.PFallbackOther (1.9s)
+✔ [1381/1401] Built WethVerify.Weth.Gen.PWithdrawTail (1.6s)
+✔ [1382/1401] Built WethVerify.Weth.Gen.PWithdraw (2.4s)
+✔ [1383/1401] Built WethVerify.Weth.Gen.PTransfer (4.3s)
+✔ [1384/1401] Built WethVerify.Weth.Gen.PTransferFrom (76s)
+✔ [1385/1401] Built WethVerify.Weth.Gen (1.3s)
+✔ [1386/1401] Built WethVerify.Weth.TotalSupply (1.6s)
+✔ [1387/1401] Built WethVerify.Weth.Sanity.Zero (1.6s)
+✔ [1388/1401] Built WethVerify.Weth.Solvent (1.9s)
+⚠ [1389/1401] Built WethVerify.Weth.Sanity.Moves (1.5s)
+warning: WethVerify/Weth/Sanity/Moves.lean:153:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [1390/1401] Built WethVerify.Weth.Withdraw (1.8s)
+⚠ [1391/1401] Built WethVerify.Weth.WithdrawAll (1.8s)
+warning: WethVerify/Weth/WithdrawAll.lean:119:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callValueCost, hv', payCall,
+    messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads, GasMeter.gasLeft, GasMeter.drain,
+    GasMeter.reservoir, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: WethVerify/Weth/WithdrawAll.lean:121:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callNewAccountStateGas,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads,
+    GasMeter.gasLeft, GasMeter.drain, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: WethVerify/Weth/WithdrawAll.lean:355:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1392/1401] Built WethVerify.Weth.Invariant (1.6s)
+warning: WethVerify/Weth/Invariant.lean:192:100: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1393/1401] Built WethVerify.Weth.Sanity.Withdraw (1.9s)
+warning: WethVerify/Weth/Sanity/Withdraw.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1394/1401] Built WethVerify.Weth.Reenter (1.6s)
+warning: WethVerify/Weth/Reenter.lean:75:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: WethVerify/Weth/Reenter.lean:79:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: WethVerify/Weth/Reenter.lean:81:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1395/1401] Built WethVerify.Weth.Tx (1.4s)
+✔ [1396/1401] Built WethVerify.Weth.Seq (1.5s)
+✔ [1397/1401] Built WethVerify.Weth.Readable (9.6s)
+⚠ [1398/1401] Built WethVerify.Weth.ReadableHand (1.7s)
+warning: WethVerify/Weth/ReadableHand.lean:122:15: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+ℹ [1399/1401] Built WethVerify.Test.Axioms (6.1s)
+info: WethVerify/Test/Axioms.lean:52:0: 'WethVerify.valid_CODE' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:53:0: 'WethVerify.table_entry' depends on axioms: [propext]
+info: WethVerify/Test/Axioms.lean:54:0: 'WethVerify.enter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:55:0: 'WethVerify.enterOther' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:56:0: 'WethVerify.enterShort' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:57:0: 'WethVerify.Complete.selector_cases' depends on axioms: [propext, Quot.sound]
+info: WethVerify/Test/Axioms.lean:58:0: 'WethVerify.Paths.totalSupply_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:59:0: 'WethVerify.Paths.totalSupply_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:60:0: 'WethVerify.Paths.ok_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:61:0: 'WethVerify.solvent_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:62:0: 'WethVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:63:0: 'WethVerify.Paths.balanceOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:64:0: 'WethVerify.Paths.balanceOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:65:0: 'WethVerify.Paths.ok_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:66:0: 'WethVerify.Readable.balanceOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:67:0: 'WethVerify.solvent_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:68:0: 'WethVerify.Sanity.balanceOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:69:0: 'WethVerify.Paths.allowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:70:0: 'WethVerify.Paths.allowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:71:0: 'WethVerify.Paths.ok_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:72:0: 'WethVerify.Readable.allowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:73:0: 'WethVerify.solvent_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:74:0: 'WethVerify.Sanity.allowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:75:0: 'WethVerify.Paths.decimals_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:76:0: 'WethVerify.Paths.decimals_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:77:0: 'WethVerify.Paths.ok_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:78:0: 'WethVerify.Readable.decimals_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:79:0: 'WethVerify.solvent_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:80:0: 'WethVerify.Sanity.decimals_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:81:0: 'WethVerify.Paths.deposit_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:82:0: 'WethVerify.Paths.deposit_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:83:0: 'WethVerify.Paths.ok_deposit' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:84:0: 'WethVerify.Readable.deposit_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:85:0: 'WethVerify.solvent_deposit' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:86:0: 'WethVerify.Sanity.deposit_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:87:0: 'WethVerify.Paths.approve_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:88:0: 'WethVerify.Paths.approve_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:89:0: 'WethVerify.Paths.approve_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:90:0: 'WethVerify.Paths.ok_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:91:0: 'WethVerify.Readable.approve_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:92:0: 'WethVerify.solvent_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:93:0: 'WethVerify.Sanity.approve_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:94:0: 'WethVerify.Paths.transfer_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:95:0: 'WethVerify.Paths.transfer_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:96:0: 'WethVerify.Paths.transfer_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:97:0: 'WethVerify.Paths.transfer_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:98:0: 'WethVerify.Paths.ok_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:99:0: 'WethVerify.Readable.transfer_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:100:0: 'WethVerify.solvent_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:101:0: 'WethVerify.Sanity.transfer_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:102:0: 'WethVerify.Paths.transferFrom_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:103:0: 'WethVerify.Paths.transferFrom_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:104:0: 'WethVerify.Paths.transferFrom_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:105:0: 'WethVerify.Paths.transferFrom_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:106:0: 'WethVerify.Paths.transferFrom_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:107:0: 'WethVerify.Paths.transferFrom_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:108:0: 'WethVerify.Paths.transferFrom_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:109:0: 'WethVerify.Paths.transferFrom_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:110:0: 'WethVerify.Paths.transferFrom_p8' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:111:0: 'WethVerify.Paths.ok_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:112:0: 'WethVerify.Readable.transferFrom_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:113:0: 'WethVerify.solvent_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:114:0: 'WethVerify.Paths.withdraw_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:115:0: 'WethVerify.Paths.withdraw_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:116:0: 'WethVerify.Paths.withdraw_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:117:0: 'WethVerify.Paths.withdraw_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:118:0: 'WethVerify.Paths.ok_withdraw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:119:0: 'WethVerify.solvent_withdraw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:120:0: 'WethVerify.Sanity.withdraw_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:121:0: 'WethVerify.Paths.fallbackShort_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:122:0: 'WethVerify.Paths.fallbackShort_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:123:0: 'WethVerify.Paths.ok_fallbackShort' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:124:0: 'WethVerify.Readable.fallbackShort_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:125:0: 'WethVerify.solvent_fallbackShort' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:126:0: 'WethVerify.Paths.fallbackOther_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:127:0: 'WethVerify.Paths.fallbackOther_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:128:0: 'WethVerify.Paths.ok_fallbackOther' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:129:0: 'WethVerify.Readable.fallbackOther_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:130:0: 'WethVerify.solvent_fallbackOther' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:131:0: 'WethVerify.Paths.totalSupplyTail_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:132:0: 'WethVerify.Paths.ok_totalSupplyTail' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:133:0: 'WethVerify.Paths.withdrawTail_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:134:0: 'WethVerify.Paths.withdrawTail_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:135:0: 'WethVerify.Paths.ok_withdrawTail' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:136:0: 'WethVerify.Loops.ro_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:137:0: 'WethVerify.solvent_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:138:0: 'WethVerify.Loops.ro_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:139:0: 'WethVerify.solvent_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:140:0: 'WethVerify.solvent_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:141:0: 'WethVerify.Paths.totalSupply_island' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:142:0: 'WethVerify.Paths.totalSupply_path' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:143:0: 'WethVerify.Paths.ok_totalSupply_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:144:0: 'WethVerify.Paths.withdraw_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:145:0: 'WethVerify.Paths.ok_withdraw_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:146:0: 'WethVerify.Paths.withdraw_path' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:147:0: 'WethVerify.Paths.ok_withdraw_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:148:0: 'WethVerify.Paths.callStep_value_deep_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:149:0: 'WethVerify.Paths.call_bad' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:150:0: 'WethVerify.Paths.ok_withdraw_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:151:0: 'WethVerify.Paths.withdraw_fails_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:152:0: 'WethVerify.Paths.withdraw_fails_balance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:153:0: 'WethVerify.Paths.withdraw_fails_ether' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:154:0: 'WethVerify.Paths.withdraw_fails_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:155:0: 'WethVerify.Paths.withdraw_fails_gas' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:156:0: 'WethVerify.Paths.withdraw_fails_noCode' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:157:0: 'WethVerify.Paths.withdraw_fails_callee' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:158:0: 'TokenKit.Stipend.sstoreStep_ne_ok_of_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:159:0: 'TokenKit.Stipend.lowResult_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:160:0: 'TokenKit.Stipend.processMessage_quiet' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:161:0: 'TokenKit.Stipend.quiet_processMessage_noValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:162:0: 'WethVerify.wSubCall_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:163:0: 'WethVerify.calleeQuiet_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:164:0: 'WethVerify.calleeQuiet_noCode' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:165:0: 'WethVerify.calleeQuiet_stop' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:166:0: 'WethVerify.calleeQuiet_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:167:0: 'WethVerify.solvent_preserved_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:168:0: 'WethVerify.withdrawReady_prePrague' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:169:0: 'TokenKit.addressL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:170:0: 'TokenKit.balanceL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:171:0: 'TokenKit.callL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:172:0: 'TokenKit.callLowL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:173:0: 'TokenKit.call_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:174:0: 'TokenKit.callLow_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:175:0: 'TokenKit.Complete.ok_exactL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:176:0: 'TokenKit.Complete.no_okL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:177:0: 'TokenKit.Supply.solvent_of_ro' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:178:0: 'TokenKit.Supply.solvent_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:179:0: 'TokenKit.Supply.solvent_moveEther_outOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:180:0: 'TokenKit.Supply.backed_moveEther_into' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:181:0: 'TokenKit.noCode_message' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:182:0: 'WethVerify.read_bal_allow' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:183:0: 'WethVerify.sum_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:184:0: 'WethVerify.sum_allow' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:185:0: 'WethVerify.solvent_goodCall' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:186:0: 'WethVerify.solvent_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:187:0: 'WethVerify.solvent_calls' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:188:0: 'WethVerify.goodCall_of_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:189:0: 'WethVerify.goodCall_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:190:0: 'WethVerify.other_process_failed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:191:0: 'WethVerify.process_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:192:0: 'WethVerify.process_step_solvent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:193:0: 'WethVerify.calls_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:194:0: 'WethVerify.withdrawReady_eoa' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:195:0: 'WethVerify.Readable.totalSupply_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:196:0: 'WethVerify.Readable.withdraw_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:197:0: 'WethVerify.Sanity.transferFrom_p4_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:198:0: 'WethVerify.Sanity.transferFrom_p6_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:199:0: 'WethVerify.Sanity.transferFrom_p8_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:200:0: 'WethVerify.Sanity.deposit_moves' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:201:0: 'WethVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:202:0: 'WethVerify.Sanity.callValueOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:203:0: 'WethVerify.Sanity.withdraw_on' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:204:0: 'WethVerify.Sanity.withdraw_succeeds' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:205:0: 'WethVerify.Sanity.withdraw_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:206:0: 'WethVerify.Sanity.caller1_noPre' depends on axioms: [propext]
+info: WethVerify/Test/Axioms.lean:207:0: 'WethVerify.Sanity.withdraw_runs_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:208:0: 'TokenKit.Witness.caller1_word' depends on axioms: [propext, Quot.sound]
+info: WethVerify/Test/Axioms.lean:209:0: 'WethVerify.mono_solvent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:210:0: 'WethVerify.code_size_ne_zero' depends on axioms: [propext]
+info: WethVerify/Test/Axioms.lean:211:0: 'WethVerify.code_not_indicator' depends on axioms: [propext, Quot.sound]
+info: WethVerify/Test/Axioms.lean:212:0: 'WethVerify.code_not_delegated' depends on axioms: [propext, Quot.sound]
+info: WethVerify/Test/Axioms.lean:213:0: 'WethVerify.solvent_zeroBase' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:214:0: 'WethVerify.backed_startSt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:215:0: 'WethVerify.frameKeepsV' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:216:0: 'WethVerify.solvent_message_any_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:217:0: 'WethVerify.solvent_transaction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:218:0: 'WethVerify.solvent_any_transactions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:219:0: 'WethVerify.solvent_from_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:220:0: 'WethVerify.Bal.resU_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:221:0: 'WethVerify.Bal.v_runFrame' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:222:0: 'WethVerify.Bal.processMessage_ind_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:223:0: 'WethVerify.Bal.processMessage_good_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:224:0: 'WethVerify.Bal.processCreateMessage_good_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:225:0: 'WethVerify.Bal.processMessageCall_good_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:226:0: 'WethVerify.Bal.runTransaction_good_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:227:0: 'WethVerify.Bal.processTransaction_good_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:228:0: 'WethVerify.Bal.chain_good_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:229:0: 'TokenKit.Seq.processMessage_ind_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:230:0: 'TokenKit.Seq.processMessageCall_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:231:0: 'TokenKit.Seq.sumBal_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: WethVerify/Test/Axioms.lean:235:0: AXIOM SCAN OK: 3773 constants (3363 theorems) of WethVerify and TokenKit, axioms used: [Quot.sound,
+ Classical.choice,
+ propext]
+✔ [1400/1401] Built WethVerify (1.9s)
+Build completed successfully (1401 jobs).
+EXIT=0

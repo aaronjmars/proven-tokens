@@ -1,0 +1,500 @@
+{
+ "token": "WETH",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "QNT, BNB and WETH audit"
+ },
+ "last_clean_build": {
+  "log": "logs/weth.log",
+  "axioms": "logs/weth.axioms"
+ },
+ "findings": {
+  "WETH-1": {
+   "severity": "major",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 3,
+     "do": "`CalleeKeeps` restates the conclusion of `solvent_withdraw` and is too loose (no gas bound, callee code not pinned). (a) Restate it locally, about the one message withdraw's CALL sends, with the gas the CALL really gives (withdraw uses a transfer: 2300 stipend, value > 0; read the exact gas from the bytes) and discharge it for the real runner for a no-code caller, a STOP contract and a contract that only accepts ether. (b) Stretch goal, the real reentrancy theorem with no callee assumption: a message that runs with at most the stipend gas cannot change any storage (SSTORE needs more than 2300 gas left since Istanbul) and cannot lower WETH's ether balance, whatever code it runs, including calls back into WETH. This needs an induction over EthLib's execution; reuse EthLib / upstream lemmas on gas monotonicity and stuck SSTORE (Evm/Stuck.lean, Logic/LessGas, NoAbort). If (b) is blocked after 3 distinct approaches, stop on it and report precisely what is missing; (a) must still be done."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 3,
+     "source": "token-kit/tokens/weth/fix-status.json fix_round_weth",
+     "recorded_status": "done",
+     "fix_3a": {
+      "status": "done",
+      "what": "The loose assumption CalleeKeeps is gone. The new assumption CalleeQuiet is about the one message that the CALL of this run of withdraw sends (CallSend: exact gas from the bytes, value wad, code, caller, target, and a sender frame whose state is the start state with the balance slot lowered). It says: no storage word of the contract changes and its ether falls by at most wad. It does not mention the invariant.",
+      "theorems_added": [
+       "WethVerify.CalleeQuiet (def, Weth/Invariant.lean)",
+       "WethVerify.wSubCall_le (the message gets at most 2300 gas)",
+       "WethVerify.calleeQuiet_process (CalleeQuiet for processRunner and EVERY callee code)",
+       "WethVerify.calleeQuiet_noCode (no-code caller)",
+       "WethVerify.calleeQuiet_stop (one-byte STOP contract, STOP_CODE)",
+       "WethVerify.calleeQuiet_accept (contract that only accepts ether, ACCEPT_CODE)",
+       "WethVerify.withdrawReady_eoa (restated)",
+       "WethVerify.withdrawReady_prePrague"
+      ],
+      "theorems_restated": [
+       "solvent_withdraw (hkeep is now CalleeQuiet for the code the state gives)",
+       "solvent_preserved (hw = WithdrawReady and CalleeQuiet)",
+       "GoodCall, goodCall_of_run (CalleeQuiet)",
+       "goodCall_process, process_step, process_step_solvent, calls_process (hw = WithdrawReady only; callee part discharged by calleeQuiet_process)"
+      ],
+      "theorems_retired": [
+       "CalleeKeeps",
+       "calleeKeeps_noCode",
+       "withdrawHyp_eoa"
+      ],
+      "satisfiability": "CalleeQuiet is a theorem for the real runner (calleeQuiet_process), and Sanity.withdraw_runs_closed gives a real run where the message of the CALL ends with no error."
+     },
+     "fix_3b": {
+      "status": "done",
+      "what": "Real reentrancy theorem with no assumption on the callee code. A message that starts with at most 2300 gas changes no account and no storage word apart from the move of its own value, whatever its code and however deep its own calls go. Proved by strong induction on the gas of the message and fun_induction over EthLib's runFrame.",
+      "main_theorems": [
+       "TokenKit.Stipend.processMessage_quiet (TokenKit/Evm/Stipend.lean)",
+       "TokenKit.Stipend.quiet_processMessage_noValue",
+       "TokenKit.Stipend.lowResult_step",
+       "TokenKit.Stipend.sstoreStep_ne_ok_of_low",
+       "WethVerify.calleeQuiet_process",
+       "WethVerify.solvent_preserved_process (solvent kept through every run, withdraw with reentry included; hw is only WithdrawReady)"
+      ],
+      "gas_rules_checked": {
+       "SSTORE": "fails when gas left is at most 2300 (EIP-2200 sentry, from Istanbul), before any read or write",
+       "CALL / CALLCODE with value": "pay more than 2300 before the message is sent (callExtraGas_bounds), so a sent call has value 0",
+       "CREATE / CREATE2": "pay 32000 (12000 from Glamsterdam) first: more than 2300 on every fork",
+       "SELFDESTRUCT": "5000 from Tangerine Whistle",
+       "warm CALL of 100": "allowed; the inner message has less gas than the frame, so the induction covers it (this is the reentry)",
+       "TSTORE": "changes transient storage only, not in Quiet",
+       "precompiles": "keep the state",
+       "EIP-7702": "a delegated callee runs any code with the gas of the call, covered since the code is arbitrary"
+      },
+      "forks": "Stipend.processMessage_quiet: every fork from Istanbul, any lawful gas meter. calleeQuiet_process: from Berlin. solvent_preserved_process: from Berlin, and WithdrawReady asks fork < Glamsterdam, so Berlin, London, Paris, Shanghai, Cancun, Prague, Osaka.",
+      "what_quiet_does_not_cover": "transient storage, logs, substate, records of reads"
+     }
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/weth/fix-status.json",
+    "token-kit/tokens/weth/WethVerify/Weth/Invariant.lean",
+    "token-kit/TokenKit/Evm/Stipend.lean",
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  },
+  "WETH-2": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix needed: the audit confirmed the claim (suggested fix: none).",
+   "steps": [],
+   "evidence": [
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  },
+  "WETH-3": {
+   "severity": "major",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 4,
+     "do": "Prove the failing cases of withdraw (insufficient balance, the CALL failing, out of gas at the CALL, depth limit) and replace the stub-runner witness by a real-runner witness with a nonzero amount to a no-code caller. State plainly which forks are covered (before Glamsterdam) and why."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 4,
+     "source": "token-kit/tokens/weth/fix-status.json fix_round_weth",
+     "recorded_status": "done",
+     "failing_cases": {
+      "file": "tokens/weth/WethVerify/Weth/WithdrawAll.lean",
+      "main": "WethVerify.Paths.ok_withdraw_all: every run that ends with no error had the code of the sender readable, depth below the limit, gas paying for the CALL, value 0, wad at most the token balance and at most the ether, and a callee frame with no error. hcode, hdepth and hcall are no longer hypotheses.",
+      "theorems_added": [
+       "Paths.callStep_value_deep_mem",
+       "Paths.call_bad",
+       "Paths.ok_withdraw_all",
+       "Paths.withdraw_fails_value (from Berlin, every fork)",
+       "Paths.withdraw_fails_balance (insufficient token balance; from Berlin, every fork)",
+       "Paths.withdraw_fails_ether (contract ether below wad)",
+       "Paths.withdraw_fails_depth (depth limit)",
+       "Paths.withdraw_fails_gas (out of gas before or at the CALL)",
+       "Paths.withdraw_fails_noCode (state does not give the code of the sender)",
+       "Paths.withdraw_fails_callee (the CALL fails)"
+      ],
+      "each_says": "the frame the loop returns has an error, for every runner and every bound; processMessage then rolls the writes back (other_process_failed)"
+     },
+     "withdraw_ready": "WithdrawReady now has two fields only: glam (fork < Glamsterdam) and del (from Prague, the code of the caller is no EIP-7702 delegation). Fields code, depth, gas removed. Before Prague it is only the fork bound (withdrawReady_prePrague).",
+     "witness": {
+      "file": "tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean",
+      "theorems_added": [
+       "Sanity.callValueOn (CALL rule in EthLib's HoareOn form, names the message the runner may fail on)",
+       "Sanity.withdraw_on",
+       "Sanity.withdraw_succeeds (for every state: withdraw of a nonzero wad to a no-code caller returns a frame with no error under processRunner)",
+       "Sanity.withdraw_runs (sample state wS: contract holds 5 wei, caller holds 5 tokens, withdraw(1))",
+       "Sanity.caller1_noPre",
+       "Sanity.withdraw_runs_closed (addresses fixed, no hypothesis left but the fork range)"
+      ],
+      "theorems_retired": [
+       "Sanity.stubRunner",
+       "Sanity.meets_stub",
+       "old Sanity.withdraw_runs (stub runner, wad = 0)"
+      ]
+     },
+     "forks": "Berlin, London, Paris, Shanghai, Cancun, Prague, Osaka. Not Glamsterdam: EthLib's rules of the CALL step (callValue, callStep_value, callExtra) are proved for the one-counter gas rules that Glamsterdam (EIP-8037) replaces. Stated in the headers of WithdrawAll.lean, Reenter.lean and Sanity/Withdraw.lean.",
+     "not_done": [
+      "Glamsterdam is not covered by any theorem that goes through the CALL of withdraw.",
+      "A caller of withdraw that is an EIP-7702 delegated account (from Prague) is not covered.",
+      "Sanity witnesses for the STOP and accept-ether callees as full runs were not written; for them CalleeQuiet is proved, and the full-run witness is for the no-code caller."
+     ],
+     "hypotheses_still_assumed": [
+      "hglam: fork < Glamsterdam (in WithdrawReady)",
+      "del: from Prague, the caller of withdraw is not an EIP-7702 delegated account (EthLib's CALL step rule does not cover a delegated target)",
+      "hsep: keccak separation of the mapping slots (unchanged, not proved)",
+      "hcodeC: the account of the contract has code in the start state (needed so that moving ether out does not delete it)",
+      "top-level message hypotheses of Seq.lean unchanged: Paris or later, no precompile, caller is not the contract, data shorter than 2^256"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/weth/fix-status.json",
+    "token-kit/tokens/weth/WethVerify/Weth/WithdrawAll.lean",
+    "token-kit/tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean",
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  },
+  "WETH-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 4,
+     "do": "Prove the failing cases of withdraw (insufficient balance, the CALL failing, out of gas at the CALL, depth limit) and replace the stub-runner witness by a real-runner witness with a nonzero amount to a no-code caller. State plainly which forks are covered (before Glamsterdam) and why."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 4,
+     "source": "token-kit/tokens/weth/fix-status.json fix_round_weth.fix_4",
+     "recorded_status": "done",
+     "witness": {
+      "file": "tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean",
+      "theorems_added": [
+       "Sanity.callValueOn (CALL rule in EthLib's HoareOn form, names the message the runner may fail on)",
+       "Sanity.withdraw_on",
+       "Sanity.withdraw_succeeds (for every state: withdraw of a nonzero wad to a no-code caller returns a frame with no error under processRunner)",
+       "Sanity.withdraw_runs (sample state wS: contract holds 5 wei, caller holds 5 tokens, withdraw(1))",
+       "Sanity.caller1_noPre",
+       "Sanity.withdraw_runs_closed (addresses fixed, no hypothesis left but the fork range)"
+      ],
+      "theorems_retired": [
+       "Sanity.stubRunner",
+       "Sanity.meets_stub",
+       "old Sanity.withdraw_runs (stub runner, wad = 0)"
+      ]
+     }
+    },
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "source": "token-kit/kit-status.json fix_round.5",
+     "recorded_status": "done",
+     "axioms_test_coverage": "Test/Axioms.lean of every token now imports every module of the root file and ends with a scan (Lean.collectAxioms) of EVERY constant of the project and of TokenKit: the build fails if one uses an axiom outside propext, Classical.choice, Quot.sound or if a module declares an axiom. So no theorem can be hidden by a list. BNB list: 153 named theorems, all new main theorems of fixes 1 and 2 included."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/weth/fix-status.json",
+    "token-kit/tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean",
+    "token-kit/kit-status.json",
+    "token-kit/tokens/weth/WethVerify/Test/Axioms.lean",
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  },
+  "WETH-5": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix needed: the audit confirmed the claim (suggested fix: none).",
+   "steps": [],
+   "evidence": [
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  },
+  "ALL-1": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "do": "In each of the four tokens' status data, list exactly which functions each sequence theorem covers and excludes, and what the `other` step assumes."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 6,
+     "source": "token-kit/kit-status.json fix_round.6",
+     "recorded_status": "done",
+     "what": "tokens.<t>.sequence_scope written for shib, qnt, bnb and weth in this file: per sequence theorem, the functions covered and excluded, and what the `other` step assumes.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": 0,
+     "build_iterations": 0,
+     "obstacles": []
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  },
+  "ALL-2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "do": "For each opt-in switch the audit lists (BNB `frame`, WETH `stops` / `explicit_size`, axioms skip lists, the weak check_axioms.sh), either remove it, or keep it with a comment and a line in kit-status.json saying what it weakens and where it is used. The axioms test must cover every main theorem with no skip list hiding one."
+    }
+   ],
+   "steps": [
+    {
+     "round": "QNT, BNB and WETH fix round",
+     "fix": 5,
+     "source": "token-kit/kit-status.json fix_round.5",
+     "recorded_status": "done",
+     "switches": [
+      {
+       "switch": "BNB functions[].frame = true (withdrawEther)",
+       "kept": true,
+       "weakens": "The generators write no path theorems to the end, no ok_/invariant theorem and no sanity witness for that function; its proofs are hand-written (Bnb/Withdraw.lean, Bnb/Sanity/Withdraw.lean).",
+       "where_used": "tokens/bnb/config/bnb.json (frame_comment, frame_theorems); scripts/gen_paths.py, gen_supply.py, gen_sanity.py, gen_axioms.py",
+       "guard": "gen_axioms.py now stops unless a frame function lists its hand-written theorems in frame_theorems; they are in the axioms test. gen_sanity.py prints that no witness was generated."
+      },
+      {
+       "switch": "WETH stops / segments (pcs 1648, 2724)",
+       "kept": true,
+       "weakens": "A path stops at the listed pc instead of the end of the frame; the rest of the function (totalSupplyTail, withdrawTail) is proved by hand (Weth/TotalSupply.lean, Weth/Withdraw.lean, Weth/WithdrawAll.lean).",
+       "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py (docstring line WEAKENS)",
+       "guard": "The hand-written tails are in the axioms test (axioms.after) and in the all-constants scan."
+      },
+      {
+       "switch": "WETH dispatch.explicit_size = true",
+       "kept": true,
+       "weakens": "Every per-function theorem ok_<fn> takes `4 <= message.data.size` as a hypothesis: with a payable fallback a successful run says nothing of the size of the call data. Calls with shorter data are the hand-written fallback entries (enterShort, enterOther).",
+       "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py, gen_loops.py, gen_readable.py, tokenlib.py (comment)",
+       "guard": "The hypothesis is visible in each statement; the short-data case is proved apart, so no call is left out."
+      },
+      {
+       "switch": "axioms.skip (BNB)",
+       "kept": false,
+       "weakens": "It left named theorems out of the axioms test.",
+       "where_used": "removed from tokens/bnb/config/bnb.json; gen_axioms.py now stops with an error if any config has axioms.skip"
+      },
+      {
+       "switch": "axioms.declared_only (WETH)",
+       "kept": true,
+       "weakens": "A generated theorem name that no Lean file declares is left out of the #print list (3 names: Sanity.transferFrom_runs, solvent_totalSupplyTail, solvent_withdrawTail; none exists, their content is in hand-written theorems).",
+       "where_used": "tokens/weth/config/weth.json (axioms.comment); scripts/gen_axioms.py prints the names left out and writes them in the head of Test/Axioms.lean",
+       "guard": "It cannot hide an existing theorem: the all-constants scan checks every constant of the project."
+      },
+      {
+       "switch": "scripts/check_axioms.sh (was weak)",
+       "kept": "rewritten",
+       "weakens": "Before: it passed on an empty log, on zero results, and missed axiom lists wrapped over several lines.",
+       "where_used": "scripts/check_axioms.sh is now a wrapper of scripts/check_axioms.py: fails on an empty log, zero results, any axiom outside the three standard ones (wrapped lists read whole), a sorry warning, a count that differs from the #print lines of Test/Axioms.lean, or a missing AXIOM SCAN OK line."
+      }
+     ],
+     "axioms_test_coverage": "Test/Axioms.lean of every token now imports every module of the root file and ends with a scan (Lean.collectAxioms) of EVERY constant of the project and of TokenKit: the build fails if one uses an axiom outside propext, Classical.choice, Quot.sound or if a module declares an axiom. So no theorem can be hidden by a list. BNB list: 153 named theorems, all new main theorems of fixes 1 and 2 included.",
+     "theorems_added": [],
+     "theorems_retired": [],
+     "hypotheses_now_assumed": [],
+     "lines_written": {
+      "scripts/check_axioms.py": "86 (new)",
+      "scripts/gen_axioms.py": "161 (about 70 new)",
+      "scripts/check_axioms.sh": "8 (wrapper)",
+      "comments in gen_paths.py, tokenlib.py, gen_sanity.py, gen_solvent.py": "about 25"
+     },
+     "build_iterations": 3,
+     "obstacles": [
+      "Lean.CollectAxioms.collect is private in Lean 4.35: the scan uses the public Lean.collectAxioms per constant."
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/kit-status.json",
+    "token-kit/tokens/bnb/config/bnb.json",
+    "token-kit/scripts/gen_paths.py",
+    "token-kit/tokens/weth/WethVerify/Weth/TotalSupply.lean",
+    "token-kit/tokens/weth/WethVerify/Weth/Withdraw.lean",
+    "token-kit/tokens/weth/WethVerify/Weth/WithdrawAll.lean",
+    "token-kit/tokens/weth/config/weth.json",
+    "token-kit/scripts/gen_axioms.py",
+    "token-kit/tokens/weth/WethVerify/Test/Axioms.lean",
+    "token-kit/scripts/check_axioms.sh",
+    "token-kit/scripts/check_axioms.py",
+    "logs/weth.log",
+    "logs/weth.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "date": "2026-11-10",
+   "shared_changes": [
+    "NEW TokenKit/Evm/Move.lean, TokenKit/Evm/CallOutcome.lean, TokenKit/Evm/Payee.lean; imported in TokenKit.lean (19 imports). WETH's root file imports CallOutcome too. No existing shared Lean file changed.",
+    "scripts/gen_axioms.py: Test/Axioms.lean now has `import Lean`, imports every module of the root file, and ends with the all-constants scan; axioms.skip is refused; frame functions need frame_theorems. This changes the generated Test/Axioms.lean of all four tokens (same #print list, more imports, the scan). SHIB, QNT and WETH were regenerated (WETH by its own agent, same output) and all four rebuilt on the box lean-ethlib-build.",
+    "scripts/check_axioms.sh is now a wrapper of the new scripts/check_axioms.py (second argument: the Test/Axioms.lean to count against).",
+    "scripts/gen_paths.py, tokenlib.py: comments only (WEAKENS notes). scripts/gen_sanity.py, gen_solvent.py: one printed note each, generated Lean unchanged.",
+    "TokenKit/Evm/Stipend.lean (other agent) was synced to this box as it stood at 19:34 EST with tokens/weth and built there; it is not in TokenKit.lean (WETH imports it directly)."
+   ],
+   "build": {
+    "final_line": "Build completed successfully (1386 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 157; AXIOM SCAN OK: 3202 constants (2996 theorems); only standard axioms",
+    "note": "Snapshot of the local tokens/weth at 19:34 EST 2026-11-10 (the other agent's tree), built on this box to check the shared changes. The other agent's own box is the reference for WETH."
+   }
+  },
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "part": "weth",
+   "date": "2026-11-10",
+   "scope": "fixes 3 (WETH-1) and 4 (WETH-3) of audits/weth/fixes.json, tokens/weth only",
+   "build": {
+    "box": "lean-weth (E2B)",
+    "command": "cd /home/user/token-kit/tokens/weth && lake build",
+    "final_line": "Build completed successfully (1386 jobs).",
+    "exit_code": 0,
+    "log_on_box": "/home/user/wb2.log",
+    "axioms_check": "scripts/check_axioms.sh on that log: theorems checked: 157, only standard axioms (propext, Classical.choice, Quot.sound)",
+    "axioms_count_weth": 157,
+    "axioms_count_before": 133,
+    "forbidden_scan": "no sorry, no axiom, no native_decide, no bv_decide, no em dash or en dash in the files written or changed"
+   },
+   "lines_written": {
+    "TokenKit/Evm/Stipend.lean": 600,
+    "tokens/weth/WethVerify/Weth/WithdrawAll.lean": 432,
+    "tokens/weth/WethVerify/Weth/Reenter.lean": 193,
+    "tokens/weth/WethVerify/Weth/Sanity/Withdraw.lean": "441 (rewritten, was 127)",
+    "edited": "Invariant.lean, Seq.lean, Withdraw.lean (comments), ReadableHand.lean (comment), WethVerify.lean (imports), config/weth.json (axioms list), Test/Axioms.lean (regenerated by scripts/gen_axioms.py, not hand edited)"
+   },
+   "obstacles": [
+    "EthLib's HoareUnder rules do not say on which message a failing runner failed, so a real-runner witness could not be derived from withdraw_path. Solved with EthLib's HoareOn form (callValueOn) and moveEther_isOk_iff.",
+    "callStep_value_deep of TokenKit/Evm/CallOutcome.lean does not give the memory after the step, which the generated tail lemma needs. A copy with the memory (callStep_value_deep_mem) lives in WithdrawAll.lean.",
+    "call_outcome of CallOutcome.lean does not say which case held, so call_bad redoes its case split to prove each failing case."
+   ],
+   "needed_shared_changes": [
+    "TokenKit.lean: add `import TokenKit.Evm.Stipend` (new shared file, not imported by the root module yet; WETH imports it directly).",
+    "tokens/weth now imports TokenKit/Evm/CallOutcome.lean, a shared file written by the other agent. I did not edit it. I copied it unchanged (md5 afda8abf9bd8a644823cf35e63f9a904, 19:14) to box lean-weth so WETH builds there. WETH uses step_at_call, callStep_missing, callStep_value_poor from it: if those change, WithdrawAll.lean must follow.",
+    "CallOutcome.lean: callStep_value_deep could also give `after.memory`; then WETH's callStep_value_deep_mem can be dropped.",
+    "kit-status.json and any status text for WETH: the entries that list CalleeKeeps as an open assumption, the stub-runner witness and the unproved failing cases of withdraw are now out of date.",
+    "scripts/gen_axioms.py now writes `open TokenKit` (was `open TokenKit TokenKit.Complete`) in Test/Axioms.lean; the build is green with it, no action needed, noted only.",
+    "scripts/regen.sh: Invariant.lean, Seq.lean, Reenter.lean, WithdrawAll.lean and Sanity/Withdraw.lean of WETH are hand-written; a regen must not overwrite them (check the gen_supply step for a token with backing = ether)."
+   ]
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "kit_theorems": {
+    "runner_level (every fork)": "Seq.processMessage_good_local (Run.lean): a sane call from a good state whose run is Clean ends good, with or without error, whatever code it runs and whatever it sends at any depth, re-entry included. Seq.processCreateMessage_good_local for creations at another address, Seq.processRunner_good_local for the runner, Seq.runFrame_keeps_local for one frame of the token under the real runner.",
+    "transaction (Dencun <= fork < Glamsterdam)": "Seq.processTransaction_good (Tx.lean): EthLib's processTransaction takes a block state where L is good to one where L is good: gas purchase, EIP-7702 authorizations, first frame, the message (call or creation), refunds, fee, end-of-transaction deletions, incorporation into the block state.",
+    "any finite list": "Seq.Chain + Seq.chain_good; Seq.ChainCap + Seq.chainCap_good for tokens with a gas cap.",
+    "base case": "Seq.ZeroBase, Seq.good_of_zero, Seq.chain_from_zero; per invariant family Seq.zeroBase_supply / zeroBase_supply2 / zeroBase_supplyMask.",
+    "fork_range_honest": "Message level: every fork (plus the token's own bound). Transaction level: Fork.dencun <= fork < Fork.glamsterdam. Before Dencun the end-of-transaction deletion could remove L after a SELFDESTRUCT at L; the kit avoids a per-token 'never SELFDESTRUCT' proof by tracking Unmarked, which only EIP-6780 gives."
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-c",
+   "date": "2026-11-11"
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "part": "apply-c",
+   "entry": "WETH transaction level",
+   "id": "WETH transaction level",
+   "recorded_status": "done",
+   "option": "a (transaction-level solvency proved with an induction written for an invariant that reads the balance)",
+   "what_changed": "Solvent C (sum of balanceOf <= ether of C) is not Seq.StorageOnly, so the kit does not apply as is. Three new generic files redo the kit's induction over EthLib's interpreter for an invariant with Bal.Mono (kept when the storage of L is the same and its ether is not lower): every step of a frame not at L keeps the storage of L and does not lower its ether (resU_step: value moves, SELFDESTRUCT, creations, reverts), then the message, transaction (gas purchase, authorizations, refunds, fee, deletions) and list levels. Weth/Tx.lean gives the WETH facts and the headlines; the frame at C uses solvent_preserved_process (stipend theorem, no assumption on the callee of withdraw).",
+   "theorems_added": [
+    "WethVerify.mono_solvent",
+    "code_size_ne_zero",
+    "code_not_indicator",
+    "code_not_delegated",
+    "solvent_zeroBase",
+    "backed_startSt",
+    "frameKeepsV",
+    "solvent_message_any_depth",
+    "solvent_transaction",
+    "solvent_any_transactions (headline)",
+    "solvent_from_zero",
+    "Bal.resU_step",
+    "Bal.v_runFrame",
+    "Bal.processMessage_ind_bal",
+    "Bal.processMessage_good_bal",
+    "Bal.processCreateMessage_good_bal",
+    "Bal.processMessageCall_good_bal",
+    "Bal.runTransaction_good_bal",
+    "Bal.processTransaction_good_bal",
+    "Bal.chain_good_bal",
+    "plus 58 supporting lemmas in TxFrame, TxRun, TxChain (78 theorems in the four files)"
+   ],
+   "theorems_retired": [],
+   "hypotheses_still_assumed": [
+    "Seq.TxClean.call with Q := QMsg (run-local: keccak separation Sep (callKeys m) for messages that enter the code at C, NOT proved; no EIP-7702 delegation on the callee of the stipend call from Prague)",
+    "Seq.TxClean.create (no keccak collision on deposited codes, NOT proved)",
+    "Seq.TxClean.auths (no authorization sets a code with the token's code hash, NOT proved)",
+    "Seq.TxClean.data (call data below 2^256 bytes)",
+    "Fork.dencun <= fork < Fork.glamsterdam for each transaction",
+    "Seq.Good at the start (or HoldsCode and all-zero storage in the _from_zero theorem)",
+    "included.sender is not C for each transaction (solvent_transaction, each cons of Bal.ChainV). True on a chain by EIP-3607 since C has code, but that check is before processTransaction and is NOT proved",
+    "QMsg for withdraw with value 0: from Prague, the code of the caller is no EIP-7702 delegation at frame start",
+    "solvent_message_any_depth only: Seq.Sane, Bal.Paid C message, Seq.Clean, Berlin <= fork < Glamsterdam"
+   ],
+   "files": {
+    "token-kit/tokens/weth/WethVerify/Weth/TxFrame.lean": "new, 559 lines, generic",
+    "token-kit/tokens/weth/WethVerify/Weth/TxRun.lean": "new, 420 lines, generic",
+    "token-kit/tokens/weth/WethVerify/Weth/TxChain.lean": "new, 454 lines, generic",
+    "token-kit/tokens/weth/WethVerify/Weth/Tx.lean": "new, 215 lines (headline solvent_any_transactions at line 198)",
+    "token-kit/tokens/weth/WethVerify.lean": "+4 imports",
+    "token-kit/tokens/weth/config/weth.json": "axioms.imports + 23 names in axioms.after",
+    "token-kit/tokens/weth/WethVerify/Test/Axioms.lean": "regenerated from config, 157 to 180 headlines (not edited by hand)",
+    "token-kit/tokens/weth/status.json": "new (fix-status.json of the earlier round left unchanged)"
+   },
+   "to_merge_into_kit": {
+    "title": "invariant that reads the balance",
+    "files": [
+     "token-kit/tokens/weth/WethVerify/Weth/TxFrame.lean",
+     "token-kit/tokens/weth/WethVerify/Weth/TxRun.lean",
+     "token-kit/tokens/weth/WethVerify/Weth/TxChain.lean"
+    ],
+    "note": "generic, namespace WethVerify.Bal; move to TokenKit/Seq under TokenKit.Seq.Bal. Kit still needs: 'sender is not L' from EIP-3607 (proof or kept hypothesis) and block-level steps. Detail in token-kit/tokens/weth/status.json."
+   },
+   "left": [
+    "sender is not C is a hypothesis, not proved",
+    "block-level steps between transactions are not linked (none lowers the ether of a contract, not proved)",
+    "the constructor run is not linked",
+    "withdraw from an EIP-7702 delegated caller",
+    "forks before Dencun and from Glamsterdam at transaction level"
+   ]
+  }
+ ]
+}

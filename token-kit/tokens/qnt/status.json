@@ -1,0 +1,56 @@
+{
+ "token": "QNT (Quant)",
+ "date": "2026-11-11",
+ "note": "This file was added in the fix round of the ten-token audit for the transaction-level theorems. The earlier record of QNT is in token-kit/kit-status.json under tokens.qnt and is not repeated here.",
+ "headline": "QNT has NO unconditional supply invariant: mint (crowdsale address only) adds to a balance and never writes totalSupply_. Two transaction-level headlines in QntVerify/Qnt/Tx.lean, each after any finite list of transactions run by EthLib's processTransaction, whoever calls and however deep: (1) fixed_mono_any_transactions: slot 1 (totalSupply_) and slot 3 (crowdsale) keep their word and D = sum of balances minus totalSupply_ never goes down, with no assumption on the start storage; (2) inv_any_transactions_no_crowdsale: sum of balances = totalSupply_ is kept when no message that enters QNT comes from the crowdsale address.",
+ "claims": {
+  "fixed_mono_any_transactions": "after any finite list of transactions (Seq.Chain with Q := SepMsg): C still holds the code of QNT, the words of slots 1 and 3 are those before the first transaction, and D at the start <= D at the end. Start: Seq.HoldsCode only. It does NOT say sum = totalSupply.",
+  "fixed_mono_transaction": "the same for one transaction. Dencun <= fork < Glamsterdam.",
+  "floor_message_any_depth, floor_transaction, floor_any_transactions": "the same facts as a kept state predicate Floor C d w1 w3 (d <= D, slot 1 = w1, slot 3 = w3), for a call at any depth (fork from Berlin), one transaction, a list.",
+  "inv_any_transactions_no_crowdsale": "Seq.Good C CODE (Inv C) is kept by any finite list of transactions (Seq.Chain with Q := NoCrowdMsg). NOT claimed when the crowdsale address calls: goodCall_mint_D (Seq.lean) shows a successful mint of a nonzero amount breaks Inv.",
+  "inv_transaction_no_crowdsale, noCrowd_message_any_depth": "the same for one transaction and for one call at any depth.",
+  "inv_from_zero_no_crowdsale": "the same from the base case shape: C holds the code and all storage words are zero (then slot 3 holds address 0, so the hypothesis excludes calls from address 0). NOT the real deployment state.",
+  "older_model_kept": "Seq.lean (calls_fixed, calls_D_mono, inv_calls_no_crowdsale, process_step, calls_process): top-level messages only, where every other step is ASSUMED to keep the storage of C (the `other` step of Calls, Untouched). It is the older, WEAKER per-message model, kept because other files and the axioms list use it; the theorems of Tx.lean do not use that assumption."
+ },
+ "assumptions": [
+  "Transaction theorems (fixed_mono_transaction, fixed_mono_any_transactions, floor_*), run-local hypothesis Seq.TxClean.call / .create with Q := SepMsg: every message that really enters the code at C during this transaction satisfies Sep (callKeys m) (keccak separation for its caller and first two argument words, NOT proved), and every code that a creation of this transaction really deposits, when it has the keccak hash of the code of QNT, is that code (no keccak collision on these codes, NOT proved). Nothing is assumed about messages or codes outside the run. floor_message_any_depth assumes the same as Seq.Clean of its run.",
+  "Transaction theorems, Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of the code of QNT (5155 bytes). Only a keccak collision breaks it; NOT proved.",
+  "Transaction theorems, Seq.TxClean.data: the call data of a transaction sent to C is below 2^256 bytes.",
+  "Transaction theorems, fork range: each transaction has Fork.dencun <= fork < Fork.glamsterdam (the *_transaction theorems, the cons of Seq.Chain). The *_message_any_depth theorems: Fork.berlin <= fork, one-counter gas meter (Evm fork Nat), so they describe the real chain only before Glamsterdam.",
+  "Transaction theorems, start state: fixed_mono_*: Seq.HoldsCode C CODE only (C holds the code of QNT, code hash = keccak256 of the code, not the empty hash), nothing about storage. inv_*_no_crowdsale: Seq.Good C CODE (Inv C) (HoldsCode and sum of balances = totalSupply_). inv_from_zero_no_crowdsale: HoldsCode and all-zero storage of C.",
+  "Transaction theorems, the *_message_any_depth theorems only: Seq.Sane C CODE message (if the top message runs at C, it is a call that runs the code of QNT with call data below 2^256 bytes). The transaction theorems prove this from HoldsCode.",
+  "inv_transaction_no_crowdsale, inv_any_transactions_no_crowdsale, inv_from_zero_no_crowdsale, noCrowd_message_any_depth: Seq.TxClean / Seq.Clean with Q := NoCrowdMsg, run-local: every message m that really enters the code at C during the run satisfies Sep (callKeys m) (keccak, NOT proved) AND callerWord m is not the low 160 bits of slot 3 of C in the state the frame of m starts from. The second part is a hypothesis on who calls, not on keccak: it excludes EVERY call by the crowdsale address (not only a successful mint), at any depth. It is stronger than needed (only a successful mint of a nonzero amount changes D).",
+  "Sep (callKeys message): a hypothesis about keccak only, NOT proved (QntVerify/Qnt/Sep.lean). Used by supply_step and so by every theorem of Tx.lean.",
+  "The older assumptions of the frame and per-message theorems are unchanged: see token-kit/kit-status.json tokens.qnt.sequence_scope."
+ ],
+ "not_covered": [
+  "Transaction level: what a block does between transactions is not linked (withdrawals, the system calls of EIP-4788, 2935, 7002, 7251, rewards). Seq.Chain strings transactions only.",
+  "Transaction level: forks before Dencun. There the end of a transaction can delete an account that ran SELFDESTRUCT, and it is not proved here that the code of QNT never runs it (the library tracks instead that C is not created in the transaction and not marked for deletion, which EIP-6780 gives from Dencun).",
+  "Transaction level: Glamsterdam and later (two-counter gas meter of EIP-8037).",
+  "Transaction level: the base case of inv_from_zero_no_crowdsale is all-zero storage; the constructor run that leaves the real start state is not linked.",
+  "No theorem says sum of balances = totalSupply_ across a call by the crowdsale address; that is false for the bytecode (mint).",
+  "The exact growth of D over a transaction (the sum of the minted amounts) is not stated at transaction level; only D never goes down."
+ ],
+ "theorem_counts": {
+  "total_theorems_in_tokens_qnt": 363,
+  "tx": "19 in Tx.lean: code_size_ne_zero, code_not_indicator, code_not_delegated, D_of_getStorage, storageOnly_floor, floor_self, frameKeepsQ_floor, floor_message_any_depth, floor_transaction, floor_any_transactions, fixed_mono_transaction, fixed_mono_any_transactions, storageOnly_inv, inv_zeroBase, frameKeepsQ_noCrowd, noCrowd_message_any_depth, inv_transaction_no_crowdsale, inv_any_transactions_no_crowdsale, inv_from_zero_no_crowdsale; definitions SepMsg, NoCrowdMsg, Floor",
+  "axioms_test": "157 names in Test/Axioms.lean (131 before, 19 of Tx.lean, 7 of TokenKit.Seq) plus the scan of every constant"
+ },
+ "fix_round_audit4": {
+  "finding": "fix 2 of the ten-token audit (shared kit fix; WBT-1 for WBT): the sequence theorems covered top-level messages only and assumed every other step keeps the storage of C (Untouched).",
+  "status": "done by agent apply-a with recipe A_no_outside_call of audits/qnt/fixes.json; detail in audits/qnt/fixes.json",
+  "files": "QntVerify/Qnt/Tx.lean (new, 302 lines, 19 theorems), QntVerify.lean (1 import), config/qnt.json (axioms.imports, axioms.after), Test/Axioms.lean (regenerated). Shared library used: TokenKit/Seq/Frame.lean, Run.lean, Tx.lean, Supply.lean (not edited).",
+  "retired": "nothing; Seq.lean is kept as the older, weaker model",
+  "to_merge_into_kit": "nothing needed. Optional: the 'fixed level' pattern (a state predicate with a parameter, instantiated at the start state, to lift a before/after relation such as 'D unchanged' or 'slot never larger') could become a kit lemma Seq.chain_rel."
+ },
+ "build": {
+  "where": "E2B box lean-fix-a (removed after the run), /home/user/token-kit/tokens/qnt, Lean v4.35.0, usdt-verify d0e684c5, kit = git archive HEAD token-kit, LEAN_NUM_THREADS=2 (fix round of the ten-token audit, part apply-a)",
+  "command": "lake build from a removed tokens/qnt/.lake/build, after a clean build of the kit library (1386 jobs)",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1384 jobs).",
+  "log": "logs/qnt.log (axioms output: logs/qnt.axioms)",
+  "axioms_check": "bash scripts/check_axioms.sh /home/user/logs/qnt.log QntVerify/Test/Axioms.lean: exit 0, 'theorems checked: 157', 'count matches Test/Axioms.lean: 157', 'only standard axioms'; 'AXIOM SCAN OK: 5477 constants (5129 theorems) of QntVerify and TokenKit'",
+  "regen_check": "bash scripts/regen_check.sh shib qnt wbt on the Mac: 3/3 identical (Test/Axioms.lean regenerated from the config; no other generated file changed)",
+  "banned_things": "no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by in Tx.lean (text search plus the axiom scan of every constant). No em dash or en dash."
+ }
+}

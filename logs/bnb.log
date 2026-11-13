@@ -1,0 +1,767 @@
+⚠ [1301/1402] Replayed UsdtVerify.Evm.At
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1303/1402] Replayed UsdtVerify.Evm.Gas
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1305/1402] Replayed UsdtVerify.Evm.Storage
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1306/1402] Replayed UsdtVerify.Evm.Write
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Base.Proofs.U256` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1308/1402] Replayed UsdtVerify.Evm.GasRules
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Log` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1309/1402] Replayed UsdtVerify.Evm.Steps
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1310/1402] Replayed UsdtVerify.Evm.Calldata
+warning: UsdtVerify/Evm/Calldata.lean: imports `EthLib.Base.Proofs.BigEndian` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1311/1402] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1313/1402] Replayed UsdtVerify.Evm.Stuck
+warning: UsdtVerify/Evm/Stuck.lean: imports `EthLib.Base.Proofs.MapM` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1314/1402] Replayed UsdtVerify.Evm.NoAbort
+warning: UsdtVerify/Evm/NoAbort.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1315/1402] Replayed UsdtVerify.Evm.MemRev
+warning: UsdtVerify/Evm/MemRev.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1323/1402] Replayed UsdtVerify.Evm.Route
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1324/1402] Replayed UsdtVerify.Evm.Runners
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1328/1402] Replayed TokenKit.Evm.Mem
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1329/1402] Replayed TokenKit.Evm.Rules
+warning: TokenKit/Evm/Rules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Region` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1330/1402] Replayed TokenKit.Evm.Stack
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1331/1402] Replayed TokenKit.Evm.Prune
+warning: TokenKit/Evm/Prune.lean: imports `EthLib.Execution.Evm.Instructions.Comparison` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Prune.lean:46:41: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Prune.lean:54:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1332/1402] Replayed TokenKit.Evm.Supply
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1333/1402] Replayed TokenKit.Evm.Readable
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1334/1402] Replayed TokenKit.Evm.Dead
+warning: TokenKit/Evm/Dead.lean:37:35: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Dead.lean:49:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1336/1402] Replayed TokenKit.Evm.Supply2
+warning: TokenKit/Evm/Supply2.lean:84:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1337/1402] Replayed TokenKit.Evm.Readable2
+warning: TokenKit/Evm/Readable2.lean:31:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1339/1402] Replayed TokenKit.Evm.Witness
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1340/1402] Replayed TokenKit.Evm.Witness2
+warning: TokenKit/Evm/Witness2.lean:85:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness2.lean:93:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness2.lean:102:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1343/1402] Replayed TokenKit.Evm.Logic
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.AccountData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Base.Proofs.Address` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1344/1402] Replayed TokenKit.Evm.Call
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1346/1402] Replayed UsdtVerify.Evm.Call
+warning: UsdtVerify/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1347/1402] Replayed TokenKit.Evm.CallOutcome
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean:118:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, keepReads, GasMeter.gasLeft, hE, h1, h2,
+    exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:169:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, keepReads, GasMeter.gasLeft,
+    GasMeter.drain, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:22: This simp argument is unused:
+  GasMeter.drain
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.drain, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:227:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callValueCost, hv', payCall,
+    messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads, GasMeter.gasLeft, GasMeter.drain,
+    GasMeter.reservoir, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:229:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callNewAccountStateGas,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads,
+    GasMeter.gasLeft, GasMeter.drain, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1349/1402] Replayed TokenKit.Evm.Ether
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.State.Frame` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean:65:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:66:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:94:40: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:96:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1352/1402] Replayed TokenKit.Evm.Stipend
+warning: TokenKit/Evm/Stipend.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Stipend.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Stipend.lean:537:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Stipend.lean:543:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1353/1402] Replayed TokenKit.Seq.Frame
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Message` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Frame.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1354/1402] Replayed TokenKit.Seq.Run
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Interpreter` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Reach` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Run.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1360/1402] Replayed TokenKit.Seq.Tx
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Process` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean: imports `EthLib.Execution.Proofs.Transactions.Authorization` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Seq/Tx.lean:151:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1363/1402] Built BnbVerify.Bnb.Code.Bytes (442ms)
+✔ [1364/1402] Built BnbVerify.Bnb.Sep (1.5s)
+⚠ [1365/1402] Built BnbVerify.Bnb.Code (1.4s)
+warning: BnbVerify/Bnb/Code.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NatCode` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1366/1402] Built BnbVerify.Test.Hash (1.4s)
+warning: BnbVerify/Test/Hash.lean: imports `EthLib.Execution.Evm.Instructions.Keccak` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+info: BnbVerify/Test/Hash.lean:30:0: CODE: 5355 bytes, keccak256 a1b62b5dd40a9c7b0f0a91ffd2578f7b1b22ca6d312846a0b88b3ae8339201c6
+✔ [1367/1402] Built BnbVerify.Bnb.Steps (2.1s)
+⚠ [1368/1402] Built BnbVerify.Bnb.Map (3.0s)
+warning: BnbVerify/Bnb/Map.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: BnbVerify/Bnb/Map.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1369/1402] Built BnbVerify.Bnb.Spec.Dispatch (4.4s)
+warning: BnbVerify/Bnb/Spec/Dispatch.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1370/1402] Built BnbVerify.Bnb.Enter (1.5s)
+✔ [1371/1402] Built BnbVerify.Bnb.Complete.Dispatch (1.8s)
+✔ [1372/1402] Built BnbVerify.Bnb.Gen.Loops (15s)
+✔ [1373/1402] Built BnbVerify.Bnb.Gen.B0 (18s)
+✔ [1374/1402] Built BnbVerify.Bnb.Gen.B4 (22s)
+✔ [1375/1402] Built BnbVerify.Bnb.Gen.B1 (24s)
+✔ [1376/1402] Built BnbVerify.Bnb.Gen.B2 (25s)
+✔ [1377/1402] Built BnbVerify.Bnb.Gen.B3 (27s)
+✔ [1378/1402] Built BnbVerify.Bnb.Gen.PAllowance (1.7s)
+✔ [1379/1402] Built BnbVerify.Bnb.Gen.PDecimals (1.8s)
+✔ [1380/1402] Built BnbVerify.Bnb.Gen.POwner (1.8s)
+✔ [1381/1402] Built BnbVerify.Bnb.Gen.PBalanceOf (1.8s)
+✔ [1382/1402] Built BnbVerify.Bnb.Gen.PFreezeOf (1.8s)
+✔ [1383/1402] Built BnbVerify.Bnb.Gen.PTotalSupply (1.9s)
+✔ [1384/1402] Built BnbVerify.Bnb.Gen.PApprove (2.0s)
+✔ [1385/1402] Built BnbVerify.Bnb.Gen.PWithdrawEther (2.0s)
+✔ [1386/1402] Built BnbVerify.Bnb.Gen.PBurn (5.1s)
+✔ [1387/1402] Built BnbVerify.Bnb.Gen.PUnfreeze (5.7s)
+✔ [1388/1402] Built BnbVerify.Bnb.Gen.PFreeze (5.9s)
+✔ [1389/1402] Built BnbVerify.Bnb.Gen.PTransfer (8.8s)
+✔ [1390/1402] Built BnbVerify.Bnb.Gen.PTransferFrom (71s)
+✔ [1391/1402] Built BnbVerify.Bnb.Gen (1.3s)
+✔ [1392/1402] Built BnbVerify.Bnb.Invariant (1.9s)
+⚠ [1393/1402] Built BnbVerify.Bnb.Sanity.Runs (2.1s)
+warning: BnbVerify/Bnb/Sanity/Runs.lean:290:15: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:339:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:339:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:402:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:402:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:404:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:471:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:471:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:473:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:531:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:531:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:589:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:589:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1394/1402] Built BnbVerify.Bnb.Withdraw (2.4s)
+warning: BnbVerify/Bnb/Withdraw.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: BnbVerify/Bnb/Withdraw.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: BnbVerify/Bnb/Withdraw.lean:229:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: BnbVerify/Bnb/Withdraw.lean:318:11: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: BnbVerify/Bnb/Withdraw.lean:323:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: BnbVerify/Bnb/Withdraw.lean:398:58: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: BnbVerify/Bnb/Withdraw.lean:565:31: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1395/1402] Built BnbVerify.Bnb.Seq (1.6s)
+warning: BnbVerify/Bnb/Seq.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1396/1402] Built BnbVerify.Bnb.Readable (5.3s)
+✔ [1397/1402] Built BnbVerify.Bnb.Stipend (1.4s)
+⚠ [1398/1402] Built BnbVerify.Bnb.Sanity.Withdraw (2.3s)
+warning: BnbVerify/Bnb/Sanity/Withdraw.lean:371:31: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: BnbVerify/Bnb/Sanity/Withdraw.lean:364:40: This simp argument is unused:
+  Std.ExtTreeMap.getElem?_insert
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [sState, State.TransactionState.ofBlock, State.TransactionState.getAccountOptional,
+    State.State.getAccountOptional, hne]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [1399/1402] Built BnbVerify.Bnb.Tx (1.3s)
+ℹ [1400/1402] Built BnbVerify.Test.Axioms (6.3s)
+info: BnbVerify/Test/Axioms.lean:42:0: 'BnbVerify.CODE_eq' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:43:0: 'BnbVerify.size_CODE' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:44:0: 'BnbVerify.Nonpayable.valueRevert' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:45:0: 'BnbVerify.Nonpayable.table_entry' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:46:0: 'BnbVerify.Nonpayable.spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:47:0: 'BnbVerify.Fallback.spec_unknown' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:48:0: 'BnbVerify.Fallback.spec_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:49:0: 'BnbVerify.enter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:50:0: 'BnbVerify.Complete.selector_cases' depends on axioms: [propext, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:51:0: 'BnbVerify.Complete.ends_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:52:0: 'BnbVerify.Complete.ends_ok_fallback' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:53:0: 'BnbVerify.Complete.runFrame_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:54:0: 'BnbVerify.Paths.totalSupply_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:55:0: 'BnbVerify.Paths.totalSupply_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:56:0: 'BnbVerify.Paths.ok_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:57:0: 'BnbVerify.supply_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:58:0: 'BnbVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:59:0: 'BnbVerify.Paths.decimals_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:60:0: 'BnbVerify.Paths.decimals_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:61:0: 'BnbVerify.Paths.ok_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:62:0: 'BnbVerify.supply_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:63:0: 'BnbVerify.Sanity.decimals_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:64:0: 'BnbVerify.Paths.owner_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:65:0: 'BnbVerify.Paths.owner_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:66:0: 'BnbVerify.Paths.ok_owner' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:67:0: 'BnbVerify.supply_owner' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:68:0: 'BnbVerify.Sanity.owner_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:69:0: 'BnbVerify.Paths.balanceOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:70:0: 'BnbVerify.Paths.balanceOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:71:0: 'BnbVerify.Paths.ok_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:72:0: 'BnbVerify.supply_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:73:0: 'BnbVerify.Sanity.balanceOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:74:0: 'BnbVerify.Paths.freezeOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:75:0: 'BnbVerify.Paths.freezeOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:76:0: 'BnbVerify.Paths.ok_freezeOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:77:0: 'BnbVerify.supply_freezeOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:78:0: 'BnbVerify.Sanity.freezeOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:79:0: 'BnbVerify.Paths.allowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:80:0: 'BnbVerify.Paths.allowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:81:0: 'BnbVerify.Paths.ok_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:82:0: 'BnbVerify.supply_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:83:0: 'BnbVerify.Sanity.allowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:84:0: 'BnbVerify.Paths.approve_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:85:0: 'BnbVerify.Paths.approve_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:86:0: 'BnbVerify.Paths.approve_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:87:0: 'BnbVerify.Paths.approve_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:88:0: 'BnbVerify.Paths.ok_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:89:0: 'BnbVerify.supply_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:90:0: 'BnbVerify.Sanity.approve_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:91:0: 'BnbVerify.Paths.transfer_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:92:0: 'BnbVerify.Paths.transfer_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:93:0: 'BnbVerify.Paths.transfer_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:94:0: 'BnbVerify.Paths.transfer_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:95:0: 'BnbVerify.Paths.transfer_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:96:0: 'BnbVerify.Paths.transfer_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:97:0: 'BnbVerify.Paths.transfer_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:98:0: 'BnbVerify.Paths.ok_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:99:0: 'BnbVerify.supply_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:100:0: 'BnbVerify.Sanity.transfer_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:101:0: 'BnbVerify.Paths.transferFrom_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:102:0: 'BnbVerify.Paths.transferFrom_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:103:0: 'BnbVerify.Paths.transferFrom_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:104:0: 'BnbVerify.Paths.transferFrom_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:105:0: 'BnbVerify.Paths.transferFrom_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:106:0: 'BnbVerify.Paths.transferFrom_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:107:0: 'BnbVerify.Paths.transferFrom_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:108:0: 'BnbVerify.Paths.transferFrom_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:109:0: 'BnbVerify.Paths.transferFrom_p8' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:110:0: 'BnbVerify.Paths.ok_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:111:0: 'BnbVerify.supply_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:112:0: 'BnbVerify.Sanity.transferFrom_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:113:0: 'BnbVerify.Paths.burn_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:114:0: 'BnbVerify.Paths.burn_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:115:0: 'BnbVerify.Paths.burn_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:116:0: 'BnbVerify.Paths.burn_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:117:0: 'BnbVerify.Paths.burn_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:118:0: 'BnbVerify.Paths.burn_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:119:0: 'BnbVerify.Paths.ok_burn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:120:0: 'BnbVerify.supply_burn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:121:0: 'BnbVerify.Sanity.burn_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:122:0: 'BnbVerify.Paths.freeze_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:123:0: 'BnbVerify.Paths.freeze_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:124:0: 'BnbVerify.Paths.freeze_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:125:0: 'BnbVerify.Paths.freeze_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:126:0: 'BnbVerify.Paths.freeze_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:127:0: 'BnbVerify.Paths.freeze_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:128:0: 'BnbVerify.Paths.ok_freeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:129:0: 'BnbVerify.supply_freeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:130:0: 'BnbVerify.Sanity.freeze_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:131:0: 'BnbVerify.Paths.unfreeze_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:132:0: 'BnbVerify.Paths.unfreeze_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:133:0: 'BnbVerify.Paths.unfreeze_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:134:0: 'BnbVerify.Paths.unfreeze_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:135:0: 'BnbVerify.Paths.unfreeze_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:136:0: 'BnbVerify.Paths.unfreeze_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:137:0: 'BnbVerify.Paths.ok_unfreeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:138:0: 'BnbVerify.supply_unfreeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:139:0: 'BnbVerify.Sanity.unfreeze_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:140:0: 'BnbVerify.Paths.withdrawEther_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:141:0: 'BnbVerify.Paths.withdrawEther_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:142:0: 'BnbVerify.Paths.withdrawEther_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:143:0: 'BnbVerify.Withdraw.withdrawEther_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:144:0: 'BnbVerify.Withdraw.supply_withdrawEther' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:145:0: 'BnbVerify.Loops.ro_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:146:0: 'BnbVerify.supply_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:147:0: 'BnbVerify.Loops.ro_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:148:0: 'BnbVerify.supply_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:149:0: 'BnbVerify.supply_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:150:0: 'BnbVerify.Readable.totalSupply_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:151:0: 'BnbVerify.Readable.decimals_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:152:0: 'BnbVerify.Readable.owner_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:153:0: 'BnbVerify.Readable.balanceOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:154:0: 'BnbVerify.Readable.freezeOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:155:0: 'BnbVerify.Readable.allowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:156:0: 'BnbVerify.Readable.approve_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:157:0: 'BnbVerify.Readable.transfer_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:158:0: 'BnbVerify.Readable.transferFrom_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:159:0: 'BnbVerify.Readable.burn_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:160:0: 'BnbVerify.Readable.freeze_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:161:0: 'BnbVerify.Readable.unfreeze_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:162:0: 'BnbVerify.inv_calls' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:163:0: 'BnbVerify.process_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:164:0: 'BnbVerify.process_step_novalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:165:0: 'BnbVerify.process_step_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:166:0: 'BnbVerify.inv_goodCall' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:167:0: 'BnbVerify.inv_goodWithdraw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:168:0: 'BnbVerify.inv_untouched' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:169:0: 'BnbVerify.untouched_process_failed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:170:0: 'BnbVerify.untouched_move' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:171:0: 'BnbVerify.process_step_withdraw' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:172:0: 'BnbVerify.process_step_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:173:0: 'BnbVerify.process_step_inv_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:174:0: 'BnbVerify.Calls.append' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:175:0: 'BnbVerify.Withdraw.tail_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:176:0: 'BnbVerify.Withdraw.tail_rev' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:177:0: 'BnbVerify.Withdraw.withdrawEther_needs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:178:0: 'BnbVerify.Withdraw.withdrawEther_only_owner' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:179:0: 'BnbVerify.Withdraw.withdrawEther_only_owner_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:180:0: 'BnbVerify.Withdraw.withdrawEther_to_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:181:0: 'BnbVerify.Withdraw.withdrawEther_reaches_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:182:0: 'BnbVerify.Withdraw.processRunner_keepsInv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:183:0: 'BnbVerify.Withdraw.keepsInv_noCode' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:184:0: 'BnbVerify.Withdraw.keepsInv_stop' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:185:0: 'BnbVerify.Withdraw.supply_withdrawEther_plain' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:186:0: 'BnbVerify.Withdraw.process_step_inv_plain' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:187:0: 'BnbVerify.Withdraw.withdrawEther_pays' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:188:0: 'BnbVerify.Withdraw.withdrawEther_pays_sample' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:189:0: 'BnbVerify.Withdraw.withdrawEther_pays_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:190:0: 'BnbVerify.Withdraw.payout_keeps_storage' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:191:0: 'BnbVerify.Withdraw.processRunner_keepsInv_any' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:192:0: 'BnbVerify.Withdraw.supply_withdrawEther_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:193:0: 'BnbVerify.process_step_withdraw_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:194:0: 'BnbVerify.process_step_all_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:195:0: 'BnbVerify.process_step_inv_all_process' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:196:0: 'TokenKit.Stipend.processMessage_quiet' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:197:0: 'TokenKit.moveEther_keeps_storage' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:198:0: 'TokenKit.call_outcome' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:199:0: 'TokenKit.Payee.stop_message' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:200:0: 'TokenKit.Payee.payee_keeps_storage' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:201:0: 'TokenKit.Payee.noCode_message_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:202:0: 'BnbVerify.storageOnly_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:203:0: 'BnbVerify.code_size_ne_zero' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:204:0: 'BnbVerify.code_not_indicator' depends on axioms: [propext, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:205:0: 'BnbVerify.code_not_delegated' depends on axioms: [propext, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:206:0: 'BnbVerify.inv_zeroBase' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:207:0: 'BnbVerify.frameKeepsR' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:208:0: 'BnbVerify.supply_message_any_depth' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:209:0: 'BnbVerify.supply_transaction' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:210:0: 'BnbVerify.supply_any_transactions' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:211:0: 'BnbVerify.supply_from_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:212:0: 'TokenKit.Seq.storageOnly_supply2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:213:0: 'TokenKit.Seq.zeroBase_supply2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:214:0: 'TokenKit.Seq.processMessage_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:215:0: 'TokenKit.Seq.processTransaction_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:216:0: 'TokenKit.Seq.chain_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:217:0: 'TokenKit.Seq.chain_from_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:221:0: AXIOM SCAN OK: 5993 constants (5614 theorems) of BnbVerify and TokenKit, axioms used: [Quot.sound,
+ Classical.choice,
+ propext]
+✔ [1401/1402] Built BnbVerify (1.9s)
+Build completed successfully (1402 jobs).
+EXIT=0

@@ -1,0 +1,51 @@
+{
+ "token": "SHIB (Shiba Inu)",
+ "date": "2026-11-11",
+ "note": "This file was added in the fix round of the ten-token audit for the transaction-level theorems. The earlier record of SHIB (build of the migration, statement preservation, sequence scope of Seq.lean) is in token-kit/kit-status.json under tokens.shib and is not repeated here.",
+ "headline": "supply_any_transactions (ShibVerify/Shib/Tx.lean): from a block state where C holds the code of SHIB and the sum of all balances is _totalSupply, the same holds after any finite list of transactions run by EthLib's processTransaction, whoever calls and however deep, under the named run-local hypotheses.",
+ "claims": {
+  "supply_message_any_depth": "one call run by EthLib's processMessage, to any account and any code, at any depth: 'C holds the code of SHIB and the invariant holds' is kept, with or without an error. Fork from Berlin. Assumes Seq.Sane, Seq.Good at the start, Seq.Clean of this run.",
+  "supply_transaction": "one whole transaction run by EthLib's processTransaction (gas purchase, EIP-7702 authorizations, the message, refunds, fee, deletion of accounts): block state before to block state after. Dencun <= fork < Glamsterdam. Assumes Seq.TxClean of this transaction and Seq.Good at the start.",
+  "supply_any_transactions": "the same after any finite list of transactions (Seq.Chain), each at its own fork and block environment.",
+  "supply_from_zero": "the same from the base case shape: C holds the code and every storage word of C is zero (inv_zeroBase). This is NOT the real deployment state of SHIB.",
+  "older_model_kept": "Seq.lean (inv_calls, process_step, calls_process): top-level messages only, where every other step is ASSUMED to keep the storage of C (the `other` step of Calls, Untouched). It is the older, WEAKER per-message model, kept because other files and the axioms list use it; the theorems of Tx.lean do not use that assumption."
+ },
+ "assumptions": [
+  "Transaction theorems (supply_transaction, supply_any_transactions, supply_from_zero), run-local hypothesis Seq.TxClean.call / .create with Q := SepMsg: every message that really enters the code at C during this transaction satisfies Sep (callKeys m) (keccak separation for its caller and first two argument words, NOT proved), and every code that a creation of this transaction really deposits, when it has the keccak hash of the code of SHIB, is that code (no keccak collision on these codes, NOT proved). Nothing is assumed about messages or codes outside the run. supply_message_any_depth assumes the same as Seq.Clean of its run.",
+  "Transaction theorems, Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of the code of SHIB (4852 bytes). Only a keccak collision breaks it; NOT proved.",
+  "Transaction theorems, Seq.TxClean.data: the call data of a transaction sent to C is below 2^256 bytes.",
+  "Transaction theorems, fork range: each transaction has Fork.dencun <= fork < Fork.glamsterdam (the *_transaction theorems, the cons of Seq.Chain). The *_message_any_depth theorems: Fork.berlin <= fork, one-counter gas meter (Evm fork Nat), so they describe the real chain only before Glamsterdam.",
+  "Transaction theorems, start state: Seq.Good C CODE (Inv C) on the block state before the first transaction: C holds the code of SHIB (its code hash is keccak256 of the code and not the empty hash) and the invariant holds (supply_any_transactions, supply_transaction); supply_from_zero assumes Seq.HoldsCode and all-zero storage of C instead.",
+  "Transaction theorems, the *_message_any_depth theorems only: Seq.Sane C CODE message (if the top message runs at C, it is a call that runs the code of SHIB with call data below 2^256 bytes). The transaction theorems prove this from HoldsCode.",
+  "Sep (callKeys message): a hypothesis about keccak only, NOT proved (ShibVerify/Shib/Sep.lean). Used by supply_preserved and so by every theorem of Tx.lean, through TxClean / Clean.",
+  "The older assumptions of the frame and per-message theorems are unchanged: see token-kit/kit-status.json tokens.shib.sequence_scope."
+ ],
+ "not_covered": [
+  "Transaction level: what a block does between transactions is not linked (withdrawals, the system calls of EIP-4788, 2935, 7002, 7251, rewards). Seq.Chain strings transactions only.",
+  "Transaction level: forks before Dencun. There the end of a transaction can delete an account that ran SELFDESTRUCT, and it is not proved here that the code of SHIB never runs it (the library tracks instead that C is not created in the transaction and not marked for deletion, which EIP-6780 gives from Dencun).",
+  "Transaction level: Glamsterdam and later (two-counter gas meter of EIP-8037).",
+  "Transaction level: the base case of supply_from_zero is all-zero storage; the constructor run that leaves the real start state is not linked, and the invariant is not shown for the real deployed storage."
+ ],
+ "theorem_counts": {
+  "total_theorems_in_tokens_shib": 386,
+  "tx": "10 in Tx.lean: storageOnly_inv, code_size_ne_zero, code_not_indicator, code_not_delegated, inv_zeroBase, frameKeepsQ, supply_message_any_depth, supply_transaction, supply_any_transactions, supply_from_zero",
+  "axioms_test": "139 names in Test/Axioms.lean (122 before, 10 of Tx.lean, 7 of TokenKit.Seq) plus the scan of every constant"
+ },
+ "fix_round_audit4": {
+  "finding": "fix 2 of the ten-token audit (shared kit fix; WBT-1 for WBT): the sequence theorems covered top-level messages only and assumed every other step keeps the storage of C (Untouched).",
+  "status": "done by agent apply-a with recipe A_no_outside_call of audits/shib/fixes.json; detail in audits/shib/fixes.json",
+  "files": "ShibVerify/Shib/Tx.lean (new, 155 lines, 10 theorems), ShibVerify.lean (1 import), config/shib.json (axioms.imports, axioms.after), Test/Axioms.lean (regenerated). Shared library used: TokenKit/Seq/Frame.lean, Run.lean, Tx.lean, Supply.lean (not edited).",
+  "retired": "nothing; Seq.lean is kept as the older, weaker model",
+  "to_merge_into_kit": "nothing needed. Optional: the 'fixed level' pattern (a state predicate with a parameter, instantiated at the start state, to lift a before/after relation such as 'D unchanged' or 'slot never larger') could become a kit lemma Seq.chain_rel."
+ },
+ "build": {
+  "where": "E2B box lean-fix-a (removed after the run), /home/user/token-kit/tokens/shib, Lean v4.35.0, usdt-verify d0e684c5, kit = git archive HEAD token-kit, LEAN_NUM_THREADS=2 (fix round of the ten-token audit, part apply-a)",
+  "command": "lake build from a removed tokens/shib/.lake/build, after a clean build of the kit library (1386 jobs)",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1380 jobs).",
+  "log": "logs/shib.log (axioms output: logs/shib.axioms)",
+  "axioms_check": "bash scripts/check_axioms.sh /home/user/logs/shib.log ShibVerify/Test/Axioms.lean: exit 0, 'theorems checked: 139', 'count matches Test/Axioms.lean: 139', 'only standard axioms'; 'AXIOM SCAN OK: 5743 constants (5413 theorems) of ShibVerify and TokenKit'",
+  "regen_check": "bash scripts/regen_check.sh shib qnt wbt on the Mac: 3/3 identical (Test/Axioms.lean regenerated from the config; no other generated file changed)",
+  "banned_things": "no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by in Tx.lean (text search plus the axiom scan of every constant). No em dash or en dash."
+ }
+}

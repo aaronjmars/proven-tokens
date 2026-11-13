@@ -1,0 +1,3225 @@
+⚠ [1301/1389] Replayed UsdtVerify.Evm.At
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/At.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1303/1389] Replayed UsdtVerify.Evm.Gas
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Fault` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Gas.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1305/1389] Replayed UsdtVerify.Evm.Storage
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Storage.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1306/1389] Replayed UsdtVerify.Evm.Write
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Write.lean: imports `EthLib.Base.Proofs.U256` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1308/1389] Replayed UsdtVerify.Evm.GasRules
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Log` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/GasRules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1309/1389] Replayed UsdtVerify.Evm.Steps
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Branch` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Stack` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Steps.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Steps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1310/1389] Replayed UsdtVerify.Evm.Stuck
+warning: UsdtVerify/Evm/Stuck.lean: imports `EthLib.Base.Proofs.MapM` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1311/1389] Replayed UsdtVerify.Evm.NoAbort
+warning: UsdtVerify/Evm/NoAbort.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NoAbort` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1312/1389] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1313/1389] Replayed UsdtVerify.Evm.MemRev
+warning: UsdtVerify/Evm/MemRev.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1321/1389] Replayed UsdtVerify.Evm.Route
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Route.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1322/1389] Replayed UsdtVerify.Evm.Runners
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: UsdtVerify/Evm/Runners.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1326/1389] Replayed TokenKit.Evm.Mem
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Machine.Memory` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.MemoryData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1327/1389] Replayed TokenKit.Evm.Rules
+warning: TokenKit/Evm/Rules.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Region` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1328/1389] Replayed TokenKit.Evm.Stack
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1329/1389] Replayed UsdtVerify.Evm.Calldata
+warning: UsdtVerify/Evm/Calldata.lean: imports `EthLib.Base.Proofs.BigEndian` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1330/1389] Replayed TokenKit.Evm.Supply
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1334/1389] Replayed TokenKit.Evm.Logic
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Instructions.AccountData` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Rules` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.RunMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Logic.lean: imports `EthLib.Base.Proofs.Address` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1335/1389] Replayed TokenKit.Evm.Opt
+warning: TokenKit/Evm/Opt.lean:111:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Opt.lean:116:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Opt.lean:129:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Opt.lean:137:59: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Opt.lean:143:2: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1337/1389] Replayed TokenKit.Evm.RawMem
+warning: TokenKit/Evm/RawMem.lean:100:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:100:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:100:39: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:101:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/RawMem.lean:103:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:103:23: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/RawMem.lean:104:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/RawMem.lean:104:23: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/RawMem.lean:89:5: Variable name `hj` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hj
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1338/1389] Replayed TokenKit.Evm.Prune
+warning: TokenKit/Evm/Prune.lean: imports `EthLib.Execution.Evm.Instructions.Comparison` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Prune.lean:46:41: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Prune.lean:54:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1339/1389] Replayed TokenKit.Evm.Supply2
+warning: TokenKit/Evm/Supply2.lean:84:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1340/1389] Replayed TokenKit.Evm.SupplyOpt
+warning: TokenKit/Evm/SupplyOpt.lean:31:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1341/1389] Replayed TokenKit.Evm.Opt06
+warning: TokenKit/Evm/Opt06.lean:121:42: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Opt06.lean:167:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1343/1389] Replayed TokenKit.Evm.Witness
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1344/1389] Replayed TokenKit.Evm.Readable
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1346/1389] Replayed TokenKit.Evm.Call
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Call` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.FailsOn` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Call.lean: imports `EthLib.Execution.Proofs.State.Tracker` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1348/1389] Replayed UsdtVerify.Evm.Call
+warning: UsdtVerify/Evm/Call.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1349/1389] Replayed TokenKit.Evm.CallOutcome
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean: imports `EthLib.Execution.Proofs.Evm.Logic.LessGas` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/CallOutcome.lean:118:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, keepReads, GasMeter.gasLeft, hE, h1, h2,
+    exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:169:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, keepReads, GasMeter.gasLeft,
+    GasMeter.drain, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:22: This simp argument is unused:
+  GasMeter.drain
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.reservoir, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:171:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hab, callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind,
+    Except.bind, pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode,
+    recordAccountRead, hgc, hga, hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost,
+    callNewAccountStateGas, callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall,
+    keepReads, GasMeter.gasLeft, GasMeter.drain, hstatic, hE, hgas', Nat.not_lt.mpr hmin, exceptionalHalt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:227:38: This simp argument is unused:
+  callNewAccountStateGas
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callValueCost, hv', payCall,
+    messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads, GasMeter.gasLeft, GasMeter.drain,
+    GasMeter.reservoir, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: TokenKit/Evm/CallOutcome.lean:229:38: This simp argument is unused:
+  GasMeter.reservoir
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [callStep, popCallOperands, popCallValue, CallKind.sendsValue, popWord, Stack.pop, bind, Except.bind,
+    pure, Except.pure, accessAddress, hfork, checkGas, hng, accessDelegation, accountCode, recordAccountRead, hgc, hga,
+    hal, hcode, hdel', htw, hsd, Except.mapError, callExtraGas, callNewAccountCost, callNewAccountStateGas,
+    callValueCost, hv', payCall, messageCallGas, chargeGas, GasMeter.charge, finishCall, genericCall, keepReads,
+    GasMeter.gasLeft, GasMeter.drain, hdeep, hstatic, hE, hgas', Nat.not_lt.mpr hmin, hbal', skipCall, refillStateGas,
+    GasMeter.refill, GasMeter.credit, pushWord, Stack.push, hlen, advance, Functor.map, Except.map]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1350/1389] Replayed TokenKit.Evm.ReadableOpt
+warning: TokenKit/Evm/ReadableOpt.lean:41:76: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:45:11: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:59:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:76:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:83:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/ReadableOpt.lean:100:37: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1353/1428] Replayed TokenKit.Evm.Ether
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.State.Frame` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Ether.lean:65:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:66:39: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:94:40: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Ether.lean:96:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1356/1428] Replayed TokenKit.Evm.Precompile
+warning: TokenKit/Evm/Precompile.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Copy` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Precompile.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Precompile.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/Precompile.lean:357:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:362:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:420:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Precompile.lean:424:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:484:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Precompile.lean:492:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Precompile.lean:498:25: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [memoryWrite]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1358/1428] Replayed TokenKit.Evm.StaticCall
+warning: TokenKit/Evm/StaticCall.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: TokenKit/Evm/StaticCall.lean: imports `EthLib.Execution.Proofs.Evm.Logic.CallSteps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1360/1428] Built LinkVerify.Link.Code.Bytes (453ms)
+⚠ [1361/1428] Built LinkVerify.Link.Lib (1.5s)
+warning: LinkVerify/Link/Lib.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Copy` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Lib.lean:67:2: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1362/1428] Built LinkVerify.Link.Sep (1.4s)
+✔ [1363/1428] Built LinkVerify.Link.Sanity.Addr (1.4s)
+⚠ [1364/1428] Built LinkVerify.Link.Code (1.4s)
+warning: LinkVerify/Link/Code.lean: imports `EthLib.Execution.Proofs.Evm.Logic.NatCode` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1365/1428] Built LinkVerify.Link.CallIn (1.9s)
+warning: LinkVerify/Link/CallIn.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Route` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/CallIn.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+⚠ [1366/1428] Built LinkVerify.Link.ReadableLib (1.5s)
+warning: LinkVerify/Link/ReadableLib.lean:37:29: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/ReadableLib.lean:46:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1367/1428] Built LinkVerify.Test.Hash (1.4s)
+warning: LinkVerify/Test/Hash.lean: imports `EthLib.Execution.Evm.Instructions.Keccak` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+info: LinkVerify/Test/Hash.lean:30:0: CODE: 3153 bytes, keccak256 77c633ba07c8cb94cd4864092fd8b31e31cf9d065f6fb6acf617298bc0008785
+⚠ [1368/1428] Built LinkVerify.Link.Reenter (3.9s)
+warning: LinkVerify/Link/Reenter.lean: imports `EthLib.Execution.Proofs.Evm.Call.StaticMessage` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Reenter.lean: imports `EthLib.Execution.Proofs.Evm.Call.Parent` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Reenter.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Keeps` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Reenter.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Message` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Reenter.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Callee` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1369/1428] Built LinkVerify.Link.Steps (2.3s)
+✔ [1370/1428] Built LinkVerify.Link.Hold (1.5s)
+✔ [1371/1428] Built LinkVerify.Link.Map (1.4s)
+⚠ [1372/1428] Built LinkVerify.Link.Tac.Rules (1.0s)
+warning: LinkVerify/Link/Tac/Rules.lean:47:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/Tac/Rules.lean:49:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Tac/Rules.lean:71:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Tac/Rules.lean:189:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1373/1428] Built LinkVerify.Link.Trace (3.4s)
+warning: LinkVerify/Link/Trace.lean: imports `EthLib.Execution.Proofs.Evm.Interpreter` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Trace.lean: imports `EthLib.Execution.Proofs.Evm.Logic.Reach` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+warning: LinkVerify/Link/Trace.lean: imports `EthLib.Execution.Proofs.Evm.Logic.GasMono` from package `EthLib`, which is designed for use with the module system; consider adding `module` to the start of this file
+✔ [1374/1428] Built LinkVerify.Link.Gen.B4 (2.6s)
+⚠ [1375/1428] Built LinkVerify.Link.Tac.Args (2.9s)
+warning: LinkVerify/Link/Tac/Args.lean:54:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Tac/Args.lean:85:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/Tac/Args.lean:92:14: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Tac/Args.lean:105:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Tac/Args.lean:150:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1376/1428] Built LinkVerify.Link.Gen.B0 (16s)
+✔ [1377/1428] Built LinkVerify.Link.Gen.B1 (25s)
+✔ [1378/1428] Built LinkVerify.Link.Gen.B3 (26s)
+✔ [1379/1428] Built LinkVerify.Link.Tac.BlocksE (26s)
+✔ [1380/1428] Built LinkVerify.Link.Tac.BlocksA (15s)
+✔ [1381/1428] Built LinkVerify.Link.Gen.B2 (31s)
+✔ [1382/1428] Built LinkVerify.Link.Gen.PShort (1.5s)
+✔ [1383/1428] Built LinkVerify.Link.Gen.POther (1.8s)
+✔ [1384/1428] Built LinkVerify.Link.Complete.Dispatch (2.0s)
+✔ [1385/1428] Built LinkVerify.Link.Gen.PTotalSupply (1.9s)
+✔ [1386/1428] Built LinkVerify.Link.Gen.PDecimals (1.0s)
+✔ [1387/1428] Built LinkVerify.Link.Gen.PBalanceOf (2.5s)
+✔ [1388/1428] Built LinkVerify.Link.Gen.PApprove (2.9s)
+✔ [1389/1428] Built LinkVerify.Link.Tac.BlocksC (35s)
+✔ [1390/1428] Built LinkVerify.Link.Tac.BlocksB (36s)
+✔ [1391/1428] Built LinkVerify.Link.Gen.PAllowance (2.8s)
+✔ [1392/1428] Built LinkVerify.Link.Gen.PTransferAndCall (2.4s)
+✔ [1393/1428] Built LinkVerify.Link.Gen.PIncreaseApproval (4.2s)
+✔ [1394/1428] Built LinkVerify.Link.Gen.PNameEntry (2.0s)
+✔ [1395/1428] Built LinkVerify.Link.Gen.PSymbolEntry (1.8s)
+✔ [1396/1428] Built LinkVerify.Link.Gen.PTransfer (7.3s)
+✔ [1397/1428] Built LinkVerify.Link.Gen.PDecreaseApproval (5.2s)
+✔ [1398/1428] Built LinkVerify.Link.Tac.BlocksD (43s)
+✔ [1399/1428] Built LinkVerify.Link.Gen.Loops (6.5s)
+✔ [1400/1428] Built LinkVerify.Link.Gen.PTransferFrom (13s)
+✔ [1401/1428] Built LinkVerify.Link.Gen (1.3s)
+✔ [1402/1428] Built LinkVerify.Link.Invariant (1.7s)
+✔ [1403/1428] Built LinkVerify.Link.Complete.Value (1.8s)
+✔ [1404/1428] Built LinkVerify.Link.Tac.Paths (7.0s)
+✔ [1405/1428] Built LinkVerify.Link.Tac.Defs (1.5s)
+✔ [1406/1428] Built LinkVerify.Link.Readable (3.3s)
+✔ [1407/1428] Built LinkVerify.Link.Tac.Main (1.8s)
+✔ [1408/1428] Built LinkVerify.Link.Tac.Complete (1.6s)
+✔ [1409/1428] Built LinkVerify.Link.Tac.Bytes (5.5s)
+✔ [1410/1428] Built LinkVerify.Link.Tac.Len (6.4s)
+✔ [1411/1428] Built LinkVerify.Link.Tac (1.4s)
+✔ [1412/1428] Built LinkVerify.Link.Whole (2.5s)
+✔ [1413/1428] Built LinkVerify.Link.Any (1.6s)
+✔ [1414/1428] Built LinkVerify.Link.ReadableTac (2.6s)
+✔ [1415/1428] Built LinkVerify.Link.Seq (1.4s)
+✔ [1416/1428] Built LinkVerify.Link.AnyLocal (1.4s)
+✔ [1417/1428] Built LinkVerify.Link.SeqLocal (1.5s)
+⚠ [1418/1428] Built LinkVerify.Link.Sanity.TacLib (2.3s)
+warning: LinkVerify/Link/Sanity/TacLib.lean:61:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/Sanity/TacLib.lean:61:25: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/Sanity/TacLib.lean:334:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [1419/1428] Built LinkVerify.Link.TraceWit (1.5s)
+⚠ [1420/1428] Built LinkVerify.Link.Sanity.Zero (23s)
+warning: LinkVerify/Link/Sanity/Zero.lean:75:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hcw, hct, hC, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:20: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hct, hC, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:25: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hC, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:30: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:34: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:54: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot, storageAt_sState_cons,
+    storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:88: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:75:111: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:25: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:30: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:35: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:39: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:59: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot, storageAt_sState_cons,
+    storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:93: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:124:116: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:175:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hcw, hct, hC, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:20: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hct, hC, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:25: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hC, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:30: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, storageAt_readSlot, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:34: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:54: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot, storageAt_sState_cons,
+    storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:88: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:220:111: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:273:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:277:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:281:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:285:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:285:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:285:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:285:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:285:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:285:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:289:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:289:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:289:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:342:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:346:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:350:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:30: This simp argument is unused:
+  hA3
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:35: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:40: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:45: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:49: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:69: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:103: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:405:126: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:30: This simp argument is unused:
+  hA3
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:35: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:40: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:45: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:49: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:69: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:103: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:409:126: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:30: This simp argument is unused:
+  hA3
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:35: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:49: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:69: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:103: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:413:126: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:417:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:417:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:417:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:417:45: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:417:69: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:421:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:421:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:421:45: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:425:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:425:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:425:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA3, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:425:45: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:425:49: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:425:69: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hA3, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:478:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:482:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:482:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:482:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:482:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:482:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:482:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:535:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:539:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:539:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:539:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:539:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:539:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:539:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:20: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:25: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:30: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:35: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:98: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:587:121: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:591:9: This simp argument is unused:
+  hval
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:591:15: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:591:40: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:591:44: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, Readable.storageAt_writeSlot_ite,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Zero.lean:591:64: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hval, hsz, hA1, hA2, hcw, hct, hC, storageAt_readSlot,
+    storageAt_sState_cons, storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1421/1428] Built LinkVerify.Link.Sanity.Base (1.5s)
+warning: LinkVerify/Link/Sanity/Base.lean:94:52: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Sanity/Base.lean:102:70: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1422/1428] Built LinkVerify.Link.ReWit.Re (8.9s)
+warning: LinkVerify/Link/ReWit/Re.lean:278:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/ReWit/Re.lean:278:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/ReWit/Re.lean:546:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/ReWit/Re.lean:551:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1423/1428] Built LinkVerify.Link.Sanity.Tac (18s)
+warning: LinkVerify/Link/Sanity/Tac.lean:183:16: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [TacFits, tac_value, tac_to, tac_caller, tac_target, g1, g2, g3,
+    storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Tac.lean:200:42: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, tac_value, tac_to, tac_caller,
+    tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Tac.lean:204:42: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, tac_value, tac_to, tac_caller,
+    tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Tac.lean:216:42: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacDoneSt, tac_noneSt, storageAt_rar, tac_value, tac_to, tac_caller,
+    tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Tac.lean:220:42: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacDoneSt, tac_noneSt, storageAt_rar, tac_value, tac_to, tac_caller,
+    tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Tac.lean:347:50: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/Sanity/Tac.lean:353:50: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/Sanity/Tac.lean:428:40: This simp argument is unused:
+  Std.ExtTreeMap.getElem?_insert
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [sState, State.TransactionState.ofBlock, State.TransactionState.getAccountOptional,
+    State.State.getAccountOptional, hne]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/Sanity/Tac.lean:449:35: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/Sanity/Tac.lean:450:35: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1424/1428] Built LinkVerify.Link.ReWit.Run (54s)
+warning: LinkVerify/Link/ReWit/Run.lean:132:13: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:18: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:23: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:28: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:33: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:38: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:42: This simp argument is unused:
+  g1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:46: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:50: This simp argument is unused:
+  q1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:54: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:132:58: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:133:10: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot, hb0,
+    hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:133:44: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:133:49: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:133:54: This simp argument is unused:
+  hb2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:9: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:13: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:23: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:28: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:33: This simp argument is unused:
+  hct
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:38: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:42: This simp argument is unused:
+  g1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:46: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:54: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:137:58: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:138:10: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot, hb0,
+    hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:138:44: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:138:49: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:138:54: This simp argument is unused:
+  hb2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:9: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:13: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:23: This simp argument is unused:
+  hA2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:28: This simp argument is unused:
+  hcw
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:42: This simp argument is unused:
+  g1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:46: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:142:58: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:143:10: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot, hb0,
+    hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:143:44: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:143:49: This simp argument is unused:
+  hb1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:143:54: This simp argument is unused:
+  hb2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:9: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:13: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:18: This simp argument is unused:
+  hA1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:38: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:46: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:50: This simp argument is unused:
+  q1
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:54: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:147:58: This simp argument is unused:
+  storageAt_readSlot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:148:10: This simp argument is unused:
+  Readable.storageAt_writeSlot_ite
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot, hb0,
+    hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:148:44: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:148:54: This simp argument is unused:
+  hb2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:152:9: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:152:13: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:152:38: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:152:54: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:153:44: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:166:7: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:166:11: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:166:36: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:166:52: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:170:7: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:170:11: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:170:36: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:170:52: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:171:42: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:174:7: This simp argument is unused:
+  hv
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:174:11: This simp argument is unused:
+  hsz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:174:36: This simp argument is unused:
+  hC
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:174:52: This simp argument is unused:
+  q2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb0, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:175:42: This simp argument is unused:
+  hb0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [hv, hsz, hA1, hA2, hcw, hct, hC, g1, g4, q1, q2, storageAt_readSlot,
+    Readable.storageAt_writeSlot_ite, hb1, hb2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:505:36: This simp argument is unused:
+  re_m_caller
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [TacFunded, re_m_value, re_m_target, tac_caller, tac_target, g2, hbal]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:505:49: This simp argument is unused:
+  re_m_target
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [TacFunded, re_m_value, re_m_caller, tac_caller, tac_target, g2, hbal]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:512:66: This simp argument is unused:
+  re_m_caller
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [TacFits, re_m_value, re_m_to, re_m_target, tac_caller, tac_target, g1, g2,
+    g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:512:79: This simp argument is unused:
+  re_m_target
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [TacFits, re_m_value, re_m_to, re_m_caller, tac_caller, tac_target, g1, g2,
+    g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:513:16: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [TacFits, re_m_value, re_m_to, re_m_caller, re_m_target, tac_caller,
+    tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:527:6: This simp argument is unused:
+  re_m_caller
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_target,
+    tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto, hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:527:19: This simp argument is unused:
+  re_m_target
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto, hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:527:68: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    re_m_target, tac_caller, tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto,
+    hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:528:51: This simp argument is unused:
+  hto2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    re_m_target, tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal,
+    hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:531:6: This simp argument is unused:
+  re_m_caller
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_target,
+    tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto, hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:531:19: This simp argument is unused:
+  re_m_target
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto, hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:531:68: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    re_m_target, tac_caller, tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto,
+    hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:532:51: This simp argument is unused:
+  hto2
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    re_m_target, tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal,
+    hto]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:535:6: This simp argument is unused:
+  re_m_caller
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_target,
+    tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto, hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:535:19: This simp argument is unused:
+  re_m_target
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    tac_caller, tac_target, g1, g2, g3, g4, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto, hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: LinkVerify/Link/ReWit/Run.lean:535:68: This simp argument is unused:
+  g4
+
+Hint: Omit it from the simp argument list.
+  [apply] simp (disch := supply_side) only [tacCallSt, tac_callSt, storageAt_rar, re_m_value, re_m_to, re_m_caller,
+    re_m_target, tac_caller, tac_target, g1, g2, g3, storageAt_readSlot, Readable.storageAt_writeSlot_ite, hbal, hto,
+    hto2]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1425/1428] Built LinkVerify.Link.ReWit.Closed (5.6s)
+warning: LinkVerify/Link/ReWit/Closed.lean:285:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/ReWit/Closed.lean:340:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: LinkVerify/Link/ReWit/Closed.lean:344:69: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: LinkVerify/Link/ReWit/Closed.lean:349:69: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+ℹ [1426/1428] Built LinkVerify.Test.Axioms (6.9s)
+info: LinkVerify/Test/Axioms.lean:58:0: 'LinkVerify.CODE_eq' depends on axioms: [propext]
+info: LinkVerify/Test/Axioms.lean:59:0: 'LinkVerify.size_CODE' depends on axioms: [propext]
+info: LinkVerify/Test/Axioms.lean:60:0: 'TokenKit.and_div_selector' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:61:0: 'TokenKit.div_and_selector' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:62:0: 'LinkVerify.mask_idem' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:63:0: 'LinkVerify.mask_lt' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:64:0: 'LinkVerify.S_bal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:65:0: 'LinkVerify.S_allow' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:66:0: 'LinkVerify.sumBal_congr' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:67:0: 'LinkVerify.inv_of_ro' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:68:0: 'TokenKit.Supply.add_fact_ltc' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:69:0: 'TokenKit.extendMemory_in' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:70:0: 'TokenKit.callInS' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:71:0: 'TokenKit.callIn_outcome' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:72:0: 'TokenKit.callIn_outcome_any' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:73:0: 'LinkVerify.Sanity.link_address_word' does not depend on any axioms
+info: LinkVerify/Test/Axioms.lean:74:0: 'LinkVerify.Paths.totalSupply_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:75:0: 'LinkVerify.Paths.totalSupply_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:76:0: 'LinkVerify.Paths.ok_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:77:0: 'LinkVerify.Readable.totalSupply_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:78:0: 'LinkVerify.supply_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:79:0: 'LinkVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:80:0: 'LinkVerify.Paths.balanceOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:81:0: 'LinkVerify.Paths.balanceOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:82:0: 'LinkVerify.Paths.ok_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:83:0: 'LinkVerify.Readable.balanceOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:84:0: 'LinkVerify.supply_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:85:0: 'LinkVerify.Sanity.balanceOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:86:0: 'LinkVerify.Paths.allowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:87:0: 'LinkVerify.Paths.allowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:88:0: 'LinkVerify.Paths.ok_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:89:0: 'LinkVerify.Readable.allowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:90:0: 'LinkVerify.supply_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:91:0: 'LinkVerify.Sanity.allowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:92:0: 'LinkVerify.Paths.decimals_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:93:0: 'LinkVerify.Paths.decimals_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:94:0: 'LinkVerify.Paths.ok_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:95:0: 'LinkVerify.Readable.decimals_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:96:0: 'LinkVerify.supply_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:97:0: 'LinkVerify.Sanity.decimals_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:98:0: 'LinkVerify.Paths.transfer_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:99:0: 'LinkVerify.Paths.transfer_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:100:0: 'LinkVerify.Paths.transfer_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:101:0: 'LinkVerify.Paths.transfer_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:102:0: 'LinkVerify.Paths.transfer_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:103:0: 'LinkVerify.Paths.transfer_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:104:0: 'LinkVerify.Paths.transfer_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:105:0: 'LinkVerify.Paths.ok_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:106:0: 'LinkVerify.Readable.transfer_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:107:0: 'LinkVerify.supply_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:108:0: 'LinkVerify.Sanity.transfer_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:109:0: 'LinkVerify.Paths.approve_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:110:0: 'LinkVerify.Paths.approve_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:111:0: 'LinkVerify.Paths.approve_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:112:0: 'LinkVerify.Paths.approve_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:113:0: 'LinkVerify.Paths.approve_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:114:0: 'LinkVerify.Paths.ok_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:115:0: 'LinkVerify.Readable.approve_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:116:0: 'LinkVerify.supply_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:117:0: 'LinkVerify.Sanity.approve_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:118:0: 'LinkVerify.Paths.transferFrom_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:119:0: 'LinkVerify.Paths.transferFrom_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:120:0: 'LinkVerify.Paths.transferFrom_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:121:0: 'LinkVerify.Paths.transferFrom_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:122:0: 'LinkVerify.Paths.transferFrom_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:123:0: 'LinkVerify.Paths.transferFrom_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:124:0: 'LinkVerify.Paths.transferFrom_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:125:0: 'LinkVerify.Paths.transferFrom_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:126:0: 'LinkVerify.Paths.ok_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:127:0: 'LinkVerify.Readable.transferFrom_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:128:0: 'LinkVerify.supply_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:129:0: 'LinkVerify.Sanity.transferFrom_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:130:0: 'LinkVerify.Paths.increaseApproval_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:131:0: 'LinkVerify.Paths.increaseApproval_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:132:0: 'LinkVerify.Paths.increaseApproval_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:133:0: 'LinkVerify.Paths.increaseApproval_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:134:0: 'LinkVerify.Paths.ok_increaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:135:0: 'LinkVerify.Readable.increaseApproval_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:136:0: 'LinkVerify.supply_increaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:137:0: 'LinkVerify.Sanity.increaseApproval_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:138:0: 'LinkVerify.Paths.decreaseApproval_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:139:0: 'LinkVerify.Paths.decreaseApproval_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:140:0: 'LinkVerify.Paths.decreaseApproval_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:141:0: 'LinkVerify.Paths.decreaseApproval_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:142:0: 'LinkVerify.Paths.decreaseApproval_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:143:0: 'LinkVerify.Paths.ok_decreaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:144:0: 'LinkVerify.Readable.decreaseApproval_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:145:0: 'LinkVerify.supply_decreaseApproval' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:146:0: 'LinkVerify.Sanity.decreaseApproval_p2_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:147:0: 'LinkVerify.Sanity.decreaseApproval_p4_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:148:0: 'LinkVerify.Paths.short_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:149:0: 'LinkVerify.Paths.ok_short' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:150:0: 'LinkVerify.Paths.other_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:151:0: 'LinkVerify.Paths.ok_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:152:0: 'LinkVerify.Loops.ro_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:153:0: 'LinkVerify.supply_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:154:0: 'LinkVerify.Loops.ro_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:155:0: 'LinkVerify.supply_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:156:0: 'LinkVerify.supply_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:157:0: 'LinkVerify.Complete.ends_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:158:0: 'LinkVerify.Complete.name_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:159:0: 'LinkVerify.Complete.symbol_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:160:0: 'LinkVerify.Complete.value_zero_of_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:161:0: 'LinkVerify.Paths.transferAndCall_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:162:0: 'LinkVerify.Paths.transferAndCall_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:163:0: 'LinkVerify.Paths.ok_transferAndCall' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:164:0: 'LinkVerify.Tac.tac_revert_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:165:0: 'LinkVerify.Tac.tac_revert_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:166:0: 'LinkVerify.Tac.tac_invalid_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:167:0: 'LinkVerify.Tac.tac_stuck_static' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:168:0: 'LinkVerify.Tac.tac_invalid_over' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:169:0: 'LinkVerify.Tac.tac_done' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:170:0: 'LinkVerify.Tac.tac_second_check' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:171:0: 'LinkVerify.Tac.tac_to_gas' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:172:0: 'LinkVerify.Tac.tac_at_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:173:0: 'LinkVerify.Tac.tac_call_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:174:0: 'LinkVerify.Tac.tac_after_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:175:0: 'LinkVerify.Tac.tac_after_fail' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:176:0: 'LinkVerify.Tac.ok_tac_pre' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:177:0: 'LinkVerify.Tac.ok_tac_post' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:178:0: 'LinkVerify.Tac.ok_tac_dec_gas' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:179:0: 'LinkVerify.Tac.ok_tac_len' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:180:0: 'LinkVerify.Tac.ok_tac_pre_gas' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:181:0: 'LinkVerify.Tac.tac_log2_words' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:182:0: 'LinkVerify.Tac.tac_call_words' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:183:0: 'LinkVerify.Tac.tac_call_selector' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:184:0: 'LinkVerify.Tac.sel_bytes' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:185:0: 'LinkVerify.Tac.tac_log2_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:186:0: 'LinkVerify.Tac.tac_call_head' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:187:0: 'LinkVerify.Tac.tacDoneSs_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:188:0: 'LinkVerify.Tac.tacCallSs_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:189:0: 'LinkVerify.Tac.tacCallSt_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:190:0: 'LinkVerify.Tac.tacToZero_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:191:0: 'LinkVerify.Tac.tacToSet_iff' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:192:0: 'LinkVerify.Tac.tacToSelf_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:193:0: 'LinkVerify.Tac.tacLow_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:194:0: 'LinkVerify.Tac.tacFunded_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:195:0: 'LinkVerify.Tac.tacOver_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:196:0: 'LinkVerify.Tac.tacFits_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:197:0: 'LinkVerify.Tac.tacHasCode_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:198:0: 'LinkVerify.Tac.tac_ext' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:199:0: 'LinkVerify.Tac.tac_call_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:200:0: 'LinkVerify.Tac.tac_to_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:201:0: 'LinkVerify.Tac.inv_tacDoneSt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:202:0: 'LinkVerify.Tac.inv_tacCallSt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:203:0: 'LinkVerify.Tac.holdsCode_tacCallSt' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:204:0: 'LinkVerify.Tac.tac_after_fail_any' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:205:0: 'LinkVerify.Tac.no_ok_after_fail' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:206:0: 'LinkVerify.Tac.ok_tac_whole' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:207:0: 'LinkVerify.Reenter.processMessage_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:208:0: 'LinkVerify.Reenter.processCreateMessage_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:209:0: 'LinkVerify.Reenter.processCreateMessage_good_of_sane' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:210:0: 'LinkVerify.Reenter.processRunner_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:211:0: 'LinkVerify.Reenter.processRunner_goodKept' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:212:0: 'LinkVerify.Reenter.runFrame_keeps' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:213:0: 'LinkVerify.Reenter.HoldsCode.hasAccount' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:214:0: 'LinkVerify.Reenter.holdsCode_writeSlot' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:215:0: 'LinkVerify.Reenter.HoldsCode.of_readsAs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:216:0: 'LinkVerify.storageOnly_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:217:0: 'LinkVerify.code_not_delegated' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:218:0: 'LinkVerify.SepAll.call' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:219:0: 'LinkVerify.supply_tac_530' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:220:0: 'LinkVerify.supply_transferAndCall' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:221:0: 'LinkVerify.supply_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:222:0: 'LinkVerify.calleeKeeps_of_keepsOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:223:0: 'LinkVerify.frameKeeps_sepAll' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:224:0: 'LinkVerify.calleeKeeps_processRunner_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:225:0: 'LinkVerify.supply_all_real_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:226:0: 'LinkVerify.process_good_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:227:0: 'LinkVerify.create_good_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:228:0: 'LinkVerify.good_msg_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:229:0: 'LinkVerify.good_create_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:230:0: 'LinkVerify.good_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:231:0: 'LinkVerify.good_run_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:232:0: 'LinkVerify.inv_run_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:233:0: 'LinkVerify.SepAll.msg' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:234:0: 'LinkVerify.Trace.processMessage_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:235:0: 'LinkVerify.Trace.processCreateMessage_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:236:0: 'LinkVerify.Trace.processRunner_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:237:0: 'LinkVerify.Trace.runFrame_keeps_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:238:0: 'LinkVerify.Trace.runFrame_agree' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:239:0: 'LinkVerify.Trace.clean_of_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:240:0: 'LinkVerify.Trace.clean_of_no_sent' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:241:0: 'LinkVerify.Trace.not_sent_of_specG' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:242:0: 'LinkVerify.frameKeepsQ' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:243:0: 'LinkVerify.runnerKeeps_processRunner_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:244:0: 'LinkVerify.calleeKeeps_processRunner_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:245:0: 'LinkVerify.supply_all_real_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:246:0: 'LinkVerify.cleanRunL_of_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:247:0: 'LinkVerify.cleanFrameL_of_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:248:0: 'LinkVerify.supply_all_real_of_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:249:0: 'LinkVerify.process_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:250:0: 'LinkVerify.create_good_local' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:251:0: 'LinkVerify.good_msgL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:252:0: 'LinkVerify.good_createL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:253:0: 'LinkVerify.good_runL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:254:0: 'LinkVerify.inv_runL' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:255:0: 'LinkVerify.Sep.restrict' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:256:0: 'LinkVerify.cleanL_of_sepList' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:257:0: 'LinkVerify.cleanL_of_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:258:0: 'LinkVerify.cleanCreateL_of_sepAll_noCollision' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:259:0: 'LinkVerify.Msg.toLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:260:0: 'LinkVerify.Create.toLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:261:0: 'LinkVerify.Run.toLocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:262:0: 'LinkVerify.inv_run_of_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:263:0: 'LinkVerify.not_sent_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:264:0: 'LinkVerify.cleanL_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:265:0: 'LinkVerify.cleanL_totalSupply_other' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:266:0: 'LinkVerify.process_good_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:267:0: 'LinkVerify.Sanity.sumTo_zero' does not depend on any axioms
+info: LinkVerify/Test/Axioms.lean:268:0: 'LinkVerify.Sanity.holdsCode_baseState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:269:0: 'LinkVerify.Sanity.inv_baseState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:270:0: 'LinkVerify.Sanity.good_baseState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:271:0: 'LinkVerify.Sanity.inv_runL_baseState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:272:0: 'LinkVerify.Sanity.size_RE' does not depend on any axioms
+info: LinkVerify/Test/Axioms.lean:273:0: 'LinkVerify.Sanity.re_not_delegated' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:274:0: 'LinkVerify.Sanity.re_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:275:0: 'LinkVerify.Sanity.spec_message_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:276:0: 'LinkVerify.Sanity.re_message_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:277:0: 'LinkVerify.Sanity.frameOf_noValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:278:0: 'LinkVerify.Sanity.clean_of_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:279:0: 'LinkVerify.Sanity.re_clean' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:280:0: 'LinkVerify.Sanity.re_inner_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:281:0: 'LinkVerify.Sanity.re_inner_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:282:0: 'LinkVerify.Sanity.tacCallGas_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:283:0: 'LinkVerify.Sanity.tac_call_run_re' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:284:0: 'LinkVerify.Sanity.reMeter_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:285:0: 'LinkVerify.Sanity.tac_re_core' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:286:0: 'LinkVerify.Sanity.callKeys_m_re' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:287:0: 'LinkVerify.Sanity.supply_tac_re_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:288:0: 'LinkVerify.Sanity.process_tac_re' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:289:0: 'LinkVerify.Sanity.msgL_tac_re' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:290:0: 'LinkVerify.Sanity.re_hash_ne' depends on axioms: [propext, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:291:0: 'LinkVerify.Sanity.holdsCode_reState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:292:0: 'LinkVerify.Sanity.getCode_reState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:293:0: 'LinkVerify.Sanity.inv_reState' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:294:0: 'LinkVerify.Sanity.reenter_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:295:0: 'LinkVerify.tac_move_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:296:0: 'LinkVerify.transferAndCall_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:297:0: 'LinkVerify.Sanity.transferAndCall_stop_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:298:0: 'LinkVerify.Sanity.transferAndCall_stop_runs_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:299:0: 'LinkVerify.Sanity.transferAndCall_nocode_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:300:0: 'LinkVerify.Sanity.transferAndCall_nocode_runs_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:301:0: 'LinkVerify.Sanity.transferAndCall_low_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:302:0: 'LinkVerify.Sanity.transferAndCall_low_runs_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:303:0: 'LinkVerify.Sanity.transferAndCall_reverts' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:304:0: 'LinkVerify.Sanity.transferAndCall_reverts_closed' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:305:0: 'LinkVerify.Sanity.calleeKeeps_stop' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:306:0: 'LinkVerify.Sanity.supply_tac_530_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:307:0: 'LinkVerify.Sanity.supply_transferAndCall_stop' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: LinkVerify/Test/Axioms.lean:311:0: AXIOM SCAN OK: 8079 constants (7538 theorems) of LinkVerify and TokenKit, axioms used: [Quot.sound,
+ Classical.choice,
+ propext]
+✔ [1427/1428] Built LinkVerify (2.1s)
+Build completed successfully (1428 jobs).
+EXIT=0

@@ -1,0 +1,521 @@
+⚠ [1301/1380] Replayed UsdtVerify.Evm.At
+⚠ [1303/1380] Replayed UsdtVerify.Evm.Gas
+⚠ [1305/1380] Replayed UsdtVerify.Evm.Storage
+⚠ [1306/1380] Replayed UsdtVerify.Evm.Write
+⚠ [1308/1380] Replayed UsdtVerify.Evm.GasRules
+⚠ [1309/1380] Replayed UsdtVerify.Evm.Steps
+⚠ [1310/1380] Replayed UsdtVerify.Evm.Calldata
+⚠ [1311/1380] Replayed UsdtVerify.Evm.Exact
+warning: UsdtVerify/Evm/Exact.lean:60:33: Variable name `hB` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hB
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [1313/1380] Replayed UsdtVerify.Evm.Stuck
+⚠ [1314/1380] Replayed UsdtVerify.Evm.NoAbort
+⚠ [1315/1380] Replayed UsdtVerify.Evm.MemRev
+⚠ [1323/1380] Replayed UsdtVerify.Evm.Route
+⚠ [1324/1380] Replayed UsdtVerify.Evm.Runners
+⚠ [1328/1380] Replayed TokenKit.Evm.Mem
+warning: TokenKit/Evm/Mem.lean:352:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:355:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:360:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:360:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:361:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:361:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:365:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:369:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:375:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:375:20: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:376:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:376:20: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:396:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:398:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:422:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:422:21: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:425:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:425:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:439:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:443:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Mem.lean:493:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Mem.lean:499:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1329/1380] Replayed TokenKit.Evm.Rules
+warning: TokenKit/Evm/Rules.lean:279:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Rules.lean:282:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:289:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Rules.lean:291:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1330/1380] Replayed TokenKit.Evm.Stack
+warning: TokenKit/Evm/Stack.lean:131:49: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1331/1380] Replayed TokenKit.Evm.Prune
+warning: TokenKit/Evm/Prune.lean:46:41: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Prune.lean:54:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1332/1380] Replayed TokenKit.Evm.Supply
+warning: TokenKit/Evm/Supply.lean:142:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Supply.lean:153:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1333/1380] Replayed TokenKit.Evm.Readable
+warning: TokenKit/Evm/Readable.lean:38:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:57:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:65:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:89:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:109:54: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:118:36: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Readable.lean:128:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:146:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:159:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Readable.lean:167:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1334/1380] Replayed TokenKit.Evm.Dead
+warning: TokenKit/Evm/Dead.lean:37:35: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Dead.lean:49:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1336/1380] Replayed TokenKit.Evm.Supply2
+warning: TokenKit/Evm/Supply2.lean:84:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [1337/1380] Replayed TokenKit.Evm.Readable2
+warning: TokenKit/Evm/Readable2.lean:31:36: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1339/1380] Replayed TokenKit.Evm.Witness
+warning: TokenKit/Evm/Witness.lean:47:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:55:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:67:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness.lean:73:51: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: TokenKit/Evm/Witness.lean:82:51: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1340/1380] Replayed TokenKit.Evm.Witness2
+warning: TokenKit/Evm/Witness2.lean:85:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness2.lean:93:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: TokenKit/Evm/Witness2.lean:102:11: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [1343/1380] Replayed UsdtVerify.Evm.Call
+✔ [1344/1380] Built BnbVerify.Bnb.Code.Bytes (393ms)
+⚠ [1345/1380] Built BnbVerify.Bnb.Code (1.1s)
+✔ [1346/1380] Built BnbVerify.Bnb.Sep (1.2s)
+⚠ [1347/1380] Built BnbVerify.Test.Hash (1.1s)
+info: BnbVerify/Test/Hash.lean:30:0: CODE: 5355 bytes, keccak256 a1b62b5dd40a9c7b0f0a91ffd2578f7b1b22ca6d312846a0b88b3ae8339201c6
+✔ [1348/1380] Built BnbVerify.Bnb.Steps (1.6s)
+⚠ [1349/1380] Built BnbVerify.Bnb.Map (2.5s)
+⚠ [1350/1380] Built BnbVerify.Bnb.Spec.Dispatch (3.6s)
+✔ [1351/1380] Built BnbVerify.Bnb.Enter (1.2s)
+✔ [1352/1380] Built BnbVerify.Bnb.Complete.Dispatch (1.4s)
+✔ [1353/1380] Built BnbVerify.Bnb.Gen.Loops (12s)
+✔ [1354/1380] Built BnbVerify.Bnb.Gen.B0 (15s)
+✔ [1355/1380] Built BnbVerify.Bnb.Gen.B4 (18s)
+✔ [1356/1380] Built BnbVerify.Bnb.Gen.B1 (19s)
+✔ [1357/1380] Built BnbVerify.Bnb.Gen.B2 (21s)
+✔ [1358/1380] Built BnbVerify.Bnb.Gen.B3 (22s)
+✔ [1359/1380] Built BnbVerify.Bnb.Gen.PTotalSupply (1.3s)
+✔ [1360/1380] Built BnbVerify.Bnb.Gen.PDecimals (1.3s)
+✔ [1361/1380] Built BnbVerify.Bnb.Gen.POwner (1.3s)
+✔ [1362/1380] Built BnbVerify.Bnb.Gen.PBalanceOf (1.4s)
+✔ [1363/1380] Built BnbVerify.Bnb.Gen.PFreezeOf (1.5s)
+✔ [1364/1380] Built BnbVerify.Bnb.Gen.PAllowance (1.5s)
+✔ [1365/1380] Built BnbVerify.Bnb.Gen.PApprove (1.6s)
+✔ [1366/1380] Built BnbVerify.Bnb.Gen.PWithdrawEther (1.7s)
+✔ [1367/1380] Built BnbVerify.Bnb.Gen.PBurn (4.3s)
+✔ [1368/1380] Built BnbVerify.Bnb.Gen.PFreeze (4.7s)
+✔ [1369/1380] Built BnbVerify.Bnb.Gen.PUnfreeze (4.7s)
+✔ [1370/1380] Built BnbVerify.Bnb.Gen.PTransfer (7.8s)
+✔ [1371/1380] Built BnbVerify.Bnb.Gen.PTransferFrom (71s)
+✔ [1372/1380] Built BnbVerify.Bnb.Gen (967ms)
+✔ [1373/1380] Built BnbVerify.Bnb.Invariant (1.5s)
+⚠ [1374/1380] Built BnbVerify.Bnb.Sanity.Runs (1.6s)
+warning: BnbVerify/Bnb/Sanity/Runs.lean:290:15: This simp argument is unused:
+  storageAt_sState_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_nil]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:339:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:339:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:402:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:402:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:404:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:471:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:471:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:473:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:531:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:531:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:589:38: This simp argument is unused:
+  storageAt_sState_nil
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, eq_self, ↓reduceIte, ite_self]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: BnbVerify/Bnb/Sanity/Runs.lean:589:81: This simp argument is unused:
+  ite_self
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [storageAt_sState_cons, storageAt_sState_nil, eq_self, ↓reduceIte]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [1375/1380] Built BnbVerify.Bnb.Seq (1.2s)
+⚠ [1376/1380] Built BnbVerify.Bnb.Withdraw (1.9s)
+warning: BnbVerify/Bnb/Withdraw.lean:189:31: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: BnbVerify/Bnb/Withdraw.lean:297:58: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: BnbVerify/Bnb/Withdraw.lean:464:31: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+✔ [1377/1380] Built BnbVerify.Bnb.Readable (3.0s)
+ℹ [1378/1380] Built BnbVerify.Test.Axioms (934ms)
+info: BnbVerify/Test/Axioms.lean:22:0: 'BnbVerify.CODE_eq' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:23:0: 'BnbVerify.size_CODE' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:24:0: 'BnbVerify.Nonpayable.valueRevert' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:25:0: 'BnbVerify.Nonpayable.table_entry' depends on axioms: [propext]
+info: BnbVerify/Test/Axioms.lean:26:0: 'BnbVerify.Nonpayable.spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:27:0: 'BnbVerify.Fallback.spec_unknown' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:28:0: 'BnbVerify.Fallback.spec_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:29:0: 'BnbVerify.enter' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:30:0: 'BnbVerify.Complete.selector_cases' depends on axioms: [propext, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:31:0: 'BnbVerify.Complete.ends_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:32:0: 'BnbVerify.Complete.ends_ok_fallback' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:33:0: 'BnbVerify.Complete.runFrame_ok_dispatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:34:0: 'BnbVerify.Paths.totalSupply_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:35:0: 'BnbVerify.Paths.totalSupply_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:36:0: 'BnbVerify.Paths.ok_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:37:0: 'BnbVerify.supply_totalSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:38:0: 'BnbVerify.Sanity.totalSupply_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:39:0: 'BnbVerify.Paths.decimals_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:40:0: 'BnbVerify.Paths.decimals_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:41:0: 'BnbVerify.Paths.ok_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:42:0: 'BnbVerify.supply_decimals' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:43:0: 'BnbVerify.Sanity.decimals_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:44:0: 'BnbVerify.Paths.owner_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:45:0: 'BnbVerify.Paths.owner_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:46:0: 'BnbVerify.Paths.ok_owner' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:47:0: 'BnbVerify.supply_owner' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:48:0: 'BnbVerify.Sanity.owner_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:49:0: 'BnbVerify.Paths.balanceOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:50:0: 'BnbVerify.Paths.balanceOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:51:0: 'BnbVerify.Paths.ok_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:52:0: 'BnbVerify.supply_balanceOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:53:0: 'BnbVerify.Sanity.balanceOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:54:0: 'BnbVerify.Paths.freezeOf_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:55:0: 'BnbVerify.Paths.freezeOf_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:56:0: 'BnbVerify.Paths.ok_freezeOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:57:0: 'BnbVerify.supply_freezeOf' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:58:0: 'BnbVerify.Sanity.freezeOf_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:59:0: 'BnbVerify.Paths.allowance_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:60:0: 'BnbVerify.Paths.allowance_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:61:0: 'BnbVerify.Paths.ok_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:62:0: 'BnbVerify.supply_allowance' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:63:0: 'BnbVerify.Sanity.allowance_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:64:0: 'BnbVerify.Paths.approve_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:65:0: 'BnbVerify.Paths.approve_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:66:0: 'BnbVerify.Paths.approve_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:67:0: 'BnbVerify.Paths.approve_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:68:0: 'BnbVerify.Paths.ok_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:69:0: 'BnbVerify.supply_approve' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:70:0: 'BnbVerify.Sanity.approve_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:71:0: 'BnbVerify.Paths.transfer_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:72:0: 'BnbVerify.Paths.transfer_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:73:0: 'BnbVerify.Paths.transfer_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:74:0: 'BnbVerify.Paths.transfer_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:75:0: 'BnbVerify.Paths.transfer_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:76:0: 'BnbVerify.Paths.transfer_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:77:0: 'BnbVerify.Paths.transfer_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:78:0: 'BnbVerify.Paths.ok_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:79:0: 'BnbVerify.supply_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:80:0: 'BnbVerify.Sanity.transfer_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:81:0: 'BnbVerify.Paths.transferFrom_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:82:0: 'BnbVerify.Paths.transferFrom_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:83:0: 'BnbVerify.Paths.transferFrom_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:84:0: 'BnbVerify.Paths.transferFrom_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:85:0: 'BnbVerify.Paths.transferFrom_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:86:0: 'BnbVerify.Paths.transferFrom_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:87:0: 'BnbVerify.Paths.transferFrom_p6' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:88:0: 'BnbVerify.Paths.transferFrom_p7' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:89:0: 'BnbVerify.Paths.transferFrom_p8' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:90:0: 'BnbVerify.Paths.ok_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:91:0: 'BnbVerify.supply_transferFrom' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:92:0: 'BnbVerify.Sanity.transferFrom_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:93:0: 'BnbVerify.Paths.burn_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:94:0: 'BnbVerify.Paths.burn_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:95:0: 'BnbVerify.Paths.burn_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:96:0: 'BnbVerify.Paths.burn_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:97:0: 'BnbVerify.Paths.burn_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:98:0: 'BnbVerify.Paths.burn_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:99:0: 'BnbVerify.Paths.ok_burn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:100:0: 'BnbVerify.supply_burn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:101:0: 'BnbVerify.Sanity.burn_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:102:0: 'BnbVerify.Paths.freeze_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:103:0: 'BnbVerify.Paths.freeze_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:104:0: 'BnbVerify.Paths.freeze_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:105:0: 'BnbVerify.Paths.freeze_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:106:0: 'BnbVerify.Paths.freeze_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:107:0: 'BnbVerify.Paths.freeze_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:108:0: 'BnbVerify.Paths.ok_freeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:109:0: 'BnbVerify.supply_freeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:110:0: 'BnbVerify.Sanity.freeze_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:111:0: 'BnbVerify.Paths.unfreeze_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:112:0: 'BnbVerify.Paths.unfreeze_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:113:0: 'BnbVerify.Paths.unfreeze_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:114:0: 'BnbVerify.Paths.unfreeze_p3' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:115:0: 'BnbVerify.Paths.unfreeze_p4' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:116:0: 'BnbVerify.Paths.unfreeze_p5' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:117:0: 'BnbVerify.Paths.ok_unfreeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:118:0: 'BnbVerify.supply_unfreeze' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:119:0: 'BnbVerify.Sanity.unfreeze_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:120:0: 'BnbVerify.Paths.withdrawEther_p0' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:121:0: 'BnbVerify.Paths.withdrawEther_p1' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:122:0: 'BnbVerify.Paths.withdrawEther_p2' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:123:0: 'BnbVerify.Loops.ro_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:124:0: 'BnbVerify.supply_name' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:125:0: 'BnbVerify.Loops.ro_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:126:0: 'BnbVerify.supply_symbol' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:127:0: 'BnbVerify.supply_preserved' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:128:0: 'BnbVerify.Readable.totalSupply_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:129:0: 'BnbVerify.Readable.decimals_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:130:0: 'BnbVerify.Readable.owner_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:131:0: 'BnbVerify.Readable.balanceOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:132:0: 'BnbVerify.Readable.freezeOf_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:133:0: 'BnbVerify.Readable.allowance_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:134:0: 'BnbVerify.Readable.approve_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:135:0: 'BnbVerify.Readable.transfer_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:136:0: 'BnbVerify.Readable.transferFrom_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:137:0: 'BnbVerify.Readable.burn_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:138:0: 'BnbVerify.Readable.freeze_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:139:0: 'BnbVerify.Readable.unfreeze_readable' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:140:0: 'BnbVerify.inv_calls' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:141:0: 'BnbVerify.process_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:142:0: 'BnbVerify.process_step_novalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:143:0: 'BnbVerify.process_step_inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:144:0: 'BnbVerify.Calls.append' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:145:0: 'BnbVerify.Withdraw.tail_ok' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:146:0: 'BnbVerify.Withdraw.tail_rev' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:147:0: 'BnbVerify.Withdraw.withdrawEther_needs' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:148:0: 'BnbVerify.Withdraw.withdrawEther_only_owner' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:149:0: 'BnbVerify.Withdraw.withdrawEther_only_owner_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:150:0: 'BnbVerify.Withdraw.withdrawEther_to_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:151:0: 'BnbVerify.Withdraw.withdrawEther_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:152:0: 'BnbVerify.Withdraw.supply_withdrawEther' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: BnbVerify/Test/Axioms.lean:153:0: 'BnbVerify.Withdraw.withdrawEther_reaches_call' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [1379/1380] Built BnbVerify (990ms)
+Build completed successfully (1380 jobs).
+EXIT=0

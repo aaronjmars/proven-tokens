@@ -1,0 +1,444 @@
+{
+ "token": "WETH9",
+ "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+ "compiler": "solc 0.4.19, optimizer off",
+ "lean_root": "WethVerify",
+ "lean_dir": "Weth",
+ "hex": "data/weth.runtime.hex",
+ "paths_json": "work/paths.json",
+ "backing": "ether",
+ "dispatch": {
+  "comment": "Numbers of the hand-written theorems `enter`, `enterShort`, `enterOther` (Enter.lean): gas of the prelude, gas of one table entry, the memory words after the prelude; explicit_size: a successful run says nothing of the size of the call data (payable fallback), so `ok_<fn>` takes `4 <= size` as a hypothesis.",
+  "prelude_gas": 62,
+  "entry_gas": 22,
+  "memory_words": [
+   0,
+   0,
+   96
+  ],
+  "explicit_size": true
+ },
+ "slots": {
+  "balances": 3,
+  "allowances": 4
+ },
+ "functions": [
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "deposit",
+   "sig": "deposit()"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "withdraw",
+   "sig": "withdraw(uint256)"
+  }
+ ],
+ "fallbacks": [
+  {
+   "name": "fallbackShort",
+   "kind": "short",
+   "dest": 175,
+   "entry_cost": 39
+  },
+  {
+   "name": "fallbackOther",
+   "kind": "other",
+   "dest": 175,
+   "entry_cost": 304
+  }
+ ],
+ "stops": [
+  1648,
+  2724
+ ],
+ "paths": {
+  "comment": "memory_lemmas named: the block lemmas use the lemmas named after the offset of the free memory pointer (memW_ext96, memW_write96, memW_read96, size_memW4) where they apply, as the first build of this token did; without the key the lemmas for any aligned word are used (memW_set, memW_readWord, size_memWn).",
+  "memory_lemmas": "named"
+ },
+ "segments": [
+  {
+   "name": "totalSupplyTail",
+   "pc": 1672,
+   "stack": [
+    "y0",
+    0,
+    436,
+    "y1"
+   ]
+  },
+  {
+   "name": "withdrawTail",
+   "pc": 2725,
+   "stack": [
+    "y0",
+    "y1",
+    "y2",
+    "y3",
+    "y4",
+    "y5",
+    612,
+    "y6"
+   ],
+   "mem": [
+    "m0",
+    "m1",
+    96
+   ],
+   "static": false
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  }
+ ],
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)",
+  "DEPOSIT": "Deposit(address,uint256)",
+  "WITHDRAWAL": "Withdrawal(address,uint256)"
+ },
+ "readable_simp": [
+  "Readable.logs_logSub2",
+  "Readable.log2",
+  "Supply.add_toNat"
+ ],
+ "readable": {
+  "balanceOf": {
+   "doc": "balanceOf(a): no value; returns `balanceOf[a]`; writes nothing and logs nothing.",
+   "let": {
+    "a": "addrArg1 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {a})",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender): no value; returns `allowance[owner][spender]`; writes nothing and logs nothing.",
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "decimals": {
+   "doc": "decimals(): no value; returns the low byte of slot 2; writes nothing and logs nothing.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (BitVec.ofNat 256 ((storageAt state message.currentTarget 2).toNat % 256))",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "deposit": {
+   "doc": "deposit() credits the value of the message to the caller `dst`, with any value and any call data it accepts. Success needs a frame that may write. Then: returns nothing; `balanceOf[dst]` is the old word plus the value modulo 2^256 (the bytecode does not check the addition); every other slot keeps its word; exactly one log, Deposit(dst, value).",
+   "let": {
+    "dst": "sender message"
+   },
+   "requires": [
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {dst}).toNat = ((balance message state {dst}).toNat + message.value.toNat) % 2 ^ 256",
+    "∀ k, k ≠ mapSlot {dst} 3 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log2 message.currentTarget DEPOSIT {dst} (wordBytes message.value))"
+   ]
+  },
+  "fallbackShort": {
+   "doc": "The fallback, for call data shorter than 4 bytes, credits the value of the message to the caller `dst`, with any value and any call data it accepts. Success needs a frame that may write. Then: returns nothing; `balanceOf[dst]` is the old word plus the value modulo 2^256 (the bytecode does not check the addition); every other slot keeps its word; exactly one log, Deposit(dst, value).",
+   "let": {
+    "dst": "sender message"
+   },
+   "requires": [
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {dst}).toNat = ((balance message state {dst}).toNat + message.value.toNat) % 2 ^ 256",
+    "∀ k, k ≠ mapSlot {dst} 3 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log2 message.currentTarget DEPOSIT {dst} (wordBytes message.value))"
+   ]
+  },
+  "fallbackOther": {
+   "doc": "The fallback, for a selector that is no function of the contract, credits the value of the message to the caller `dst`, with any value and any call data it accepts. Success needs a frame that may write. Then: returns nothing; `balanceOf[dst]` is the old word plus the value modulo 2^256 (the bytecode does not check the addition); every other slot keeps its word; exactly one log, Deposit(dst, value).",
+   "let": {
+    "dst": "sender message"
+   },
+   "requires": [
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(balance message s.state {dst}).toNat = ((balance message state {dst}).toNat + message.value.toNat) % 2 ^ 256",
+    "∀ k, k ≠ mapSlot {dst} 3 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log2 message.currentTarget DEPOSIT {dst} (wordBytes message.value))"
+   ]
+  },
+  "approve": {
+   "doc": "approve(guy, wad) from the caller `src`. Success needs: no value, a frame that may write. Then: returns 1; `allowance[src][guy]` is `wad`; every other slot keeps its word; exactly one log, Approval(src, guy, wad).",
+   "let": {
+    "src": "sender message",
+    "guy": "addrArg1 message",
+    "wad": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {src} {guy} = {wad}",
+    "∀ k, k ≠ mapSlot {guy} (mapSlot {src} 4) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {src} {guy} (wordBytes {wad}))"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(dst, wad) from the caller `src`. Success needs: no value, a frame that may write, `wad <= balanceOf[src]`. Then: returns 1; `balanceOf[src]` is the old word minus `wad` and `balanceOf[dst]` the old word plus `wad` modulo 2^256 (the bytecode does not check the addition; when `dst = src` the balance is unchanged); every other slot keeps its word; exactly one log, Transfer(src, dst, wad).",
+   "let": {
+    "src": "sender message",
+    "dst": "addrArg1 message",
+    "wad": "arg2 message"
+   },
+   "cases": [
+    "{dst} = {src}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{wad}.toNat ≤ (balance message state {src}).toNat"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{dst} ≠ {src} → (balance message s.state {src}).toNat = (balance message state {src}).toNat - {wad}.toNat ∧ (balance message s.state {dst}).toNat = ((balance message state {dst}).toNat + {wad}.toNat) % 2 ^ 256",
+    "{dst} = {src} → (balance message s.state {src}).toNat = (balance message state {src}).toNat",
+    "∀ k, k ≠ mapSlot {src} 3 → k ≠ mapSlot {dst} 3 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {src} {dst} (wordBytes {wad}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(src, dst, wad) by the caller `guy`. Success needs: no value, a frame that may write, `wad <= balanceOf[src]`, and, when `src` is not `guy` and `allowance[src][guy]` is not 2^256 - 1, `wad <= allowance[src][guy]`. Then: returns 1; the balances move as in transfer; in that same case the allowance is the old word minus `wad`, and otherwise it is unchanged; every other slot keeps its word; exactly one log, Transfer(src, dst, wad).",
+   "let": {
+    "src": "addrArg1 message",
+    "dst": "addrArg2 message",
+    "wad": "arg3 message",
+    "guy": "sender message",
+    "max": "115792089237316195423570985008687907853269984665640564039457584007913129639935 : U256"
+   },
+   "cases": [
+    "{dst} = {src}",
+    "{src} = {guy}",
+    "allowance message state {src} {guy} = {max}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{wad}.toNat ≤ (balance message state {src}).toNat",
+    "{src} ≠ {guy} → allowance message state {src} {guy} ≠ {max} → {wad}.toNat ≤ (allowance message state {src} {guy}).toNat"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{dst} ≠ {src} → (balance message s.state {src}).toNat = (balance message state {src}).toNat - {wad}.toNat ∧ (balance message s.state {dst}).toNat = ((balance message state {dst}).toNat + {wad}.toNat) % 2 ^ 256",
+    "{dst} = {src} → (balance message s.state {src}).toNat = (balance message state {src}).toNat",
+    "{src} ≠ {guy} → allowance message state {src} {guy} ≠ {max} → (allowance message s.state {src} {guy}).toNat = (allowance message state {src} {guy}).toNat - {wad}.toNat",
+    "{src} = {guy} → allowance message s.state {src} {guy} = allowance message state {src} {guy}",
+    "allowance message state {src} {guy} = {max} → allowance message s.state {src} {guy} = allowance message state {src} {guy}",
+    "∀ k, k ≠ mapSlot {src} 3 → k ≠ mapSlot {dst} 3 → k ≠ mapSlot {guy} (mapSlot {src} 4) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {src} {dst} (wordBytes {wad}))"
+   ]
+  }
+ },
+ "sanity": {
+  "comment": "The argument words of the witness call of each function (scripts/gen_sanity.py): address arguments not 0, amounts 0. transferFrom has three success paths: its witnesses are in Sanity/Moves.lean, by hand.",
+  "totalSupply": [],
+  "balanceOf": [
+   1
+  ],
+  "allowance": [
+   1,
+   2
+  ],
+  "decimals": [],
+  "deposit": [],
+  "approve": [
+   1,
+   0
+  ],
+  "transfer": [
+   1,
+   0
+  ],
+  "transferFrom": [
+   1,
+   2,
+   0
+  ],
+  "withdraw": [
+   0
+  ]
+ },
+ "axioms": {
+  "comment": "names: hand-written theorems checked before the generated ones; after: theorems of files that import the generated ones; imports: the modules Test/Axioms.lean imports; declared_only: leave out a generated name that no Lean file declares.",
+  "declared_only": true,
+  "imports": [
+   "WethVerify.Weth.Seq",
+   "WethVerify.Weth.ReadableHand",
+   "WethVerify.Weth.Sanity.Moves",
+   "WethVerify.Weth.Sanity.Withdraw",
+   "WethVerify.Weth.Tx"
+  ],
+  "names": [
+   "valid_CODE",
+   "table_entry",
+   "enter",
+   "enterOther",
+   "enterShort",
+   "selector_cases"
+  ],
+  "after": [
+   "totalSupply_island",
+   "totalSupply_path",
+   "ok_totalSupply_exact",
+   "withdraw_at",
+   "ok_withdraw_at",
+   "withdraw_path",
+   "ok_withdraw_exact",
+   "callStep_value_deep_mem",
+   "call_bad",
+   "ok_withdraw_all",
+   "withdraw_fails_value",
+   "withdraw_fails_balance",
+   "withdraw_fails_ether",
+   "withdraw_fails_depth",
+   "withdraw_fails_gas",
+   "withdraw_fails_noCode",
+   "withdraw_fails_callee",
+   "Stipend.sstoreStep_ne_ok_of_low",
+   "Stipend.lowResult_step",
+   "Stipend.processMessage_quiet",
+   "Stipend.quiet_processMessage_noValue",
+   "wSubCall_le",
+   "calleeQuiet_process",
+   "calleeQuiet_noCode",
+   "calleeQuiet_stop",
+   "calleeQuiet_accept",
+   "solvent_preserved_process",
+   "withdrawReady_prePrague",
+   "addressL",
+   "balanceL",
+   "callL",
+   "callLowL",
+   "call_ok",
+   "callLow_ok",
+   "Complete.ok_exactL",
+   "Complete.no_okL",
+   "Supply.solvent_of_ro",
+   "Supply.solvent_congr",
+   "Supply.solvent_moveEther_outOf",
+   "Supply.backed_moveEther_into",
+   "noCode_message",
+   "read_bal_allow",
+   "sum_bal",
+   "sum_allow",
+   "solvent_goodCall",
+   "solvent_other",
+   "solvent_calls",
+   "goodCall_of_run",
+   "goodCall_process",
+   "other_process_failed",
+   "process_step",
+   "process_step_solvent",
+   "calls_process",
+   "withdrawReady_eoa",
+   "Readable.totalSupply_readable",
+   "Readable.withdraw_readable",
+   "Sanity.transferFrom_p4_runs",
+   "Sanity.transferFrom_p6_runs",
+   "Sanity.transferFrom_p8_runs",
+   "Sanity.deposit_moves",
+   "Sanity.totalSupply_runs",
+   "Sanity.callValueOn",
+   "Sanity.withdraw_on",
+   "Sanity.withdraw_succeeds",
+   "Sanity.withdraw_runs",
+   "Sanity.caller1_noPre",
+   "Sanity.withdraw_runs_closed",
+   "Witness.caller1_word",
+   "mono_solvent",
+   "code_size_ne_zero",
+   "code_not_indicator",
+   "code_not_delegated",
+   "solvent_zeroBase",
+   "backed_startSt",
+   "frameKeepsV",
+   "solvent_message_any_depth",
+   "solvent_transaction",
+   "solvent_any_transactions",
+   "solvent_from_zero",
+   "Bal.resU_step",
+   "Bal.v_runFrame",
+   "Bal.processMessage_ind_bal",
+   "Bal.processMessage_good_bal",
+   "Bal.processCreateMessage_good_bal",
+   "Bal.processMessageCall_good_bal",
+   "Bal.runTransaction_good_bal",
+   "Bal.processTransaction_good_bal",
+   "Bal.chain_good_bal",
+   "Seq.processMessage_ind_local",
+   "Seq.processMessageCall_good",
+   "Seq.sumBal_zero"
+  ]
+ }
+}

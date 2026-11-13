@@ -1,0 +1,603 @@
+{
+ "token": "LINK",
+ "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+ "compiler": "solc 0.4.16, optimizer on (200 runs)",
+ "lean_root": "LinkVerify",
+ "lean_dir": "Link",
+ "hex": "data/link.runtime.hex",
+ "paths_json": "work/paths.json",
+ "dispatch": {
+  "generate": true,
+  "mode": "walk",
+  "memory_words": [
+   0,
+   0,
+   96
+  ],
+  "value_check": "per_function",
+  "min_size": 1,
+  "size_proof": "obtain \u27e8hsize, -\u27e9 := ends_ok_dispatch hfork hsize' start hrun hok",
+  "layout_doc": [
+   "Storage layout, read off the bytecode (see docs/MAP.md):",
+   "",
+   "- `balances[a]` at `mapSlot a 1`.",
+   "- `allowed[owner][spender]` at `mapSlot spender (mapSlot owner 2)`.",
+   "- `totalSupply` is the constant 10^27 held in the code (no slot); slot 0 is never read or written.",
+   "- `name`, `symbol` and `decimals` are constants held in the code."
+  ]
+ },
+ "paths": {
+  "raw_memory": "across_blocks",
+  "raw_words": true,
+  "block_imports": [
+   "LinkVerify.Link.Lib"
+  ]
+ },
+ "prune": "normalized",
+ "slots": {
+  "balances": 1,
+  "allowances": 2
+ },
+ "functions": [
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "increaseApproval",
+   "sig": "increaseApproval(address,uint256)"
+  },
+  {
+   "name": "decreaseApproval",
+   "sig": "decreaseApproval(address,uint256)"
+  }
+ ],
+ "fallbacks": [
+  {
+   "name": "short",
+   "kind": "short"
+  },
+  {
+   "name": "other",
+   "kind": "other"
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  }
+ ],
+ "stops": [
+  530
+ ],
+ "prefix_functions": [
+  {
+   "name": "transferAndCall",
+   "sig": "transferAndCall(address,uint256,bytes)"
+  }
+ ],
+ "generators": [
+  "code",
+  "dispatch",
+  "paths",
+  "loops",
+  "supply",
+  "sanity",
+  "readable",
+  "axioms"
+ ],
+ "sanity": {
+  "comment": "The witness call of each success path (scripts/gen_sanity.py, form eval). The caller is Witness.CALLER1; amounts are 1 and the balances and allowances used are 5.",
+  "imports": [
+   "TokenKit.Evm.WitnessOpt"
+  ],
+  "contract_word": "(0x514910771af9ca656af840dff83e8264ecf986ca : U256)",
+  "doc": "`<path>_runs` (or `<fn>_runs` for a function with one success path): in the state with one\naccount at the contract `C` that holds the stated words at the stated slots (every other slot\n0), the stated call from the caller `Witness.CALLER1` meets every hypothesis of the success path\ntheorem; so the loop of the interpreter runs it from pc 0 to the end with no error, for every\nmessage runner and every gas bound that holds its gas, with the stated output and end state.\nEvery condition is computed by the kernel, the keccak of each mapping slot included: no\nhypothesis about keccak is used.\n`hC` fixes the address word of the contract `C` to the address of LINK on mainnet (transfer,\napprove and transferFrom compare the receiver with the address of the contract);\n`Sanity/Addr.lean` gives such an address.",
+  "totalSupply": {
+   "args": [],
+   "slots": []
+  },
+  "decimals": {
+   "args": [],
+   "slots": []
+  },
+  "balanceOf": {
+   "args": [
+    2
+   ],
+   "slots": []
+  },
+  "allowance": {
+   "args": [
+    2,
+    3
+   ],
+   "slots": []
+  },
+  "approve": {
+   "args": [
+    2,
+    7
+   ],
+   "slots": []
+  },
+  "increaseApproval": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": []
+  },
+  "decreaseApproval": {
+   "decreaseApproval_p2": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": []
+   },
+   "decreaseApproval_p4": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot 2 (mapSlot Witness.CALLER1W 2)",
+      5
+     ]
+    ]
+   }
+  },
+  "transfer": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": [
+    [
+     "mapSlot Witness.CALLER1W 1",
+     5
+    ]
+   ]
+  },
+  "transferFrom": {
+   "args": [
+    2,
+    3,
+    1
+   ],
+   "slots": [
+    [
+     "mapSlot 2 1",
+     5
+    ],
+    [
+     "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+     5
+    ]
+   ]
+  }
+ },
+ "token_generators": [
+  "scripts/gen_value.py"
+ ],
+ "supply": {
+  "comment": "checked04: the SafeMath checks of Solidity 0.4 with the optimizer on (sub: ISZERO (GT v a); add: ISZERO (LT (ADD v b) b)); the invariant has no total supply slot (the total is a constant of the code).",
+  "checked04": true,
+  "what": "the sum of all balances is the constant `10^27` that `totalSupply()` returns",
+  "what_kept": "if the sum of all balances was `10^27` before, it is after.",
+  "unfold": "Inv",
+  "rules": "Supply.sumBal_read, S_bal hsep, S_allow hsep, storageAt_readSlot",
+  "ro": "inv_of_ro",
+  "dispatch": "  obtain \u27e8_, i, hi\u27e9 := ends_ok_dispatch hfork hsize' start hrun hok\n"
+ },
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)",
+  "TRANSFER_DATA": "Transfer(address,address,uint256,bytes)"
+ },
+ "readable_opts": {
+  "comment": "facts checked04: the condition shapes of Solidity 0.4 with the optimizer on (gen_readable.facts04; lemmas of LinkVerify/Link/ReadableLib.lean); close: the closing tactic; several_paths same_claims: every success path proves the same claims (decreaseApproval has two); simp: the mask on the right of AND; sep_doc, doc: text of the head of the file.",
+  "facts": "checked04",
+  "close": "readable_close08",
+  "several_paths": "same_claims",
+  "imports": [
+   "TokenKit.Evm.ReadableOpt",
+   "TokenKit.Evm.Opt06",
+   "LinkVerify.Link.ReadableLib"
+  ],
+  "simp": [
+   "and_mask_comm"
+  ],
+  "sep_doc": "A theorem whose\nfunction writes two or more slots takes `Sep (callKeys message)` (the hypothesis on keccak of\nSep.lean, not proved): without it two of the slots could be the same slot.",
+  "doc": [
+   "LINK (Solidity 0.4.16) has no check of the size of the call data: bytes of an argument past the\nend of the call data read as zero, so no theorem here has a claim on `message.data.size`.\nThe total supply is no slot: `totalSupply()` returns the constant `10^27` of the code.\n`approve`, `increaseApproval` and `decreaseApproval` write one slot, so their theorems take no\nhypothesis on keccak; `transfer` and `transferFrom` take `Sep (callKeys message)`.\nIn `transfer`, `approve` and `transferFrom` the modifier `validRecipient` rejects the receiver\n(or spender) 0 and the address of the contract itself (`message.currentTarget.toU256`)."
+  ]
+ },
+ "readable": {
+  "totalSupply": {
+   "doc": "totalSupply(). Success needs no value. Then: returns the constant `10^27` held in the code (the total supply is no slot); no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (1000000000000000000000000000 : U256)",
+    "(1000000000000000000000000000 : U256).toNat = 10 ^ 27",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "decimals": {
+   "doc": "decimals(). Success needs no value. Then: returns the constant 18 held in the code; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (18 : U256)",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "balanceOf": {
+   "doc": "balanceOf(owner). Success needs no value. Then: returns `balances[owner]` (the argument masked to 160 bits); no slot changes; no log. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "addrArg1 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {owner})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender). Success needs no value. Then: returns `allowed[owner][spender]` (the arguments masked to 160 bits); no slot changes; no log. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   },
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "\u2200 k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(to, value) with `from` the caller. Success needs: no value, a frame that may write, an account of the contract, `to` not 0 and not the contract itself (validRecipient), `value <= balances[from]`, and (when `to` is not `from`) no overflow of `balances[to]`. Then: returns 1; `balances[from]` is the old word minus `value` and `balances[to]` the old word plus `value` (when `to = from` the balance is unchanged); every other slot keeps its word; exactly one log, Transfer(from, to, value). The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "from": "sender message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{to} \u2260 0",
+    "{to} \u2260 message.currentTarget.toU256",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "\u2200 k, k \u2260 mapSlot {from} 1 \u2192 k \u2260 mapSlot {to} 1 \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "approve": {
+   "doc": "approve(spender, value) from the caller `owner`. Success needs: no value, a frame that may write, an account of the contract, `spender` not 0 and not the contract itself (validRecipient). Then: returns 1; `allowed[owner][spender]` is `value`; every other slot keeps its word; exactly one log, Approval(owner, spender, value). No hypothesis on keccak is needed. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "value": "arg2 message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{spender} \u2260 0",
+    "{spender} \u2260 message.currentTarget.toU256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {owner} {spender} = {value}",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes {value}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(from, to, value) by the caller `spender`. Success needs: no value, a frame that may write, an account of the contract, `to` not 0 and not the contract itself (validRecipient), `value <= balances[from]`, (when `to` is not `from`) no overflow of `balances[to]`, and `value <= allowed[from][spender]`. Then: returns 1; `balances[from]` is the old word minus `value` and `balances[to]` the old word plus `value` (when `to = from` the balance is unchanged); `allowed[from][spender]` is the old word minus `value` (whoever `spender` is: `from`, `to` or another address); every other slot keeps its word; exactly one log, Transfer(from, to, value) (no Approval log). The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "sender message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{to} \u2260 0",
+    "{to} \u2260 message.currentTarget.toU256",
+    "{amount}.toNat \u2264 (balance message state {from}).toNat",
+    "{to} \u2260 {from} \u2192 (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256",
+    "{amount}.toNat \u2264 (allowance message state {from} {spender}).toNat"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} \u2260 {from} \u2192 (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat \u2227 (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} \u2192 balance message s.state {from} = balance message state {from}",
+    "(allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "\u2200 k, k \u2260 mapSlot {from} 1 \u2192 k \u2260 mapSlot {to} 1 \u2192 k \u2260 mapSlot {spender} (mapSlot {from} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "increaseApproval": {
+   "doc": "increaseApproval(spender, added) from the caller `owner` (no validRecipient: `spender` may be 0 or the contract). Success needs: no value, a frame that may write, an account of the contract, and no overflow of `allowed[owner][spender]`. Then: returns 1; `allowed[owner][spender]` is the old word plus `added`; every other slot keeps its word; exactly one log, Approval(owner, spender, new allowance). No hypothesis on keccak is needed. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "added": "arg2 message"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "(allowance message state {owner} {spender}).toNat + {added}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat + {added}.toNat",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (add {added} (allowance message state {owner} {spender}))))"
+   ]
+  },
+  "decreaseApproval": {
+   "doc": "decreaseApproval(spender, subtracted) from the caller `owner` (no validRecipient). Success needs: no value, a frame that may write, an account of the contract. Then: returns 1; `allowed[owner][spender]` is 0 when `subtracted` is above the old word, else the old word minus `subtracted`; every other slot keeps its word; exactly one log, Approval(owner, spender, new allowance). No hypothesis on keccak is needed. The code has no check of the size of the call data: bytes of an argument past the end of the call data read as zero.",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "subtracted": "arg2 message",
+    "old": "allowance message state (sender message) (addrArg1 message)"
+   },
+   "sep": false,
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{old}.toNat < {subtracted}.toNat \u2192 allowance message s.state {owner} {spender} = 0",
+    "{subtracted}.toNat \u2264 {old}.toNat \u2192 (allowance message s.state {owner} {spender}).toNat = {old}.toNat - {subtracted}.toNat",
+    "\u2200 k, k \u2260 mapSlot {spender} (mapSlot {owner} 2) \u2192 storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "{old}.toNat < {subtracted}.toNat \u2192 s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (0 : U256)))",
+    "{subtracted}.toNat \u2264 {old}.toNat \u2192 s.substate.logs = substate.logs.push (Readable.log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (sub {old} {subtracted})))"
+   ]
+  }
+ },
+ "axioms": {
+  "comment": "names: hand-written theorems checked before the generated ones; after: theorems of files that import the generated ones. transferAndCall is a prefix function (its generated path stops at pc 530): its generated theorems and the hand-written ones that finish it are named here. There is no skip list.",
+  "declared_only": true,
+  "declared_only_comment": "the two fallbacks (call data shorter than 4 bytes with size 0, unknown selector) never end with no error, so they have no supply theorem: supply_short and supply_other are not declared and are left out (printed in the head of Test/Axioms.lean).",
+  "imports": [
+   "LinkVerify.Link.Invariant"
+  ],
+  "names": [
+   "CODE_eq",
+   "size_CODE",
+   "and_div_selector",
+   "div_and_selector",
+   "mask_idem",
+   "mask_lt",
+   "S_bal",
+   "S_allow",
+   "sumBal_congr",
+   "inv_of_ro",
+   "TokenKit.Supply.add_fact_ltc",
+   "TokenKit.extendMemory_in",
+   "TokenKit.callInS",
+   "TokenKit.callIn_outcome",
+   "TokenKit.callIn_outcome_any",
+   "Sanity.link_address_word"
+  ],
+  "after": [
+   "Complete.ends_ok_dispatch",
+   "Complete.name_value",
+   "Complete.symbol_value",
+   "Complete.value_zero_of_ok",
+   "Paths.transferAndCall_p0",
+   "Paths.transferAndCall_p1",
+   "Paths.ok_transferAndCall",
+   "Tac.tac_revert_zero",
+   "Tac.tac_revert_self",
+   "Tac.tac_invalid_low",
+   "Tac.tac_stuck_static",
+   "Tac.tac_invalid_over",
+   "Tac.tac_done",
+   "Tac.tac_second_check",
+   "Tac.tac_to_gas",
+   "Tac.tac_at_call",
+   "Tac.tac_call_range",
+   "Tac.tac_after_ok",
+   "Tac.tac_after_fail",
+   "Tac.ok_tac_pre",
+   "Tac.ok_tac_post",
+   "Tac.ok_tac_dec_gas",
+   "Tac.ok_tac_len",
+   "Tac.ok_tac_pre_gas",
+   "Tac.tac_log2_words",
+   "Tac.tac_call_words",
+   "Tac.tac_call_selector",
+   "Tac.sel_bytes",
+   "Tac.tac_log2_head",
+   "Tac.tac_call_head",
+   "Tac.tacDoneSs_eq",
+   "Tac.tacCallSs_eq",
+   "Tac.tacCallSt_eq",
+   "Tac.tacToZero_iff",
+   "Tac.tacToSet_iff",
+   "Tac.tacToSelf_iff",
+   "Tac.tacLow_iff",
+   "Tac.tacFunded_iff",
+   "Tac.tacOver_iff",
+   "Tac.tacFits_iff",
+   "Tac.tacHasCode_iff",
+   "Tac.tac_ext",
+   "Tac.tac_call_mem",
+   "Tac.tac_to_ne",
+   "Tac.inv_tacDoneSt",
+   "Tac.inv_tacCallSt",
+   "Tac.holdsCode_tacCallSt",
+   "Tac.tac_after_fail_any",
+   "Tac.no_ok_after_fail",
+   "Tac.ok_tac_whole",
+   "Reenter.processMessage_good",
+   "Reenter.processCreateMessage_good",
+   "Reenter.processCreateMessage_good_of_sane",
+   "Reenter.processRunner_good",
+   "Reenter.processRunner_goodKept",
+   "Reenter.runFrame_keeps",
+   "Reenter.HoldsCode.hasAccount",
+   "Reenter.holdsCode_writeSlot",
+   "Reenter.HoldsCode.of_readsAs",
+   "storageOnly_inv",
+   "code_not_delegated",
+   "SepAll.call",
+   "supply_tac_530",
+   "supply_transferAndCall",
+   "supply_all",
+   "calleeKeeps_of_keepsOn",
+   "frameKeeps_sepAll",
+   "calleeKeeps_processRunner_sepAll_noCollision",
+   "supply_all_real_sepAll_noCollision",
+   "process_good_sepAll_noCollision",
+   "create_good_sepAll_noCollision",
+   "good_msg_sepAll_noCollision",
+   "good_create_sepAll_noCollision",
+   "good_other",
+   "good_run_sepAll_noCollision",
+   "inv_run_sepAll_noCollision",
+   "SepAll.msg",
+   "Trace.processMessage_good_local",
+   "Trace.processCreateMessage_good_local",
+   "Trace.processRunner_good_local",
+   "Trace.runFrame_keeps_local",
+   "Trace.runFrame_agree",
+   "Trace.clean_of_global",
+   "Trace.clean_of_no_sent",
+   "Trace.not_sent_of_specG",
+   "frameKeepsQ",
+   "runnerKeeps_processRunner_local",
+   "calleeKeeps_processRunner_local",
+   "supply_all_real_local",
+   "cleanRunL_of_sepAll_noCollision",
+   "cleanFrameL_of_sepAll_noCollision",
+   "supply_all_real_of_global",
+   "process_good_local",
+   "create_good_local",
+   "good_msgL",
+   "good_createL",
+   "good_runL",
+   "inv_runL",
+   "Sep.restrict",
+   "cleanL_of_sepList",
+   "cleanL_of_sepAll_noCollision",
+   "cleanCreateL_of_sepAll_noCollision",
+   "Msg.toLocal",
+   "Create.toLocal",
+   "Run.toLocal",
+   "inv_run_of_global",
+   "not_sent_totalSupply",
+   "cleanL_totalSupply",
+   "cleanL_totalSupply_other",
+   "process_good_totalSupply",
+   "Sanity.sumTo_zero",
+   "Sanity.holdsCode_baseState",
+   "Sanity.inv_baseState",
+   "Sanity.good_baseState",
+   "Sanity.inv_runL_baseState",
+   "Sanity.size_RE",
+   "Sanity.re_not_delegated",
+   "Sanity.re_call",
+   "Sanity.spec_message_runs",
+   "Sanity.re_message_runs",
+   "Sanity.frameOf_noValue",
+   "Sanity.clean_of_spec",
+   "Sanity.re_clean",
+   "Sanity.re_inner_spec",
+   "Sanity.re_inner_runs",
+   "Sanity.tacCallGas_le",
+   "Sanity.tac_call_run_re",
+   "Sanity.reMeter_le",
+   "Sanity.tac_re_core",
+   "Sanity.callKeys_m_re",
+   "Sanity.supply_tac_re_frame",
+   "Sanity.process_tac_re",
+   "Sanity.msgL_tac_re",
+   "Sanity.re_hash_ne",
+   "Sanity.holdsCode_reState",
+   "Sanity.getCode_reState",
+   "Sanity.inv_reState",
+   "Sanity.reenter_closed",
+   "tac_move_readable",
+   "transferAndCall_readable",
+   "Sanity.transferAndCall_stop_runs",
+   "Sanity.transferAndCall_stop_runs_closed",
+   "Sanity.transferAndCall_nocode_runs",
+   "Sanity.transferAndCall_nocode_runs_closed",
+   "Sanity.transferAndCall_low_runs",
+   "Sanity.transferAndCall_low_runs_closed",
+   "Sanity.transferAndCall_reverts",
+   "Sanity.transferAndCall_reverts_closed",
+   "Sanity.calleeKeeps_stop",
+   "Sanity.supply_tac_530_of",
+   "Sanity.supply_transferAndCall_stop"
+  ]
+ }
+}

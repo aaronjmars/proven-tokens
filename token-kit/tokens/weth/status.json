@@ -1,0 +1,76 @@
+{
+ "token": "WETH",
+ "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+ "date": "2026-11-11",
+ "result": "done (option a): solvency of WETH (sum of balances <= ether of the contract) is proved after any transaction and any finite list of transactions run by EthLib's real transaction function, with the assumptions and limits listed below. Earlier rounds: see fix-status.json (kept unchanged).",
+ "build": {
+  "where": "E2B box lean-fix-c, /home/user/token-kit/tokens/weth, kit = git archive HEAD token-kit (committed kit), Lean v4.35.0",
+  "command": "lake build from a removed tokens/weth/.lake/build (target WethVerify), LEAN_NUM_THREADS=2",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1401 jobs).",
+  "log": "logs/weth.log (axioms output: logs/weth.axioms)",
+  "axioms_check": "scripts/check_axioms.sh on that log: count matches Test/Axioms.lean: 180; only standard axioms (propext, Classical.choice, Quot.sound); AXIOM SCAN OK: 3773 constants (3363 theorems) of WethVerify and TokenKit",
+  "regen_check": "SAME weth"
+ },
+ "theorem_counts": {
+  "theorems_in_tokens_weth": 412,
+  "headlines_in_Test_Axioms": 180,
+  "headlines_before_this_round": 157,
+  "new": {
+   "Weth/TxFrame.lean": 35,
+   "Weth/TxRun.lean": 16,
+   "Weth/TxChain.lean": 16,
+   "Weth/Tx.lean": 11
+  }
+ },
+ "headline": "solvent_any_transactions (WethVerify/Weth/Tx.lean): 'C holds the code of WETH and the sum of all balanceOf is at most the ether of C' holds after ANY finite list of transactions run by EthLib's processTransaction (Bal.ChainV), whoever sends them and whatever they call at any depth (calls back into WETH, the callee of withdraw, creations, SELFDESTRUCT of other accounts, failed and reverted calls included). From a block state where it holds. Assumptions: the 'Transaction theorems' lines of `assumptions`; limits: the 'Transaction level' lines of `not_covered`.",
+ "why_not_the_kit_as_is": "Solvent reads the ether of C, so it is not Seq.StorageOnly and TokenKit.Seq does not apply. TxFrame.lean, TxRun.lean and TxChain.lean redo the kit's induction over EthLib's interpreter for an invariant that also reads the ether: every step outside a frame at C keeps the storage of C and does not lower its ether (Bal.Up), and the invariant only needs 'more ether never breaks it' (Bal.Mono). The kit is reused for the code and storage facts (with P := True and P := 'storage equals').",
+ "claims": {
+  "solvent_message_any_depth": "one call run by EthLib's processMessage, to any account and any code, at any depth: 'C holds the code of WETH and is solvent' is kept, with or without an error. Berlin <= fork < Glamsterdam. Assumes Seq.Sane, Bal.Paid C message, Seq.Good at the start, Seq.Clean of this run with Q := QMsg.",
+  "solvent_transaction": "one whole transaction run by EthLib's processTransaction (gas purchase, EIP-7702 authorizations, the message, refunds, fee, deletion of accounts). Dencun <= fork < Glamsterdam. Assumes Seq.TxClean, sender not C, Seq.Good at the start.",
+  "solvent_any_transactions": "the same after any finite list of transactions (Bal.ChainV: Seq.Chain plus 'sender is not C' for each transaction).",
+  "solvent_from_zero": "the same from the base case: C holds the code and every storage word of C is zero (solvent_zeroBase).",
+  "frameKeepsV": "the code of WETH meets the interface Bal.FrameKeepsV for EthLib's real runner, by solvent_preserved_process (Reenter.lean, the stipend theorem: no assumption on the callee of withdraw). backed_startSt: the value moved into C leaves the contract backed with that value to spare (what deposit needs).",
+  "facts_for_the_induction": "mono_solvent, code_size_ne_zero, code_not_indicator, code_not_delegated, solvent_zeroBase: proved, no hypothesis.",
+  "generic_layer": "namespace WethVerify.Bal, not specific to WETH: resU_step (one interpreter step of a frame not at L keeps storage of L and does not lower its ether), v_runFrame, processMessage_ind_bal, processMessage_good_bal, processCreateMessage_good_bal, processMessageCall_good_bal, runTransaction_good_bal, processTransaction_good_bal, chain_good_bal.",
+  "older_model_kept": "Seq.lean (Calls, Other): top-level messages only, where every other change is ASSUMED to keep the storage of C and not lower its ether. Kept; the theorems of Tx.lean do not use that assumption."
+ },
+ "assumptions": [
+  "Transaction theorems (solvent_transaction, solvent_any_transactions, solvent_from_zero), run-local hypothesis Seq.TxClean.call with Q := QMsg: every message that really enters the code at C during this transaction satisfies QMsg. Part 1: Sep (callKeys m) (keccak separation, NOT proved). Part 2: when it is withdraw (selector 0x2e1a7d4d) with value 0 and the fork is Prague or later, the code of its caller is no EIP-7702 delegation in the state the frame starts from. Nothing is assumed about messages outside the run. solvent_message_any_depth assumes the same as Seq.Clean of its run.",
+  "Transaction theorems (same three), Seq.TxClean.create: every code that a creation of this transaction really deposits, when it has the keccak hash of the code of WETH, is that code (no keccak collision, NOT proved).",
+  "Transaction theorems (same three), Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code with the keccak hash of the code of WETH. NOT proved.",
+  "Transaction theorems (same three), Seq.TxClean.data: the call data of a transaction sent to C is below 2^256 bytes.",
+  "Transaction theorems, sender: included.sender is not C (hypothesis of solvent_transaction and Bal.processTransaction_good_bal; one field of each cons of Bal.ChainV, so used by solvent_any_transactions, solvent_from_zero and Bal.chain_good_bal). The sender pays the gas, which would lower the ether of C. On a real chain it holds because C has code (EIP-3607), but that check runs before processTransaction and is NOT proved here.",
+  "Transaction theorems, fork range: each transaction has Fork.dencun <= fork < Fork.glamsterdam (solvent_transaction, each cons of Bal.ChainV). solvent_message_any_depth and frameKeepsV: Fork.berlin <= fork < Fork.glamsterdam.",
+  "Transaction theorems, start state: Seq.Good C CODE (Solvent C) on the block state before the first transaction (solvent_any_transactions, solvent_transaction); solvent_from_zero assumes Seq.HoldsCode and all-zero storage of C instead.",
+  "solvent_message_any_depth only: Seq.Sane C CODE message, and Bal.Paid C message (its value does not come from C; it moves its value when it runs at C). The transaction theorems prove both.",
+  "Older theorems keep their own hypotheses: see fix-status.json, hypotheses_still_assumed."
+ ],
+ "not_covered": [
+  "Transaction level: what a block does between transactions is not linked (withdrawals, the system calls of EIP-4788, 2935, 7002, 7251, block rewards). The chain predicate strings transactions only.",
+  "Transaction level: forks before Dencun (there the end of a transaction can delete an account that ran SELFDESTRUCT; the library uses EIP-6780 from Dencun instead).",
+  "Transaction level: Glamsterdam and later (two-counter gas meter).",
+  "Transaction level: block-level steps do not lower the ether of a contract, but that is not proved here.",
+  "Transaction level: the constructor run is not linked; solvent_from_zero is the all-zero base case.",
+  "withdraw called by an account that carries an EIP-7702 delegation (Prague and later): excluded by QMsg part 2, not proved either way.",
+  "The exact amount of ether or of any balance after a transaction: only the inequality (solvency) is carried through transactions."
+ ],
+ "fix_round_audit4": {
+  "finding": "WETH (the ten-token audit, fix 2 applied to WETH): the sequence theorems covered top-level messages only and assumed every other change keeps the storage of C and does not lower its ether.",
+  "status": "done, option (a): transaction-level solvency proved with an induction written for this token",
+  "part": "apply-c, see audits/weth/fixes.json",
+  "files": "WethVerify/Weth/TxFrame.lean (new, 559 lines), TxRun.lean (new, 420), TxChain.lean (new, 454), Tx.lean (new, 215), WethVerify.lean (4 imports), config/weth.json (axioms.imports, 23 names in axioms.after), WethVerify/Test/Axioms.lean (regenerated, 157 to 180), status.json (new)",
+  "retired": "nothing; Seq.lean is kept as the older, weaker model"
+ },
+ "to_merge_into_kit": {
+  "title": "invariant that reads the balance",
+  "files": [
+   "tokens/weth/WethVerify/Weth/TxFrame.lean",
+   "tokens/weth/WethVerify/Weth/TxRun.lean",
+   "tokens/weth/WethVerify/Weth/TxChain.lean"
+  ],
+  "what": "These three files are generic (no fact about WETH; namespace WethVerify.Bal). They give the kit's transaction induction for an invariant P with Bal.Mono L P (kept when the storage of L is the same and its ether is not lower) instead of Seq.StorageOnly. Definitions: Up, U, Paid, ResU, Mono, FrameKeepsV, V, ChainV. Headlines: resU_step, v_runFrame, processMessage_ind_bal, processMessage_good_bal, processCreateMessage_good_bal, processMessageCall_good_bal, runTransaction_good_bal, processTransaction_good_bal, chain_good_bal.",
+  "how": "Move to TokenKit/Seq (for example Seq/BalFrame.lean, BalRun.lean, BalTx.lean) under namespace TokenKit.Seq.Bal, then tokens/weth/WethVerify/Weth/Tx.lean only changes its imports and opens. Any token whose invariant compares storage with its own ether (wrapped ether, vaults) can use it.",
+  "kit_still_needs": "A proof or a kept hypothesis for 'the sender of a transaction is not L' (EIP-3607: the check_transaction step before processTransaction rejects a sender with code). Block-level steps (withdrawals, system calls) for both Seq.Chain and Bal.ChainV."
+ }
+}

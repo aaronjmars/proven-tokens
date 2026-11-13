@@ -1,0 +1,907 @@
+{
+ "kit": {
+  "path": "token-kit",
+  "date": "2026-11-10",
+  "layout": {
+   "scripts/": "one generator set for every token: tokenlib.py, gen_code, gen_dispatch, gen_paths, gen_loops, gen_supply, gen_solvent, gen_readable, gen_sanity, gen_axioms, regen.sh, kit_opens.py, check_axioms.sh, map.py, disasm.py, keccak.py, compare_ref.py, dump_statements.py, build_box.sh",
+   "TokenKit/Evm/ + TokenKit.lean + lakefile.lean": "the shared Lean library, namespace TokenKit, its own Lake package (requires UsdtVerify from ../usdt-verify, uses the packages directory of that checkout). 16 files, 2789 lines.",
+   "tokens/<token>/": "one Lake package per token (requires TokenKit from ../..): config/<token>.json, data/, generated Lean files, hand-written Lean files, docs/MAP.md. No copy of the generic files.",
+   "statement-dumps/": "the before/after statement dumps (dumps.tgz), one diff per token, and the final build logs (the EthLib module-system warnings filtered out)."
+  },
+  "box": {
+   "name": "lean-ethlib-build",
+   "kit": "/home/user/token-kit",
+   "originals_for_the_dumps": "/home/user/{shib,qnt,bnb,weth}-verify (shib was already there and has the same Lean files by checksum as the local shib-verify; qnt, bnb, weth were copied and built, each exit code 0)",
+   "box_copy_equals_local": "197 files (.lean, .py, .sh, .json) compared by sha1 after the final build: identical",
+   "upstream_rebuilt_or_refetched": "no: in every build log every job outside TokenKit and the token is Replayed, 0 Built lines for EthLib, Mathlib or UsdtVerify; no network fetch",
+   "disk_free_mb_after": 7883
+  }
+ },
+ "tokens": {
+  "shib": {
+   "project": "tokens/shib",
+   "regen_command": "bash <kit>/scripts/regen.sh config/shib.json (run in tokens/shib; also run on the box: exit code 0 and every Lean file unchanged)",
+   "build": {
+    "command": "lake build in /home/user/token-kit/tokens/shib on the box, after removing .lake/build of the kit and of the token (clean build)",
+    "exit_code": 0,
+    "final_line": "Build completed successfully (1368 jobs)."
+   },
+   "axioms_test": {
+    "theorems": 122,
+    "only_three_standard_axioms": true,
+    "check": "scripts/check_axioms.sh on the build log: \"theorems checked: 122\", \"only standard axioms\" (propext, Classical.choice, Quot.sound or a subset)",
+    "fix_round_note": "Test/Axioms.lean regenerated in the fix round of the QNT, BNB and WETH audit (same 122 names, plus the all-constants scan); see fix_round.builds.shib"
+   },
+   "statement_preservation": {
+    "constants_compared": 191,
+    "axioms_test_theorems": 122,
+    "identical": "121 of 122 theorem statements and all 68 other definitions are identical modulo the namespace (same hash of the type and body after the namespace is removed, same printed text).",
+    "changed": [
+     {
+      "constant": "Ro (structure of TokenKit/Evm/Safe.lean), constructor Ro.mk",
+      "change": "one more field: accounts : for every address a, S'.getAccount a = S.getAccount a",
+      "why": "WETH added this field to its copy of the generic file Safe.lean (its solvency proof needs that a read-only run keeps the ether of every account). The shared library has one Ro, the stronger one."
+     },
+     {
+      "theorems": [
+       "Loops.ro_name",
+       "Loops.ro_symbol"
+      ],
+      "effect": "STRONGER: same hypotheses, the conclusion Ro now also says that every account is unchanged. Proved by the same generated proof."
+     },
+     {
+      "theorems": [
+       "Supply.inv_of_ro"
+      ],
+      "effect": "a helper lemma of the library with Ro as a HYPOTHESIS: read alone it asks for more than before (the extra field). It is the WETH version of the same lemma. Its only use is on the Ro that ro_name and ro_symbol give, so no end-to-end theorem of SHIB (supply_*, readable, Seq) is changed; none of them mentions Ro."
+     }
+    ]
+   },
+   "generated_files_vs_original": "32 files compared with shib-verify: 32 same, 0 different",
+   "hand_written": {
+    "total_lines": 1143,
+    "files": [
+     {
+      "file": "ShibVerify.lean",
+      "lines": 23
+     },
+     {
+      "file": "ShibVerify/Shib/Code.lean",
+      "lines": 42
+     },
+     {
+      "file": "ShibVerify/Shib/Complete/Dispatch.lean",
+      "lines": 95
+     },
+     {
+      "file": "ShibVerify/Shib/Enter.lean",
+      "lines": 45
+     },
+     {
+      "file": "ShibVerify/Shib/Map.lean",
+      "lines": 159
+     },
+     {
+      "file": "ShibVerify/Shib/Sanity/Moves.lean",
+      "lines": 110
+     },
+     {
+      "file": "ShibVerify/Shib/Sep.lean",
+      "lines": 131
+     },
+     {
+      "file": "ShibVerify/Shib/Seq.lean",
+      "lines": 243
+     },
+     {
+      "file": "ShibVerify/Shib/Spec/Dispatch.lean",
+      "lines": 214
+     },
+     {
+      "file": "ShibVerify/Shib/Steps.lean",
+      "lines": 81
+     }
+    ],
+    "note": "Code, Steps, Map, Enter, Spec/Dispatch, Complete/Dispatch (636 lines) are the hand-written dispatcher of the first token; gen_dispatch.py can write them (dispatch.generate, as QNT does) but that was not switched on here so the files stay identical to the original. Truly token-specific: Sep, Seq, Sanity/Moves."
+   },
+   "generated": {
+    "files": 22,
+    "lines": 10266
+   },
+   "sequence_scope": {
+    "file": "tokens/shib/ShibVerify/Shib/Seq.lean",
+    "functions_covered": "All 12 functions and the fallback: totalSupply, balanceOf, allowance, decimals, name, symbol, transfer, approve, transferFrom, increaseAllowance, decreaseAllowance, burn. No function is excluded. SHIB has no CALL.",
+    "theorems": {
+     "inv_calls": "Inv kept along any finite sequence of GoodCall and Untouched steps. Covers every selector.",
+     "goodCall_process": "top-level message that ends with no error = GoodCall. Every selector. Needs: Paris, code = CODE, no precompile, data below 2^256 bytes, Sep (callKeys message) (keccak, assumed), value 0 or not moved.",
+     "process_value_fails": "a message that moves a nonzero value always ends with an error (every function is non-payable).",
+     "process_step / process_step_inv / calls_process": "every top-level message that processMessage ends, every selector, error or not."
+    },
+    "excluded": [
+     "two-counter gas meter (EIP-8037); forks before Paris for whole messages",
+     "keccak separation is assumed, not proved",
+     "nested calls into the contract from another contract are steps only through the same GoodCall hypotheses (the theorems lift top-level messages)"
+    ],
+    "other_step_assumes": "The `other` step (Untouched) assumes one thing: every storage word of the contract is as before. It is proved for a top-level message that ends with an error (untouched_process_failed). For anything else put there (transactions to other accounts, fees, ether sent to the contract) it is the assumption of the step. It excludes a storage write to the contract by anything but its own code."
+   }
+  },
+  "qnt": {
+   "project": "tokens/qnt",
+   "regen_command": "bash <kit>/scripts/regen.sh config/qnt.json (run in tokens/qnt; also run on the box: exit code 0 and every Lean file unchanged)",
+   "build": {
+    "command": "lake build in /home/user/token-kit/tokens/qnt on the box, after removing .lake/build of the kit and of the token (clean build)",
+    "exit_code": 0,
+    "final_line": "Build completed successfully (1372 jobs)."
+   },
+   "axioms_test": {
+    "theorems": 131,
+    "only_three_standard_axioms": true,
+    "check": "scripts/check_axioms.sh on the build log: \"theorems checked: 131\", \"only standard axioms\" (propext, Classical.choice, Quot.sound or a subset)",
+    "fix_round_note": "Test/Axioms.lean regenerated in the fix round of the QNT, BNB and WETH audit (same 131 names, plus the all-constants scan); see fix_round.builds.qnt"
+   },
+   "statement_preservation": {
+    "constants_compared": 213,
+    "axioms_test_theorems": 131,
+    "identical": "all 131 theorem statements and all 82 other definitions identical modulo the namespace",
+    "changed": []
+   },
+   "generated_files_vs_original": "36 files compared with qnt-verify: 35 same, 1 different. Qnt/Readable.lean, 2 lines: `Readable.eq_of_cond` is now `Readable.eq_of_cond2`. QNT and WETH each added a lemma for the same compiled shape of require(a == b) (ISZERO ISZERO EQ); the merged gen_readable.py emits the WETH name for both. Same statement shape, proof only; no theorem statement changes.",
+   "hand_written": {
+    "total_lines": 793,
+    "files": [
+     {
+      "file": "QntVerify.lean",
+      "lines": 22
+     },
+     {
+      "file": "QntVerify/Qnt/Sanity/Moves.lean",
+      "lines": 248
+     },
+     {
+      "file": "QntVerify/Qnt/Sep.lean",
+      "lines": 162
+     },
+     {
+      "file": "QntVerify/Qnt/Seq.lean",
+      "lines": 361
+     }
+    ],
+    "note": "Dispatcher files are generated. Token-specific: Sep, Seq, Sanity/Moves."
+   },
+   "generated": {
+    "files": 32,
+    "lines": 9167
+   },
+   "sequence_scope": {
+    "file": "tokens/qnt/QntVerify/Qnt/Seq.lean",
+    "functions_covered": "All 14 functions and the fallback: name, approve, totalSupply, transferFrom, decimals, mint, DECIMAL_ZEROS, decreaseApproval, balanceOf, symbol, crowdsale, transfer, increaseApproval, allowance. QNT has no CALL.",
+    "theorems": {
+     "calls_fixed": "slots 1 (totalSupply_) and 3 (crowdsale) keep their word along any sequence. Every selector, mint included.",
+     "calls_D_mono": "sum of balances minus totalSupply_ never goes down. Every selector.",
+     "inv_calls_no_crowdsale": "Inv (sum of balances = totalSupply_) kept along a sequence in which no call comes from the address in slot 3. So it EXCLUDES a successful mint (only that address can mint): mint with a nonzero amount breaks Inv (goodCall_mint_D), which is what the bytecode does.",
+     "process_step / calls_process": "every top-level message that processMessage ends, every selector. Needs Paris, code = CODE, no precompile, data below 2^256 bytes, Sep (callKeys message).",
+     "process_step_inv": "slots 1 and 3 kept for any caller; Inv kept when the caller is not the address in slot 3."
+    },
+    "excluded": [
+     "Inv is not claimed across a mint by the crowdsale address",
+     "two-counter gas meter; forks before Paris for whole messages",
+     "keccak separation is assumed, not proved"
+    ],
+    "other_step_assumes": "The `other` step (Untouched) assumes one thing: every storage word of the contract is as before. It is proved for a top-level message that ends with an error (untouched_process_failed). For anything else put there (transactions to other accounts, fees, ether sent to the contract) it is the assumption of the step. It excludes a storage write to the contract by anything but its own code."
+   }
+  },
+  "bnb": {
+   "project": "tokens/bnb",
+   "regen_command": "bash <kit>/scripts/regen.sh config/bnb.json (run in tokens/bnb; also run on the box: exit code 0 and every Lean file unchanged)",
+   "build": {
+    "command": "lake build in /home/user/token-kit/tokens/bnb on the box (fix round of the QNT, BNB and WETH audit)",
+    "exit_code": 0,
+    "final_line": "Build completed successfully (1389 jobs)."
+   },
+   "axioms_test": {
+    "theorems": 153,
+    "only_three_standard_axioms": true,
+    "check": "scripts/check_axioms.sh <log> BnbVerify/Test/Axioms.lean: \"theorems checked: 153\", count matches, \"AXIOM SCAN OK: 5516 constants (5310 theorems) of BnbVerify and TokenKit, axioms used: [Quot.sound, Classical.choice, propext]\", \"only standard axioms\""
+   },
+   "statement_preservation": {
+    "constants_compared": 217,
+    "axioms_test_theorems": 132,
+    "identical": "130 of 132 theorem statements and all 85 other definitions identical modulo the namespace",
+    "changed": [
+     {
+      "constant": "Ro, constructor Ro.mk",
+      "change": "same extra field accounts as for SHIB",
+      "why": "same as SHIB"
+     },
+     {
+      "theorems": [
+       "Loops.ro_name",
+       "Loops.ro_symbol"
+      ],
+      "effect": "STRONGER conclusion (accounts unchanged too)."
+     }
+    ]
+   },
+   "generated_files_vs_original": "36 files compared with bnb-verify: 34 same, 2 different. Bnb/Invariant.lean (10 lines) and Bnb/Readable.lean (14 lines): `Supply.sub_fact_lt` is now `Supply.sub_fact_lt1`. BNB and WETH each had a lemma named Supply.sub_fact_lt for a different compiled shape (one ISZERO over LT for BNB, three for WETH); in one library the BNB one is renamed sub_fact_lt1. Proof lines only.",
+   "hand_written": {
+    "total_lines": 1934,
+    "files": [
+     {
+      "file": "BnbVerify.lean",
+      "lines": 26
+     },
+     {
+      "file": "BnbVerify/Bnb/Code.lean",
+      "lines": 42
+     },
+     {
+      "file": "BnbVerify/Bnb/Complete/Dispatch.lean",
+      "lines": 142
+     },
+     {
+      "file": "BnbVerify/Bnb/Enter.lean",
+      "lines": 45
+     },
+     {
+      "file": "BnbVerify/Bnb/Map.lean",
+      "lines": 196
+     },
+     {
+      "file": "BnbVerify/Bnb/Sep.lean",
+      "lines": 176
+     },
+     {
+      "file": "BnbVerify/Bnb/Seq.lean",
+      "lines": 252
+     },
+     {
+      "file": "BnbVerify/Bnb/Spec/Dispatch.lean",
+      "lines": 208
+     },
+     {
+      "file": "BnbVerify/Bnb/Steps.lean",
+      "lines": 81
+     },
+     {
+      "file": "BnbVerify/Bnb/Withdraw.lean",
+      "lines": 480
+     },
+     {
+      "file": "scripts/bnb_readable.py",
+      "lines": 286
+     }
+    ],
+    "note": "Dispatcher files by hand as for SHIB (714 lines). Withdraw.lean is the function with a value CALL. scripts/bnb_readable.py is a token script that writes Bnb/Readable.lean (538 generated lines), run by regen.sh through the config key token_generators."
+   },
+   "generated": {
+    "files": 26,
+    "lines": 10880
+   },
+   "sequence_scope": {
+    "file": "tokens/bnb/BnbVerify/Bnb/Seq.lean",
+    "functions_covered": "All 15 functions and the payable fallback: totalSupply, decimals, owner, balanceOf, freezeOf, allowance, name, symbol, approve, transfer, transferFrom, burn, freeze, unfreeze (GoodCall, no runner assumption) and withdrawEther (GoodWithdraw, under its local assumption).",
+    "theorems": {
+     "inv_calls": "Inv (sum of balances + sum of frozen = totalSupply) kept along any finite sequence of GoodCall, GoodWithdraw and Untouched steps.",
+     "process_step / process_step_inv / process_step_novalue": "every top-level message with a selector OTHER than withdrawEther (0x3bed33ce). Needs Paris, code = CODE, no precompile, data below 2^256 bytes, Sep (callKeys message), hcode (the contract account holds code).",
+     "process_step_withdraw": "the selector of withdrawEther only. Needs Paris and before Glamsterdam, hdel (owner code is no EIP-7702 delegation), hkeeps (Withdraw.KeepsInv for processRunner: the one message of the CALL keeps Inv).",
+     "process_step_all / process_step_inv_all": "every selector; the hypotheses of withdrawEther are asked only for its selector, keccak only for the others.",
+     "Withdraw.process_step_inv_plain": "withdrawEther with no runner assumption, when the owner has no code or the code STOP and is no precompile.",
+     "process_step_withdraw_process / process_step_all_process / process_step_inv_all_process (Bnb/Stipend.lean)": "the same with NO runner assumption, for any code of the owner (see stipend_closure). Left for withdrawEther: before Glamsterdam, hdel, hcode."
+    },
+    "excluded": [
+     "withdrawEther to an owner that is an EIP-7702 delegated account from Prague (hdel). An owner with any other code is now covered with no assumption (stipend_closure); before that entry it was covered only under KeepsInv.",
+     "withdrawEther from Glamsterdam on",
+     "two-counter gas meter; forks before Paris for whole messages",
+     "keccak separation is assumed, not proved"
+    ],
+    "other_step_assumes": "The `other` step (Untouched) assumes one thing: every storage word of the contract is as before. It is proved for a top-level message that ends with an error (untouched_process_failed). For anything else put there (transactions to other accounts, fees, ether sent to the contract) it is the assumption of the step. It excludes a storage write to the contract by anything but its own code. For BNB it is also proved for the move of the value of a message (untouched_move, from moveEther_keeps_storage)."
+   },
+   "stipend_closure": {
+    "date": "2026-11-10",
+    "what": "The last runner assumption of BNB is gone: Withdraw.KeepsInv is now PROVED for EthLib's real runner (processRunner / processMessage) for ANY code of the owner, by reuse of TokenKit.Stipend.processMessage_quiet (the theorem WETH uses). No library lemma was missing: no Stipend2.lean, no edit under TokenKit/.",
+    "file": "tokens/bnb/BnbVerify/Bnb/Stipend.lean (new, hand-written; imported in BnbVerify.lean)",
+    "call_gas": "The CALL at pc 3010 asks for gas 2300 * (amount == 0) (Withdraw.askedWord, read from the bytes by the generated path withdrawEther_p2): 0 asked + 2300 stipend when amount != 0, 2300 asked + no stipend when amount = 0. So the message has at most 2300 gas (last field of Withdraw.Payout, proved in withdrawEther_run from callGas_subCall_le and askedWord_le).",
+    "theorems": {
+     "Withdraw.payout_keeps_storage": "the message of Payout, run by processRunner with no error, keeps every storage word of the contract. Hypotheses: .istanbul <= fork; the contract account holds code.",
+     "Withdraw.processRunner_keepsInv_any": "KeepsInv (processRunner fork bound) message S for every bound, message, state. Hypotheses: .istanbul <= fork; (S.getAccount message.currentTarget).codeHash != EMPTY_CODE_HASH. Nothing on the owner (any code, precompile, delegation).",
+     "Withdraw.supply_withdrawEther_process": "supply_withdrawEther under processRunner with no KeepsInv. Hypotheses: .berlin <= fork < .glamsterdam, data size < 2^256, selector, hdel, contract holds code, Inv at start.",
+     "process_step_withdraw_process": "process_step_withdraw with no KeepsInv.",
+     "process_step_all_process": "process_step_all with no KeepsInv: hw is now only (fork < .glamsterdam and hdel).",
+     "process_step_inv_all_process": "process_step_inv_all with no KeepsInv: Inv at the start of any top-level message of CODE gives Inv at its end."
+    },
+    "hypotheses_left_process_step_inv_all_process": [
+     "hparis: .paris <= fork",
+     "hmc: message.code = CODE",
+     "noPrecompile: precompileAddress fork message = none",
+     "hsize: message.data.size < 2^256",
+     "hcode: (state.getAccount message.currentTarget).codeHash != EMPTY_CODE_HASH",
+     "K: selector != 0x3bed33ce -> Sep (callKeys message) (keccak separation, assumed)",
+     "hw: selector = 0x3bed33ce -> fork < .glamsterdam and hdel (from Prague (.pectra <= fork) the code of the owner is no EIP-7702 delegation)",
+     "hproc: processMessage fork message state substate = .ok ended; hI: Inv at the start"
+    ],
+    "why_each_condition": {
+     "istanbul": "hypothesis of processMessage_quiet: SSTORE fails with 2300 gas or less from Istanbul (EIP-2200). No upper fork bound for KeepsInv itself. Implied by Paris / Berlin in the other theorems.",
+     "contract_has_code": "the message moves its value out of the contract; EthLib's moveEther may delete an account left empty, an account with code is never empty (moveEther_keeps_storage). Same as hcode of process_step.",
+     "hdel_still_needed": "yes, but only for the CALL step of the contract itself: TokenKit.call_outcome (used by withdrawEther_run) does not cover a CALL to a delegated account. It is NOT needed for KeepsInv; before Prague it asks nothing. Same limit as WETH's WithdrawReady.",
+     "before_glamsterdam": "call_outcome is proved for the one-counter gas rules before Glamsterdam. Not needed for KeepsInv."
+    },
+    "kept_unchanged": "Withdraw.lean, Seq.lean, Sanity/Withdraw.lean and every old theorem (process_step_all, process_step_inv_all, processRunner_keepsInv, ...) are byte-identical; nothing weakened. Their head comments still say the general owner is not proved there; this file is where it is proved.",
+    "generator": "names added to axioms.after and module to axioms.imports in tokens/bnb/config/bnb.json; Test/Axioms.lean regenerated with scripts/gen_axioms.py (not edited by hand). Added to the list: the 6 theorems above and Stipend.processMessage_quiet.",
+    "build": {
+     "command": "cd /home/user/token-kit/tokens/bnb && lake build (box lean-ethlib-build)",
+     "exit_code": 0,
+     "final_line": "Build completed successfully (1391 jobs).",
+     "log": "/home/user/logs/bnbst/full.log (on the box)"
+    },
+    "axioms_test": {
+     "theorems": 160,
+     "was": 153,
+     "check": "bash scripts/check_axioms.sh <log> tokens/bnb/BnbVerify/Test/Axioms.lean: exit 0, \"theorems checked: 160\", count matches, \"AXIOM SCAN OK: 5578 constants (5362 theorems) of BnbVerify and TokenKit, axioms used: [Quot.sound, Classical.choice, propext]\", \"only standard axioms\""
+    },
+    "files_changed": [
+     "tokens/bnb/BnbVerify/Bnb/Stipend.lean (new)",
+     "tokens/bnb/BnbVerify.lean (one import)",
+     "tokens/bnb/config/bnb.json (axioms.after, axioms.imports)",
+     "tokens/bnb/BnbVerify/Test/Axioms.lean (generated)",
+     "kit-status.json"
+    ],
+    "not_covered": [
+     "withdrawEther to an owner that is an EIP-7702 delegated account from Prague (hdel)",
+     "withdrawEther from Glamsterdam on; two-counter gas meter",
+     "whole messages before Paris",
+     "keccak separation is assumed, not proved"
+    ]
+   }
+  },
+  "weth": {
+   "project": "tokens/weth",
+   "regen_command": "bash <kit>/scripts/regen.sh config/weth.json (run in tokens/weth; also run on the box: exit code 0 and every Lean file unchanged)",
+   "build": {
+    "command": "lake build in /home/user/token-kit/tokens/weth on the box, after removing .lake/build of the kit and of the token (clean build)",
+    "exit_code": 0,
+    "final_line": "Build completed successfully (1386 jobs)."
+   },
+   "axioms_test": {
+    "theorems": 157,
+    "check": "scripts/check_axioms.sh on the build log: \"theorems checked: 157\", count matches Test/Axioms.lean, scan of every constant OK, only standard axioms (propext, Classical.choice, Quot.sound)",
+    "note": "Refreshed after the WETH fix round (tokens/weth/fix-status.json); earlier entry said 133 theorems, 1380 jobs."
+   },
+   "statement_preservation": {
+    "constants_compared": 223,
+    "axioms_test_theorems": "133 lines, 131 distinct names (Sanity.totalSupply_runs and Sanity.withdraw_runs are printed twice, as in the original file)",
+    "identical": "all statements and definitions identical modulo the namespace",
+    "changed": []
+   },
+   "generated_files_vs_original": "38 files compared with weth-verify: 38 same, 0 different",
+   "hand_written": {
+    "total_lines": 2087,
+    "files": [
+     {
+      "file": "WethVerify.lean",
+      "lines": 28
+     },
+     {
+      "file": "WethVerify/Weth/Code.lean",
+      "lines": 42
+     },
+     {
+      "file": "WethVerify/Weth/Complete/Dispatch.lean",
+      "lines": 55
+     },
+     {
+      "file": "WethVerify/Weth/Enter.lean",
+      "lines": 109
+     },
+     {
+      "file": "WethVerify/Weth/Invariant.lean",
+      "lines": 199
+     },
+     {
+      "file": "WethVerify/Weth/Map.lean",
+      "lines": 160
+     },
+     {
+      "file": "WethVerify/Weth/ReadableHand.lean",
+      "lines": 129
+     },
+     {
+      "file": "WethVerify/Weth/Sanity/Moves.lean",
+      "lines": 280
+     },
+     {
+      "file": "WethVerify/Weth/Sanity/Withdraw.lean",
+      "lines": 127
+     },
+     {
+      "file": "WethVerify/Weth/Sep.lean",
+      "lines": 132
+     },
+     {
+      "file": "WethVerify/Weth/Seq.lean",
+      "lines": 317
+     },
+     {
+      "file": "WethVerify/Weth/Steps.lean",
+      "lines": 81
+     },
+     {
+      "file": "WethVerify/Weth/TotalSupply.lean",
+      "lines": 100
+     },
+     {
+      "file": "WethVerify/Weth/Withdraw.lean",
+      "lines": 328
+     }
+    ],
+    "note": "Steps, Map, Enter, Code, Complete/Dispatch by hand (447 lines; WETH has a payable fallback, so no Spec/Dispatch). Withdraw, TotalSupply, Invariant, ReadableHand, Sanity/Moves, Sanity/Withdraw, Sep, Seq are about the external call and the ether backing."
+   },
+   "generated": {
+    "files": 24,
+    "lines": 7752
+   },
+   "sequence_scope": {
+    "file": "tokens/weth/WethVerify/Weth/Seq.lean",
+    "written_by": "BNB fix agent from the file as it stood at 19:34 EST 2026-11-10; the WETH agent may refine it",
+    "functions_covered": "All 11 functions and the two fallbacks (deposit by plain ether): totalSupply, balanceOf, allowance, decimals, name, symbol, deposit, approve, transfer, transferFrom, withdraw.",
+    "theorems": {
+     "solvent_calls": "Solvent (ether of the contract covers the sum of balances) kept along any finite sequence of GoodCall and Other steps.",
+     "goodCall_process / process_step / process_step_solvent / calls_process": "every top-level message that processMessage ends, every selector. Needs Paris, code = CODE, no precompile, data below 2^256 bytes, Sep (callKeys message), hval (the message moves its value or has none), hne (the caller is not the contract), hcodeC (the contract account holds code), and for withdraw with no value hw : WithdrawReady (before Glamsterdam, caller code is no EIP-7702 delegation). No assumption on the callee (Weth/Reenter.lean).",
+     "withdrawReady_eoa": "WithdrawReady holds when the caller of withdraw has no code, before Glamsterdam."
+    },
+    "excluded": [
+     "withdraw from Glamsterdam on, or by a caller whose code is an EIP-7702 delegation",
+     "a message from the contract to itself (hne)",
+     "two-counter gas meter; forks before Paris",
+     "keccak separation is assumed, not proved"
+    ],
+    "other_step_assumes": "The `other` step (Other) assumes two things: every storage word of the contract is as before, and its ether did not go down. Proved for a top-level message that ends with an error (other_process_failed). For transactions to other accounts, fees and ether forced into the contract it is the assumption of the step. It excludes any loss of ether of the contract outside its own code."
+   }
+  }
+ },
+ "library_build": {
+  "command": "lake build in /home/user/token-kit (clean)",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1347 jobs)."
+ },
+ "statement_preservation_method": {
+  "tool": "scripts/dump_statements.py",
+  "how": "On the box, for the original project and for the migrated one, a Lean command walks every theorem named in Test/Axioms.lean and every definition, structure and constructor of the project or of the generic files that its statement uses (through types and bodies of definitions, not proofs). For each it writes the name with the root namespace removed, a hash of the type and of the body computed after the same removal inside, the list of constants used, and the printed type (pp.fullNames). The two dumps are compared by name; texts are compared with runs of blanks made one blank, because the printer breaks lines by width and names changed length.",
+  "files": "statement-dumps/<token>.diff.txt (the archive of the 8 full dumps, dumps.tgz, is not kept)",
+  "result": "QNT and WETH: no change. SHIB and BNB: one changed definition (Ro gained the field accounts), which makes ro_name and ro_symbol stronger; for SHIB the library lemma Supply.inv_of_ro takes the stronger Ro as hypothesis. See tokens.<t>.statement_preservation."
+ },
+ "merged_changes": {
+  "from_qnt": [
+   "gen_dispatch.py (dispatcher files from the config, dispatch.generate)",
+   "gen_paths: aligned memory of any number of words (memW_set, memW_load, memW_readWord, memW_readWords, size_memWn), INVALID 0xfe as a faulted path, paths.decide_equivalent",
+   "gen_supply: supply.mode = delta (delta_<fn>, supply_step)",
+   "gen_readable: several success paths, shapes require(a == b) and if (v > a), readable_opts.simp",
+   "gen_sanity: skip of functions with no entry, {path: words} form, Witness.nogt1",
+   "gen_axioms: delta names, dict form of sanity",
+   "library: Mem (general aligned lemmas, memW_init_fp), Rules (isZero_eq_zero_iff, isZero_ne_zero_iff, decided_by), Readable (eq_of_cond, le_of_cond_gt1, lt_of_cond_gt1, sub_fact1, div_one, toNat_zero), Witness (nogt1, noov, eq2)"
+  ],
+  "from_bnb": [
+   "gen_paths: return data read from memory (RET), LOG2, paths that stop at a CALL (frame), prune: normalized, dead_branches, paths_imports, min_size, size_proof, derived facts in paths.json",
+   "gen_loops: size_proof",
+   "gen_supply: section supply for a two-mapping invariant, hsel hypotheses for functions with no success path, shapes add_fact_lt, sub_fact_lt1, add_fact2",
+   "gen_sanity: expression parser, dict form, sanity.imports / doc / file",
+   "gen_axioms: sanity.file, axioms.skip",
+   "regen.sh: generators list",
+   "library: Prune, Dead, Supply2, Readable2, Witness2, logSub2 / log2K in Rules, additions to Mem"
+  ],
+  "from_weth": [
+   "gen_paths: stops (leaf kind at), segments, fallback kinds short and other, dispatch.explicit_size, LOG2 and halts with free pointer 96, a JUMPI on equal t t follows one side, completeness in runFrame form",
+   "tokenlib: fallbacks, segments, stops, explicit_size",
+   "gen_solvent.py (backing = ether)",
+   "gen_readable: optional totalSupply slot, fallbacks, eq_of_cond2 / ne_of_cond2, le_of_cond_lt + sub_fact_lt, readable_simp",
+   "gen_sanity: fallbacks, Witness.nolt0, skip unless one success path",
+   "gen_axioms: fallbacks, segments, solvent_ prefix, axioms.declared_only",
+   "regen.sh: gen_solvent or gen_supply by backing",
+   "check_axioms.sh: grep -E version that works on macOS",
+   "library: Logic (ADDRESS, BALANCE, ruleL, ok_exactL, no_okL), Call (CALL rules, call_ok), Ether, Solvent, Ro.accounts in Safe, Readable (eq_of_cond2, ne_of_cond2, log2, readable_close), Witness (nolt0, eq2_ne, eq2_eq, CALLER1W, caller1_word)"
+  ],
+  "new_in_the_kit": [
+   "every generator writes into the project of the config it is given (tokens/<t>) and imports TokenKit.Evm.*",
+   "kit_opens.py: sets the line `open TokenKit [TokenKit.<Sub> ...]` in every project file that imports the kit (last step of regen.sh; also the one-time migration of hand files)",
+   "regen.sh: token_generators (scripts of the token itself), config path resolved from any folder",
+   "gen_axioms: axioms.declared_only looks in the token project and in the kit library",
+   "compare_ref.py, dump_statements.py, build_box.sh"
+  ]
+ },
+ "conflicts_and_resolutions": [
+  {
+   "conflict": "gen_paths memory lemmas: QNT emits general lemmas for any number of words, BNB and WETH emit lemmas named by offset (memW_ext96, memW_write96, memW_read96, size_memW4)",
+   "resolution": "the general QNT lemmas are the default; `paths.memory_lemmas: \"named\"` in the config keeps the named ones. BNB and WETH set it, so their generated proofs are byte-identical to the originals. Both lemma sets are in TokenKit/Evm/Mem.lean."
+  },
+  {
+   "conflict": "gen_readable, a function with several success paths: QNT states the same claims for every path (rcases over ok_<fn>), WETH states one case per path with the other paths excluded",
+   "resolution": "WETH style is the default; `readable_opts.several_paths: \"same_claims\"` (set for QNT) keeps the QNT style. No check dropped in either."
+  },
+  {
+   "conflict": "gen_readable, require(a == b): QNT lemma eq_of_cond, WETH lemma eq_of_cond2 for the same compiled shape",
+   "resolution": "the generator emits eq_of_cond2 / ne_of_cond2; both lemmas stay in the library. 2 proof lines of Qnt/Readable.lean differ from the original."
+  },
+  {
+   "conflict": "Supply.sub_fact_lt defined by BNB (one ISZERO over LT) and by WETH (three ISZERO over LT) with different statements",
+   "resolution": "both kept; the BNB one is named Supply.sub_fact_lt1 (library, gen_supply.py, bnb_readable.py). 24 proof lines of two BNB files differ from the original."
+  },
+  {
+   "conflict": "isZero_eq_zero_iff in QNT Rules.lean (implicit argument, x ≠ 0) and in BNB Prune.lean (explicit argument, ¬x = 0)",
+   "resolution": "one lemma, the QNT one in Rules.lean; Prune.lean imports it. The BNB tactics decided and add_second still prove their goals (simp set has ne_eq)."
+  },
+  {
+   "conflict": "le_of_cond_gt1, div_one, log2, logs_logSub2 defined twice (QNT or WETH Readable.lean and BNB Readable2.lean)",
+   "resolution": "kept once in Readable.lean, removed from Readable2.lean (same statements; le_of_cond_gt1 differs only in the order of two implicit arguments)."
+  },
+  {
+   "conflict": "structure Ro: 3 fields in SHIB, QNT, BNB; 4 fields (accounts) in WETH",
+   "resolution": "one Ro with 4 fields (the stronger one; WETH needs it). ro_name / ro_symbol of SHIB and BNB become stronger and are proved by the same generated proof; Supply.inv_of_ro and Supply.inv2_of_ro take the stronger Ro. This is the only statement change of the migration; see tokens.shib.statement_preservation. A way with no change at all would be two structures (Ro with 3 fields, a second one with accounts for WETH); not done because it renames Ro in the WETH statements and files."
+  },
+  {
+   "conflict": "gen_sanity: BNB dict form with args, QNT dict form {path: words}, WETH skip rule and fallbacks",
+   "resolution": "all three forms accepted; a condition that is not taken stops the generator unless its proof is by decide (no witness is silently skipped beyond what the originals skipped)."
+  },
+  {
+   "conflict": "Mem.lean header and memW_init: QNT/BNB side is a superset of the WETH side",
+   "resolution": "superset kept (with memW_init_fp); WETH proofs build unchanged."
+  },
+  {
+   "conflict": "check_axioms.sh: three versions",
+   "resolution": "the WETH grep -E version (works on Linux and macOS); same check: fails on any axiom name outside the three standard ones."
+  },
+  {
+   "conflict": "namespaces: generic names used to resolve because the token namespace was their own (for example log3 inside namespace ShibVerify.Readable)",
+   "resolution": "library in namespace TokenKit; token files keep their namespace and get `open TokenKit` plus `open TokenKit.<Sub>` where they enter or open <Root>.<Sub> (kit_opens.py). No statement text was edited by hand."
+  }
+ ],
+ "token_configs_changed": {
+  "bnb": "paths.memory_lemmas = named; paths_imports TokenKit.Evm.Dead; sanity.imports TokenKit.Evm.Witness2; token_generators [scripts/bnb_readable.py]",
+  "weth": "paths.memory_lemmas = named",
+  "qnt": "readable_opts.several_paths = same_claims",
+  "shib": "none"
+ },
+ "checks": {
+  "forbidden": "no sorry, native_decide, bv_decide, admit or axiom declaration in any .lean file of the kit (grep); no \"declaration uses sorry\" in any build log",
+  "dashes": "no em dash or en dash in any file of the kit (byte search)",
+  "originals": "the four original folders and the upstream clone were only read; no file in them is newer than the start of the work",
+  "git": "nothing pushed, no repository created"
+ },
+ "how_to_run_for_a_new_token": [
+  "1. Make tokens/<t>/ with config/<t>.json (copy the closest of the four: shib = plain ERC20 solc 0.5, qnt = solc 0.4 with mint and a generated dispatcher, bnb = two balance mappings and a value CALL, weth = ether backed with a payable fallback) and data/<t>.runtime.hex. Set root (for example FooVerify), dir (Foo), the functions, slots and selectors.",
+  "2. Copy lakefile.lean, lake-manifest.json and lean-toolchain from tokens/shib and change the two names ShibVerify to <Root>. Add <Root>.lean with the imports of the files to build.",
+  "3. In tokens/<t>: bash ../../scripts/regen.sh config/<t>.json. With dispatch.generate the dispatcher files are written too. The last step (kit_opens.py) sets the `open TokenKit ...` lines.",
+  "4. Write the token-specific files by hand: Sep.lean, Seq.lean, a Sanity/Moves.lean witness, and any function that calls out (patterns: tokens/bnb Withdraw.lean, tokens/weth Withdraw.lean and Invariant.lean). Import generic files as TokenKit.Evm.<File>; run python3 ../../scripts/kit_opens.py . after adding a file.",
+  "5. Build on the box: bash scripts/build_box.sh <t> (copies the kit to /home/user/token-kit, builds the library and the token detached, prints the final line and the result of check_axioms.sh). The box needs a built /home/user/usdt-verify next to the kit; nothing of EthLib or Mathlib is fetched or built.",
+  "6. A lemma that is not about the token goes into TokenKit/Evm (a new file, imported in TokenKit.lean), not into the token. Then rebuild every token: bash scripts/build_box.sh shib qnt bnb weth <t>.",
+  "7. After a generator change: regen all tokens, python3 scripts/compare_ref.py tokens/<t> <original project> for the four references, and scripts/dump_statements.py (see its header) for the statement check."
+ ],
+ "not_done": [
+  "SHIB, BNB and WETH still carry hand-written dispatcher files that gen_dispatch.py could write; left as is so the files stay identical to the originals.",
+  "build_box.sh was used for the final clean build; the older per-project sync.sh, build.sh, bstart.sh, bwait.sh, regress.sh, check_shib.sh, try.sh are replaced by build_box.sh and compare_ref.py and were not copied."
+ ],
+ "fix_round": {
+  "1": {
+   "finding": "BNB-1 (critical)",
+   "status": "done",
+   "what": "The hypothesis `hrunner` (over every message of the runner, false for EthLib's processRunner) is gone. withdrawEther now rests on a local assumption in upstream's style: Withdraw.KeepsInv runChild message S := KeepsOn runChild (Payout message S) (InvKept message.currentTarget). It is only about the one message the CALL of withdrawEther sends (code address = the owner in slot 4, value = the amount, sender = the contract, gas = what the CALL forwards), from a caller state that reads as the start state (accounts, storage, code), and only when the runner ends that message with no error.",
+   "theorems_added": {
+    "tokens/bnb/BnbVerify/Bnb/Withdraw.lean": [
+     "Withdraw.Payout (def)",
+     "Withdraw.InvKept (def)",
+     "Withdraw.KeepsInv (def)",
+     "Withdraw.withdrawEther_to_call",
+     "Withdraw.withdrawEther_run (restated)",
+     "Withdraw.supply_withdrawEther (restated)",
+     "Withdraw.readsAs_storageAt",
+     "Withdraw.readsAs_getAccount",
+     "Withdraw.incorporateChild_state",
+     "Withdraw.toAddressMasked_ownerWord",
+     "Withdraw.askedWord_le",
+     "Supply.inv2_congr (moved here from Seq.lean)"
+    ],
+    "tokens/bnb/BnbVerify/Bnb/Seq.lean": [
+     "GoodWithdraw (def)",
+     "Calls.withdraw (new constructor)",
+     "inv_goodWithdraw",
+     "process_step_withdraw",
+     "process_step_all",
+     "process_step_inv_all"
+    ],
+    "tokens/bnb/BnbVerify/Bnb/Sanity/Withdraw.lean": [
+     "Withdraw.PlainOwner (def)",
+     "Withdraw.hdel_of_plain",
+     "Withdraw.processRunner_keepsInv",
+     "Withdraw.keepsInv_noCode (case a)",
+     "Withdraw.keepsInv_stop (case b)",
+     "Withdraw.supply_withdrawEther_plain",
+     "Withdraw.process_step_inv_plain",
+     "Withdraw.withdrawEther_pays",
+     "Withdraw.withdrawEther_pays_sample",
+     "Withdraw.withdrawEther_pays_closed",
+     "Withdraw.notPrecompile_sample",
+     "Withdraw.ne_sample"
+    ],
+    "TokenKit/Evm/CallOutcome.lean": [
+     "callStep_missing",
+     "callStep_value_poor",
+     "callStep_value_static",
+     "callStep_value_deep",
+     "Sent (def)",
+     "callGas_subCall_le",
+     "step_at_call",
+     "call_outcome"
+    ],
+    "TokenKit/Evm/Payee.lean": [
+     "Payee.STOP_CODE (def)",
+     "Payee.delegatedAddress_stop",
+     "Payee.delegatedAddress_empty",
+     "Payee.stop_message",
+     "Payee.payee_keeps_storage",
+     "Payee.noCode_message_runs"
+    ]
+   },
+   "theorems_retired": [
+    "Withdraw.withdrawEther_run in its old form (hypothesis hrunner): replaced by the restated theorem of the same name, no hrunner",
+    "Withdraw.supply_withdrawEther in its old form (hypothesis hrunner): replaced by the restated theorem of the same name, hypothesis hkeeps : KeepsInv runChild message state",
+    "No theorem of the kit takes hrunner any more (grep: only one retirement note in the header of Bnb/Withdraw.lean)."
+   ],
+   "hypotheses_now_assumed": [
+    "hkeeps : Withdraw.KeepsInv runChild message state (local, one message). PROVED for processRunner when the owner has no code or the code STOP and is no precompile, and the contract account holds code (processRunner_keepsInv, keepsInv_noCode, keepsInv_stop). Still an assumption for an owner with any other code.",
+    "hdel : the code of the owner is no EIP-7702 delegation (asked from Pectra only; proved for a plain owner: hdel_of_plain)",
+    "hglam : fork < Glamsterdam for withdrawEther (the fork range of EthLib's rules of CALL used here)",
+    "hfork : Berlin <= fork (Paris for the whole-message theorems); call data below 2^256 bytes",
+    "No keccak hypothesis for withdrawEther (it writes no mapping); Sep (callKeys message) stays assumed for the other selectors, as before."
+   ],
+   "satisfiable_for_real_runner": "Machine-checked: Withdraw.processRunner_keepsInv proves KeepsInv for processRunner at every bound for (a) an owner with no code and (b) an owner whose code is the one byte STOP. Withdraw.withdrawEther_pays_closed is a full run with processRunner and amount 1 with no hypothesis but Paris <= fork < Glamsterdam: it ends with no error, the owner has 1 wei more, the contract 1 wei less.",
+   "sequence_theorems": "withdrawEther is back: Calls has the constructor `withdraw` (GoodWithdraw), inv_calls covers it, process_step_withdraw / process_step_all / process_step_inv_all lift it to processMessage under hdel and KeepsInv for processRunner; process_step_inv_plain has no runner assumption at all for a plain owner.",
+   "amount_0_and_failure_cases": "Covered by generality, not by a separate witness: withdrawEther_run and supply_withdrawEther hold for every amount word (amount 0 included: the CALL then moves no value and KeepsInv is asked for that message) and for every run that ends with no error. A run that ends with an error (not the owner, nonzero value sent, contract too poor, call depth 1024, callee fails so the code reverts, out of gas) is rolled back by the message layer: untouched_process_failed, used in process_step_withdraw. NOT done: a separate closed full-run witness with amount 0; an owner with code other than STOP stays under the assumption.",
+   "lines_written": {
+    "tokens/bnb/BnbVerify/Bnb/Withdraw.lean": "581 (was 480, rewritten in part)",
+    "tokens/bnb/BnbVerify/Bnb/Seq.lean": "419 (was 252)",
+    "tokens/bnb/BnbVerify/Bnb/Sanity/Withdraw.lean": "414 (new)",
+    "TokenKit/Evm/CallOutcome.lean": "465 (new)",
+    "TokenKit/Evm/Payee.lean": "156 (new)"
+   },
+   "build_iterations": "about 14 builds on the box: shared files 4, Withdraw.lean + Seq.lean 1 after the rewrite, Sanity/Withdraw.lean 5, full BNB build 2, plus the first tries on Withdraw.lean",
+   "obstacles": [
+    "LawfulGasMeter instance stuck on `cases hpm : processMessage ...`: the meter must be given (`Meter := Nat`).",
+    "`decide` with a free variable in the sample state: goals restated with `show` first.",
+    "regen.sh runs kit_opens.py, which adds `open TokenKit.Complete` to hand-written files that import the kit: the files were rebuilt after it so that a regen leaves them unchanged."
+   ]
+  },
+  "2": {
+   "status": "done",
+   "what": "`hmove` is no hypothesis any more. TokenKit.moveEther_keeps_storage (TokenKit/Evm/Move.lean) proves from EthLib's moveEther that a successful move of ether keeps every storage word of a contract whose account holds code. BNB's Seq.lean uses it as the theorem `untouched_move`.",
+   "theorems_added": [
+    "TokenKit.moveEther_keeps_storage",
+    "BnbVerify.untouched_move"
+   ],
+   "theorems_retired": [
+    "hypothesis hmove of process_step and process_step_inv (BNB): removed, the two theorems now take hcode instead"
+   ],
+   "hypotheses_now_assumed": [
+    "hcode : (state.getAccount message.currentTarget).codeHash is not EMPTY_CODE_HASH (the contract account holds code). Needed because EthLib's moveEther deletes an account that is empty after the move; an account with code is never empty. True for any deployed contract."
+   ],
+   "lines_written": {
+    "TokenKit/Evm/Move.lean": "51 (new)"
+   },
+   "build_iterations": 2,
+   "obstacles": []
+  },
+  "5": {
+   "status": "done",
+   "switches": [
+    {
+     "switch": "BNB functions[].frame = true (withdrawEther)",
+     "kept": true,
+     "weakens": "The generators write no path theorems to the end, no ok_/invariant theorem and no sanity witness for that function; its proofs are hand-written (Bnb/Withdraw.lean, Bnb/Sanity/Withdraw.lean).",
+     "where_used": "tokens/bnb/config/bnb.json (frame_comment, frame_theorems); scripts/gen_paths.py, gen_supply.py, gen_sanity.py, gen_axioms.py",
+     "guard": "gen_axioms.py now stops unless a frame function lists its hand-written theorems in frame_theorems; they are in the axioms test. gen_sanity.py prints that no witness was generated."
+    },
+    {
+     "switch": "WETH stops / segments (pcs 1648, 2724)",
+     "kept": true,
+     "weakens": "A path stops at the listed pc instead of the end of the frame; the rest of the function (totalSupplyTail, withdrawTail) is proved by hand (Weth/TotalSupply.lean, Weth/Withdraw.lean, Weth/WithdrawAll.lean).",
+     "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py (docstring line WEAKENS)",
+     "guard": "The hand-written tails are in the axioms test (axioms.after) and in the all-constants scan."
+    },
+    {
+     "switch": "WETH dispatch.explicit_size = true",
+     "kept": true,
+     "weakens": "Every per-function theorem ok_<fn> takes `4 <= message.data.size` as a hypothesis: with a payable fallback a successful run says nothing of the size of the call data. Calls with shorter data are the hand-written fallback entries (enterShort, enterOther).",
+     "where_used": "tokens/weth/config/weth.json; scripts/gen_paths.py, gen_loops.py, gen_readable.py, tokenlib.py (comment)",
+     "guard": "The hypothesis is visible in each statement; the short-data case is proved apart, so no call is left out."
+    },
+    {
+     "switch": "axioms.skip (BNB)",
+     "kept": false,
+     "weakens": "It left named theorems out of the axioms test.",
+     "where_used": "removed from tokens/bnb/config/bnb.json; gen_axioms.py now stops with an error if any config has axioms.skip"
+    },
+    {
+     "switch": "axioms.declared_only (WETH)",
+     "kept": true,
+     "weakens": "A generated theorem name that no Lean file declares is left out of the #print list (3 names: Sanity.transferFrom_runs, solvent_totalSupplyTail, solvent_withdrawTail; none exists, their content is in hand-written theorems).",
+     "where_used": "tokens/weth/config/weth.json (axioms.comment); scripts/gen_axioms.py prints the names left out and writes them in the head of Test/Axioms.lean",
+     "guard": "It cannot hide an existing theorem: the all-constants scan checks every constant of the project."
+    },
+    {
+     "switch": "scripts/check_axioms.sh (was weak)",
+     "kept": "rewritten",
+     "weakens": "Before: it passed on an empty log, on zero results, and missed axiom lists wrapped over several lines.",
+     "where_used": "scripts/check_axioms.sh is now a wrapper of scripts/check_axioms.py: fails on an empty log, zero results, any axiom outside the three standard ones (wrapped lists read whole), a sorry warning, a count that differs from the #print lines of Test/Axioms.lean, or a missing AXIOM SCAN OK line."
+    }
+   ],
+   "axioms_test_coverage": "Test/Axioms.lean of every token now imports every module of the root file and ends with a scan (Lean.collectAxioms) of EVERY constant of the project and of TokenKit: the build fails if one uses an axiom outside propext, Classical.choice, Quot.sound or if a module declares an axiom. So no theorem can be hidden by a list. BNB list: 153 named theorems, all new main theorems of fixes 1 and 2 included.",
+   "theorems_added": [],
+   "theorems_retired": [],
+   "hypotheses_now_assumed": [],
+   "lines_written": {
+    "scripts/check_axioms.py": "86 (new)",
+    "scripts/gen_axioms.py": "161 (about 70 new)",
+    "scripts/check_axioms.sh": "8 (wrapper)",
+    "comments in gen_paths.py, tokenlib.py, gen_sanity.py, gen_solvent.py": "about 25"
+   },
+   "build_iterations": 3,
+   "obstacles": [
+    "Lean.CollectAxioms.collect is private in Lean 4.35: the scan uses the public Lean.collectAxioms per constant."
+   ]
+  },
+  "6": {
+   "status": "done",
+   "what": "tokens.<t>.sequence_scope written for shib, qnt, bnb and weth in this file: per sequence theorem, the functions covered and excluded, and what the `other` step assumes.",
+   "theorems_added": [],
+   "theorems_retired": [],
+   "hypotheses_now_assumed": [],
+   "lines_written": 0,
+   "build_iterations": 0,
+   "obstacles": []
+  },
+  "shared_changes": [
+   "NEW TokenKit/Evm/Move.lean, TokenKit/Evm/CallOutcome.lean, TokenKit/Evm/Payee.lean; imported in TokenKit.lean (19 imports). WETH's root file imports CallOutcome too. No existing shared Lean file changed.",
+   "scripts/gen_axioms.py: Test/Axioms.lean now has `import Lean`, imports every module of the root file, and ends with the all-constants scan; axioms.skip is refused; frame functions need frame_theorems. This changes the generated Test/Axioms.lean of all four tokens (same #print list, more imports, the scan). SHIB, QNT and WETH were regenerated (WETH by its own agent, same output) and all four rebuilt on the box lean-ethlib-build.",
+   "scripts/check_axioms.sh is now a wrapper of the new scripts/check_axioms.py (second argument: the Test/Axioms.lean to count against).",
+   "scripts/gen_paths.py, tokenlib.py: comments only (WEAKENS notes). scripts/gen_sanity.py, gen_solvent.py: one printed note each, generated Lean unchanged.",
+   "TokenKit/Evm/Stipend.lean (other agent) was synced to this box as it stood at 19:34 EST with tokens/weth and built there; it is not in TokenKit.lean (WETH imports it directly)."
+  ],
+  "builds": {
+   "box": "lean-ethlib-build, /home/user/token-kit, Lean v4.35.0",
+   "bnb": {
+    "final_line": "Build completed successfully (1389 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 153 (count matches Test/Axioms.lean); AXIOM SCAN OK: 5516 constants (5310 theorems) of BnbVerify and TokenKit, axioms used: [Quot.sound, Classical.choice, propext]; only standard axioms"
+   },
+   "shib": {
+    "final_line": "Build completed successfully (1368 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 122; AXIOM SCAN OK: 5307 constants (5142 theorems); only standard axioms"
+   },
+   "qnt": {
+    "final_line": "Build completed successfully (1372 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 131; AXIOM SCAN OK: 5001 constants (4828 theorems); only standard axioms"
+   },
+   "weth": {
+    "final_line": "Build completed successfully (1386 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 157; AXIOM SCAN OK: 3202 constants (2996 theorems); only standard axioms",
+    "note": "Snapshot of the local tokens/weth at 19:34 EST 2026-11-10 (the other agent's tree), built on this box to check the shared changes. The other agent's own box is the reference for WETH."
+   }
+  }
+ },
+ "lead_rebuild": {
+  "what": "Clean rebuild by the lead session after both fix rounds, with TokenKit.Evm.Stipend added to TokenKit.lean; script e2b/verify_all.sh",
+  "kit": "1353 jobs, exit 0",
+  "shib": "1368 jobs, 122 theorems",
+  "qnt": "1372 jobs, 131 theorems",
+  "bnb": "1389 jobs, 153 theorems",
+  "weth": "1386 jobs, 157 theorems",
+  "axioms": "all four: scan OK, only standard axioms",
+  "elapsed_s": 385
+ },
+ "optimizer_on": {
+  "pilot": "PEPE (tokens/pepe, namespace PepeVerify, config/pepe.json): solc 0.8.0 with the optimizer on. Every SHIB theorem family is proved; lake build exit 0, 'Build completed successfully (1397 jobs).'; axioms check passed on 306 theorems (propext, Classical.choice, Quot.sound only).",
+  "detail": "tokens/pepe/status.json (counts, assumptions, not covered, contract findings, generator changes, next_tokens for the 11 other optimizer-on tokens)",
+  "switches": "dispatch.mode walk; paths.logic; paths.raw_memory across_blocks; prune normalized; readonly_loops entry paths; supply.checked08 and supply.rules; sanity entries with slots (form eval); readable_opts facts checked08, close, several_paths same_claims, imports, simp, unfold, header, heartbeats; axioms.declared_only",
+  "new_kit_files": "TokenKit/Evm/Opt.lean, SafeL.lean, SupplyOpt.lean, WitnessOpt.lean, ReadableOpt.lean (five import lines added to TokenKit.lean; no existing declaration edited)",
+  "statement_form": "paths over EthLib Logic.SpecG and completeness over EndsL (EthLib runFrame, any message runner), because upstream's simulated opcode set lacks SHL, SHR, SLT, SGT, XOR",
+  "finished_tokens": "generated files of shib, qnt, weth, bnb: 147 of 149 byte-identical with the current scripts; the 2 others (Test/Axioms.lean of weth and bnb) differ by one 'open' line that kit_opens.py derives from TokenKit/Evm/Logic.lean, not from the optimizer-on changes. No file of the four tokens was regenerated or edited.",
+  "date": "2026-11-10"
+ },
+ "permit_model": {
+  "pilot": "USDD (tokens/usdd): permit proved for EthLib's real runner with no assumption on the precompile output; lake build exit 0, 'Build completed successfully (1407 jobs).', axioms test 287 theorems, only standard axioms.",
+  "library": "TokenKit/Evm/Precompile.lean (STATICCALL to precompile 1: gas, memory in and out, no state change beyond the recorded reads and the warm address; output is Precompiles.Ecrecover.compute via recoveredWord) and TokenKit/Evm/RawMem.lean (known words of a raw memory).",
+  "key_lemma": "TokenKit.ecrecover_call_ok: from the frame at GAS STATICCALL and a run of processRunner that ends with no error, the call got at least 3000 gas and the run goes on from the frame after the solc revert-bubble idiom with compute's output written.",
+  "scope": "from Paris, before Glamsterdam; hypothesis: no EIP-7702 delegation code at address 1 (used from Pectra).",
+  "generator_switches": "paths.raw_words, prefix_functions, stops, segments[].raw_mem, segments[].post_def",
+  "open": "no Sanity witness for a successful permit; DAI (0.5 unoptimized call bytes), SKY / USDE / ENA (PUSH0 idiom, CHAINID, ADDRESS; SKY ERC-1271 branch) need the variants listed in tokens/usdd/status.json reuse_notes."
+ },
+ "wbt_merge": {
+  "what": "The WBT local generators (tokens/wbt/scripts) are folded into scripts/ behind config switches: paths.log_before_sstore, paths.block_imports, supply.style delta_unopt08, supply.lib, readable_opts.facts unopt08, the generated_by keys, dispatch.split_doc, and gen_nomint.py (config key nomint). The kit regen.sh now writes WBT byte-identical; WbtVerify/Wbt/Lib.lean stays in the token.",
+  "regeneration_check": "shib, qnt, bnb, weth, pepe, wbt, usdd and dai: every file byte-identical with the final scripts.",
+  "bnb_weth": "Test/Axioms.lean of bnb and weth regenerated (one open line) and rebuilt on the box: bnb 1391 jobs, exit 0, 160 theorems; weth 1386 jobs, exit 0, 157 theorems; only standard axioms.",
+  "dai": "tokens/dai added with the same kit (paths.note, dead rule sub_after_ge_lt, supply.require_lt, readable_opts.require_lt; TokenKit/Evm/Note.lean and Unopt05.lean): lake build exit 0, 'Build completed successfully (1410 jobs).', axioms test 296 theorems. Kit library: 1363 jobs, exit 0.",
+  "detail": "tokens/dai/status.json"
+ },
+ "sky": {
+  "project": "tokens/sky",
+  "status": "tokens/sky/status.json",
+  "build_final_line": "Build completed successfully (1447 jobs).",
+  "axioms_test_theorems": 348,
+  "summary": "21 selectors; all proved except permit(bytes) with a signature length other than 65; general static-call theorem TokenKit.staticcall_kept; regen_check 8/8 identical"
+ },
+ "usde_ena_merge": {
+  "date": "2026-11-11",
+  "what": "The local generators of USDE and ENA (tokens/usde/scripts, tokens/ena/scripts) are folded into scripts/ behind config switches, and their generic local Lean lemmas are copied into five new files of TokenKit/Evm. scripts/regen.sh now writes both tokens byte-identical.",
+  "regeneration_check": "bash scripts/regen_check.sh bnb dai ena pepe qnt shib sky usdd usde wbt weth: 11/11 identical, on the Mac and on the box (tokens/link is not part of the check: it is in progress with its own script copies).",
+  "switches": {
+   "paths.env_local": "CHAINID by the rule chainidL and ADDRESS by addressL in logic mode (gen_paths.py), and CALLDATACOPY / CHAINID / ADDRESS in read-only loops with the modules of paths.block_imports imported by Gen/Loops.lean (gen_loops.py). SKY keeps paths.env08 (chainidK of Env08.lean).",
+   "paths.log_static_alt": "a LOG before the first SSTORE of a path: the stuck path splits on message.isStatic inside its own proof (rule logStaticStuck). WBT keeps paths.log_before_sstore (logStuckW, a split in the completeness proof).",
+   "paths.short_revert": "REVERT of the first bytes of one word (custom error of Solidity 0.8).",
+   "paths.block_imports_first": "the modules of paths.block_imports come first in the imports of the block files (USDE, ENA order); without it they come after Map (WBT, SKY order).",
+   "min_fork": "top-level key, ENA: \"shapella\". tokenlib.install_fork rewrites `.berlin <= fork` to `.shapella <= fork` and `from Berlin` to `from Shapella` in every Lean file a generator writes; gen_paths.py / gen_loops.py give (toBerlin hfork) to expK, sloadK, sstoreK, revertK, revert0K, chainidL; PUSH0 (0x5f) steps with push0L.",
+   "supply.unchecked as a dict {balances, totalSupply}": "USDE / ENA style (unchecked_facts: Supply.add_bal_inv, Supply.sub_tot_inv from the invariant itself; add_fact_gtc). supply.unchecked = true stays the SKY style.",
+   "supply.never_ok": "a function whose every path fails needs no supply theorem: supply_preserved closes its selector with ok_<fn>.elim.",
+   "readable_opts.add_gtc": "facts08: ISZERO (GT a (ADD v a)) gives Supply.add_bound_gtc / add_nat_gtc.",
+   "axioms.dotted_decl": "declared_only also accepts a dotted declaration (theorem Supply.inv_congr) by its last part."
+  },
+  "other_script_changes": "disasm.py names CHAINID, SELFBALANCE, BASEFEE, PUSH0; regen_check.sh runs on Linux too (mktemp, tar in place of rsync). tokenlib.py / kit_opens.py path changes of the local copies are not needed in the kit.",
+  "token_files_changed": "config/usde.json and config/ena.json (the switches above), and scripts/mk_config.py, mk_config_more.py, mk_config_readable.py of both tokens so that they still write exactly these configs. No Lean file of any token changed, so no token was rebuilt. The local generator copies stay in tokens/usde/scripts and tokens/ena/scripts but are no longer needed.",
+  "new_kit_files": {
+   "TokenKit/Evm/EnvL.lean": "instruction_chainid, chainidL, calldatacopyL, logStaticStuck",
+   "TokenKit/Evm/Push0.lean": "toBerlin, toParis, push0GA, push0L",
+   "TokenKit/Evm/Precompile0.lean": "bubble_no_ok0, ecrecover_call_ok0 (PUSH0 form of the solc revert-bubble code after STATICCALL to address 1)",
+   "TokenKit/Evm/SupplyInv.lean": "two_le_sumTo, bal_nonneg, bal_at, two_bal_le_sumBal, sumBal_nonneg, add_bal_inv, sub_tot_inv, add_bound_gtc, add_nat_gtc, add_fact_gtc, inv_bal_le, inv_two_bal_le, inv_storage_congr",
+   "TokenKit/Evm/Bits08.lean": "add_sub_same, high_eq_not_mask, and_high_comm, and_or_not, and_and_not, mask_or_high, mask_or_high_addr, mask_and_high, m40_idem, div_nat, mul10_nat, mul10_bound, high40_eq_not, m40_or_high"
+  },
+  "library_build": "lake build in /home/user/token-kit: exit 0, 'Build completed successfully (1373 jobs).' (1363 before plus the new modules). #print axioms on 14 of the new lemmas: only propext, Classical.choice, Quot.sound. Five import lines added to TokenKit.lean; no existing declaration edited.",
+  "caveats": [
+   "USDE and ENA keep their local copies under the SAME names in namespace TokenKit (Usde/Lib.lean, Usde/SupplyLib.lean, Ena/Lib.lean, Ena/Precompile0.lean, Ena/SupplyLib.lean). A module must import the kit file or the local copy, never both, and never `import TokenKit` (the root) from USDE or ENA.",
+   "sumTo_nonneg, le_sumTo, bal_le_sumBal were already in Evm/SupplyUnchecked.lean (SKY); SupplyInv.lean imports that file and does not repeat them.",
+   "Supply.inv_congr is named Supply.inv_storage_congr in the kit: gen_axioms declared_only scans the kit for `theorem <name>` and the old name would have changed Test/Axioms.lean of pepe, usdd, wbt and dai.",
+   "min_fork converts only the rule sites ENA uses to (toBerlin hfork); other rules that take hfork (bin3K, chainidK) are not converted.",
+   "Not moved: Usde/Permit.lean prefix1901_at / digest_bytes_at, the *_no_wrap lemmas of ReadableLib.lean (they use the Inv of the token), ENA mint_wait_nat / mint_cap_nat, and the per-witness block and address options of gen_sanity (Sanity/Domain.lean, Sanity/Mint.lean stay hand-written)."
+  ],
+  "uni_additions": {
+   "date": "2026-11-11",
+   "what": "Shared changes made for UNI (tokens/uni), all behind config switches or in new files.",
+   "switches": {
+    "paths.code_copy": "CODECOPY of constant data into memory (rule codecopyRK, TokenKit/Evm/CodeCopy.lean), in gen_paths.py and gen_loops.py.",
+    "paths.block_env": "NUMBER in logic mode and in read-only loops (rule numberL).",
+    "paths.auto_chain": "{pc: name}: a shared internal function is proved once per shape of the frame at that pc and composed with its callers (gen_paths.py); UNI uses it for _moveDelegates.",
+    "supply.style = chain": "gen_supply.py hands over to the new scripts/gen_supply_chain.py, which writes Frame.lean and Invariant.lean for a token whose writers go through chained segments.",
+    "token_generators": "top-level list of scripts of the token itself, run by regen.sh after the kit generators (UNI: scripts/gen_sig.py)."
+   },
+   "new_kit_files": {
+    "TokenKit/Evm/CodeCopy.lean": "codecopyRK, size_copiedC, load_rawC, read_rawC, instruction_number, numberL, logSubOne, logOneK, logFourZK, logStuckW, logOne, logs_logSubOne",
+    "TokenKit/Evm/Named.lean": "decidedN (paths stated with named terms)",
+    "TokenKit/Evm/SupplyMask.lean": "bal, sumBal, D, Inv for balances kept in the low bits of a word; sumBal_read, sumBal_write_nb, sumBal_write_bal, D_read, D_write_bal, D_write_tot, D_write_other, D_of_ro",
+    "TokenKit/Evm/Bits96.lean": "uint96, uint32 and address mask arithmetic (and_m96_comm, m96_idem, m96_or, sub96_nat, add96_nat, add_nat and others)"
+   },
+   "library_build": "Four import lines appended to TokenKit.lean (root only). No existing declaration edited. No module that another token imports changed, so no other token is forced to rebuild beyond the root TokenKit module; none was rebuilt by this work.",
+   "regeneration_check": "bash scripts/regen_check.sh (all tokens, on the Mac, after the last change): 12/14 identical: bnb, dai, ena, pepe, qnt, shib, sky, uni, usdd, usde, wbt, weth SAME. link and wbtc FAIL inside their own regen.sh (selector not once in the table); both are tokens in progress by other agents and were not touched.",
+   "uni_status": "tokens/uni/status.json"
+  }
+ },
+ "current": {
+  "date": "2026-11-12",
+  "note": "The entries under 'tokens' and the sections below are dated records from the merge of the first four tokens (2026-11-10) and are not rewritten. Current state: 15 tokens; the record of each is tokens/<t>/status.json. Counts are the theorems checked by scripts/check_axioms.sh in the full clean rebuild of 2026-11-12 (logs/).",
+  "theorems_checked": {
+   "shib": 139,
+   "qnt": 157,
+   "bnb": 176,
+   "weth": 180,
+   "pepe": 351,
+   "wbt": 311,
+   "usdd": 333,
+   "dai": 342,
+   "usde": 424,
+   "ena": 445,
+   "sky": 441,
+   "link": 250,
+   "wbtc": 399,
+   "uni": 862,
+   "ondo": 2115
+  },
+  "total": 6925
+ }
+}

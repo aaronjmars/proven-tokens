@@ -1,0 +1,8 @@
+theorems checked: 351
+    341 Classical.choice
+    345 Quot.sound
+    348 propext
+count matches Test/Axioms.lean: 351
+AXIOM SCAN OK: 15127 constants (14741 theorems) of PepeVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

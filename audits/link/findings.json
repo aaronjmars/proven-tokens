@@ -1,0 +1,133 @@
+{
+ "token": "LINK",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit (the ten-token audit) of the LINK proof in token-kit/tokens/link (Lean 4 on EthLib 62dbd687 and usdt-verify d0e684c5). Nothing outside audits/link/ was written. No Lean was built: every statement below was read from the source, and the build facts come from logs/link.*. Two read-only Python scripts were run. Date 2026-11-11.",
+ "checked_ok": [
+  "Code constant: CODE_NAT in LinkVerify/Link/Code/Bytes.lean equals survey/tokens/LINK/runtime.hex byte for byte (3153 bytes), and data/link.runtime.hex equals the survey file (check_code.py). Test/Hash.lean also compares CODE with the data file and its keccak with 77c633ba...8785 at build time (an #eval test, not a theorem).",
+  "Selector table: the 12 (selector, destination) pairs read from the bytes equal ENTRIES in LinkVerify/Link/Map.lean, every destination is a JUMPDEST, and the 12 names equal survey/tokens/LINK/abi.json (check_code.py).",
+  "Opcodes before the metadata: 1 CALL (pc 3088), 9 SSTORE, 10 SLOAD, 2 INVALID, 2 EXTCODESIZE, 4 ADDRESS; no DELEGATECALL, CALLCODE, STATICCALL, CREATE, CREATE2, SELFDESTRUCT, RETURNDATASIZE or RETURNDATACOPY. So the code has no mint, no burn, no owner, no pause, no upgrade and no self destruct.",
+  "Hygiene: rg finds no sorry, admit, native_decide, bv_decide, unsafe, implemented_by, opaque, extern and no axiom declaration in tokens/link/LinkVerify or in token-kit/TokenKit. set_option is only autoImplicit, linter options, maxRecDepth 4096/8192 and maxHeartbeats 1000000 (11 uses). No em dash or en dash in the token's Lean, json or md files.",
+  "Test/Axioms.lean lists 186 distinct names and all of them are declared; it lists every headline theorem I looked for (supply_all, supply_all_real, calleeKeeps_processRunner, frameKeeps, process_good, good_run, inv_run, ok_tac_whole, transferAndCall_readable, ok_tac_pre, ok_tac_post, ok_tac_len, supply_preserved, processMessage_good, processRunner_goodKept, callIn_outcome, callIn_outcome_any, storageOnly_inv, code_not_delegated). The last command scans every constant of the LinkVerify and TokenKit modules, so unlisted helpers (processMessage_ind, frame_core, w_runFrame) are covered too. There is no skip list; declared_only drops only supply_short and supply_other, which are not declared because those two paths cannot succeed.",
+  "Build claims: logs/link.log ends with 'Build completed successfully (1420 jobs).' and EXIT=0; link.axioms says 'theorems checked: 186', 'count matches Test/Axioms.lean: 186', 'AXIOM SCAN OK: 7691 constants (7288 theorems)', AXRC=0, only propext, Classical.choice, Quot.sound. This matches status.json build.* and the README row (186).",
+  "theorem_counts in status.json match a line count of the source (check_axioms_list.py): Gen 278, Tac 171, Reenter 89, Sanity 75, Invariant 12, Whole 11, Sep 10, Readable 9, ReadableTac 8, Any 7, Complete 6, Code 5, Seq 5, Lib 5, ReadableLib 5, CallIn 4, Hold 3. Steps.lean has 1 theorem that the status file does not list (704 in total).",
+  "The reentrancy induction is real, not an assumption that restates the conclusion. Reenter.processMessage_ind (Reenter.lean:1215) is a strong induction on message.gas over EthLib's processMessage and processCreateMessage; frame_core (1143) builds the At hypothesis of FrameKeeps for the real startFrame by rfl (line 1163), so FrameKeeps is used on real frames. Nested messages need no Sane assumption: res_callStep (929) derives callee.code = CODE for a CALL to L from HoldsCode and delegatedAddress CODE = none, DELEGATECALL and CALLCODE keep the current target of the sender, and nested creations are shown not to run at L (Sane0). A message that ends with an error is rolled back (good_restore).",
+  "CalleeKeeps (Any.lean:63) is local to the one message of the CALL and is discharged for processRunner by calleeKeeps_processRunner (Any.lean:187); this is not the false global runner hypothesis of the QNT, BNB and WETH audit (BNB-1). The CALL rule callIn_outcome_any (CallIn.lean:284) covers the three outcomes (step error, depth limit pushes 0, message run) with no hypothesis on the callee code, a 7702 delegated callee included.",
+  "hN (tacN message < 2^64) is not a hidden assumption in the supply results: supply_transferAndCall (Any.lean:118) gets it from ok_tac_len under gas < 2^60.",
+  "The success theorems of the 9 plain functions are witnessed: Sanity/Zero.lean has 10 _runs theorems, one per success path of totalSupply, balanceOf, allowance, decimals, transfer, approve, transferFrom, increaseApproval, decreaseApproval (two paths). transferAndCall has 4 real runs from pc 0 with closed forms that carry only fork hypotheses: transferAndCall_stop_runs_closed (Sanity/Tac.lean:360, processRunner, contract receiver, balances 5 to 4 and 0 to 1), transferAndCall_nocode_runs_closed (436), transferAndCall_low_runs_closed, transferAndCall_reverts_closed (547).",
+  "Pruned branches of the generator (work/paths.json _pruned) cannot weaken the ok_ theorems: each ok_<fn> is a completeness statement about every run that ends with no error and is proved in Lean from pc 0 (for example ok_transferAndCall, Gen/PTransferAndCall.lean:94, uses no_okLE and ok_splitLE).",
+  "EthLib top level (upstream/EthLib/EthLib/Execution/Transactions/Process.lean:323 to 337): a transaction with a target runs processMessage and before Glamsterdam the meter is Nat, as the proofs assume; a transaction with no target runs processCreateMessage (see LINK-2)."
+ ],
+ "findings": [
+  {
+   "id": "LINK-1",
+   "token": "LINK",
+   "severity": "critical",
+   "claim": "status.json main_theorems.supply and sequences: 'calleeKeeps_processRunner (that assumption holds for EthLib's real runner and every receiver), supply_all_real (no callee assumption left)', 'process_good', 'good_run, inv_run (sum of balances = 10^27 after any finite sequence)'; README: main result 'transferAndCall with reentrancy'.",
+   "what_is_actually_proved": "Every one of these five theorems carries two GLOBAL keccak hypotheses, K : SepAll and hcol : Reenter.NoCollision CODE. SepAll says Sep A for every list A of address words, which unfolds to: (a) the balance slot map x -> keccak(x, 1) is injective on all 2^160 address words, and (b) no allowance slot keccak(s, keccak(o, 2)) of any of the 2^320 pairs is the balance slot of any address word. NoCollision CODE says no byte string of any length has the keccak hash of the code. Treating keccak as a random function, (a) fails (about 2^319 pairs against 2^256 values: about 2^63 expected colliding pairs), (b) fails (about 2^224 expected hits) and NoCollision fails (already among the 2^264 strings of 33 bytes there are about 2^8 expected second preimages). This is exactly the form that upstream usdt-verify docs/AUDIT.md finding 1 rates Critical ('almost certainly false for the real keccak, so every theorem that assumes them is, as far as anyone can tell, vacuous'), and the SHIB audit praised the local Sep for NOT being this form. So the reentrancy result for every receiver, the real-runner result and the sequence result are proved only under hypotheses that are almost certainly false; they cannot be refuted in Lean (that would need explicit collisions), and nothing shows them satisfiable. What does stand without them: supply_all under the local CalleeKeeps and Sep (callKeys message) (Any.lean:133), supply_transferAndCall_stop for a STOP receiver under processRunner with only the local Sep (Sanity/Tac.lean:659), ok_tac_whole and the readable forms. The status file lists both hypotheses as 'Not proved (keccak hypothesis, as allowed by the brief)' and words SepAll as 'keccak slots of different keys do not collide', which hides that it is the global, likely false form. The WBTC status file already says its run-local version is 'Better than LINK' and keeps the global forms only as corollaries with the hypothesis in the name.",
+   "evidence": "token-kit/tokens/link/LinkVerify/Link/Hold.lean:44 'def SepAll : Prop := forall A : List U256, (forall x in A, x.toNat < 2 ^ 160) -> Sep A'; Sep.lean (structure Sep: 'uniq : forall x in A, Supply.UniqBal 1 x', 'allow : forall o in A, forall s in A, Supply.NotBal 1 (mapSlot s (mapSlot o 2))'); TokenKit/Evm/Supply.lean:53 to 57 (NotBal, UniqBal quantify over all y with y.toNat < 2^160); Reenter.lean:64 'def NoCollision (CODE : ByteArray) : Prop := forall code : ByteArray, keccak256 code = keccak256 CODE -> code = CODE'. Hypotheses in the statements: Any.lean:187 calleeKeeps_processRunner '(K : SepAll) (hcol : Reenter.NoCollision CODE)', Any.lean:198 supply_all_real (same), Seq.lean:49 process_good (same), Seq.lean:94 good_run, Seq.lean:104 inv_run. Use: frameKeeps (Any.lean:167) calls K.call message for every frame at L, holdsCode_setCode (Reenter.lean:358) uses hcol on every code deposit. Upstream wording: upstream/usdt-verify/docs/AUDIT.md lines 17, 27 to 51. WBTC: token-kit/tokens/wbtc/status.json global_keccak_hypotheses, tokens/wbtc/WbtcVerify/Wbtc/SeqLocal.lean header. Scratch file that unfolds SepAll into (a) and (b): scratch file SepAllGlobal.lean (not kept).",
+   "suggested_fix": "Port the WBTC run-local form to LINK (Trace.lean, AnyLocal.lean, SeqLocal.lean): ask Sep (callKeys m) only of the messages m that really enter the code at L during the run, and ask of code deposits only that no code deposited in this run is another byte string with the hash of CODE; or the finite list form (one list A, every message that enters L takes its keys in A). Keep the present theorems as corollaries with the hypothesis in the name, and say in status.json that SepAll and NoCollision are the global forms and are almost certainly false.",
+   "machine_check": "written, not built (scratch file SepAllGlobal.lean (not kept): sepAll_injective, sepAll_allow, noCollision_all only unfold the hypotheses; falsity itself cannot be machine-checked)"
+  },
+  {
+   "id": "LINK-2",
+   "token": "LINK",
+   "severity": "major",
+   "claim": "status.json sequences: 'process_good (any top-level message to any target, with or without error), good_run, inv_run (sum of balances = 10^27 after any finite sequence)'; Seq.lean docstring of process_good: 'a top-level message (to any account, or a creation at another address)'.",
+   "what_is_actually_proved": "Seq.Msg is defined with processMessage only. In EthLib a transaction that creates a contract does not run processMessage at the top: processMessageCall calls processCreateMessage (prepareCreation, then processMessage, then depositCode). Such a transaction is therefore not a Msg step, and it is not an Other step either, because its init code can call LINK and move balances. So Run, good_run and inv_run do not cover any history that contains a contract creation transaction (every deployment since Berlin). The needed lemma exists and is proved (Reenter.processCreateMessage_good, for a creation at another address than L) but Seq.lean never uses it. The other non-message steps (fees, refunds, 7702 authorizations, end of transaction deletions, system calls) are the assumed Other step: 'keeps the code and every storage word of L' is assumed, not derived from EthLib's transaction layer (this part is disclosed).",
+   "evidence": "tokens/link/LinkVerify/Link/Seq.lean:62 to 68 'def Msg ... processMessage fork message S substate meter held = .ok ended and S' = ended.val.state' (no processCreateMessage case); Seq.lean:71 'def Other'; Seq.lean:76 inductive Run has only nil, msg, other. upstream/EthLib/EthLib/Execution/Transactions/Process.lean:333 'let (evm, _) <- processCreateMessage fork first.message first.state first.substate' against line 337 for processMessage. Reenter.lean:1346 processCreateMessage_good is proved and unused by Seq.lean. status.json not_covered names only 'creation at address L'.",
+   "suggested_fix": "Add a Create step to Run (a top-level processCreateMessage with message.currentTarget != L) and close it with Reenter.processCreateMessage_good, as WBTC does (create_good_local, CreateL). Then say plainly that the Other step is an assumption until the transaction layer is derived."
+  },
+  {
+   "id": "LINK-3",
+   "token": "LINK",
+   "severity": "minor",
+   "claim": "status.json: 'inv_run (sum of balances = 10^27 after any finite sequence)'; Seq.lean: 'THE TOTAL SUPPLY NEVER CHANGES'.",
+   "what_is_actually_proved": "A step theorem only: if GoodLink L S holds (L holds CODE and the sum is 10^27) then it holds after the run. No theorem shows that any state is good: the constructor (creation code) is not in the proof, no state with Inv is built, and no Msg or Run with a call into LINK is exhibited. The only inhabitants of Run that the files give are the trivial ones. The fork range is Berlin <= fork < Glamsterdam per message, so the history of LINK from its deployment in 2017 to Berlin is outside the theorem and Inv at the Berlin block is an assumption. Also each message needs message.gas <= 2^60 - 1 and Sane (assumed at the top level, although it follows from HoldsCode and code_not_delegated for a real transaction).",
+   "evidence": "Seq.lean:104 to 107 inv_run '(h : Run L S S') (hold : Reenter.HoldsCode L CODE S) (hinv : Inv L S) : Inv L S''; Seq.lean:62 Msg ('.berlin <= fork and fork < .glamsterdam and message.gas <= GAS_CAP and Reenter.Sane L CODE message'); rg for GoodLink, HoldsCode, Run in LinkVerify/Link/Sanity gives no witness; survey/tokens/LINK holds runtime code only.",
+   "suggested_fix": "State the base case as an explicit assumption in status.json (constructor and pre-Berlin history not covered). Add one closed witness: a concrete good state under a finite Sep list and one Msg that calls transfer, so GoodLink and Msg are shown inhabited. Derive Sane for a top-level message from HoldsCode instead of assuming it."
+  },
+  {
+   "id": "LINK-4",
+   "token": "LINK",
+   "severity": "minor",
+   "claim": "status.json assumptions: 'CalleeKeeps ... Machine-checked true for EthLib's real runner for every receiver (calleeKeeps_processRunner)'; findings_contract: 'A receiver can reenter the token during the CALL; the supply invariant still holds (frameKeeps, by induction over the real runner)'.",
+   "what_is_actually_proved": "True only under SepAll and NoCollision CODE (LINK-1), Berlin <= fork < Glamsterdam, bound <= 2^60 - 1 and HoldsCode. No run with a receiver that really calls back into the token is exhibited: the only contract receivers in the witnesses are STOP (0x00) and INVALID (0xfe). calleeKeeps_stop proves the restricted CalleeKeepsOf (the code of the message is fixed to STOP), not CalleeKeeps. So the reentrancy path of the induction has no machine-checked instance.",
+   "evidence": "Any.lean:187 to 193 calleeKeeps_processRunner '(K : SepAll) (hcol : Reenter.NoCollision CODE) {bound : Nat} (hb : bound <= GAS_CAP) (hold : Reenter.HoldsCode message.currentTarget CODE state)'; Sanity/Tac.lean:583 CalleeKeepsOf, 611 calleeKeeps_stop, 289 transferAndCall_stop_runs (Payee.STOP_CODE), Sanity/TacLib.lean:67 INVALID_CODE; Sanity/Tac.lean:559 to 573 (the file's own comment says the literal CalleeKeeps needs SepAll and NoCollision).",
+   "suggested_fix": "Add a witness with a small receiver that calls transfer back into the token inside onTokenTransfer, run by processRunner, and show the sum is kept with only a finite Sep list. Put the hypotheses next to the words 'machine-checked true' in status.json."
+  },
+  {
+   "id": "LINK-5",
+   "token": "LINK",
+   "severity": "minor",
+   "claim": "status.json main_theorems.per_function: 'ok_<fn> gives every way a call can end with exact storage writes, logs, output and gas for totalSupply, balanceOf, allowance, decimals, name, symbol, transfer, ...'; dispatcher: 'every call data lands in exactly one of the 12 functions or the fallback revert'.",
+   "what_is_actually_proved": "The ok_ theorems speak only of runs that end with NO error (hok : s.error = none); failing ends are separate path theorems, read here for shape only. For name() and symbol() there is no ok_name or ok_symbol: only ok_nameEntry and ok_symbolEntry (the run reaches pc 188 or 743) and ro_name, ro_symbol (a successful run changes no storage and adds no log). No output, no gas and no success witness exist for name() and symbol(), so nothing shows that these two functions can return at all. The dispatcher theorem is ends_ok_dispatch: a run with no error has non-empty call data and the selector of one of the 12 entries; 'lands in the fallback revert' is the pair ok_short, ok_other (no successful run), and the per-function value check is value_zero_of_ok (a successful run has value 0).",
+   "evidence": "Gen/Loops.lean:817 ro_name and 1605 ro_symbol ('Ro message.currentTarget state substate s.state s.substate'); Gen/PNameEntry.lean ok_nameEntry; Sanity/Zero.lean has 10 _runs and none for name or symbol; work/paths.json nameEntry_p0 and symbolEntry_p0 end 'at'; Complete/Dispatch.lean:70 ends_ok_dispatch; Complete/Value.lean:77 value_zero_of_ok. Partly disclosed in not_covered ('name() and symbol(): only no storage write, no log').",
+   "suggested_fix": "Reword the two status lines ('every successful run'; name and symbol out of the ok_ list) and add name_runs and symbol_runs witnesses."
+  },
+  {
+   "id": "LINK-6",
+   "token": "LINK",
+   "severity": "minor",
+   "claim": "status.json transferAndCall_whole: 'ok_tac_whole (every successful run, exact message sent, exact gas, final state = state the callee left)'.",
+   "what_is_actually_proved": "ok_tac_whole starts at pc 530 with a fixed stack and memory, not at pc 0, and needs hN (tacN message < 2^64) and hdel (the receiver is not a 7702 delegation). The pc 0 form is transferAndCall_readable (gas < 2^60, Sep (callKeys message), hdel). 'Exact message' holds for the head words only: the bytes argument inside the call data and inside the second log is defined by reading memory (tacCallData, tacLog2Data) and is not shown equal to the padded argument of the caller. The receiver test is on the size of the code as a 256-bit word. All of this is disclosed in assumptions and not_covered; the headline line alone reads stronger.",
+   "evidence": "Whole.lean:166 to 172 ok_tac_whole '(hN : tacN message < 2 ^ 64) (hdel : forall c, TacCode message state c -> .pectra <= fork -> delegatedAddress c = none) ... (start : At CODE message 530 [sel] (memW [0, 0, 96]) gas state substate evm)'; ReadableTac.lean:178 to 186 transferAndCall_readable; ReadableTac.lean:198 to 218 (head words only).",
+   "suggested_fix": "Name the pc 0 theorem in the headline and add the missing lemma that the copied bytes are the argument padded to 32 bytes."
+  },
+  {
+   "id": "LINK-7",
+   "token": "LINK",
+   "severity": "note",
+   "claim": "Per-call supply theorems (supply_transfer, supply_preserved, supply_all) hold 'under Sep (callKeys message)'.",
+   "what_is_actually_proved": "As stated. Sep (callKeys message) is the local form (3 address words: caller and the first two arguments): each of 3 balance slots is the balance slot of no other address, and 9 allowance slots are no balance slot. It is plausible (failure odds about 12 * 2^-96 per call under the random function heuristic) but it is never discharged, so no supply_* theorem has a machine-checked instance. This is the same standing as SHIB.",
+   "evidence": "Sep.lean callKeys and structure Sep; Invariant.lean:310 supply_preserved '(hsep : Sep (callKeys message))'; Any.lean:133 supply_all.",
+   "suggested_fix": "None needed; give the odds in docs/MAP.md."
+  },
+  {
+   "id": "LINK-8",
+   "token": "LINK",
+   "severity": "note",
+   "claim": "Comments and dated notes.",
+   "what_is_actually_proved": "Any.lean names the callback 'onTokenReceived' twice; the bytes hold selector a4c0ed36, which is onTokenTransfer(address,uint256,bytes) (Tac/Bytes.lean and status.json say it right). status.json build.ethlib_on_box says the box commit 62dbd687 is 'older than the upstream copy on the Mac'; upstream/EthLib on the Mac is now at 62dbd687 too. Steps.lean (1 theorem) is missing from theorem_counts. Hash test and file comparison are #eval tests, not theorems (said in Test/Hash.lean).",
+   "evidence": "Any.lean:10 and :61; survey/tokens/LINK/runtime.hex contains a4c0ed36 once; git rev-parse HEAD in upstream/EthLib = 62dbd687dfa0a10641cf24e35c2572d3039bad55; check_axioms_list.py output.",
+   "suggested_fix": "Fix the two comments and the stale note."
+  },
+  {
+   "id": "LINK-9",
+   "token": "LINK",
+   "severity": "note",
+   "claim": "What the proofs and the bytes say about the real contract (for the owner).",
+   "what_is_actually_proved": "1. Nobody can mint or burn: the code has no owner, no mint, no burn, no pause and totalSupply() returns the constant 10^27; the only storage writes are 2 balances and 1 allowance per call. 2. transferAndCall moves the tokens and emits both logs BEFORE it calls the receiver, with all gas but 710 (63/64 rule), and the receiver may call back into the token; a failing receiver reverts the whole call, a receiver with no code just gets the tokens. 3. No function checks the length of the call data: short data is read as zero padded, so a short transfer call can succeed with unintended arguments. 4. validRecipient blocks to = 0 and to = the token for transfer, approve, transferFrom, transferAndCall, but increaseApproval and decreaseApproval have no such check. 5. SafeMath failures end in INVALID 0xfe and burn all gas. 6. The supply equation is a statement about all 2^160 balance slots, so it truly depends on keccak: an allowance slot that equals a balance slot would let approve change a balance. Finding one is far out of reach (about 2^128 work), but this is why the global hypothesis of LINK-1 is not a formality.",
+   "evidence": "check_code.py opcode list; status.json findings_contract; Readable.lean (transfer_readable and the config readable docs for increaseApproval, decreaseApproval: 'no validRecipient'); Sanity/Tac.lean transferAndCall_reverts_closed, transferAndCall_nocode_runs_closed.",
+   "suggested_fix": "None."
+  }
+ ],
+ "not_checked": [
+  "No Lean build was run in this audit: build, axiom and count facts are taken from logs/link.* and from reading the source. The log was not tied to the current files by hash.",
+  "The scratch file lean/SepAllGlobal.lean was not built.",
+  "EthLib itself, usdt-verify and TokenKit lemma proofs (trusted as the model; only statements were read: CallOutcome, Supply, SafeL, Call).",
+  "The 43 generated path theorems and the Tac block and path files one by one; failing paths (revert, invalid, stuck); gas constants against a reference client.",
+  "Tac/Len.lean (ok_tac_len: the length bound from the gas cap) and Tac/Bytes.lean were read by statement only.",
+  "Whether regenerating with the local scripts reproduces the committed generated files (the token keeps local copies of 10 kit scripts; no divergence run was done).",
+  "The live chain: eth_getCode today, the constructor, and whether the sum of balances is 10^27 on mainnet.",
+  "Whether a top-level Sane and a fee step as Other really follow from EthLib's processTransaction (argued from Process.lean, not proved)."
+ ],
+ "verdict": {
+  "code constant equals on-chain runtime code (block 26386793) and selector table matches": "holds",
+  "build: exit 0, 186 theorems in the axioms test, standard axioms only, no sorry or added axiom": "holds (from the saved log; not rebuilt here)",
+  "dispatcher completeness and per-function value check": "holds with caveat (successful runs only: ends_ok_dispatch, value_zero_of_ok)",
+  "per-function ok_ theorems with exact writes, logs, output and gas": "holds with caveat (9 functions, successful runs; name() and symbol() only 'no write, no log', with no success witness)",
+  "readable forms for 9 functions and transferAndCall_readable": "holds with caveat (Sep (callKeys message) where two slots are written; transferAndCall: gas < 2^60, receiver not 7702 delegated, head words only)",
+  "transferAndCall whole function, exact message (ok_tac_whole)": "holds with caveat (from pc 530, hN, hdel; the bytes payload is not tied to the argument)",
+  "supply invariant for the 11 plain functions (supply_preserved)": "holds with caveat (local Sep (callKeys message), never discharged)",
+  "supply invariant for all 12 selectors under the local callee assumption (supply_all)": "holds with caveat (local Sep; transferAndCall: fork < Glamsterdam, gas < 2^60, CalleeKeeps assumed)",
+  "transferAndCall keeps the supply for a STOP receiver under the real runner (supply_transferAndCall_stop)": "holds with caveat (local Sep only)",
+  "CalleeKeeps is true for the real runner and every receiver (calleeKeeps_processRunner), supply_all_real with no callee assumption": "does not hold as a usable fact (rests on SepAll and NoCollision CODE, global keccak hypotheses that are almost certainly false; the induction itself is sound)",
+  "process_good: any top-level message keeps a good state": "does not hold as a usable fact (same two global hypotheses); also only processMessage, gas <= 2^60 - 1, Berlin to before Glamsterdam",
+  "good_run / inv_run: sum of balances = 10^27 after any finite sequence": "does not hold as stated (global hypotheses of LINK-1; contract creation transactions are outside Run; Other steps and the starting state are assumed)",
+  "witnesses: 10 success paths plus 4 real transferAndCall runs": "holds (no witness for name(), symbol(), a re-entering receiver, or a good state)"
+ }
+}

@@ -1,0 +1,14 @@
+import ShibVerify.Shib.Gen.B0
+import ShibVerify.Shib.Gen.B1
+import ShibVerify.Shib.Gen.B2
+import ShibVerify.Shib.Gen.B3
+import ShibVerify.Shib.Gen.PTotalSupply
+import ShibVerify.Shib.Gen.PBalanceOf
+import ShibVerify.Shib.Gen.PAllowance
+import ShibVerify.Shib.Gen.PDecimals
+import ShibVerify.Shib.Gen.PTransfer
+import ShibVerify.Shib.Gen.PApprove
+import ShibVerify.Shib.Gen.PTransferFrom
+import ShibVerify.Shib.Gen.PIncreaseAllowance
+import ShibVerify.Shib.Gen.PDecreaseAllowance
+import ShibVerify.Shib.Gen.PBurn

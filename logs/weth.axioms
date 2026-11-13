@@ -1,0 +1,8 @@
+theorems checked: 180
+    173 Classical.choice
+    177 Quot.sound
+    180 propext
+count matches Test/Axioms.lean: 180
+AXIOM SCAN OK: 3773 constants (3363 theorems) of WethVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

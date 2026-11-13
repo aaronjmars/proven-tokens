@@ -1,0 +1,8 @@
+theorems checked: 311
+    297 Classical.choice
+    305 Quot.sound
+    308 propext
+count matches Test/Axioms.lean: 311
+AXIOM SCAN OK: 13798 constants (13420 theorems) of WbtVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

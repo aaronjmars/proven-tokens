@@ -1,0 +1,12 @@
+# third-party clones (pinned in README) and build outputs
+upstream/
+.lake/
+__pycache__/
+*.pyc
+*.tgz
+*.olean
+.DS_Store
+# local reading copy of EthLib
+token-kit/tokens/*/work/
+# local agent session files
+.claude/

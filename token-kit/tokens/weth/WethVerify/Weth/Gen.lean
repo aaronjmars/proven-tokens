@@ -1,0 +1,16 @@
+import WethVerify.Weth.Gen.B0
+import WethVerify.Weth.Gen.B1
+import WethVerify.Weth.Gen.B2
+import WethVerify.Weth.Gen.PTotalSupply
+import WethVerify.Weth.Gen.PBalanceOf
+import WethVerify.Weth.Gen.PAllowance
+import WethVerify.Weth.Gen.PDecimals
+import WethVerify.Weth.Gen.PDeposit
+import WethVerify.Weth.Gen.PApprove
+import WethVerify.Weth.Gen.PTransfer
+import WethVerify.Weth.Gen.PTransferFrom
+import WethVerify.Weth.Gen.PWithdraw
+import WethVerify.Weth.Gen.PFallbackShort
+import WethVerify.Weth.Gen.PFallbackOther
+import WethVerify.Weth.Gen.PTotalSupplyTail
+import WethVerify.Weth.Gen.PWithdrawTail

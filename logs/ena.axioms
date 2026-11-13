@@ -1,0 +1,8 @@
+theorems checked: 445
+    384 Classical.choice
+    424 Quot.sound
+    432 propext
+count matches Test/Axioms.lean: 445
+AXIOM SCAN OK: 14206 constants (13746 theorems) of EnaVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms
+AXRC=0

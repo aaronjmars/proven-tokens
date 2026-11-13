@@ -1,0 +1,82 @@
+{
+ "token": "QNT",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "QNT, BNB and WETH audit"
+ },
+ "paths_note": "Evidence paths name the files as they were when audited. qnt-verify, bnb-verify, weth-verify and shib-verify were the first per-token projects; they were merged into token-kit/tokens/<t> (same file names), so their paths are given there. Later fixes changed some of these files, so line numbers can be off. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent audit of qnt-verify, bnb-verify, weth-verify (Lean 4 on EthLib). Local projects not modified. Lean experiments run on box lean-weth in <project>/Audit/, copies in the scratch Lean files (not kept). Date 2026-11-10.",
+ "findings": [
+  {
+   "id": "QNT-1",
+   "token": "QNT",
+   "severity": "minor",
+   "claim": "mint breaks 'sum of balances = totalSupply' (goodCall_mint_D); no function writes slot 1 or 3; only the crowdsale address can mint.",
+   "what_is_actually_proved": "Confirmed from the bytes: 10 SSTOREs (pc 1630, 2175, 2322, 2593, 2949, 3313, 3465, 4154, 4301, 4685), every key is a SHA3 output over base 0 or nested base 2; no literal slot write, no CALL, DELEGATECALL or SELFDESTRUCT. Mint (pc 2711): SLOAD 3, mask 160 bits, compare with CALLER, else REVERT; SafeMath add with INVALID on overflow; one SSTORE to keccak(to, 0); LOG3. The theorem is an implication: under Sep (keccak separation, unproved), for a successful mint run, D grows by the amount, so Inv before and amount != 0 give not Inv after. It is not vacuous: mint_runs gives a real successful run of mint(1, 7) from the address in slot 3. But no single closed theorem exhibits a concrete broken state, because Sep is never discharged, even for the witness call. 'No write to slot 1 or 3' also means 'unless a keccak slot collides' (Sep).",
+   "evidence": "disassembly QNT.txt (not kept); token-kit/tokens/qnt/QntVerify/Qnt/Seq.lean (goodCall_mint_D, mint_caller); Qnt/Sanity/Moves.lean:139-170.",
+   "suggested_fix": "State one closed corollary: 'Sep for mint(1,7) implies the end state of mint_runs violates Inv'. Say plainly in the summary that the break is conditional on Sep."
+  },
+  {
+   "id": "QNT-2",
+   "token": "QNT",
+   "severity": "minor",
+   "claim": "D (sum of balances minus totalSupply_) never goes down; equality kept if no call comes from the crowdsale address.",
+   "what_is_actually_proved": "True inside the Calls model: steps are top-level successful calls of CODE (Paris or later) or 'other' steps ASSUMED to leave C's storage untouched. Nested calls and outer rollbacks are not linked. Witnesses for approve, transferFrom, increaseApproval and most others use amount 0 only (Sanity/Zero); nonzero witnesses exist for transfer, mint and decreaseApproval_p2. Failing paths (20 revert, 5 invalid, 7 stuck) have no witnesses and no theorem that every failing run is one of them (disclosed).",
+   "evidence": "token-kit/tokens/qnt/QntVerify/Qnt/Seq.lean; Qnt/Sanity/Zero.lean, Moves.lean; status.json not_proved.",
+   "suggested_fix": "Add a nonzero transferFrom witness. State the Calls model limits in the headline."
+  },
+  {
+   "id": "ALL-1",
+   "token": "QNT, BNB, WETH",
+   "severity": "minor",
+   "claim": "Invariant theorems hold 'for every call'.",
+   "what_is_actually_proved": "Each write theorem needs Sep (callKeys message): keccak slots of the addresses in the call do not collide with each other or with fixed slots. Never proved (cannot be, short of a keccak model). Disclosed. One gas counter only (no EIP-8037). Frame theorems from Berlin, message lift from Paris. Static frames: handled (a successful run with SSTORE implies not static, derived in ok_<fn>). Value to non-payable functions: proved to revert. Dirty upper address bits: handled by the masks in the path terms. Short call data: QNT reverts (spec_short), BNB payable fallback stops for 1 to 3 bytes and empty data, WETH enterShort = deposit.",
+   "evidence": "*/Sep.lean; */Complete/Dispatch.lean (selector_cases); Gen/P*.lean ok_<fn> statements.",
+   "suggested_fix": "None beyond wording."
+  },
+  {
+   "id": "ALL-2",
+   "token": "QNT, BNB, WETH",
+   "severity": "minor",
+   "claim": "check_axioms.sh shows only standard axioms.",
+   "what_is_actually_proved": "The result is right (see checked_ok: I scanned every constant), but the script is weak: axiom names on wrapped continuation lines are not checked, an empty log passes, the count is not compared, sorry warnings are not read. QNT and BNB versions give a false alarm on macOS grep.",
+   "evidence": "generator_divergence.json flag 3; */scripts/check_axioms.sh:5-11.",
+   "suggested_fix": "Replace by a Lean-side scan over all constants of the project (scratch file AllAxioms*.lean (not kept) does this)."
+  }
+ ],
+ "verdict": {
+  "code constant equals on-chain runtime code": "holds",
+  "dispatcher and function path theorems with completeness for successful runs": "holds",
+  "no function writes slot 1 (totalSupply_) or slot 3 (crowdsale)": "holds with caveat (under Sep; confirmed from bytes)",
+  "only the crowdsale address can mint (mint_caller)": "holds",
+  "mint with nonzero amount breaks sum = totalSupply (goodCall_mint_D)": "holds with caveat (conditional on Sep; non-empty by mint_runs; no closed concrete instance)",
+  "D never goes down / equality kept without crowdsale calls": "holds with caveat (Calls model only)"
+ },
+ "checked_ok": [
+  "CODE literal equals survey/tokens/<SYM>/runtime.hex and data/*.runtime.hex in all three (5155, 5355, 3124 bytes); keccak matches Test/Hash.lean; eth_getCode at latest from Etherscan equals runtime.hex for all three addresses.",
+  "lake build on the box: qnt-verify rc 0, bnb-verify rc 0, weth-verify 'Build completed successfully (1379 jobs)'; box copies byte-identical to local (sha256).",
+  "Axioms test lines match status.json: QNT 131, BNB 132, WETH 133, standard axioms only.",
+  "Whole-environment scan (every constant whose module starts with the project name): QNT 5005 constants / 4827 theorems, BNB 5323 / 5157, WETH 3003 / 2832. Union of axioms = propext, Classical.choice, Quot.sound. No axiom declaration, no opaque, no implemented_by, no extern.",
+  "Text scan: no sorry, native_decide, bv_decide, unsafe, implemented_by, opaque, axiom. set_option only autoImplicit false, two linter options, maxRecDepth 4096. One instance (stepLiftLogic). Macros are tactic helpers only.",
+  "All SSTORE sites in the three bytecodes listed and their keys traced (QNT 10, BNB 12, WETH 6).",
+  "All pruned branches (QNT 3, BNB 13, WETH 3) are proved inside the path theorems, none merely skipped.",
+  "SHIB regeneration with each project's scripts is byte-identical (23 of 23 files); each project regenerates to its committed files (no hand edit of generated files)."
+ ],
+ "not_checked": [
+  "EthLib itself and the shared usdt-verify library (trusted as the model).",
+  "Solidity source to bytecode correspondence; slot names taken from layout knowledge and the bytes, Etherscan source not diffed.",
+  "Readable corollaries were read for shape only, not each re-derived.",
+  "Failing paths (revert, invalid, stuck) one by one; gas constants against a reference client.",
+  "Shadowed names beyond the environment scan (no duplicate definitions of EthLib names found by the build; not exhaustively searched)."
+ ],
+ "generator_divergence": {
+  "summary": "No generator change silently weakens a default code path: SHIB output is byte-identical with all three script sets. The weakenings are opt-in config features.",
+  "weakening_flags": [
+   "check_axioms.sh in all projects misses wrapped lines, empty logs and counts."
+  ],
+  "not_weakening": [
+   "QNT decide_equivalent, BNB prune/dead_branches, WETH equal_self: proved in Lean.",
+   "QNT delta mode states a different headline exactly, all 14 selectors covered."
+  ]
+ }
+}

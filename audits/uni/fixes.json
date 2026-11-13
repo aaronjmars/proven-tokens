@@ -1,0 +1,314 @@
+{
+ "token": "UNI",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "last_clean_build": {
+  "log": "logs/uni.log",
+  "axioms": "logs/uni.axioms"
+ },
+ "findings": {
+  "UNI-1": {
+   "severity": "major",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 2,
+     "do": "Shared kit fix. The sequence theorems cover direct top-level messages only; every other step is assumed Untouched, calls from inside other contracts and whole transactions are not linked, and contract creation messages are left out. Port the transaction link of upstream usdt-verify into TokenKit and use it in every token; use LINK's already proved processCreateMessage_good. Until then, list the Untouched assumption under assumptions in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "kit-seq",
+     "recorded_status": "partly",
+     "what_changed": "Shared kit part done: generic runner theorem (any message at any depth keeps 'holds CODE + invariant', success or failure), transaction link (EthLib processTransaction) and any finite list of transactions, base case shape, all run-local (no SepAll, no NoCollision). The token itself was not edited by this agent.",
+     "theorems_added": "TokenKit.Seq: processMessage_good_local, processMessage_unmarked_local, processCreateMessage_good_local, processCreateMessage_unmarked_local, processRunner_good_local, runFrame_keeps_local, frameKeepsR_of_all, processMessageCall_good, runTransaction_good_at, runTransaction_good, processTransaction_good, chain_good, runTransaction_good_cap, processTransaction_good_cap, chainCap_good, good_of_zero, chain_from_zero, storageOnly_supply, zeroBase_supply, storageOnly_supply2, zeroBase_supply2, storageOnly_supplyMask, zeroBase_supplyMask (plus about 150 supporting lemmas)",
+     "theorems_retired": "none (no old theorem was removed or renamed)",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create (per transaction, RUN-LOCAL): every message that really enters the code at L during this run satisfies Q (for PEPE: Sep (callKeys m), keccak separation of three address words, NOT proved), and every code that a creation of this run really deposits, when it has the keccak hash of CODE, is CODE (no keccak collision on the codes of this run, NOT proved).",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of CODE.",
+      "Seq.TxClean.data: the call data of a transaction sent to L is below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork and fork < Fork.glamsterdam (the message-level theorems of Run.lean hold at every fork; the token's own lower bound applies, Berlin for PEPE).",
+      "Start: Seq.Good L CODE P on the block state before the first transaction (L holds CODE, codeHash = keccak CODE, not the empty hash, and P holds); or for chain_from_zero: Seq.HoldsCode plus all-zero storage of L.",
+      "Only for tokens with a gas cap (real outside call): Seq.GasCap G: the first frame of each transaction has at most G gas."
+     ],
+     "what_is_left": "Apply recipe B to this token (frameKeepsR by cases on the permit selector, Q carries NoDelegation1), regenerate Test/Axioms.lean, update status.json, rebuild. Recipe B was not compiled on a permit token. UNI uses SupplyMask.Inv: Seq.storageOnly_supplyMask / zeroBase_supplyMask are in the kit. UNI must not be built on an 8 GB box without care."
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "apply-b",
+     "recorded_status": "done",
+     "severity": "major",
+     "token": "uni",
+     "what_changed": "New UniVerify/Uni/Tx.lean on TokenKit.Seq: the supply invariant (with 'C holds CODE') after any message at any depth, any transaction as EthLib's processTransaction runs it, any finite list of transactions, and from the all-zero base case. Every selector included. The assumed `Untouched` step is not used. status.json: transaction_theorems, fix_round_audit4, 9 assumptions lines, not_covered lines, counts, build. UNI: permit, delegateBySig and mint are all in the headline through supply_preserved_real (delta_step_real: Dsum exactly kept). The build was a FULL clean build of uni (new box), 2107 s with LEAN_NUM_THREADS=2, not only a final lake build from a built state. Its Sep hypothesis keeps its non-finite group (every address word); named in assumptions.",
+     "theorems_added": [
+      "storageOnly_inv",
+      "code_size_ne_zero",
+      "code_not_indicator",
+      "code_not_delegated",
+      "inv_zeroBase",
+      "frameKeepsR",
+      "supply_message_any_depth",
+      "supply_transaction",
+      "supply_any_transactions (headline)",
+      "supply_from_zero",
+      "QMsg (abbrev)"
+     ],
+     "theorems_retired": "none. Seq.lean / PermitSeq.lean theorems (inv_calls, inv_callsP, process_step, process_step_all, ...) are kept and named in status.json as the older, weaker per-message model with the assumed Untouched step.",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create with Q := QMsg (per transaction, RUN-LOCAL): every message m that really enters the code at C during the run satisfies Sep (callKeys m) (keccak, NOT proved) and NoDelegation1 fork s for the state s its frame starts from (address 1 holds no EIP-7702 delegation code; NOT proved, assumed at each entry, used by the ecrecover selectors only and from Pectra only); every code a creation of the run really deposits with the keccak hash of CODE is CODE.",
+      "Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code with the keccak hash of CODE.",
+      "Seq.TxClean.data: call data of a transaction sent to C below 2^256 bytes.",
+      "Fork of each transaction: Fork.dencun <= fork < Fork.glamsterdam. Message theorem and frameKeepsR: Paris <= fork < Glamsterdam (ENA: Shapella <= fork < Glamsterdam).",
+      "Start: Seq.Good C CODE (Inv C) on the block state before the first transaction; supply_from_zero: Seq.HoldsCode plus all-zero storage of C.",
+      "supply_message_any_depth only: Seq.Sane C CODE message."
+     ],
+     "files_written": {
+      "UniVerify/Uni/Tx.lean": "new, 170 lines",
+      "UniVerify.lean": "1 import line",
+      "config": "scripts/mk_config.py + config/uni.json (written by mk_config.py)",
+      "UniVerify/Test/Axioms.lean": "regenerated (gen_axioms.py + kit_opens.py), 774 names (+10)",
+      "status.json": "updated"
+     },
+     "what_is_left": "Named in not_covered: block-level steps between transactions; forks before Dencun and from Glamsterdam; the constructor run / real start state; NoDelegation1 is assumed at each entry, not derived from the start state."
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/uni/UniVerify/Test/Axioms.lean",
+    "token-kit/tokens/uni/UniVerify/Uni/Tx.lean",
+    "token-kit/tokens/uni/UniVerify.lean",
+    "token-kit/tokens/uni/scripts/mk_config.py",
+    "token-kit/tokens/uni/config/uni.json",
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 5,
+     "recorded_status": "closed",
+     "what": "Sep restated in finite-key form: Sep A D speaks about the slots of finitely many given address words (the call keys and their delegates in the start state; for delegateBySig also the signer that ECRECOVER returns). Every headline (supply_preserved, supply_preserved_real, Seq.lean, Tx.lean, Readable.lean) now takes it. The old form over every address word is kept as SepAll / SepAllMsg / supply_preserved_real_sepAll, marked weaker and most likely vacuous. One closed instance reduces RealSep to 11 named keccak facts.",
+     "theorems": [
+      "UniVerify.Sep",
+      "RealSep",
+      "supply_preserved",
+      "supply_preserved_real",
+      "supply_preserved_real_sepAll",
+      "SepAll.sep",
+      "SepAllMsg.real",
+      "Instance.realSep_m0_iff",
+      "Instance.supply_m0",
+      "supply_any_transactions"
+     ],
+     "left": "Instance.KeyFacts (11 facts: 9 over 2^160 address words, 2 over 2^32 checkpoint numbers) cannot be proved in Lean; named in status.json"
+    }
+   ],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-3": {
+   "severity": "minor",
+   "status": "partly",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 6,
+     "do": "Missing witnesses. Add a real successful run for permit (and for UNI's transfer, transferFrom, mint, delegate, delegateBySig), discharge NoDelegation1 (scratch: scratch file NoDelegation1Empty.lean (not kept), scratch file NoDelegation1Sat.lean (not kept), scratch file PermitWitness.lean (not kept)), and add a LINK receiver that really re-enters."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 6,
+     "recorded_status": "closed for one run per writer; partly overall",
+     "what": "Each of the six writers has one machine-checked successful run from pc 0. permit and delegateBySig: real secp256k1 signatures, real runner, ECRECOVER evaluated by the kernel, mainnet address of UNI, chain id 1.",
+     "theorems": [
+      "Instance.transfer_runs",
+      "Instance.transferFrom_runs",
+      "Instance.mint_runs",
+      "Instance.delegate_runs",
+      "Instance.delegateBySig_runs",
+      "Instance.permit_runs",
+      "Instance.permit_runs_inv"
+     ],
+     "left": "all six runs move no votes: the checkpoint-writing paths of _moveDelegates, permit with an amount other than 2^256 - 1, and transfer / transferFrom with a non-zero amount have no witness (status.json not_covered)"
+    }
+   ],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 5,
+     "do": "Sep (keccak separation) and the start invariant Inv are never shown satisfiable. Give each token one closed instance: a concrete state and call where Sep and Inv hold (scratch starts: scratch file InvEmpty.lean (not kept), scratch file UsdeInvEmpty.lean (not kept), scratch file AuditUni.lean (not kept)), and a base case for the sequence theorems."
+    },
+    {
+     "round": "ten-token fix round",
+     "fix": 7,
+     "do": "Fork range. The one-counter gas meter is not the one EthLib runs from Glamsterdam. State fork < Glamsterdam in every theorem that needs it and in every status.json."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 7,
+     "recorded_status": "closed",
+     "what": "status.json fork_range: every real-run theorem states Paris (or Dencun) <= fork < Glamsterdam; the one-frame theorems state Berlin only and the record explains why they are independent of the meter. The new runs state fork < Glamsterdam."
+    }
+   ],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-5": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "ten-token fix round",
+     "fix": 6,
+     "do": "Missing witnesses. Add a real successful run for permit (and for UNI's transfer, transferFrom, mint, delegate, delegateBySig), discharge NoDelegation1 (scratch: scratch file NoDelegation1Empty.lean (not kept), scratch file NoDelegation1Sat.lean (not kept), scratch file PermitWitness.lean (not kept)), and add a LINK receiver that really re-enters."
+    }
+   ],
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "fix": 6,
+     "recorded_status": "closed",
+     "what": "NoDelegation1 and the start invariant are proved for concrete states.",
+     "theorems": [
+      "Instance.noDelegation1_of_emptyHash",
+      "Instance.noDelegation1_sState",
+      "Instance.noDelegation1_before_pectra",
+      "Instance.inv_start"
+     ]
+    }
+   ],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-6": {
+   "severity": "note",
+   "status": "open",
+   "reason": "Not in the fix list: the lemmas that tie the digests to the EIP-712 encoding were not added; the wording in status.json says what is proved.",
+   "steps": [],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-7": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix asked beyond keeping \"votes are not specified\" in not_covered, where it is.",
+   "steps": [],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-8": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "ten-token fix round",
+     "part": "close-f",
+     "entry": "fix-9-records",
+     "fix": 9,
+     "recorded_status": "done",
+     "what": "both status.json files updated: build, counts, assumptions, not_covered, fork_range, main theorems; stale notes about missing witnesses removed; doc headers of Seq.lean, Tx.lean, Sep.lean, SigSupply.lean and the new files match the theorems."
+    }
+   ],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  },
+  "UNI-9": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix needed: facts for the owner, recorded in status.json contract_findings.",
+   "steps": [],
+   "evidence": [
+    "logs/uni.log",
+    "logs/uni.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-b",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit applied to usdd, dai, usde, ena, uni with recipe B of kit-seq.json. All five: headline supply_any_transactions (+ supply_transaction, supply_message_any_depth, supply_from_zero), clean build exit 0, check_axioms green, regen_check SAME, Mac = box. No kit file edited, no new kit lemma needed."
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-f",
+   "date": "2026-11-11 / 2026-11-12 UTC",
+   "summary": "UNI-2, UNI-4, UNI-5, SKY-4, SKY-7 closed. UNI-3 and SKY-5 closed for one real run per function (all six UNI writers; SKY permit by ECRECOVER), with the paths that still have no run listed. SKY-6 and the UNI mint rules worded per call (no sequence form). SKY-3 still open (base case only). No sorry, no added axiom, no native_decide.",
+   "build": {
+    "command": "lake build (LEAN_NUM_THREADS=2) from an empty tokens/uni/.lake/build",
+    "result": "Build completed successfully (1506 jobs).  exit 0",
+    "elapsed_seconds": 2736,
+    "axioms": "count matches Test/Axioms.lean: 862; AXIOM SCAN OK: 64142 constants (63658 theorems); only standard axioms",
+    "log": "logs/uni.log",
+    "axioms_output": "logs/uni.axioms",
+    "files": "147 files identical on Mac and box (sha256)",
+    "theorem_declarations": 3300
+   }
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "ten-token fix round",
+   "fix": 10,
+   "what": "the auditor scratch Lean file AuditUni.lean built on the rebuild box: compiles (exit 0, no sorry)"
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "close-f",
+   "entry": "fix-8-uni-mint-rules",
+   "fix": 8,
+   "recorded_status": "closed by wording",
+   "what": "mint_readable and every mint claim in status.json are worded PER CALL; no sequence form (same reason as SKY-6)."
+  }
+ ]
+}

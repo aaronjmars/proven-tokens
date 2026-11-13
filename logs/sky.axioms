@@ -1,0 +1,7 @@
+theorems checked: 453
+    413 Classical.choice
+    437 Quot.sound
+    444 propext
+count matches Test/Axioms.lean: 453
+AXIOM SCAN OK: 21979 constants (21313 theorems) of SkyVerify and TokenKit, axioms used: [Quot.sound,
+only standard axioms

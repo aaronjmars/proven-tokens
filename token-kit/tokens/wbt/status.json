@@ -1,0 +1,225 @@
+{
+ "token": "WBT (WhiteBIT Coin)",
+ "address": "0x925206b8a707096ed26ae47c84747fe0bb734f59",
+ "date": "2026-11-10",
+ "result": "done: every theorem family of PEPE is proved for the deployed bytecode of WBT, plus two extras (delta_<fn>: the sum of balances minus totalSupply is unchanged by every successful call, with no assumption on the start state; total_le / supply_never_grows: no successful call makes totalSupply larger). Limits are listed under not_covered.",
+ "bytecode": {
+  "size_bytes": 8392,
+  "keccak256": "5c6a78cafeeff9642dc3f44f61bd91a01c76ff4c2f1eb931157019a674142b60",
+  "compiler": "solc 0.8.12, optimizer off",
+  "selectors": 22,
+  "writers": 12,
+  "external_calls": "none (no CALL, STATICCALL, DELEGATECALL)",
+  "source": "worked from the bytes and the ABI only; ETHERSCAN_KEY was not set, so the verified source was not fetched"
+ },
+ "build": {
+  "where": "E2B box lean-fix-d (template lean-ethlib, removed after the run), /home/user/token-kit/tokens/wbt, Lean v4.35.0, usdt-verify d0e684c5, kit = git archive HEAD token-kit (kit library built first: 1386 jobs, exit 0), LEAN_NUM_THREADS=2 (fix round of the ten-token audit, part close-d, 2026-11-11)",
+  "command": "lake build from a removed tokens/wbt/.lake/build",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1413 jobs).",
+  "log": "logs/wbt.log (axioms output: logs/wbt.axioms)",
+  "axioms_check": "bash scripts/check_axioms.sh /home/user/logs/wbt.log WbtVerify/Test/Axioms.lean: exit 0, 'theorems checked: 311', 'count matches Test/Axioms.lean: 311', 'only standard axioms' (Classical.choice 297, Quot.sound 305, propext 308 of the 311); 'AXIOM SCAN OK: 13798 constants (13420 theorems) of WbtVerify and TokenKit'",
+  "regen_check": "bash scripts/regen_check.sh pepe wbt on the Mac: 2/2 SAME (the kit generators write every generated file of WBT as it is, the three changed head lines and Test/Axioms.lean included)",
+  "banned_things": "no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by in Tx.lean and Sanity/Closed.lean (text search plus the axiom scan of every constant); 0 'sorry' and 0 error lines in the build log. No em dash or en dash in the changed files.",
+  "seconds": 297,
+  "mac_equals_box": "md5 of every file of tokens/wbt (without .lake and __pycache__) on the Mac and on the box after the final build and after status.json was copied: identical"
+ },
+ "theorem_counts": {
+  "total_theorems_in_tokens_wbt": 1050,
+  "bytecode_and_hash": "Code.lean (5 theorems: CODE_eq, size_CODE, getElem_CODE, byteAt_CODE, valid_CODE) and Test/Hash.lean (a build-time test: CODE equals data/wbt.runtime.hex byte for byte, has 8392 bytes, keccak256 5c6a78ca...142b60)",
+  "jump_destinations": "valid_CODE (Code.lean); 1 theorem in Steps.lean (push data); Map.lean holds the selector table (22 entries) and the storage layout (definitions)",
+  "dispatcher": "walk mode: the dispatcher is walked from pc 0 inside every path; Complete/Dispatch.lean has 3 theorems: selector_cases, ends_ok_dispatch, runFrame_ok_dispatch",
+  "block_lemmas": "515 in Gen/B0..B12.lean",
+  "paths": {
+   "total": 131,
+   "ok": 20,
+   "revert": 95,
+   "stuck": 14,
+   "at": 2,
+   "note": "each path theorem gives the exact storage writes, logs, output and gas used of the path, under a sufficient gas bound (a writing path needs gas >= cost + 2301, the stipend check at SSTORE; completeness gives only cost <= gas). Every function has exactly ONE success path. 'at' = the entry paths of name() and symbol() that stop at the loop head. 'stuck' = a write or a log in a static frame or with no account. 169 branches whose conditions contradict each other were dropped by the generator (prune: normalized)."
+  },
+  "completeness_ok": "25: ok_<fn> for the 20 functions with a success path, ok_valueSent, ok_short, ok_other (these three prove False: no successful run), ok_nameEntry, ok_symbolEntry",
+  "readonly_loops": "184 theorems in Gen/Loops.lean; main results Loops.ro_name and Loops.ro_symbol (every successful run of name() or symbol(): no storage write, no log)",
+  "supply_invariant": "46 in Invariant.lean: delta_<fn> and supply_<fn> for 20 functions and for name and symbol, delta_step, supply_preserved",
+  "no_mint": "3 in NoMint.lean: total_le, total_le_goodCall, supply_never_grows",
+  "readable": "20 <fn>_readable in Readable.lean, one per function with a success path",
+  "sanity": "20 witnesses <fn>_runs in Sanity/Zero.lean, one per success path (40 theorems with helpers). These are frame-level (the message has gas 0, the frame gas is chosen freely) and their states are not shown to meet the invariant.",
+  "sequences": "10 in Seq.lean: Supply.inv_congr, inv_goodCall, inv_untouched, inv_calls, goodCall_process, untouched_process_failed, process_value_fails, process_step, process_step_inv, calls_process (from Paris)",
+  "sep": "16 in Sep.lean (hand-written): the invariant, callKeys, the Sep structure and its rewrite rules",
+  "lib": "16 in Lib.lean (hand-written, nothing about WBT: to merge into the kit)",
+  "axioms_test": "311 names in Test/Axioms.lean (268 at first, 20 of Tx.lean, 7 of TokenKit.Seq, 15 of Sanity/Closed.lean, and Supply.inv_congr, now listed through the config switch axioms.dotted_decl) plus the scan of every constant",
+  "tx": "20 in Tx.lean: storageOnly_inv, code_size_ne_zero, code_not_indicator, code_not_delegated, inv_zeroBase, frameKeepsQ, supply_message_any_depth, supply_transaction, supply_any_transactions, supply_from_zero, storageOnly_level, level_self, frameKeepsQ_level, level_message_any_depth, level_transaction, level_any_transactions, delta_transaction, supply_never_grows_transaction, delta_any_transactions, supply_never_grows_any_transactions; definitions SepMsg, Level",
+  "closed_instance": "15 in Sanity/Closed.lean (hand-written): 9 lemmas about no token (storageAt_codeState, codeHash_codeState, getCode_codeState, holdsCode_codeState, noPre_of, writeCost_le_all, lt_of_le_bound, spec_process, clean_of_spec), wbt_address_word, notPrecompile_wbt, holdsCode_wState, inv_wState, good_wState, burn_closed"
+ },
+ "supply_statement": {
+  "invariant": "Inv C S := Supply.Inv 3 5 C S: the sum of the balance words (slots mapSlot a 3 for the 2^160 addresses a) equals the word of slot 5 (_totalSupply). D is that sum minus the word of slot 5.",
+  "per_function": "delta_<fn> (all 22 selectors): every successful call ends with the same D it started with, under Sep (callKeys message), with NO assumption on the start state. So the sum of balances always moves exactly as totalSupply does.",
+  "totalSupply_and_sum_unchanged": "totalSupply, balanceOf, allowance, decimals, owner, isOwner, paused, isBlacklisted, name, symbol (read only); approve, increaseAllowance, decreaseAllowance (one allowance slot); blacklistAccount (one blacklist slot); pause, unpause (slot 2); transferOwnership, renounceOwnership (slot 0); transfer, transferFrom (one balance down by amount, one up by amount, or no change when from = to)",
+  "totalSupply_and_sum_down": "burn(amount): totalSupply and the balance of the caller (the owner) each go down by amount. destroyBlackFunds(a): the balance of a becomes 0 and totalSupply goes down by the old balance of a.",
+  "never_up": "total_le: no successful frame makes the word of slot 5 larger. supply_never_grows_any_transactions (Tx.lean): the same after any finite list of whole transactions, whoever calls and however deep (Dencun <= fork < Glamsterdam, run-local TxClean). supply_never_grows (NoMint.lean) is the older claim in the weaker per-message model Calls, whose `other` step is ASSUMED to keep the storage. There is no mint function in the runtime code."
+ },
+ "assumptions": [
+  "Transaction theorems (supply_transaction, supply_any_transactions, supply_from_zero, delta_transaction, delta_any_transactions, supply_never_grows_transaction, supply_never_grows_any_transactions, level_*), run-local hypothesis Seq.TxClean.call / .create with Q := SepMsg: every message that really enters the code at C during this transaction satisfies Sep (callKeys m) (keccak separation for its caller and first two argument words, NOT proved), and every code that a creation of this transaction really deposits, when it has the keccak hash of the code of WBT, is that code (no keccak collision on these codes, NOT proved). Nothing is assumed about messages or codes outside the run. supply_message_any_depth / level_message_any_depth assumes the same as Seq.Clean of its run.",
+  "Transaction theorems, Seq.TxClean.auths: no EIP-7702 authorization of the transaction sets a code (0 or 23 bytes) with the keccak hash of the code of WBT (8392 bytes). Only a keccak collision breaks it; NOT proved.",
+  "Transaction theorems, Seq.TxClean.data: the call data of a transaction sent to C is below 2^256 bytes.",
+  "Transaction theorems, fork range: each transaction has Fork.dencun <= fork < Fork.glamsterdam (the *_transaction theorems, the cons of Seq.Chain). The *_message_any_depth theorems: Fork.berlin <= fork, one-counter gas meter (Evm fork Nat), so they describe the real chain only before Glamsterdam.",
+  "Transaction theorems, start state: supply_transaction, supply_any_transactions: Seq.Good C CODE (Inv C) on the block state before the first transaction (C holds the code of WBT, code hash = keccak256 of the code and not the empty hash, and the invariant holds). delta_* and supply_never_grows_*: Seq.HoldsCode only, nothing about storage. supply_from_zero: HoldsCode and all-zero storage of C.",
+  "Transaction theorems, the *_message_any_depth theorems only: Seq.Sane C CODE message (if the top message runs at C, it is a call that runs the code of WBT with call data below 2^256 bytes). The transaction theorems prove this from HoldsCode.",
+  "Older per-message model (Seq.lean inv_calls, NoMint.lean supply_never_grows): the `other` step of Calls ASSUMES Untouched (every storage word of C as before) for everything that is not a direct successful top-level call: calls from inside other contracts, rollbacks of outer frames, fees, other transactions. Not proved in that model (the ten-token audit, WBT-1); the theorems of Tx.lean do not use it.",
+  "Sep W_KEYS (hA of inv_wState, good_wState, burn_closed; Sanity/Closed.lean), W_KEYS = [CALLER1W, 1, 0] (the caller, the amount word 1, and 0 because the call data has no second argument): Sep for the three words of the witness call. It is the smallest named list the frame theorems let through and unfolds to 30 keccak facts, each over all 2^160 address words: slot 5 is the balance slot of no address (1); no other address has the balance slot of each of the three words (3); the 9 allowance slots keyed by two of the words are no balance slot and not slot 5 (18); the 3 blacklist slots are no balance slot and not slot 5 (6); slots 0 and 2 are no balance slot (2). inv_wState uses three of them only (uniqueness of the balance slot of CALLER1W; slots 0 and 5 are no balance slot). None can be proved in this model: keccak has no proved property and 2^160 inputs cannot be computed by the kernel. No instance of Sep is proved anywhere.",
+  "hH : hashOf CODE != EMPTY_CODE_HASH (holdsCode_wState, good_wState, burn_closed): the keccak hash of the code of WBT is not the hash of the empty code. True (Test/Hash.lean computes the hash at build time with #eval) but not proved in the kernel: the kernel computation of keccak over a whole code ran a box out of memory in an earlier round (WBTC), so it was not tried for the 8392 bytes of WBT.",
+  "Sep (callKeys message): a hypothesis about keccak only, NOT proved. For the caller and the first two argument words (each masked to 160 bits): slot 5 is no balance slot; their balance slots are the balance slot of no other address; allowance slots keyed by two of them and their blacklist slots are no balance slot and not slot 5; slots 0 and 2 are no balance slot. Used by delta_<fn>, supply_<fn>, total_le, the sequence theorems and the readable corollaries of transfer, transferFrom, approve, increaseAllowance, decreaseAllowance, burn, destroyBlackFunds. Not used by the path theorems, ok_<fn>, the Sanity witnesses, or the other readable corollaries.",
+  "message.data.size < 2^256 (hsize') in every completeness and later theorem.",
+  "Fork: from Berlin up to but not including Glamsterdam for paths, completeness, invariant, readable and sanity; from Paris up to but not including Glamsterdam for the lift to top-level messages and sequences. The lower bounds are in the statements; the upper bound is in the statements of Tx.lean and Sanity/Closed.lean only (next line).",
+  "Gas and upper fork bound (the ten-token audit, WBT-3, fix 7): the one-counter meter (Evm fork Nat). The generated frame theorems and the per-message theorems of Seq.lean and NoMint.lean carry only Fork.berlin <= fork (Paris for the per-message lift) and no upper bound in their statement. They are true as stated at every such fork, because they speak about EthLib's frame runner instantiated with the Nat meter; but EthLib's processTransaction uses that meter only below Glamsterdam, so they describe the real chain only before Glamsterdam. The link to the chain is made in Tx.lean (Fork.dencun <= fork < Fork.glamsterdam, through processTransaction with its real meter, which also answers the missing glue to processMessageCall of WBT-3) and in Sanity/Closed.lean (burn_closed states fork < Fork.glamsterdam). The generator was not changed to add the bound to the older theorems: it is a file of the shared kit, the bound would be an unused hypothesis in each of them, and every other token would have to be regenerated. The EIP-8037 meter is not ported.",
+  "The start state is 'At CODE message 0 [] .empty gas state substate evm': a fresh frame at pc 0 with empty stack and memory.",
+  "Sequence lift: message.code = CODE, the target is no precompile, and for a successful call no value is moved (process_value_fails shows a call with value fails).",
+  "supply_preserved and inv_calls assume the invariant in the start state; the constructor (which created the supply) is not verified. delta_<fn>, delta_step, total_le and supply_never_grows do not assume it."
+ ],
+ "statement_form": "WBT uses SHR (1) and SLT (6), which are outside upstream's Gas.simulated set. So, as for PEPE, paths are stated over EthLib's Logic.SpecG / HoareG (the real step function), and completeness and every later family over 'EndsL runChild evm s' (a run of EthLib's runFrame that returns, for every bound and every message runner; TokenKit/Evm/SafeL.lean). This is EthLib's real frame runner, not a weaker model.",
+ "not_covered": [
+  "name() and symbol(): only 'no storage write, no log' for every successful run (Loops.ro_name, Loops.ro_symbol) and the entry paths. That a call of name() or symbol() CAN end with no error is not witnessed, so ro_name and ro_symbol could hold for no run at all (the ten-token audit, WBT-5); the supply theorems are sound either way. The returned string is not proved.",
+  "The EIP-8037 two-counter gas meter (by the brief).",
+  "The readable corollaries state requirements, storage, output and logs; they do not restate gas (the path theorems give the exact gas).",
+  "The readable corollaries of blacklistAccount, pause, unpause, transferOwnership and renounceOwnership give the new slot word as a bit expression (flag OR the old word with its low byte, or low 20 bytes, cleared); the plain reading 'isBlacklisted(a) afterwards returns the flag' is not stated as its own theorem.",
+  "The three fallbacks (value sent, call data under 4 bytes, unknown selector) have no readable corollary and no witness: ok_valueSent, ok_short and ok_other prove that no such run succeeds.",
+  "Sanity witnesses exist for the 20 success paths only. The 95 revert and 14 stuck paths have no witness; the generator drops paths with contradictory conditions, but a remaining revert path is not shown non-empty.",
+  "Sanity witnesses run in a state with one account (the contract) and from one caller (Witness.CALLER1). In Sanity/Zero.lean the account has no code in the state (the code comes from the message); Sanity/Closed.lean has the one witness where the account holds the code, the invariant holds, and EthLib's processMessage runs the call.",
+  "The constructor and the deployed storage (who the owner is now, the current supply) are not covered: only the runtime code.",
+  "Solidity-level meaning (revert reason strings, Panic codes) is not decoded: a revert path gives the raw output bytes.",
+  "Seq.TxClean and Seq.Chain have no closed instance: it would need a concrete signed transaction run through processTransaction (signature recovery, fee and balance checks), which is not built here. The closed instance of Sanity/Closed.lean is at the level of one message (processMessage), for burn only: no closed instance for the other 11 writers. total_le still asks the whole Sep, more than the inequalities it uses (the ten-token audit, WBT-2).",
+  "Transaction level: what a block does between transactions is not linked (withdrawals, the system calls of EIP-4788, 2935, 7002, 7251, rewards). Seq.Chain strings transactions only.",
+  "Transaction level: forks before Dencun. There the end of a transaction can delete an account that ran SELFDESTRUCT, and it is not proved here that the code of WBT never runs it (the library tracks instead that C is not created in the transaction and not marked for deletion, which EIP-6780 gives from Dencun).",
+  "Transaction level: Glamsterdam and later (two-counter gas meter of EIP-8037).",
+  "Transaction level: the base case of supply_from_zero is all-zero storage; the constructor run that leaves the real start state is not linked.",
+  "After renounceOwnership (the ten-token audit, WBT-6): only burn has a proved requirement 'caller != 0'. blacklistAccount, destroyBlackFunds, pause, unpause, transferOwnership and renounceOwnership only require sender = owner; in the model a caller with address 0 passes that check when slot 0 is 0. That nobody can call them then is an argument about real senders (no signed transaction comes from address 0), not a theorem."
+ ],
+ "storage_layout": {
+  "0": "_owner (low 160 bits)",
+  "mapSlot a 1": "_blacklist[a] (low byte)",
+  "2": "_paused (low byte)",
+  "mapSlot a 3": "_balances[a]",
+  "mapSlot spender (mapSlot owner 4)": "_allowed[owner][spender]",
+  "5": "_totalSupply",
+  "6": "_name",
+  "7": "_symbol",
+  "8": "_decimals (low byte, read from storage by decimals())"
+ },
+ "contract_findings": [
+  "No mint: none of the 22 selectors can make totalSupply larger (total_le). Supply only goes down, by burn and destroyBlackFunds.",
+  "Owner powers (the address in slot 0): burn its own tokens, blacklistAccount(a, flag) for any address, destroyBlackFunds(a) for a blacklisted address, pause, unpause, transferOwnership (one step, new owner not 0), renounceOwnership. After renounceOwnership the owner is the address 0: burn then fails for every caller (it requires caller = owner and caller != 0); the other owner functions only require sender = owner, with no 'caller != 0' check in the code, so that they can no longer be called rests on the fact that no transaction can be sent from the address 0, not on a check in the contract (the ten-token audit, WBT-6).",
+  "burn(amount) is owner only and burns from the caller: a holder cannot burn its own tokens. It emits Transfer(owner, 0, amount). It checks neither the pause nor the blacklist. It lowers _totalSupply before it checks the balance of the caller; the failed check reverts the whole call.",
+  "destroyBlackFunds(a): owner only, a must be blacklisted; sets the balance of a to 0 and lowers totalSupply by it; emits DestroyedBlackFunds(a, old balance) and NO Transfer event, so an indexer that follows Transfer events only will miss it. Works while paused.",
+  "blacklistAccount writes the flag with no event: listing and unlisting leave no log. Any address can be listed, the owner and the address 0 included. Together with destroyBlackFunds (no Transfer event) the owner can remove the funds of any address in two steps of which only the second leaves a log (DestroyedBlackFunds).",
+  "Blacklist reach: transfer needs the caller and the receiver not blacklisted; transferFrom needs from and to not blacklisted but does NOT check the spender (the caller): a blacklisted spender can still move tokens of others with an allowance. approve, increaseAllowance and decreaseAllowance test neither the blacklist nor the pause: a blacklisted address can still set allowances.",
+  "Pause reach: only transfer and transferFrom check it. approve, increaseAllowance, decreaseAllowance, burn, blacklistAccount, destroyBlackFunds and the ownership functions work while paused.",
+  "transferFrom always lowers the allowance (no 'infinite allowance' shortcut for the largest word) and emits only Transfer: no Approval event on spend. It checks the allowance first, then pause, blacklist, receiver not 0, balance.",
+  "transfer and transferFrom reject the receiver 0; the sender 0 is not tested. approve, increaseAllowance and decreaseAllowance reject spender 0 and caller 0.",
+  "isOwner(address) tests its ARGUMENT against the owner, not the caller.",
+  "decimals() reads the low byte of slot 8 from storage; it is not a constant of the code.",
+  "Every function rejects any value (one CALLVALUE check at the top); call data under 4 bytes and unknown selectors revert: no fallback, no receive.",
+  "The ABI decoder (0.8) reverts on short call data and on dirty high bits of an address or bool argument.",
+  "transferOwnership and renounceOwnership emit their log BEFORE the storage write; in a static frame they fail at the LOG."
+ ],
+ "to_merge_into_kit": [
+  {
+   "file": "tokens/wbt/scripts/gen_paths.py",
+   "base": "scripts/gen_paths.py",
+   "reason": "(a) LOG1 is accepted; a LOG1 of no bytes (Pause(), Unpause()) uses the new rule log1ZK. (b) A LOG that comes before the first SSTORE of a path (transferOwnership, renounceOwnership): the kit version wrote a proof that used hstatic before it was known; the copy adds a stuck leaf for the static case (logStuckW) and a split on message.isStatic in the completeness proof. (c) Block files import <Mod>.Lib. (d) sys.path points at the kit scripts.",
+   "state": "MERGED into the kit (kit-status.json wbt_merge): the files of WBT are written by the kit scripts/regen.sh from config/wbt.json (regen_check.sh wbt: SAME). The local copy in tokens/wbt/scripts differs from the kit, is not used, and is marked SUPERSEDED in its head (the ten-token audit, WBT-4); regen_wbt.sh now stops with a message."
+  },
+  {
+   "file": "tokens/wbt/scripts/gen_supply.py",
+   "base": "scripts/gen_supply.py (checked08)",
+   "reason": "knows the checked addition of 0.8 with the optimizer OFF, ISZERO (GT a (MAX - v)) (the kit knows only GT a (NOT v)); writes the stronger delta_<fn> (D unchanged, no assumption on the start state) and derives supply_<fn> from it.",
+   "state": "MERGED into the kit (kit-status.json wbt_merge): the files of WBT are written by the kit scripts/regen.sh from config/wbt.json (regen_check.sh wbt: SAME). The local copy in tokens/wbt/scripts differs from the kit, is not used, and is marked SUPERSEDED in its head (the ten-token audit, WBT-4); regen_wbt.sh now stops with a message."
+  },
+  {
+   "file": "tokens/wbt/scripts/gen_readable.py",
+   "base": "scripts/gen_readable.py",
+   "reason": "new facts mode readable_opts.facts = unopt08 (function facts_unopt08): the size check ISZERO (SLT ((4 + (CDS - 4)) - 4) k), the MAX - v addition check, and a hard stop on an unknown shape instead of a warning. Nothing else differs.",
+   "state": "MERGED into the kit (kit-status.json wbt_merge): the files of WBT are written by the kit scripts/regen.sh from config/wbt.json (regen_check.sh wbt: SAME). The local copy in tokens/wbt/scripts differs from the kit, is not used, and is marked SUPERSEDED in its head (the ten-token audit, WBT-4); regen_wbt.sh now stops with a message."
+  },
+  {
+   "file": "tokens/wbt/scripts/gen_nomint.py",
+   "base": "new",
+   "reason": "writes NoMint.lean (total_le, supply_never_grows) from the readable corollaries; the table KIND is for WBT, the idea is general for a token with no mint.",
+   "state": "MERGED into the kit (kit-status.json wbt_merge): the files of WBT are written by the kit scripts/regen.sh from config/wbt.json (regen_check.sh wbt: SAME). The local copy in tokens/wbt/scripts differs from the kit, is not used, and is marked SUPERSEDED in its head (the ten-token audit, WBT-4); regen_wbt.sh now stops with a message."
+  },
+  {
+   "file": "tokens/wbt/scripts/fix_map_text.py",
+   "base": "scripts/gen_dispatch.py",
+   "reason": "gen_dispatch.py (mode walk) writes in the head of Map.lean that the code was compiled with the optimizer; false for WBT. The script corrects that one comment sentence. Fix in the kit: take the sentence from the configuration.",
+   "state": "MERGED into the kit (kit-status.json wbt_merge): the files of WBT are written by the kit scripts/regen.sh from config/wbt.json (regen_check.sh wbt: SAME). The local copy in tokens/wbt/scripts differs from the kit, is not used, and is marked SUPERSEDED in its head (the ten-token audit, WBT-4); regen_wbt.sh now stops with a message."
+  },
+  {
+   "file": "tokens/wbt/scripts/regen_wbt.sh",
+   "base": "scripts/regen.sh",
+   "reason": "regen.sh always runs the kit generators first and token_generators only after them, so a token cannot replace gen_paths, gen_supply or gen_readable. Fix in the kit: let the configuration name a replacement script per generator.",
+   "state": "MERGED into the kit (kit-status.json wbt_merge): the files of WBT are written by the kit scripts/regen.sh from config/wbt.json (regen_check.sh wbt: SAME). The local copy in tokens/wbt/scripts differs from the kit, is not used, and is marked SUPERSEDED in its head (the ten-token audit, WBT-4); regen_wbt.sh now stops with a message."
+  },
+  {
+   "file": "tokens/wbt/WbtVerify/Wbt/Lib.lean",
+   "base": "new (TokenKit/Evm/)",
+   "reason": "library lemmas with nothing about WBT: logSub1 and log1ZK (LOG1 of no bytes), logStuckW (a LOG in a static frame is stuck), add_bound_gen / add_bound_submax / add_nat_submax / add_fact_submax and size_of_slt_u and add4_sub4 (shapes of unoptimized 0.8), mul_one_right, zero_or, and_255_comm, and_255_idem, log1 and logs_logSub1, D_congr."
+  },
+  {
+   "file": "scripts/gen_axioms.py",
+   "base": "note only, no local copy",
+   "reason": "with declared_only, a name with a namespace prefix inside the project namespace (Supply.inv_congr of Seq.lean) is reported as not declared and left out of the named list. Same for PEPE.",
+   "state": "solved without a kit change: the kit already has the switch axioms.dotted_decl; it is now set for WBT and Supply.inv_congr is in the named list."
+  },
+  {
+   "file": "TokenKit lemma style",
+   "base": "note only",
+   "reason": "a simp over 'sub (MAX literal) v' with the 78 digit literal and omega ran out of memory (Lean exit 137 after 2 minutes); stating the lemma for any word m with m.toNat = 2^256 - 1 (add_bound_gen) and then applying it to the literal is instant."
+  },
+  {
+   "file": "tokens/wbt/WbtVerify/Wbt/Sanity/Closed.lean",
+   "base": "new (TokenKit/Seq or TokenKit/Evm/Witness)",
+   "reason": "the 9 lemmas about no token (codeState and its lemmas, noPre_of, writeCost_le_all, lt_of_le_bound, spec_process, clean_of_spec) and the tactic macro gas_below; the same text is in tokens/pepe."
+  }
+ ],
+ "updated": "2026-11-11 (fix round of the ten-token audit: part apply-a, transaction-level theorems, WBT-1; part close-d, fixes 5, 7 and 9: closed instance Sanity/Closed.lean, fork range, stale notes)",
+ "fork_range": "Chain-level claims hold for Fork.dencun <= fork < Fork.glamsterdam, that is from Dencun up to but not including Glamsterdam (the *_transaction and *_any_transactions theorems of Tx.lean). The closed instance burn_closed: Fork.paris <= fork < Fork.glamsterdam. Frame and per-message theorems are stated for every fork from Berlin (Paris for the per-message lift) over the one-counter gas meter and carry no upper bound in their statement; they describe the real chain only from Berlin up to but not including Glamsterdam (see assumptions, 'Gas and upper fork bound').",
+ "headline": "Three transaction-level headlines in WbtVerify/Wbt/Tx.lean, each after any finite list of transactions run by EthLib's processTransaction, whoever calls and however deep, under the named run-local hypotheses: supply_any_transactions (sum of balances = _totalSupply is kept), delta_any_transactions (sum of balances minus _totalSupply is unchanged, no assumption on the start storage), supply_never_grows_any_transactions (_totalSupply is never larger, no assumption on the start storage).",
+ "claims": {
+  "supply_message_any_depth": "one call run by EthLib's processMessage, to any account and any code, at any depth: 'C holds the code of WBT and the invariant holds' is kept, with or without an error. Fork from Berlin. Assumes Seq.Sane, Seq.Good at the start, Seq.Clean of this run.",
+  "supply_transaction": "one whole transaction run by EthLib's processTransaction (gas purchase, EIP-7702 authorizations, the message, refunds, fee, deletion of accounts). Dencun <= fork < Glamsterdam. Assumes Seq.TxClean and Seq.Good at the start.",
+  "supply_any_transactions": "the same after any finite list of transactions (Seq.Chain).",
+  "supply_from_zero": "the same from the base case shape (C holds the code, all-zero storage). NOT the real deployment state of WBT.",
+  "delta_transaction, delta_any_transactions": "C still holds the code and Supply.D 3 5 C (sum of balances minus the word of slot 5) is equal before and after one transaction / any finite list. Start: Seq.HoldsCode only.",
+  "supply_never_grows_transaction, supply_never_grows_any_transactions": "the word of slot 5 (_totalSupply) after one transaction / any finite list is at most the word before. Start: Seq.HoldsCode only. This closes WBT-1: rollbacks of outer frames, calls from inside other contracts, fees and refunds are all inside EthLib's processTransaction here, none is assumed.",
+  "level_message_any_depth, level_transaction, level_any_transactions": "the two facts above as a kept state predicate Level C d n (D = d and slot 5 <= n), for a call at any depth (fork from Berlin), one transaction, a list.",
+  "burn_closed": "Sanity/Closed.lean (the ten-token audit, WBT-2; hand-written). ONE closed instance of the hypotheses of the supply theorems, at message level. wState: one account at the mainnet address of WBT that holds the code of WBT, owner (slot 0) = Witness.CALLER1, _totalSupply (slot 5) = 5, balance of Witness.CALLER1 = 5, all else 0. m_w: burn(1) from Witness.CALLER1, no value, gas limit 1000000. Statement, for Paris <= fork < Glamsterdam and every block and transaction environment: Seq.Good holds in wState (good_wState, inv_wState); EthLib's processMessage ends m_w with no error and empty output; at the end _totalSupply is 4 and the balance of the owner is 4 (this burn lowered slot 5); the run meets Seq.Clean with Q := SepMsg (the run-local hypothesis of supply_message_any_depth); and Seq.Good holds in the end state by supply_message_any_depth. Hypotheses that stay, both about keccak and NOT proved: hA : Sep W_KEYS with W_KEYS = [CALLER1W, 1, 0], and hH : hashOf CODE != EMPTY_CODE_HASH. Sep itself is not shown satisfiable.",
+  "older_model_kept": "Seq.lean (inv_calls, process_step, calls_process; and supply_never_grows, total_le_goodCall of NoMint.lean): top-level messages only, where every other step is ASSUMED to keep the storage of C (the `other` step of Calls, Untouched). It is the older, WEAKER per-message model, kept because other files and the axioms list use it; the theorems of Tx.lean do not use that assumption."
+ },
+ "fix_round_audit4": {
+  "finding": "fix 2 of the ten-token audit (shared kit fix; WBT-1 for WBT): the sequence theorems covered top-level messages only and assumed every other step keeps the storage of C (Untouched).",
+  "status": "done by agent apply-a with recipe A_no_outside_call of audits/wbt/fixes.json; detail in audits/wbt/fixes.json",
+  "files": "WbtVerify/Wbt/Tx.lean (new, 300 lines, 20 theorems), WbtVerify.lean (1 import), config/wbt.json (axioms.imports, axioms.after), Test/Axioms.lean (regenerated). Shared library used: TokenKit/Seq/Frame.lean, Run.lean, Tx.lean, Supply.lean (not edited).",
+  "retired": "nothing; Seq.lean is kept as the older, weaker model",
+  "to_merge_into_kit": "nothing needed. Optional: the 'fixed level' pattern (a state predicate with a parameter, instantiated at the start state, to lift a before/after relation such as 'D unchanged' or 'slot never larger') could become a kit lemma Seq.chain_rel.",
+  "findings": {
+   "WBT-1": "done (Tx.lean)",
+   "WBT-3": "partly, explained: the transaction theorems state Dencun <= fork < Glamsterdam and run through processTransaction with its real meter (the glue to the transaction path that WBT-3 asks); burn_closed states fork < Glamsterdam; the older generated frame and per-message theorems still have no upper fork bound in their statement, because they hold at every fork as statements about the Nat-meter runner (see assumptions and fork_range). The generator was not changed.",
+   "WBT-2": "partly: Sep cannot be proved. Part close-d reduced it to Sep W_KEYS (30 keccak facts on three named words) and showed it goes together with a good start state and a real successful burn that lowers slot 5 (burn_closed). total_le was not restated with fewer inequalities.",
+   "WBT-4": "done: clean build log and axioms output in logs/wbt.log and wbt.axioms; status.json and config/wbt.json say the kit generators write the files; the heads of Invariant.lean, Readable.lean and NoMint.lean name the kit scripts (config keys generated_by); the local copies are marked SUPERSEDED.",
+   "WBT-5": "disclosed in not_covered; no witness of a successful name() or symbol().",
+   "WBT-6": "done: wording of the renounceOwnership finding and three added facts in contract_findings."
+  },
+  "part_close_d": "fixes 5, 7 and 9 of audits/wbt/fixes.json; detail in audits/wbt/fixes.json. Files: WbtVerify/Wbt/Sanity/Closed.lean (new, 412 lines, 15 theorems), WbtVerify.lean (1 import), config/wbt.json (axioms.imports, axioms.after, axioms.dotted_decl, three generated_by keys, the regen note), Test/Axioms.lean, Invariant.lean, Readable.lean, NoMint.lean (regenerated: one head line each), scripts/* (SUPERSEDED marks), status.json."
+ },
+ "build_before_fix4": {
+  "where": "E2B box lean-ethlib-build, /home/user/token-kit/tokens/wbt, Lean v4.35.0",
+  "command": "lake build (target WbtVerify, the root that imports every module and Test/Axioms)",
+  "exit_code": 0,
+  "final_line": "Build completed successfully (1401 jobs).",
+  "log_on_box": "/home/user/logs/wbt.final.log",
+  "axioms_check": "bash scripts/check_axioms.sh /home/user/logs/wbt.final.log WbtVerify/Test/Axioms.lean: exit 0, 'theorems checked: 268', 'count matches Test/Axioms.lean: 268', 'only standard axioms' (propext 268, Quot.sound 267, Classical.choice 262). The scan at the end of Test/Axioms.lean printed 'AXIOM SCAN OK: 13335 constants (13129 theorems) of WbtVerify and TokenKit'.",
+  "banned_things": "no sorry, no axiom declaration, no native_decide, no bv_decide in tokens/wbt (text search plus the axiom scan). 'decide +kernel' is used in the Sanity witnesses and bv_omega in one lemma of Lib.lean (add4_sub4): both are checked by the Lean kernel and add no axiom. No em dash or en dash in any file (text search).",
+  "warnings": "only lints: unused simp arguments in Sanity/Zero.lean (generated), deprecation notes of the kit library, and the 'module system' note on Seq.lean and Test/Hash.lean. No sorry warning.",
+  "mac_equals_box": "70 files of tokens/wbt (no .lake, no __pycache__) compared by sha1 after the final build: identical. status.json was copied after that.",
+  "how_to_regenerate": "bash tokens/wbt/scripts/regen_wbt.sh (not the kit scripts/regen.sh: see to_merge_into_kit), then lake build in tokens/wbt on the box."
+ }
+}

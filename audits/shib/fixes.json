@@ -1,0 +1,326 @@
+{
+ "token": "SHIB",
+ "about": "What the fix rounds did for each finding of findings.json (same ids). status: closed, partly or open. asked: the item of the fix list. steps: the record of each part of a fix round that touched the finding, oldest first, as that part wrote it (paths updated to this layout; recorded_status is its own word). evidence: the files of the result and the last clean build. fix_rounds: what each part did for this token, with its build.",
+ "audit": {
+  "date": "2026-11-10",
+  "round": "first SHIB audit",
+  "date_note": "not recorded in the audit file; inferred from the next audit (QNT, BNB and WETH, 2026-11-10), which it came before"
+ },
+ "last_clean_build": {
+  "log": "logs/shib.log",
+  "axioms": "logs/shib.axioms"
+ },
+ "findings": {
+  "F1": {
+   "severity": "minor",
+   "status": "open",
+   "reason": "No fix item asked for it. Sep (keccak separation) is still an assumption, named in token-kit/tokens/shib/status.json (assumptions) and docs/MAP.md (Not proved); SHIB has no closed instance file.",
+   "steps": [],
+   "evidence": [
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F2": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "SHIB fix round",
+     "fix": 3,
+     "do": "Lift the frame-level results to a whole top-level message, the way upstream does (UsdtVerify/Usdt/Invariant/Seq.lean: goodCall_process, process_step, untouched_process_failed, process_value_fails, inv_calls): from Paris, one-counter meter, a top-level message to SHIB either keeps the invariant or leaves storage unchanged, and so does any finite sequence. Reuse upstream and EthLib lemmas; do not port the EIP-8037 meter. If this is blocked, say exactly where."
+    }
+   ],
+   "steps": [
+    {
+     "round": "SHIB fix round",
+     "fix": 3,
+     "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+     "asked": "Lift the frame-level results to a whole top-level message, the way upstream does (UsdtVerify/Usdt/Invariant/Seq.lean: goodCall_process, process_step, untouched_process_failed, process_value_fails, inv_calls): from Paris, one-counter meter, a top-level message to SHIB either keeps the invariant or leaves storage unchanged, and so does any finite sequence. Reuse upstream and EthLib lemmas; do not port the EIP-8037 meter. If this is blocked, say exactly where.",
+     "what_changed": "ShibVerify/Shib/Seq.lean: process_step, process_step_inv and inv_calls over EthLib processMessage (from Paris, one-counter meter). Later the ten-token fix round added Tx.lean (whole transactions, Dencun <= fork < Glamsterdam).",
+     "files": [
+      "token-kit/tokens/shib/ShibVerify/Shib/Seq.lean",
+      "token-kit/tokens/shib/ShibVerify/Shib/Tx.lean"
+     ]
+    },
+    {
+     "round": "ten-token fix round",
+     "part": "apply-a",
+     "entry": "fix 2 for shib and qnt (not audited in the ten-token audit, same gap)",
+     "recorded_status": "done",
+     "hypotheses_still_assumed": [
+      "Seq.TxClean.call / .create per transaction, RUN-LOCAL: every message that really enters the token code during the run satisfies Q (Sep (callKeys m), keccak separation, NOT proved; for QNT part 2 also 'caller is not the crowdsale address'), and no keccak collision on the codes the run deposits (NOT proved)",
+      "Seq.TxClean.auths (no EIP-7702 authorization sets a code with the hash of the token code), Seq.TxClean.data (call data of a transaction to the token below 2^256 bytes)",
+      "Fork.dencun <= fork < Fork.glamsterdam for each transaction (message-level theorems: Fork.berlin <= fork, one-counter meter)",
+      "Start: Seq.Good (HoldsCode + invariant), or HoldsCode only for the WBT delta / never-grows and QNT fixed_mono theorems, or HoldsCode + all-zero storage for the from-zero theorems"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "token-kit/tokens/shib/ShibVerify/Shib/Seq.lean",
+    "token-kit/tokens/shib/ShibVerify/Shib/Tx.lean",
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F3": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "SHIB fix round",
+     "fix": 1,
+     "do": "transferFrom_p8 is vacuous (hc3 and hc8 contradict). Remove it or replace it by a lemma stating the path is unreachable, and make the generator detect contradictory path conditions so it never emits a vacuous path theorem again. Correct every count in pilot-status.json and docs."
+    }
+   ],
+   "steps": [
+    {
+     "round": "SHIB fix round",
+     "fix": 1,
+     "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+     "asked": "transferFrom_p8 is vacuous (hc3 and hc8 contradict). Remove it or replace it by a lemma stating the path is unreachable, and make the generator detect contradictory path conditions so it never emits a vacuous path theorem again. Correct every count in pilot-status.json and docs.",
+     "what_changed": "docs/MAP.md: a branch that an earlier condition of the same path decides is not followed (1 such branch, in transferFrom), so no path theorem has conditions that contradict each other; 55 path theorems.",
+     "files": [
+      "token-kit/tokens/shib/ShibVerify/Shib/Gen/PTransferFrom.lean",
+      "token-kit/tokens/shib/docs/MAP.md"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "token-kit/tokens/shib/ShibVerify/Shib/Gen/PTransferFrom.lean",
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F4": {
+   "severity": "minor",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "SHIB fix round",
+     "fix": 2,
+     "do": "Add readable corollaries for all 10 functions: success conditions in plain arithmetic over the START state (e.g. to != 0, amount <= balances[from], amount <= allowed[from][caller]) and end storage in terms of start values (balances[from] = old - amount, balances[to] = old + amount, totalSupply unchanged or minus amount for burn, the exact Transfer/Approval log). Prove them from the existing raw-term path theorems; state clearly the from == to case. Prefer generating these from a small per-function description so other tokens reuse it."
+    }
+   ],
+   "steps": [
+    {
+     "round": "SHIB fix round",
+     "fix": 2,
+     "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+     "asked": "Add readable corollaries for all 10 functions: success conditions in plain arithmetic over the START state (e.g. to != 0, amount <= balances[from], amount <= allowed[from][caller]) and end storage in terms of start values (balances[from] = old - amount, balances[to] = old + amount, totalSupply unchanged or minus amount for burn, the exact Transfer/Approval log). Prove them from the existing raw-term path theorems; state clearly the from == to case. Prefer generating these from a small per-function description so other tokens reuse it.",
+     "what_changed": "ShibVerify/Shib/Readable.lean: <fn>_readable for the 10 functions (conditions over the start state, end storage in terms of the start storage, exact logs; the case to = from apart), generated by scripts/gen_readable.py.",
+     "files": [
+      "token-kit/tokens/shib/ShibVerify/Shib/Readable.lean",
+      "token-kit/scripts/gen_readable.py"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "token-kit/tokens/shib/ShibVerify/Shib/Readable.lean",
+    "token-kit/scripts/gen_readable.py",
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F5": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix asked (the suggested fix is optional): success is still proved for gas above TOTAL + 2300 only.",
+   "steps": [],
+   "evidence": [
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F6": {
+   "severity": "note",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "SHIB fix round",
+     "fix": 5,
+     "do": "Every token has name() and symbol() with a copy loop, so this blocks the fan-out. Extend the method to cover them: at minimum prove that a successful name()/symbol() run writes no storage and emits no log, so supply_preserved and the completeness statement need no selector exclusion; better, the full return data as upstream does in Spec/Strings.lean and Complete/Getters.lean (loop proved by induction). Reuse upstream's string work where the bytecode shape matches."
+    }
+   ],
+   "steps": [
+    {
+     "round": "SHIB fix round",
+     "fix": 5,
+     "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+     "asked": "Every token has name() and symbol() with a copy loop, so this blocks the fan-out. Extend the method to cover them: at minimum prove that a successful name()/symbol() run writes no storage and emits no log, so supply_preserved and the completeness statement need no selector exclusion; better, the full return data as upstream does in Spec/Strings.lean and Complete/Getters.lean (loop proved by induction). Reuse upstream's string work where the bytecode shape matches.",
+     "what_changed": "ShibVerify/Shib/Gen/Loops.lean: ro_name and ro_symbol (a run that ends with no error writes no storage and adds no log), so supply_preserved needs no selector exclusion. The bytes they return are not proved.",
+     "files": [
+      "token-kit/tokens/shib/ShibVerify/Shib/Gen/Loops.lean",
+      "token-kit/tokens/shib/ShibVerify/Shib/Invariant.lean"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "token-kit/tokens/shib/ShibVerify/Shib/Gen/Loops.lean",
+    "token-kit/tokens/shib/ShibVerify/Shib/Invariant.lean",
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F7": {
+   "severity": "note",
+   "status": "open",
+   "reason": "No fix needed: the audit confirmed the claim.",
+   "steps": [],
+   "evidence": [
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F8": {
+   "severity": "note",
+   "status": "closed",
+   "asked": [
+    {
+     "round": "SHIB fix round",
+     "fix": 6,
+     "do": "Make the two generators token-agnostic: everything SHIB-specific (hex path, selector table, slot layout, function list, namespace) comes from one per-token config file. Record in pilot-status.json under `how_to_run_for_a_new_token` the exact steps and which parts stay manual. Do not start on other tokens."
+    }
+   ],
+   "steps": [
+    {
+     "round": "SHIB fix round",
+     "fix": 6,
+     "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+     "asked": "Make the two generators token-agnostic: everything SHIB-specific (hex path, selector table, slot layout, function list, namespace) comes from one per-token config file. Record in pilot-status.json under `how_to_run_for_a_new_token` the exact steps and which parts stay manual. Do not start on other tokens.",
+     "what_changed": "The generators read everything about the token from config/shib.json (one generator set for every token in token-kit/scripts/); token-kit/kit-status.json how_to_run_for_a_new_token lists the steps.",
+     "files": [
+      "token-kit/tokens/shib/config/shib.json",
+      "token-kit/scripts/gen_paths.py"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "token-kit/tokens/shib/config/shib.json",
+    "token-kit/kit-status.json",
+    "token-kit/scripts/gen_paths.py",
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  },
+  "F9": {
+   "severity": "note",
+   "status": "closed",
+   "steps": [
+    {
+     "round": "SHIB fix round",
+     "fix": 1,
+     "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+     "what_changed": "Counts corrected with fix 1; the axioms generator is in the kit (token-kit/scripts/gen_axioms.py) and token-kit/tokens/shib/docs/MAP.md is the one map of the token (entry pcs 54..175, 2292 instructions).",
+     "files": [
+      "token-kit/scripts/gen_axioms.py",
+      "token-kit/tokens/shib/docs/MAP.md"
+     ]
+    }
+   ],
+   "evidence": [
+    "token-kit/tokens/shib/docs/MAP.md",
+    "token-kit/scripts/gen_axioms.py",
+    "logs/shib.log",
+    "logs/shib.axioms"
+   ]
+  }
+ },
+ "fix_rounds": [
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "date": "2026-11-10",
+   "shared_changes": [
+    "NEW TokenKit/Evm/Move.lean, TokenKit/Evm/CallOutcome.lean, TokenKit/Evm/Payee.lean; imported in TokenKit.lean (19 imports). WETH's root file imports CallOutcome too. No existing shared Lean file changed.",
+    "scripts/gen_axioms.py: Test/Axioms.lean now has `import Lean`, imports every module of the root file, and ends with the all-constants scan; axioms.skip is refused; frame functions need frame_theorems. This changes the generated Test/Axioms.lean of all four tokens (same #print list, more imports, the scan). SHIB, QNT and WETH were regenerated (WETH by its own agent, same output) and all four rebuilt on the box lean-ethlib-build.",
+    "scripts/check_axioms.sh is now a wrapper of the new scripts/check_axioms.py (second argument: the Test/Axioms.lean to count against).",
+    "scripts/gen_paths.py, tokenlib.py: comments only (WEAKENS notes). scripts/gen_sanity.py, gen_solvent.py: one printed note each, generated Lean unchanged.",
+    "TokenKit/Evm/Stipend.lean (other agent) was synced to this box as it stood at 19:34 EST with tokens/weth and built there; it is not in TokenKit.lean (WETH imports it directly)."
+   ],
+   "build": {
+    "final_line": "Build completed successfully (1368 jobs).",
+    "exit_code": 0,
+    "axioms": "theorems checked: 122; AXIOM SCAN OK: 5307 constants (5142 theorems); only standard axioms"
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "kit-seq",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit. The shared library TokenKit.Seq is written and builds; PEPE is the pilot and has the headline 'the supply invariant holds after any finite list of transactions, whoever calls and however deep' (supply_any_transactions) with every assumption named. The other 13 tokens are NOT edited: the recipe below is what later agents apply.",
+   "kit_theorems": {
+    "runner_level (every fork)": "Seq.processMessage_good_local (Run.lean): a sane call from a good state whose run is Clean ends good, with or without error, whatever code it runs and whatever it sends at any depth, re-entry included. Seq.processCreateMessage_good_local for creations at another address, Seq.processRunner_good_local for the runner, Seq.runFrame_keeps_local for one frame of the token under the real runner.",
+    "transaction (Dencun <= fork < Glamsterdam)": "Seq.processTransaction_good (Tx.lean): EthLib's processTransaction takes a block state where L is good to one where L is good: gas purchase, EIP-7702 authorizations, first frame, the message (call or creation), refunds, fee, end-of-transaction deletions, incorporation into the block state.",
+    "any finite list": "Seq.Chain + Seq.chain_good; Seq.ChainCap + Seq.chainCap_good for tokens with a gas cap.",
+    "base case": "Seq.ZeroBase, Seq.good_of_zero, Seq.chain_from_zero; per invariant family Seq.zeroBase_supply / zeroBase_supply2 / zeroBase_supplyMask.",
+    "fork_range_honest": "Message level: every fork (plus the token's own bound). Transaction level: Fork.dencun <= fork < Fork.glamsterdam. Before Dencun the end-of-transaction deletion could remove L after a SELFDESTRUCT at L; the kit avoids a per-token 'never SELFDESTRUCT' proof by tracking Unmarked, which only EIP-6780 gives."
+   }
+  },
+  {
+   "round": "ten-token fix round",
+   "part": "apply-a",
+   "date": "2026-11-11",
+   "summary": "Fix 2 of the ten-token audit applied to shib, qnt, wbt with recipe A_no_outside_call. Each token has <Root>Verify/<Tok>/Tx.lean with its invariant after any transaction and any finite list of transactions run by EthLib's processTransaction. All three build clean against the committed kit; axioms counts match; only the three standard axioms. The first build attempt of every file passed; no kit lemma was missing.",
+   "build": {
+    "status": "done",
+    "file": "token-kit/tokens/shib/ShibVerify/Shib/Tx.lean (155 lines, 10 theorems)",
+    "pattern": "pepe as is; Inv = Supply.Inv 0 2; supply_preserved takes upstream Ends, so (Ends.run hrun)",
+    "theorems_added": [
+     "storageOnly_inv",
+     "code_size_ne_zero",
+     "code_not_indicator",
+     "code_not_delegated",
+     "inv_zeroBase",
+     "frameKeepsQ",
+     "supply_message_any_depth",
+     "supply_transaction",
+     "supply_any_transactions (headline)",
+     "supply_from_zero"
+    ],
+    "theorems_retired": "none",
+    "build": "exit 0, Build completed successfully (1380 jobs); check_axioms 139 = 139, only standard axioms, AXIOM SCAN OK 5743 constants",
+    "axioms_names": "122 -> 139",
+    "status_json": "token-kit/tokens/shib/status.json (NEW file: shib had none; the older record stays in kit-status.json tokens.shib)"
+   }
+  }
+ ],
+ "other_changes": [
+  {
+   "round": "SHIB fix round",
+   "fix": 4,
+   "recorded_status": "no status record kept; read from the code and docs/MAP.md",
+   "asked": "Add a Sanity/ folder with a concrete witness (state + call where every hypothesis except Sep holds and the run succeeds) for each of the 10 success paths, starting from the auditor's two transfer witnesses.",
+   "what_changed": "ShibVerify/Shib/Sanity/: Zero.lean (<fn>_runs, one real run per success path, amount 0) and Moves.lean (transfer_moves, a transfer of 1 from a balance of 5).",
+   "files": [
+    "token-kit/tokens/shib/ShibVerify/Shib/Sanity/Zero.lean",
+    "token-kit/tokens/shib/ShibVerify/Shib/Sanity/Moves.lean"
+   ],
+   "about": "non-vacuity of the success theorems (verdict entry)"
+  },
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "fix": 5,
+   "source": "token-kit/kit-status.json fix_round.5",
+   "recorded_status": "done",
+   "what": "Test/Axioms.lean of every token now imports every module of the root file and ends with a scan (Lean.collectAxioms) of EVERY constant of the project and of TokenKit: the build fails if one uses an axiom outside propext, Classical.choice, Quot.sound or if a module declares an axiom. So no theorem can be hidden by a list. BNB list: 153 named theorems, all new main theorems of fixes 1 and 2 included."
+  },
+  {
+   "round": "QNT, BNB and WETH fix round",
+   "fix": 6,
+   "source": "token-kit/kit-status.json fix_round.6",
+   "recorded_status": "done",
+   "what": "tokens.<t>.sequence_scope written for shib, qnt, bnb and weth in this file: per sequence theorem, the functions covered and excluded, and what the `other` step assumes.",
+   "theorems_added": [],
+   "theorems_retired": [],
+   "hypotheses_now_assumed": [],
+   "lines_written": 0,
+   "build_iterations": 0,
+   "obstacles": []
+  }
+ ]
+}

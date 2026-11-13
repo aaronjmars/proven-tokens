@@ -1,0 +1,1128 @@
+{
+ "token": "PEPE",
+ "address": "0x6982508145454ce325ddbe47a25d4ec3d2311933",
+ "compiler": "solc 0.8.0, optimizer on (200 runs)",
+ "lean_root": "PepeVerify",
+ "lean_dir": "Pepe",
+ "hex": "data/pepe.runtime.hex",
+ "paths_json": "work/paths.json",
+ "dispatch": {
+  "comment": "mode walk: optimized code. gen_paths.py walks the dispatcher from pc 0 (no enter lemma, no price of the prelude); gen_dispatch.py writes Code, Steps, Map and Complete/Dispatch.",
+  "generate": true,
+  "mode": "walk",
+  "memory_words": [
+   0,
+   0,
+   128
+  ],
+  "layout_doc": [
+   "Storage layout, read off the bytecode (see docs/MAP.md):",
+   "",
+   "- `_owner` in the low 160 bits of slot 0.",
+   "- `_balances[a]` at `mapSlot a 1`.",
+   "- `_allowances[owner][spender]` at `mapSlot spender (mapSlot owner 2)`.",
+   "- `_totalSupply` at slot 3; `_name` at slot 4; `_symbol` at slot 5.",
+   "- `limited` in the low byte of slot 6; `maxHoldingAmount` at slot 7; `minHoldingAmount` at slot 8.",
+   "- `uniswapV2Pair` in the low 160 bits of slot 9.",
+   "- `blacklists[a]` in the low byte of `mapSlot a 10`."
+  ]
+ },
+ "paths": {
+  "raw_memory": "across_blocks"
+ },
+ "prune": "normalized",
+ "slots": {
+  "owner": 0,
+  "balances": 1,
+  "allowances": 2,
+  "totalSupply": 3,
+  "limited": 6,
+  "maxHoldingAmount": 7,
+  "minHoldingAmount": 8,
+  "uniswapV2Pair": 9,
+  "blacklists": 10
+ },
+ "functions": [
+  {
+   "name": "totalSupply",
+   "sig": "totalSupply()"
+  },
+  {
+   "name": "balanceOf",
+   "sig": "balanceOf(address)"
+  },
+  {
+   "name": "allowance",
+   "sig": "allowance(address,address)"
+  },
+  {
+   "name": "decimals",
+   "sig": "decimals()"
+  },
+  {
+   "name": "owner",
+   "sig": "owner()"
+  },
+  {
+   "name": "limited",
+   "sig": "limited()"
+  },
+  {
+   "name": "maxHoldingAmount",
+   "sig": "maxHoldingAmount()"
+  },
+  {
+   "name": "minHoldingAmount",
+   "sig": "minHoldingAmount()"
+  },
+  {
+   "name": "uniswapV2Pair",
+   "sig": "uniswapV2Pair()"
+  },
+  {
+   "name": "blacklists",
+   "sig": "blacklists(address)"
+  },
+  {
+   "name": "transfer",
+   "sig": "transfer(address,uint256)"
+  },
+  {
+   "name": "approve",
+   "sig": "approve(address,uint256)"
+  },
+  {
+   "name": "transferFrom",
+   "sig": "transferFrom(address,address,uint256)"
+  },
+  {
+   "name": "increaseAllowance",
+   "sig": "increaseAllowance(address,uint256)"
+  },
+  {
+   "name": "decreaseAllowance",
+   "sig": "decreaseAllowance(address,uint256)"
+  },
+  {
+   "name": "burn",
+   "sig": "burn(uint256)"
+  },
+  {
+   "name": "blacklist",
+   "sig": "blacklist(address,bool)"
+  },
+  {
+   "name": "setRule",
+   "sig": "setRule(bool,address,uint256,uint256)"
+  },
+  {
+   "name": "transferOwnership",
+   "sig": "transferOwnership(address)"
+  },
+  {
+   "name": "renounceOwnership",
+   "sig": "renounceOwnership()"
+  }
+ ],
+ "fallbacks": [
+  {
+   "name": "valueSent",
+   "kind": "value"
+  },
+  {
+   "name": "short",
+   "kind": "short"
+  },
+  {
+   "name": "other",
+   "kind": "other"
+  }
+ ],
+ "readonly_loops": [
+  {
+   "name": "name",
+   "sig": "name()"
+  },
+  {
+   "name": "symbol",
+   "sig": "symbol()"
+  }
+ ],
+ "generators": [
+  "code",
+  "dispatch",
+  "paths",
+  "loops",
+  "supply",
+  "sanity",
+  "readable",
+  "axioms"
+ ],
+ "supply": {
+  "checked08": true,
+  "rules": "Supply.D_read, D_bal hsep, D_tot hsep, D_allow hsep, D_black hsep, D_owner hsep, D_limited hsep, D_max hsep, D_min hsep, D_pair hsep, storageAt_readSlot"
+ },
+ "sanity": {
+  "comment": "The witness call of each success path (scripts/gen_sanity.py, form eval): the argument words and the words of the slots of the state. The caller is Witness.CALLER1 (word Witness.CALLER1W); amounts are 1 and the balances and allowances used are 5.",
+  "imports": [
+   "TokenKit.Evm.WitnessOpt"
+  ],
+  "doc": "`<path>_runs` (or `<fn>_runs` for a function with one success path): in the state with one\naccount at the contract `C` that holds the stated words at the stated slots (every other slot\n0), the stated call from the caller `Witness.CALLER1` meets every hypothesis of the success path\ntheorem; so the loop of the interpreter runs it from pc 0 to the end with no error, for every\nmessage runner and every gas bound that holds its gas, with the stated output and end state.\nEvery condition is computed by the kernel, the keccak of each mapping slot included: no\nhypothesis about keccak is used.",
+  "totalSupply": {
+   "args": [],
+   "slots": []
+  },
+  "decimals": {
+   "args": [],
+   "slots": []
+  },
+  "owner": {
+   "args": [],
+   "slots": []
+  },
+  "limited": {
+   "args": [],
+   "slots": []
+  },
+  "maxHoldingAmount": {
+   "args": [],
+   "slots": []
+  },
+  "minHoldingAmount": {
+   "args": [],
+   "slots": []
+  },
+  "uniswapV2Pair": {
+   "args": [],
+   "slots": []
+  },
+  "balanceOf": {
+   "args": [
+    2
+   ],
+   "slots": []
+  },
+  "blacklists": {
+   "args": [
+    2
+   ],
+   "slots": []
+  },
+  "allowance": {
+   "args": [
+    2,
+    3
+   ],
+   "slots": []
+  },
+  "approve": {
+   "args": [
+    2,
+    7
+   ],
+   "slots": []
+  },
+  "increaseAllowance": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": []
+  },
+  "decreaseAllowance": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": [
+    [
+     "mapSlot 2 (mapSlot Witness.CALLER1W 2)",
+     5
+    ]
+   ]
+  },
+  "blacklist": {
+   "args": [
+    2,
+    1
+   ],
+   "slots": [
+    [
+     0,
+     "Witness.CALLER1W"
+    ]
+   ]
+  },
+  "setRule": {
+   "args": [
+    1,
+    3,
+    10,
+    0
+   ],
+   "slots": [
+    [
+     0,
+     "Witness.CALLER1W"
+    ]
+   ]
+  },
+  "transferOwnership": {
+   "args": [
+    2
+   ],
+   "slots": [
+    [
+     0,
+     "Witness.CALLER1W"
+    ]
+   ]
+  },
+  "renounceOwnership": {
+   "args": [],
+   "slots": [
+    [
+     0,
+     "Witness.CALLER1W"
+    ]
+   ]
+  },
+  "transfer": {
+   "transfer_p10": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      0,
+      2
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ]
+    ]
+   },
+   "transfer_p14": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      0,
+      "Witness.CALLER1W"
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ]
+    ]
+   },
+   "transfer_p20": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      9,
+      "Witness.CALLER1W"
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      10
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ]
+    ]
+   },
+   "transfer_p25": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      9,
+      3
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ]
+    ]
+   },
+   "transfer_p29": {
+    "args": [
+     2,
+     1
+    ],
+    "slots": [
+     [
+      9,
+      3
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ]
+    ]
+   }
+  },
+  "burn": {
+   "burn_p8": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ]
+   },
+   "burn_p12": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      0,
+      "Witness.CALLER1W"
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ]
+   },
+   "burn_p18": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      9,
+      "Witness.CALLER1W"
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      10
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ]
+   },
+   "burn_p23": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      9,
+      3
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ]
+   },
+   "burn_p27": {
+    "args": [
+     1
+    ],
+    "slots": [
+     [
+      9,
+      3
+     ],
+     [
+      "mapSlot Witness.CALLER1W 1",
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ]
+   }
+  },
+  "transferFrom": {
+   "transferFrom_p13": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      0,
+      3
+     ],
+     [
+      "mapSlot 2 1",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   },
+   "transferFrom_p19": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      0,
+      2
+     ],
+     [
+      "mapSlot 2 1",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   },
+   "transferFrom_p27": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      9,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      10
+     ],
+     [
+      "mapSlot 2 1",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   },
+   "transferFrom_p34": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      9,
+      4
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      "mapSlot 2 1",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   },
+   "transferFrom_p40": {
+    "args": [
+     2,
+     3,
+     1
+    ],
+    "slots": [
+     [
+      9,
+      4
+     ],
+     [
+      "mapSlot 2 1",
+      5
+     ],
+     [
+      "mapSlot Witness.CALLER1W (mapSlot 2 2)",
+      5
+     ]
+    ]
+   }
+  }
+ },
+ "events": {
+  "TRANSFER": "Transfer(address,address,uint256)",
+  "APPROVAL": "Approval(address,address,uint256)",
+  "OWNERSHIP": "OwnershipTransferred(address,address)"
+ },
+ "readable": {
+  "totalSupply": {
+   "doc": "totalSupply(). Success needs no value. Then: returns `_totalSupply`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (totalSupply message state)",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "balanceOf": {
+   "doc": "balanceOf(a). Success needs: no value, 36 bytes of call data, and an argument word with no dirty bits above the address. Then: returns `_balances[a]`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 32 ≤ message.data.size",
+    "arg1 message = {a}"
+   ],
+   "ensures": [
+    "s.output = wordBytes (balance message state {a})",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "let": {
+    "a": "addrArg1 message"
+   }
+  },
+  "allowance": {
+   "doc": "allowance(owner, spender). Success needs: no value, 68 bytes of call data, and two argument words with no dirty bits above the address. Then: returns `_allowances[owner][spender]`; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 64 ≤ message.data.size",
+    "arg1 message = {owner}",
+    "arg2 message = {spender}"
+   ],
+   "ensures": [
+    "s.output = wordBytes (allowance message state {owner} {spender})",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "let": {
+    "owner": "addrArg1 message",
+    "spender": "addrArg2 message"
+   }
+  },
+  "decimals": {
+   "doc": "decimals(). Success needs no value. Then: returns 18; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 18",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "owner": {
+   "doc": "owner(). Success needs no value. Then: returns the address in slot 0; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (ownerOf message state)",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "limited": {
+   "doc": "limited(). Success needs no value. Then: returns 1 when the low byte of slot 6 is not 0, else 0; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (isZero (isZero (limitedOf message state)))",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "maxHoldingAmount": {
+   "doc": "maxHoldingAmount(). Success needs no value. Then: returns the word of slot 7; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (maxHolding message state)",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "minHoldingAmount": {
+   "doc": "minHoldingAmount(). Success needs no value. Then: returns the word of slot 8; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (minHolding message state)",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "uniswapV2Pair": {
+   "doc": "uniswapV2Pair(). Success needs no value. Then: returns the address in slot 9; no slot changes; no log.",
+   "requires": [
+    "message.value = 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes (pairOf message state)",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "blacklists": {
+   "doc": "blacklists(a). Success needs: no value, 36 bytes of call data, and an argument word with no dirty bits above the address. Then: returns 1 when the low byte of `blacklists[a]` is not 0, else 0; no slot changes; no log.",
+   "requires": [
+    "message.value = 0",
+    "4 + 32 ≤ message.data.size",
+    "arg1 message = addrArg1 message"
+   ],
+   "ensures": [
+    "s.output = wordBytes (isZero (isZero (bitwiseAnd 255 (storageAt state message.currentTarget (mapSlot (arg1 message) 10)))))",
+    "∀ k, storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ]
+  },
+  "transfer": {
+   "doc": "transfer(to, amount) from the caller `from`. Success needs: no value, 68 bytes of call data, a clean address word, a frame that may write, `from` and `to` not 0, the checks of `_beforeTokenTransfer`: neither `to` nor `from` is blacklisted; while `uniswapV2Pair` is 0 (trading not started) `from` or `to` is the owner; when `uniswapV2Pair` is set, `limited` is on and `from` is the pair, the new balance of `to` is within `[minHoldingAmount, maxHoldingAmount]`; `amount <= _balances[from]`, and (when `to` is not `from`) no overflow of `_balances[to]`. Then: returns 1; `_balances[from]` is the old word minus `amount` and `_balances[to]` the old word plus `amount` (when `to = from` the balance is unchanged); `_totalSupply` and every other slot keep their word; exactly one log, Transfer(from, to, amount).",
+   "let": {
+    "from": "sender message",
+    "to": "addrArg1 message",
+    "amount": "arg2 message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 64 ≤ message.data.size",
+    "arg1 message = {to}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{from} ≠ 0",
+    "{to} ≠ 0",
+    "blacklisted message state {to} = 0",
+    "blacklisted message state {from} = 0",
+    "pairOf message state = 0 → ({from} = ownerOf message state ∨ {to} = ownerOf message state)",
+    "pairOf message state ≠ 0 → limitedOf message state ≠ 0 → pairOf message state = {from} → (balance message state {to}).toNat + {amount}.toNat ≤ (maxHolding message state).toNat ∧ (minHolding message state).toNat ≤ (balance message state {to}).toNat + {amount}.toNat",
+    "{amount}.toNat ≤ (balance message state {from}).toNat",
+    "{to} ≠ {from} → (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} ≠ {from} → (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat ∧ (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} → balance message s.state {from} = balance message state {from}",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {from} 1 → k ≠ mapSlot {to} 1 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))"
+   ]
+  },
+  "transferFrom": {
+   "doc": "transferFrom(from, to, amount) by the caller `spender`. Success needs: no value, 100 bytes of call data, two clean address words, a frame that may write, `from`, `to` and `spender` not 0, the checks of `_beforeTokenTransfer`: neither `to` nor `from` is blacklisted; while `uniswapV2Pair` is 0 (trading not started) `from` or `to` is the owner; when `uniswapV2Pair` is set, `limited` is on and `from` is the pair, the new balance of `to` is within `[minHoldingAmount, maxHoldingAmount]`; `amount <= _balances[from]`, `amount <= _allowances[from][spender]`, and (when `to` is not `from`) no overflow of `_balances[to]`. Then: returns 1; the balances move as in transfer (unchanged when `to = from`); `_allowances[from][spender]` is the old word minus `amount`; `_totalSupply` and every other slot keep their word; exactly two logs, Transfer(from, to, amount) then Approval(from, spender, new allowance).",
+   "let": {
+    "from": "addrArg1 message",
+    "to": "addrArg2 message",
+    "amount": "arg3 message",
+    "spender": "sender message"
+   },
+   "cases": [
+    "{to} = {from}"
+   ],
+   "requires": [
+    "message.value = 0",
+    "4 + 96 ≤ message.data.size",
+    "arg1 message = {from}",
+    "arg2 message = {to}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{from} ≠ 0",
+    "{to} ≠ 0",
+    "{spender} ≠ 0",
+    "blacklisted message state {to} = 0",
+    "blacklisted message state {from} = 0",
+    "pairOf message state = 0 → ({from} = ownerOf message state ∨ {to} = ownerOf message state)",
+    "pairOf message state ≠ 0 → limitedOf message state ≠ 0 → pairOf message state = {from} → (balance message state {to}).toNat + {amount}.toNat ≤ (maxHolding message state).toNat ∧ (minHolding message state).toNat ≤ (balance message state {to}).toNat + {amount}.toNat",
+    "{amount}.toNat ≤ (balance message state {from}).toNat",
+    "{amount}.toNat ≤ (allowance message state {from} {spender}).toNat",
+    "{to} ≠ {from} → (balance message state {to}).toNat + {amount}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "{to} ≠ {from} → (balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat ∧ (balance message s.state {to}).toNat = (balance message state {to}).toNat + {amount}.toNat",
+    "{to} = {from} → balance message s.state {from} = balance message state {from}",
+    "(allowance message s.state {from} {spender}).toNat = (allowance message state {from} {spender}).toNat - {amount}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {from} 1 → k ≠ mapSlot {to} 1 → k ≠ mapSlot {spender} (mapSlot {from} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = (substate.logs.push (log3 message.currentTarget TRANSFER {from} {to} (wordBytes {amount}))).push (log3 message.currentTarget APPROVAL {from} {spender} (wordBytes (sub (allowance message state {from} {spender}) {amount})))"
+   ]
+  },
+  "approve": {
+   "doc": "approve(spender, value) by the caller `owner`. Success needs: no value, 68 bytes of call data, a clean address word, a frame that may write, `owner` and `spender` not 0. Then: returns 1; `_allowances[owner][spender]` is `value`; `_totalSupply` and every other slot keep their word; exactly one log, Approval(owner, spender, value).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "value": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 ≤ message.data.size",
+    "arg1 message = {spender}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{owner} ≠ 0",
+    "{spender} ≠ 0"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "allowance message s.state {owner} {spender} = {value}",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {spender} (mapSlot {owner} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes {value}))"
+   ]
+  },
+  "increaseAllowance": {
+   "doc": "increaseAllowance(spender, added) by the caller `owner`. Success needs: no value, 68 bytes of call data, a clean address word, a frame that may write, `owner` and `spender` not 0, no overflow of the allowance. Then: returns 1; `_allowances[owner][spender]` is the old word plus `added`; `_totalSupply` and every other slot keep their word; exactly one log, Approval(owner, spender, new allowance).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "added": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 ≤ message.data.size",
+    "arg1 message = {spender}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{owner} ≠ 0",
+    "{spender} ≠ 0",
+    "(allowance message state {owner} {spender}).toNat + {added}.toNat < 2 ^ 256"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat + {added}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {spender} (mapSlot {owner} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (add (allowance message state {owner} {spender}) {added})))"
+   ]
+  },
+  "decreaseAllowance": {
+   "doc": "decreaseAllowance(spender, subtracted) by the caller `owner`. Success needs: no value, 68 bytes of call data, a clean address word, a frame that may write, `owner` and `spender` not 0, `subtracted <= _allowances[owner][spender]`. Then: returns 1; `_allowances[owner][spender]` is the old word minus `subtracted`; `_totalSupply` and every other slot keep their word; exactly one log, Approval(owner, spender, new allowance).",
+   "let": {
+    "owner": "sender message",
+    "spender": "addrArg1 message",
+    "subtracted": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 ≤ message.data.size",
+    "arg1 message = {spender}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{owner} ≠ 0",
+    "{spender} ≠ 0",
+    "{subtracted}.toNat ≤ (allowance message state {owner} {spender}).toNat"
+   ],
+   "ensures": [
+    "s.output = wordBytes 1",
+    "(allowance message s.state {owner} {spender}).toNat = (allowance message state {owner} {spender}).toNat - {subtracted}.toNat",
+    "totalSupply message s.state = totalSupply message state",
+    "∀ k, k ≠ mapSlot {spender} (mapSlot {owner} 2) → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget APPROVAL {owner} {spender} (wordBytes (sub (allowance message state {owner} {spender}) {subtracted})))"
+   ]
+  },
+  "burn": {
+   "doc": "burn(amount) by the caller `from`. Success needs: no value, 36 bytes of call data, a frame that may write, `from` not 0, the checks of `_beforeTokenTransfer`: neither `to` nor `from` is blacklisted; while `uniswapV2Pair` is 0 (trading not started) `from` or `to` is the owner; when `uniswapV2Pair` is set, `limited` is on and `from` is the pair, the new balance of `to` is within `[minHoldingAmount, maxHoldingAmount]` (with `to` the address 0); `amount <= _balances[from]` and `amount <= _totalSupply`. Then: returns nothing; `_totalSupply` and `_balances[from]` are each the old word minus `amount`; every other slot keeps its word; exactly one log, Transfer(from, 0, amount).",
+   "let": {
+    "from": "sender message",
+    "amount": "arg1 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 32 ≤ message.data.size",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "{from} ≠ 0",
+    "blacklisted message state 0 = 0",
+    "blacklisted message state {from} = 0",
+    "pairOf message state = 0 → ({from} = ownerOf message state ∨ 0 = ownerOf message state)",
+    "pairOf message state ≠ 0 → limitedOf message state ≠ 0 → pairOf message state = {from} → (balance message state 0).toNat + {amount}.toNat ≤ (maxHolding message state).toNat ∧ (minHolding message state).toNat ≤ (balance message state 0).toNat + {amount}.toNat",
+    "{amount}.toNat ≤ (balance message state {from}).toNat",
+    "{amount}.toNat ≤ (totalSupply message state).toNat"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "(totalSupply message s.state).toNat = (totalSupply message state).toNat - {amount}.toNat",
+    "(balance message s.state {from}).toNat = (balance message state {from}).toNat - {amount}.toNat",
+    "∀ k, k ≠ 3 → k ≠ mapSlot {from} 1 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget TRANSFER {from} 0 (wordBytes {amount}))"
+   ]
+  },
+  "blacklist": {
+   "doc": "blacklist(account, flag) by the owner. Success needs: no value, 68 bytes of call data, a clean address word and a flag word that is 0 or 1, a frame that may write, and the caller is the owner. Then: returns nothing; the low byte of `blacklists[account]` is the flag (the other bytes of the slot keep their value); every other slot keeps its word; no log.",
+   "let": {
+    "account": "addrArg1 message",
+    "flag": "arg2 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 64 ≤ message.data.size",
+    "arg1 message = {account}",
+    "{flag} = isZero (isZero {flag})",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "ownerOf message state = sender message"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "storageAt s.state message.currentTarget (mapSlot {account} 10) = bitwiseOr (isZero (isZero {flag})) (bitwiseAnd (115792089237316195423570985008687907853269984665640564039457584007913129639680 : U256) (storageAt state message.currentTarget (mapSlot {account} 10)))",
+    "∀ k, k ≠ mapSlot {account} 10 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "sep": false
+  },
+  "setRule": {
+   "doc": "setRule(limited, pair, max, min) by the owner. Success needs: no value, 132 bytes of call data, a flag word that is 0 or 1 and a clean address word, a frame that may write, and the caller is the owner. Then: returns nothing; the low byte of slot 6 is the flag, the low 20 bytes of slot 9 are `pair` (the other bytes of both slots keep their value), slot 7 is `max`, slot 8 is `min`; every other slot keeps its word; no log.",
+   "let": {
+    "flag": "arg1 message",
+    "pair": "addrArg2 message",
+    "max": "arg3 message",
+    "min": "arg4 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 128 ≤ message.data.size",
+    "{flag} = isZero (isZero {flag})",
+    "arg2 message = {pair}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "ownerOf message state = sender message"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "storageAt s.state message.currentTarget 6 = bitwiseOr (isZero (isZero {flag})) (bitwiseAnd (115792089237316195423570985008687907853269984665640564039457584007913129639680 : U256) (storageAt state message.currentTarget 6))",
+    "storageAt s.state message.currentTarget 9 = bitwiseOr {pair} (bitwiseAnd (115792089237316195423570985007226406215939081747436879206741300988257197096960 : U256) (storageAt state message.currentTarget 9))",
+    "storageAt s.state message.currentTarget 7 = {max}",
+    "storageAt s.state message.currentTarget 8 = {min}",
+    "∀ k, k ≠ 6 → k ≠ 9 → k ≠ 7 → k ≠ 8 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs"
+   ],
+   "sep": false
+  },
+  "transferOwnership": {
+   "doc": "transferOwnership(newOwner) by the owner. Success needs: no value, 36 bytes of call data, a clean address word, a frame that may write, the caller is the owner, and `newOwner` is not 0. Then: returns nothing; the low 20 bytes of slot 0 are `newOwner` (the other bytes keep their value); every other slot keeps its word; exactly one log, OwnershipTransferred(old owner, newOwner).",
+   "let": {
+    "new": "addrArg1 message"
+   },
+   "requires": [
+    "message.value = 0",
+    "4 + 32 ≤ message.data.size",
+    "arg1 message = {new}",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "ownerOf message state = sender message",
+    "{new} ≠ 0"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "storageAt s.state message.currentTarget 0 = bitwiseOr {new} (bitwiseAnd (storageAt state message.currentTarget 0) (115792089237316195423570985007226406215939081747436879206741300988257197096960 : U256))",
+    "∀ k, k ≠ 0 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget OWNERSHIP (ownerOf message state) {new} ByteArray.empty)"
+   ],
+   "sep": false
+  },
+  "renounceOwnership": {
+   "doc": "renounceOwnership() by the owner. Success needs: no value, a frame that may write, and the caller is the owner. Then: returns nothing; the low 20 bytes of slot 0 are 0 (the other bytes keep their value); every other slot keeps its word; exactly one log, OwnershipTransferred(old owner, 0).",
+   "requires": [
+    "message.value = 0",
+    "message.isStatic = false",
+    "hasAccount state message.currentTarget",
+    "ownerOf message state = sender message"
+   ],
+   "ensures": [
+    "s.output = ByteArray.empty",
+    "storageAt s.state message.currentTarget 0 = bitwiseOr 0 (bitwiseAnd (storageAt state message.currentTarget 0) (115792089237316195423570985007226406215939081747436879206741300988257197096960 : U256))",
+    "∀ k, k ≠ 0 → storageAt s.state message.currentTarget k = storageAt state message.currentTarget k",
+    "s.substate.logs = substate.logs.push (log3 message.currentTarget OWNERSHIP (ownerOf message state) 0 ByteArray.empty)"
+   ],
+   "sep": false
+  }
+ },
+ "readable_opts": {
+  "comment": "facts: the condition shapes of optimized Solidity 0.8 (gen_readable.facts08); close: the closing tactic; several_paths same_claims: every success path proves the same claims; simp: more rewrite rules (the mask on the right of AND, literal slots that differ); header/unfold: more abbreviations of the token.",
+  "facts": "checked08",
+  "close": "readable_close08",
+  "several_paths": "same_claims",
+  "imports": [
+   "TokenKit.Evm.ReadableOpt"
+  ],
+  "simp": [
+   "and_mask_comm",
+   "eq_false (by decide : (6 : U256) ≠ 7)",
+   "eq_false (by decide : (6 : U256) ≠ 8)",
+   "eq_false (by decide : (6 : U256) ≠ 9)",
+   "eq_false (by decide : (7 : U256) ≠ 6)",
+   "eq_false (by decide : (7 : U256) ≠ 8)",
+   "eq_false (by decide : (7 : U256) ≠ 9)",
+   "eq_false (by decide : (8 : U256) ≠ 6)",
+   "eq_false (by decide : (8 : U256) ≠ 7)",
+   "eq_false (by decide : (8 : U256) ≠ 9)",
+   "eq_false (by decide : (9 : U256) ≠ 6)",
+   "eq_false (by decide : (9 : U256) ≠ 7)",
+   "eq_false (by decide : (9 : U256) ≠ 8)"
+  ],
+  "unfold": [
+   "arg4",
+   "ownerOf",
+   "pairOf",
+   "limitedOf",
+   "blacklisted",
+   "maxHolding",
+   "minHolding"
+  ],
+  "header": [
+   "/-- The fourth argument word. -/\nabbrev arg4 (m : Message fork) : U256 := loadWord m.data 100 32",
+   "/-- `owner()` of the called contract in the state `S`: the address in slot 0. -/\nabbrev ownerOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd MASK (storageAt S m.currentTarget 0)",
+   "/-- `uniswapV2Pair` of the called contract in the state `S`: the address in slot 9. -/\nabbrev pairOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd MASK (storageAt S m.currentTarget 9)",
+   "/-- The byte of `limited` of the called contract in the state `S` (not 0: limited). -/\nabbrev limitedOf (m : Message fork) (S : State.TransactionState) : U256 :=\n  bitwiseAnd 255 (storageAt S m.currentTarget 6)",
+   "/-- The byte of `blacklists[a]` of the called contract in the state `S` (not 0: blacklisted). -/\nabbrev blacklisted (m : Message fork) (S : State.TransactionState) (a : U256) : U256 :=\n  bitwiseAnd 255 (storageAt S m.currentTarget (mapSlot a 10))",
+   "/-- `maxHoldingAmount` and `minHoldingAmount` of the called contract in the state `S`. -/\nabbrev maxHolding (m : Message fork) (S : State.TransactionState) : U256 :=\n  storageAt S m.currentTarget 7\nabbrev minHolding (m : Message fork) (S : State.TransactionState) : U256 :=\n  storageAt S m.currentTarget 8"
+  ],
+  "heartbeats": 4000000
+ },
+ "axioms": {
+  "comment": "names: hand-written theorems checked before the generated ones; after: theorems of files that import the generated ones; imports: the modules Test/Axioms.lean imports; declared_only: leave out a generated name that no Lean file declares (the three fallbacks have no supply_<name>: supply_preserved covers them as failed runs).",
+  "declared_only": true,
+  "dotted_decl": true,
+  "imports": [
+   "PepeVerify.Pepe.Invariant",
+   "PepeVerify.Pepe.Readable",
+   "PepeVerify.Pepe.Sanity.Zero",
+   "PepeVerify.Pepe.Seq",
+   "PepeVerify.Pepe.Tx",
+   "PepeVerify.Pepe.Sanity.Closed"
+  ],
+  "names": [
+   "valid_CODE",
+   "selector_cases",
+   "ends_ok_dispatch",
+   "runFrame_ok_dispatch",
+   "nameEntry_p0",
+   "nameEntry_p1",
+   "ok_nameEntry",
+   "symbolEntry_p0",
+   "symbolEntry_p1",
+   "ok_symbolEntry"
+  ],
+  "after": [
+   "Supply.inv_congr",
+   "inv_goodCall",
+   "inv_untouched",
+   "inv_calls",
+   "goodCall_process",
+   "untouched_process_failed",
+   "process_value_fails",
+   "process_step",
+   "process_step_inv",
+   "calls_process",
+   "Witness.caller1_toU256",
+   "Witness.endsL_of_reaches",
+   "storageOnly_inv",
+   "code_size_ne_zero",
+   "code_not_indicator",
+   "code_not_delegated",
+   "inv_zeroBase",
+   "frameKeepsQ",
+   "supply_message_any_depth",
+   "supply_transaction",
+   "supply_any_transactions",
+   "supply_from_zero",
+   "Seq.frameKeepsR_of_all",
+   "Seq.storageOnly_supply",
+   "Seq.zeroBase_supply",
+   "Seq.storageOnly_supply2",
+   "Seq.zeroBase_supply2",
+   "Seq.storageOnly_supplyMask",
+   "Seq.zeroBase_supplyMask",
+   "Seq.processMessage_good_local",
+   "Seq.processRunner_good_local",
+   "Seq.runFrame_keeps_local",
+   "Seq.runTransaction_good",
+   "Seq.processTransaction_good",
+   "Seq.runTransaction_good_at",
+   "Seq.runTransaction_good_cap",
+   "Seq.processTransaction_good_cap",
+   "Seq.chainCap_good",
+   "Seq.good_of_zero",
+   "Seq.chain_good",
+   "Seq.chain_from_zero",
+   "Sanity.storageAt_codeState",
+   "Sanity.codeHash_codeState",
+   "Sanity.getCode_codeState",
+   "Sanity.holdsCode_codeState",
+   "Sanity.noPre_of",
+   "Sanity.writeCost_le_all",
+   "Sanity.lt_of_le_bound",
+   "Sanity.spec_process",
+   "Sanity.clean_of_spec",
+   "Sanity.pepe_address_word",
+   "Sanity.notPrecompile_pepe",
+   "Sanity.holdsCode_wState",
+   "Sanity.inv_wState",
+   "Sanity.good_wState",
+   "Sanity.transfer_closed"
+  ]
+ }
+}

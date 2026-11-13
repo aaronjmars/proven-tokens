@@ -1,0 +1,172 @@
+{
+ "token": "DAI",
+ "audit": {
+  "date": "2026-11-11",
+  "round": "ten-token audit"
+ },
+ "paths_note": "Evidence paths are given in the current layout. Auditor scratch files (Lean experiments, disassembly, scripts and their output) are not kept; audits/check_code.py replaces the code checks.",
+ "scope": "Independent read-only audit of the DAI proof (token-kit/tokens/dai, Lean 4 on EthLib and usdt-verify). Nothing outside audits/dai/ was written. Lean was not built: every statement about what Lean accepts rests on logs/dai.log. Date 2026-11-11.",
+ "checked_ok": [
+  "CODE_NAT and CODE_SIZE equal survey/tokens/DAI/runtime.hex byte for byte (7904 bytes); keccak256 4e36f96ee1667a663dfaac57c4d185a0e369a3a217e0079d49620f34f85d1ac7 matches Test/Hash.lean and SOURCE.md; data/dai.runtime.hex and data/abi.json are identical to the survey copies.",
+  "Selector table: 22 entries in the bytes = ENTRIES of Map.lean in order; all destinations are JUMPDESTs; keys = the 22 ABI selectors; no other PUSH4.",
+  "Opcodes that leave the frame: one STATICCALL (pc 5336); no CALL, CALLCODE, DELEGATECALL, CREATE, CREATE2, SELFDESTRUCT; 13 SSTORE, 25 SLOAD, one TIMESTAMP (pc 5535), no CHAINID.",
+  "Bytes at 5335..5352 are the GAS STATICCALL and failure-bubble idiom that TokenKit.ecrecover_call_ok asks for; permit_call discharges its 16 byte facts by code_fact.",
+  "PERMIT_TYPEHASH (Permit.lean and Readable.lean) = keccak('Permit(address holder,address spender,uint256 nonce,uint256 expiry,bool allowed)'), PUSH32 at pc 3899 and 4805; TRANSFER and APPROVAL topics = keccak of the event signatures; P1901 = 0x1901 << 240.",
+  "EthLib's Precompiles.Ecrecover.compute is a real definition (Ecrecover.lean:44-58); recoveredWord adds only 'else 0' for an empty output; nothing is assumed about the recovery.",
+  "EthLib resolves the EIP-7702 delegation of the callee (Call/Instructions.lean:123) and disables precompiles for a delegated callee (:272), so hdel / NoDelegation1 is a needed and true-on-chain hypothesis, not a false one.",
+  "Hypotheses of every headline theorem read in full (supply_preserved, ok_mint, mint_readable, burn_readable, rely_readable, transferFrom_readable, ends_ok_dispatch, all of Seq.lean, Permit.lean and PermitSeq.lean, ecrecover_call_ok, ok_permitTail_ends): none restates its conclusion, none is a universally quantified runner property (the BNB-1 pattern), the runner is processRunner itself where a runner matters.",
+  "Soundness hygiene: text scan of 94 Lean files of DaiVerify and TokenKit: no sorry, admit, axiom, native_decide, bv_decide, unsafe, implemented_by, opaque, extern. Test/Axioms.lean scans every constant of DaiVerify and TokenKit modules with no skip list.",
+  "Build log: 296 results for 296 '#print axioms' lines, line numbers match, only the three standard axioms, AXIOM SCAN OK 10793 constants (10535 theorems), 'Build completed successfully (1410 jobs).', EXIT=0; same numbers as status.json and the README.",
+  "Theorem counts of status.json match the files (281 block rules, 139 paths, 66 loop theorems, 26 witnesses, Invariant 22, Readable 18, Seq 10, PermitSeq 13, Permit 4, Sep 16).",
+  "Generators: regen.sh on a scratch copy reproduces every generated file of tokens/dai byte for byte. The config switches used (prune normalized, dead rule sub_after_ge_lt, stops [5335], segment permitTail, prefix function permit, axioms.declared_only) do not drop a proof duty silently: pruned branches are closed by Lean tactics, the permit gap between pc 5335 and 5337 is closed by the hand-written permit_call, and the left-out axiom names are names that no file declares plus Supply.inv_congr (under the scan).",
+  "No tokens/dai/scripts folder (no local generator copies)."
+ ],
+ "findings": [
+  {
+   "id": "DAI-1",
+   "token": "DAI",
+   "severity": "major",
+   "claim": "README: 'DAI: supply invariant, with permit'. status.json sequences: 'Seq.lean 10 (top-level messages and finite sequences, without permit) + PermitSeq.lean 13 (with permit: ... process_step_all, inv_callsP)'.",
+   "what_is_actually_proved": "An inductive step for ONE run of EthLib's processMessage with its default meter, plus a linear chain model. process_step_all: for a message with message.code = CODE, no precompile target, data below 2^256 bytes, Paris <= fork < Glamsterdam, NoDelegation1 of the start state and Sep (callKeys message), a run 'processMessage fork message state substate = .ok ended' is a GoodCall, a PermitCall or an Untouched step. inv_callsP: Inv is kept along a CallsP chain. Everything that is not such a run is the constructor 'other', whose only content is the ASSUMPTION Untouched C S S' (every storage word of C kept). It is proved only for a failed processMessage (untouched_process_failed). Not proved, and so outside the theorem: (a) any link to a transaction or a block: no file of DaiVerify or TokenKit mentions processMessageCall, processTransaction or prepareFirstFrame. EthLib's transaction layer does not call processMessage with the default meter: it passes first.meter and first.held and a message whose code it read from the state (Process.lean:300-312, 336-337). Upstream usdt-verify proves that link (Summary.lean:549, Usdt/Invariant/SeqMeter.lean); it was not ported. (b) message.code = CODE is a hypothesis on the message; nothing ties the code stored for C in the state to CODE, before or after a step. (c) Calls made by other contracts into DAI. A successful nested run is a GoodCall by its definition (any bound, any depth), and processRunner calls processMessage with the default meter, so process_step_all does apply to the child message taken alone. But the chain cannot express what the outer frames do next: a later revert of an outer frame restores an OLDER storage of C, which is neither Untouched nor a GoodCall from the current state. The invariant still holds there (the older state had it), but no theorem says so. (d) No base case: Inv is not shown for any state (constructor not analysed, no chain state). In practice mint and burn of DAI are reached through other contracts (the wards are contracts such as DaiJoin: from memory, not checked live), so the supply changing calls on mainnet are of kind (c). The file header of Seq.lean and the status file say 'top-level' and 'assumption of the step', so this is disclosed; the README headline is wider than the theorem.",
+   "evidence": [
+    "token-kit/tokens/dai/DaiVerify/Dai/Seq.lean:63-84 (GoodCall, Untouched, Calls; 'for the other changes it is the assumption of the step', doc lines 23-26)",
+    "token-kit/tokens/dai/DaiVerify/Dai/Seq.lean:110-120 goodCall_process: '(hproc : processMessage fork message state substate = .ok ended)' with '(hmc : message.code = CODE)'",
+    "token-kit/tokens/dai/DaiVerify/Dai/PermitSeq.lean:136-144 (CallsP), 207-216 (process_step_all hypotheses: hparis, hglam, hmc, noPrecompile, hsize, hdel : NoDelegation1 fork state, K : Sep (callKeys message))",
+    "rg processMessageCall|processTransaction|runTransaction|prepareFirstFrame in token-kit/TokenKit and tokens/dai/DaiVerify: no hit",
+    "upstream/EthLib/EthLib/Execution/Transactions/Process.lean:279-312 (prepareFirstFrame: meter := GasMeter.commit done.meter; message with code from state), 336-337 ('processMessage fork first.message first.state first.substate first.meter first.held')",
+    "upstream/EthLib/EthLib/Execution/Evm/Call/MessageCall.lean:282-327 (processMessage; the runner of child messages calls 'processMessage fork child caller.state caller.substate.child' with the default meter)",
+    "upstream/usdt-verify/UsdtVerify/Summary.lean:549 ('as EthLib's processMessageCall passes the meter left by the authorizations')"
+   ],
+   "suggested_fix": "Port upstream's transaction link (processMessageCall over Nat with the meter of the authorizations) and state one theorem over a whole transaction: every frame whose currentTarget is not C keeps the storage of C, every frame of C runs CODE (needs 'the code of C is CODE' as an invariant of the state: no SELFDESTRUCT, no CREATE collision), and a rollback restores a state that had Inv. Until then say in the README: 'inductive step per processMessage run; composition over transactions assumed'. Add the base case as a remark (all-zero storage has Inv)."
+  },
+  {
+   "id": "DAI-2",
+   "token": "DAI",
+   "severity": "minor",
+   "claim": "status.json permit: 'proved for EthLib's real runner (processRunner), no assumption on the output of the precompile'; main theorems ok_permit_real, permit_readable, supply_permit, process_step_all / inv_callsP.",
+   "what_is_actually_proved": "The statements are right and strong: all four are implications from a real run 'Evm.runFrame (step fork) (step_decreases fork) bound (processRunner fork bound) evm within = .ok s' with s.error = none, and the recovered word is EthLib's own Precompiles.Ecrecover.compute (a real definition, Ecrecover.lean:44-58, no opaque, no axiom) through TokenKit.recoveredWord. I found no hypothesis that restates the conclusion and none that is false for processRunner. Hypotheses: .paris <= fork, fork < .glamsterdam, message.data.size < 2^256, selector = 0x8fcbaf0c, hdel (NoDelegation1), and Sep (callKeys message) for supply_permit and permit_readable only. What is missing is any witness: no theorem shows that a permit run can end with no error in the model, so ok_permit_real, permit_readable, supply_permit, PermitCall, the 'permit' constructor of CallsP and the four success paths permitTail_p2, p5, p8, p11 have no machine-checked instance (30 'ok' paths in work/paths.json, 26 witnesses). Also NoDelegation1 is never proved for any state in the token (rg: only definitions and uses). It is easy (EthLib resolves the delegation of the callee before the precompile check, Call/Instructions.lean:123, so the hypothesis cannot be dropped, but it holds whenever the code at address 1 is empty): see the scratch file. Both gaps are disclosed in status.json (permit.not_covered).",
+   "evidence": [
+    "token-kit/tokens/dai/DaiVerify/Dai/Permit.lean:142-173 permit_call, 208-225 ok_permit_real (hypotheses quoted above; conclusion: value 0, 260 bytes, holder != 0, '1219 + slotCost ... <= gas', '3000 <= (permitCall ...).subCall', Paths.permitTail_ends ... (recoveredWord (permitInput ...)))",
+    "token-kit/tokens/dai/DaiVerify/Dai/PermitSeq.lean:44-46 NoDelegation1, 81-93 supply_permit, 341-372 permit_readable",
+    "token-kit/TokenKit/Evm/Precompile.lean:456-459 recoveredWord, 549-570 ecrecover_call_ok",
+    "upstream/EthLib/EthLib/Execution/Evm/Precompiles/Ecrecover.lean:44-58",
+    "check_consts.out.json (audit scratch, not kept): bytes 5335..5352 = 5afa1580156114e9573d6000803e3d6000fd (GAS STATICCALL and the bubble idiom the lemma asks for); PERMIT_TYPEHASH = keccak of the type string; P1901 = 0x1901 << 240",
+    "regen.log (audit scratch, not kept): 'Sanity/Zero.lean: 26 witnesses'"
+   ],
+   "suggested_fix": "Add noDelegation1_of_empty to the token. Add one witness of a successful permit: a fixed (digest, v, r, s) whose recovery the kernel can compute, or at least a witness with an abstract hypothesis 'recoveredWord input = holder' that discharges every other hypothesis of permitTail_p2.",
+   "machine_check": "written, not built: scratch file NoDelegation1Empty.lean (not kept) (NoDelegation1 from empty code at address 1)"
+  },
+  {
+   "id": "DAI-3",
+   "token": "DAI",
+   "severity": "minor",
+   "claim": "supply_<fn> for 21 functions, supply_preserved, supply_permit, and the 10 write readable theorems hold 'under Sep (callKeys message) (assumed, not proved)'.",
+   "what_is_actually_proved": "True as stated, and disclosed. Sep is local to one call: for the 3 key words (caller, first two arguments masked to 160 bits) it asks that slot 1 is no balance slot, each balance slot is unique among the 2^160 address words, and the allowance, wards and nonces slots of these keys are no balance slot, not slot 1, and (allowance against nonces) differ. It is not the false global form. It cannot be proved in Lean (2^160 keccak values), and Sep.total is needed even for an empty key list, so no supply_ theorem and no hsep readable theorem has a closed machine-checked instance. In a chain each call carries its own Sep inside GoodCall / PermitCall, so inv_callsP is over chains whose every call met it. The keys cover every slot the code hashes: transferFrom, pull, move, burn use allowance[arg1][caller]; permit uses nonces[arg1] and allowance[arg1][arg2] (checked against the statements of burn_readable, transferFrom_readable, permit_readable).",
+   "evidence": [
+    "token-kit/tokens/dai/DaiVerify/Dai/Sep.lean:52-57 callKeys, 60-73 structure Sep (total, uniq, allow, ward, nonce)",
+    "token-kit/TokenKit/Evm/Supply.lean:53-58 NotBal, UniqBal; 60-72 bal, sumBal, D, Inv (Int sum over 2^160 words)",
+    "token-kit/tokens/dai/DaiVerify/Dai/Invariant.lean:668-676 supply_preserved '(hsep : Sep (callKeys message))'",
+    "rg 'theorem .* : Sep' in tokens/dai and TokenKit: no hit"
+   ],
+   "suggested_fix": "Keep. Say in docs/MAP.md that no instance of supply_* is machine checked and give the heuristic odds (about 2^-96 per fact)."
+  },
+  {
+   "id": "DAI-4",
+   "token": "DAI",
+   "severity": "minor",
+   "claim": "status.json assumptions: 'path specs, ok_, supply, readable from Berlin; Seq from Paris; permit from Paris and before Glamsterdam. One-counter gas meter (Nat)'.",
+   "what_is_actually_proved": "As stated, with one consequence that is easy to miss. Every theorem is over 'Evm fork Nat'. EthLib runs transactions with the Nat meter only before Glamsterdam: processTransaction uses StateGasMeter from Glamsterdam (Process.lean:438). So GoodCall, goodCall_process and process_step, which only ask .berlin <= fork or .paris <= fork, are for Glamsterdam and later about a meter the transaction layer does not use. The effective range of every sequence result is Paris <= fork < Glamsterdam (Paris, Shanghai, Cancun, Prague, Osaka, BPO1 to BPO5), and of every frame result Berlin to BPO5. The bytes were read at block 26386793 (2026-11-10). If mainnet had activated Glamsterdam by then, no sequence or permit theorem covers the fork that is live; I could not check which fork that block is on.",
+   "evidence": [
+    "upstream/EthLib/EthLib/Execution/Transactions/Process.lean:436-439 ('else if fork >= .glamsterdam then runTransaction StateGasMeter env block included tx')",
+    "token-kit/tokens/dai/DaiVerify/Dai/Seq.lean:63-73 GoodCall ('.berlin <= fork', 'evm s : Evm fork Nat')",
+    "token-kit/tokens/dai/DaiVerify/Dai/PermitSeq.lean:207-208 '(hparis : .paris <= fork) (hglam : fork < .glamsterdam)'",
+    "survey/tokens/DAI/SOURCE.md (block 26386793)"
+   ],
+   "suggested_fix": "State the range as 'Paris to BPO5' for sequences in the README table. Check the fork of the fetch block. Port upstream SeqMeter.lean for the two-counter meter when Glamsterdam matters."
+  },
+  {
+   "id": "DAI-5",
+   "token": "DAI",
+   "severity": "minor",
+   "claim": "status.json: 'sanity_witnesses: 26 (every success path in one frame; 45 theorems in Sanity/Zero.lean)'.",
+   "what_is_actually_proved": "26 witnesses exist and are real: each <path>_runs gives a gas, a start frame and an end frame for a concrete call in a one-account state, shows the hypotheses of the success path hold with keccak computed by the kernel (no Sep), for every message runner and every fork from Berlin. They cover 26 of the 30 paths of kind 'ok' in work/paths.json: the 8 views, rely, deny, approve, transfer, push, mint and the 3 success paths each of transferFrom, pull, move, burn. Not covered: the 4 success paths of permitTail (DAI-2, disclosed) and name(), symbol(), version(), which have neither a witness nor a statement of the returned string (only ro_name, ro_symbol, ro_version: 'no storage write, no log' if the run ends with no error). So 'every success path' is true for the generated one-frame paths only. The 83 revert and 22 stuck paths have no witness (disclosed); my scan of paths.json found no path that holds the same term with both signs (the SHIB F3 pattern): 0 hits in 139 paths. The 23 branches pruned by a rule (10 + 4 sub_after_ge_lt, 4 equal_self, 4 hc4, 1 hc2) are closed by a Lean tactic inside the path proofs (sub_checked_lt, decided_by), not skipped. All witnesses are at frame level; there is no witness of a processMessage run (goodCall_process has no instance).",
+   "evidence": [
+    "token-kit/tokens/dai/DaiVerify/Dai/Sanity/Zero.lean:1399-1406 mint_runs (statement: '∃ (gas : Nat) (evm s : Evm fork Nat), At CODE (m_mint b t C) 0 [] .empty gas (sState C [(mapSlot Witness.CALLER1W 0, 1)]) ss evm ∧ (∀ {bound} (runChild : MessageRunner fork Nat bound), ... EndsL runChild evm s) ∧ s.error = none ∧ ...')",
+    "check_paths.out.json (audit scratch, not kept) (total_paths 139; by kind: revert 83, ok 30, stuck 22, at 4; contradictions [])",
+    "token-kit/tokens/dai/DaiVerify/Dai/Gen/Loops.lean:748-757 ro_name",
+    "token-kit/TokenKit/Evm/Unopt05.lean:30-44 (sub_check_of_ge_lt, macro sub_checked_lt); rg -c sub_checked_lt in Gen/P*.lean: Transfer 3, Push 3, TransferFrom 10, Move 10, Burn 10, Pull 10"
+   ],
+   "suggested_fix": "Word it as '26 of 30 success paths; permit and the three string getters have none'. Add witnesses for name, symbol, version (they need no state) and state their output bytes."
+  },
+  {
+   "id": "DAI-6",
+   "token": "DAI",
+   "severity": "note",
+   "claim": "status.json build and counts: 'Build completed successfully (1410 jobs)', '296 named theorems + scan of every constant', 'AXIOM SCAN OK: 10793 constants (10535 theorems)', only standard axioms.",
+   "what_is_actually_proved": "Matches the files and the log I have. Test/Axioms.lean has 296 '#print axioms' lines; logs/dai.log has 296 results, each on the line number where Axioms.lean names that theorem (0 mismatches), all within propext, Classical.choice, Quot.sound; the log ends with 'Build completed successfully (1410 jobs).' and EXIT=0; every DaiVerify module is listed as Built (clean rebuild of the token; the TokenKit modules are Replayed from the kit build). dai.axioms: count 296, AXRC=0. The scan in Axioms.lean has no skip list: it visits every constant whose module starts with DaiVerify or TokenKit, fails on any axiom declaration and on any other axiom. Text scan of 94 Lean files (DaiVerify and all of TokenKit): no sorry, admit, axiom, native_decide, bv_decide, unsafe, implemented_by, opaque, extern. File counts match status.json: 281 block rules, 139 paths, 66 loop theorems, 22 in Invariant.lean, 18 in Readable.lean, 45 in Sanity/Zero.lean, Seq 10, PermitSeq 13, Permit 4, Sep 16. Regenerating in a scratch copy with the kit scripts gives the committed generated files byte for byte (no hand edit). Two wording points: '296 theorems' in the README is the named list, which holds 37 shared TokenKit lemmas and leaves out the 281 block rules, the 66 loop rules, the 6 entry paths of name, symbol, version and Supply.inv_congr (all still under the scan); and the scan only sees the TokenKit modules the token imports. I could not check that the log was produced from exactly these sources beyond the matching line numbers and counts.",
+   "evidence": [
+    "check_code.out.json (audit scratch, not kept) (print_axioms_lines 296, log_results 296, log_result_line_mismatches [], log_nonstandard_axioms [], hygiene_hits [])",
+    "logs/dai.log (last lines), dai.axioms, dai.done ('DONE 252s')",
+    "token-kit/tokens/dai/DaiVerify/Test/Axioms.lean:338-363 (the scan)",
+    "regen.log (audit scratch, not kept) ('Axioms.lean: 296 theorems'; diff -rq of the regenerated copy against tokens/dai: empty)"
+   ],
+   "suggested_fix": "None needed. Optional: print the sha256 of the source tree into the build log so a log can be tied to a tree."
+  },
+  {
+   "id": "DAI-7",
+   "token": "DAI",
+   "severity": "note",
+   "claim": "CODE is the deployed bytecode; 22 selectors; supply_preserved and the dispatcher cover every function.",
+   "what_is_actually_proved": "Holds. CODE_NAT / CODE_SIZE equal survey/tokens/DAI/runtime.hex byte for byte (7904 bytes; keccak 4e36f96e...1ac7 as in Test/Hash.lean and SOURCE.md; data/dai.runtime.hex is the same file). The bytes hold exactly 22 'DUP1 PUSH4 k EQ PUSH2 d JUMPI' entries, equal to ENTRIES of Map.lean in order, every destination a JUMPDEST, and the 22 keys are exactly keccak(signature)[:4] of the 22 functions of abi.json; no other PUSH4 constant exists. ends_ok_dispatch: a run from pc 0 that ends with no error has >= 4 bytes of data, value 0 and the key of an entry (the three fallbacks are proved to end in an error for every gas). supply_preserved matches on all 22 entries; 21 go to supply_<fn>, the permit entry is closed by the hypothesis 'selector message.data ≠ 0x8fcbaf0c' and is added back by supply_permit and process_step_all. The frame theorems hold for any message runner (the only call opcode in the bytes is the STATICCALL at pc 5336; no CALL, CALLCODE, DELEGATECALL, CREATE, CREATE2, SELFDESTRUCT), so there is no reentrancy surface in this code. Static frames and a missing account are handled: ok_<fn> of every writer derives message.isStatic = false and hasAccount from the run (the other case is a proved stuck path).",
+   "evidence": [
+    "audits/check_code.py and check_code.out.json",
+    "token-kit/tokens/dai/DaiVerify/Dai/Complete/Dispatch.lean:69-83 ends_ok_dispatch",
+    "token-kit/tokens/dai/DaiVerify/Dai/Invariant.lean:668-676 supply_preserved ('(hsel7 : selector message.data ≠ 0x8fcbaf0c)')",
+    "token-kit/tokens/dai/DaiVerify/Dai/Gen/PMint.lean:256-273 ok_mint (conclusion holds 'message.isStatic = false ∧ hasAccount state message.currentTarget')"
+   ],
+   "suggested_fix": "None."
+  },
+  {
+   "id": "DAI-8",
+   "token": "DAI",
+   "severity": "note",
+   "claim": "status.json contract_findings (who can mint, burn, permit rules).",
+   "what_is_actually_proved": "The readable theorems I read support them, each as 'a run that ends with no error implies ...' (necessary conditions and exact effects; sufficiency is only shown by the witnesses). Worth telling the owner: (1) mint_readable: the only checks are wards[caller] = 1 and no overflow of balanceOf[usr] and totalSupply; no cap, no zero address check. rely_readable: any ward can make any address a ward; deny likewise removes any ward, itself included. There is no theorem at sequence level about who the wards are or can become; that is live state. (2) burn_readable: no ward needed; caller = usr, or allowance[usr][caller] >= wad (the largest word is not reduced). (3) permit_readable: the digest uses the word of storage slot 5 as domain separator; the bytes have no CHAINID opcode, so the separator is fixed at construction and a signature is valid on any chain fork that shares this storage. Allowance is set to 0 or to the largest word only. expiry = 0 means no expiry. The nonce sum is unchecked (wraps at 2^256, not reachable in practice). v is cut to its low byte. Only ECRECOVER is used: a contract holder cannot permit. (4) transferFrom, pull, move, burn skip the allowance when caller = src and never reduce an allowance equal to the largest word. (5) Every function reverts on value; a nonzero value at top level is proved to fail (process_value_fails).",
+   "evidence": [
+    "token-kit/tokens/dai/DaiVerify/Dai/Readable.lean:1040-1058 mint_readable, 1085-1106 burn_readable, 340-354 rely_readable, 506-528 transferFrom_readable",
+    "token-kit/tokens/dai/DaiVerify/Dai/PermitSeq.lean:325-331 permitRecovered ('permitDigest (storageAt S m.currentTarget (5 : U256)) ...'), 341-372 permit_readable",
+    "check_consts.out.json (audit scratch, not kept) (opcode 0x46 CHAINID: no pc; CALLER at 20 pcs)",
+    "token-kit/tokens/dai/DaiVerify/Dai/Seq.lean:161-167 process_value_fails"
+   ],
+   "suggested_fix": "None for the proofs. A sequence theorem 'wards only change through rely / deny by a ward' and 'totalSupply only changes through mint / burn' would turn these into invariants."
+  }
+ ],
+ "not_checked": [
+  "Lean was not run. That the proofs check rests on logs/dai.log; I could not tie that log to this exact source tree beyond matching line numbers, names and counts.",
+  "The scratch file lean/NoDelegation1Empty.lean is not built.",
+  "EthLib and usdt-verify themselves (trusted as the model), including Ecdsa.recover against the real precompile and the gas constants against a client.",
+  "Whether EthLib's order 'delegation before precompile' matches clients for a call to address 1; it does not matter while address 1 holds no code.",
+  "Whether applyAuthorizations leaves the Nat meter unchanged, i.e. whether the default-meter processMessage of the theorems is literally the call the transaction layer makes (DAI-1 a).",
+  "Which fork mainnet is on at block 26386793 (DAI-4).",
+  "Live chain state: who the wards are, the word of slot 5, whether sum of balances = totalSupply holds today; the constructor.",
+  "Solidity source against the bytes (no verified source in the repo); slot names are read off the bytes.",
+  "Proof bodies of generated files, the 281 block rules, the loop theorems and the 139 path statements one by one; I read the ok_ and readable statements of mint, burn, rely, transferFrom, permit and the tail, and trusted the generator for the same shape elsewhere (regeneration is byte identical).",
+  "Machine-checked falsity or truth of Sep for any key list (not possible in Lean).",
+  "A successful permit in the model (no witness exists; I did not build one)."
+ ],
+ "verdict": {
+  "DAI": {
+   "code constant equals the on-chain runtime code, 22 selectors": "holds",
+   "dispatcher completeness (ends_ok_dispatch, runFrame_ok_dispatch)": "holds",
+   "139 path specs and completeness ok_<fn> for every function and the three fallbacks": "holds with caveat (from Berlin, Nat meter; revert and stuck paths not witnessed; statements read for a sample only)",
+   "supply invariant per call: supply_<fn> for 21 functions and supply_preserved": "holds with caveat (under Sep, never discharged; permit selector excluded here and added by supply_permit)",
+   "readable theorems (18) and ro_name, ro_symbol, ro_version": "holds with caveat (necessary conditions and exact effects of a successful run; Sep for the writers; the three strings are not stated)",
+   "sanity witnesses: every success path in one frame": "holds with caveat (26 of 30 success paths; none for permit, name, symbol, version; frame level only)",
+   "permit proved for the real runner with no assumption on the precompile (ok_permit_real, permit_readable, supply_permit)": "holds with caveat (Paris <= fork < Glamsterdam, NoDelegation1, Sep for the last two; no witness of a successful permit; NoDelegation1 never discharged)",
+   "sequences: top-level messages and finite sequences, with permit (process_step_all, inv_callsP)": "holds with caveat (one processMessage run with the default meter and a linear chain; every other step is the assumed Untouched; no transaction link, no nested call composition, no base case: DAI-1)",
+   "README headline 'supply invariant, with permit'": "holds with caveat (as an inductive step per call under Sep; not as an invariant of the chain: DAI-1)",
+   "build: exit 0, 296 theorems, only standard axioms, scan of every constant": "holds (from the log; not rebuilt)",
+   "contract_findings of status.json": "holds (supported by the readable theorems read)"
+  }
+ }
+}

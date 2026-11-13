@@ -1,0 +1,302 @@
+{
+ "token": "WBTC",
+ "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+ "fork_range": "Fork.berlin <= fork < Fork.glamsterdam for every headline: supply_all_calleeKeeps (the upper bound is used for reclaimToken), supply_all_real_local, process_good_local, create_good_local, good_runL, inv_runL. The closed witnesses (reclaim_reenter_closed, reclaimToken_self_runs_closed): Fork.paris <= fork < Fork.glamsterdam. The generated frame theorems of the 23 functions with no CALL state only Fork.berlin <= fork (see assumptions, the Fork line). Not covered: before Berlin, Glamsterdam and later, and the transaction layer (no processTransaction theorem for WBTC, so no Dencun bound appears).",
+ "namespace": "WbtcVerify",
+ "config": "config/wbtc.json",
+ "bytecode": {
+  "bytes": 4582,
+  "compiler": "solc 0.4.24, optimizer on (200 runs)",
+  "selectors": 24,
+  "writers": 14,
+  "calls_reachable": 2,
+  "call_sites": "pc 1536 (token.balanceOf(this)) and pc 3211 (token.transfer(owner, balance)), both in reclaimToken(address) 0x17ffc320. The third CALL byte of the linear scan (pc 4526) and the CALLCODE byte (pc 4508) are inside the 32-byte Transfer topic constant at 4507..4538 (data of a PUSH32 pattern, after the STOP at 4506, no JUMPDEST inside); the metadata starts at 4539. The CREATE2 / SHL hits are in the same constant or in the metadata. None is reachable"
+ },
+ "state": "done with open points: all families proved and green. Open points are listed under not_covered (main ones: no closed instance of Sep, so no hypothesis-free instance of any supply or sequence theorem; one true hypothesis about the code hash; the witness with a token that calls back (ReclaimWit/ReClosed.lean) rests on Sep of its five words, which is not proved; role facts are per call, with no sequence theorem; the constructor is not modelled).",
+ "build": {
+  "where": "E2B box lean-fix-d (template lean-ethlib, removed after the run), /home/user/token-kit/tokens/wbtc, Lean v4.35.0, usdt-verify d0e684c5, kit = git archive HEAD token-kit (kit library built first: 1386 jobs, exit 0), LEAN_NUM_THREADS=2 (fix round of the ten-token audit, part close-d, 2026-11-11)",
+  "command": "lake build from a removed tokens/wbtc/.lake/build",
+  "final_line": "Build completed successfully (1447 jobs).",
+  "exit_code": 0,
+  "seconds": 218,
+  "log": "logs/wbtc.log (axioms output: logs/wbtc.axioms)",
+  "axioms_check": "bash scripts/check_axioms.sh /home/user/logs/wbtc.log WbtcVerify/Test/Axioms.lean: exit 0, 'theorems checked: 399', 'count matches Test/Axioms.lean: 399', 'only standard axioms' (Classical.choice 359, Quot.sound 388, propext 396 of the 399); 'AXIOM SCAN OK: 11902 constants (11393 theorems) of WbtcVerify and TokenKit'",
+  "forbidden_search": "no sorry, admit, axiom declaration, native_decide, bv_decide, unsafe, implemented_by in tokens/wbtc; no em dash or en dash in any file; 0 'sorry' in the build log",
+  "mac_box_sync": "md5 of all files of tokens/wbtc identical on Mac and box (.lake and __pycache__ excluded), after the final build and after status.json was copied",
+  "earlier_build": {
+   "command": "lake build (through TAG=wbfinal bash scripts/wb.sh . ; full compile of the merged tree was TAG=wb10, wbfinal is the rerun after the last script comment edits)",
+   "final_line": "Build completed successfully (1442 jobs).",
+   "axioms": "358 named theorems, 11677 constants",
+   "memory": "wb10 (full compile of the new files): at most 2 Lean processes at once, least memory available 5897 MB. LEAN_NUM_THREADS=3, one WBTC build at a time (lock file), build waits while less than 3000 MB is available"
+  }
+ },
+ "theorem_counts": {
+  "bytecode_and_jumpdests (Code.lean)": 5,
+  "hash_test (Test/Hash.lean, runtime test, not a theorem)": 0,
+  "steps (Steps.lean)": 1,
+  "local_rules (Lib.lean)": 11,
+  "blocks_and_paths (Gen/, 9 block files, 30 path files, Loops)": 560,
+  "dispatcher_and_completeness (Complete/: dispatcher table, ok_<fn>, value check)": 6,
+  "keccak_separation_lemmas (Sep.lean)": 15,
+  "supply_invariant (Invariant.lean)": 23,
+  "outside_call_generic (CallIn 4, CallOut 8, CallBubble 7)": 19,
+  "reclaimToken (Reclaim/Whole, Good, Readable, Fail)": 37,
+  "reentrancy_induction (Reenter.lean, copy of LINK's)": 89,
+  "run_local_trace (Trace.lean 29, TraceWit.lean 4)": 33,
+  "any_callee (Hold 5, Any 6, AnyLocal 6)": 17,
+  "sequences (Seq 5, SeqLocal 12)": 17,
+  "reclaimToken_real_runner_run_local_condition (ReclaimWit/Tiny, Sent, Clean)": 32,
+  "readable (ReadableLib 37, Readable 20, Roles 22)": 79,
+  "sanity_witnesses (Sanity/Zero 50 with 29 named witnesses; Sanity/Reclaim* and Addr 123 with 18 named witnesses; Sanity/Base 6: the base state)": 179,
+  "reclaimToken_reentry_witness (ReclaimWit/Re 24, SentSeg 5, ReRun 11, ReClosed 23)": 63,
+  "axioms_test": "399 named theorems printed, plus a scan of all constants (see build.axioms_check)",
+  "total_theorems_in_project": 1186,
+  "note": "recounted from the files in the fix round of the ten-token audit (lines that start with 'theorem '): 1116 before, plus supply_all_calleeKeeps and the 6 theorems of Sanity/Base.lean; 1123 before the part 'reenter' of the fix round, plus the 63 theorems of the four new files of ReclaimWit/"
+ },
+ "main_theorems": {
+  "per_function": "ok_<fn> for the 21 plain functions (exact storage writes, logs, gas), <fn>_readable (20) and reclaimToken_readable; name(), symbol(): Roles.name_reads_only, Roles.symbol_reads_only (no storage write, no log)",
+  "supply": "supply_all_calleeKeeps (Any.lean, headline since the fix round of the ten-token audit): every successful call of any of the 24 selectors keeps Inv (sum of balances = totalSupply_) under the local Sep (callKeys message), and for reclaimToken under fork < Glamsterdam and the LOCAL ReclaimCalleeKeeps on the two messages it sends; no HoldsCode and no hypothesis on other messages of the runner. supply_all_runnerKeeps (named supply_all before) is a corollary that asks RunnerKeeps instead, a hypothesis on EVERY sane message the runner could be given, plus HoldsCode: it is the interface of the reentrancy induction, not a headline. Exact change for mint and burn in Invariant.lean and Roles.totalSupply_change",
+  "reclaimToken": [
+   "ok_reclaim, reclaim_two_calls (Reclaim/Whole.lean): exact behavior up to the first CALL, between the calls and after: both messages byte exact, gas by the 63/64 rule, no storage write and no log by WBTC itself, end state = state the second child left",
+   "rc_bubble1, rc_bubble2, reclaim_fails_value, reclaim_fails_not_owner, reclaim_fails_no_code (Reclaim/Fail.lean)",
+   "supply_reclaimToken (Reclaim/Good.lean): Inv kept under the LOCAL assumption ReclaimCalleeKeeps runChild message state (no keccak hypothesis)",
+   "reclaim_good: the form the reentrancy induction needs",
+   "supply_all_real_local (AnyLocal.lean): the assumption proved for EthLib's real runner processRunner for ANY callee, reentry included, under the run-local CleanFrameW",
+   "reclaimCalleeKeeps_tiny, supply_reclaimToken_tiny (ReclaimWit/Tiny.lean): the assumption holds for the real runner and a concrete 10 byte token, with no keccak hypothesis",
+   "cleanFrameW_reclaim_tiny (no keccak hypothesis: the tiny token run sends nothing into WBTC), cleanW_reclaim_tiny, supply_all_real_local_reclaim_tiny, process_good_reclaim_tiny (ReclaimWit/Clean.lean): on a real reclaimToken run the run-local condition FOLLOWS FROM Sep (callKeys message) of the top message. These are implications, not closed instances: Sep, and for the last two GoodWbtc / HoldsCode and Inv, stay as hypotheses"
+  ],
+  "top_level_and_sequences": "process_good_local, create_good_local, good_runL, inv_runL (SeqLocal.lean, from Berlin, no gas cap); global forms process_good_sepAll_noCollision, inv_run_sepAll_noCollision, inv_run_of_global are corollaries",
+  "witnesses": "29 in Sanity/Zero.lean (every success path of the 21 plain functions, extra ones such as mint_paused_runs, burn_paused_runs, and revert witnesses); reclaimToken through the real processMessage: reclaimToken_runs (tiny token answers 1), five failing cases (not owner, no code, callee reverts and data is bubbled, short return, returns 0), reclaimToken_self_runs (token = WBTC, two real nested self calls, balance 7 moves to the owner, one Transfer log), each with a _closed form on a concrete state; reclaim_reenter_closed (a token other than WBTC that calls back, see reentry_witness)",
+  "roles": "Roles.lean, PER CALL: each theorem is about one frame of CODE from pc 0 that ends with no error. mint_only_owner, burn_only_owner, pause_role, unpause_role, paused_blocks, ownership moves (transferOwnership sets only pendingOwner, claimOwnership), finishMinting_does_nothing, renounceOwnership_fails; every_call, totalSupply_change, slot5_change, owner_change, paused_change, pendingOwner_change, mintingFinished_fixed, decimals_fixed EXCLUDE a reclaimToken frame by hypothesis (hsel3 : selector != 0x17ffc320), and the six slot theorems also need the unproved AllowFixed. There is no sequence or reentrancy theorem for any role fact (the Trace induction is instantiated with Inv only), so nothing is proved about roles over time",
+  "base_case": "Sanity/Base.lean (audit finding WBTC-2): emptyState holds CODE at WBTC_ADDRESS with empty storage (all balances 0, totalSupply_ 0); inv_emptyState (no hypothesis), holdsCode_emptyState and good_emptyState (hH : hashOf CODE != EMPTY_CODE_HASH is the only hypothesis), inv_runL_emptyState. This is the closed instance of the non-keccak part of the hypotheses of the sequence theorem",
+  "reentry_witness": "ReclaimWit/Re.lean, SentSeg.lean, ReRun.lean, ReClosed.lean (fix round of the ten-token audit, the gap of LINK-4 for WBTC). The token is a hand-written 45 byte contract RE that, on every call, CALLs its caller with transfer(0x2000, 1) and returns the word 1. reclaim_reenter_closed (ReClosed.lean): from the closed state reState (WBTC at WBTC_ADDRESS, owner CALLER1, not paused, totalSupply_ 2; RE at the address of the word 0x1000 with 2 WBTC), at every fork from Paris and before Glamsterdam, EthLib's processMessage ends reclaimToken(0x1000) from the owner (gas limit 32,000,000) with no error; the token called back WBTC.transfer(0x2000, 1) from inside its balanceOf and again from inside its transfer (end balances: token 0, 0x2000 2); the run meets CleanW; GoodWbtc holds at the end by process_good_local; the run is a RunL sequence and Inv holds at the end by inv_runL. supply_reclaim_re_frame: the frame level, with CleanFrameW shown and supply_all_real_local applied. process_reclaim_re, msgL_reclaim_re: the message level for any state with these facts (ReSt). reclaim_re_core (ReRun.lean): the run under the real runner and the list of the messages that the frame of reclaimToken sends (the two calls to the token), from first_call_s and second_call_s (SentSeg.lean: copies of the call lemmas with one more fact on Trace.Sent). re_call_runs: one call of WBTC to RE with the inner transfer inside, and its Trace.CleanRun. Hypotheses that stay, named in the statements: hA : Sep RE_KEYS (the five words CALLER1, 0x1000, 0x2000, 1, 0), hH : hashOf CODE != EMPTY_CODE_HASH, hRE : hashOf RE != hashOf CODE."
+ },
+ "assumptions": [
+  "Sep (callKeys message): keccak slots of the keys of this one call do not collide. Local, NEVER proved for any key list (not even the empty list: Sep.total and Sep.fixed are keccak facts over 2^160 keys, which cannot be computed), so Sep is never inhabited here and no theorem that takes it has a closed instance. In transfer, transferFrom, mint, burn, approve family supply theorems, supply_all_calleeKeeps, supply_all_runnerKeeps, supply_all_real_local, and 4 readable theorems. reclaimToken's own theorems need no keccak hypothesis.",
+  "Roles.AllowFixed (callKeys message): an allowance slot keyed by two keys of the call is neither slot 5 nor slot 6. Local keccak hypothesis, not proved, not implied by Sep. Only in slot5_change, mintingFinished_fixed, decimals_fixed, owner_change, paused_change, pendingOwner_change.",
+  "ReclaimCalleeKeeps runChild message state (supply_reclaimToken, supply_all_calleeKeeps): the LOCAL assumption on the two messages reclaimToken sends (if the child ends with no error from a state that keeps Inv, the state it leaves keeps Inv). Proved for the real runner for any callee by supply_all_real_local, which assumes the run-local CleanFrameW, HoldsCode and Berlin <= fork < Glamsterdam; proved with no keccak hypothesis for the tiny token (reclaimCalleeKeeps_tiny).",
+  "RunnerKeeps runChild L (supply_reclaimToken_runner, supply_all_runnerKeeps only): the runner keeps Good for EVERY sane message it could be given, not only the two that reclaimToken sends; with HoldsCode. A hypothesis over every message of the runner: these two theorems are the interface of the reentrancy induction (which proves RunnerKeeps for processRunner), not headlines.",
+  "CleanW / CleanFrameW (run-local, Trace.lean; in supply_all_real_local, process_good_local, create_good_local via CleanCreateW, MsgL, CreateL, good_runL, inv_runL, inv_runL_emptyState): (1) Sep (callKeys m) for each message m that actually enters WBTC's code during this run; (2) every code deposited during this run whose keccak256 equals that of CODE is CODE. Not proved in general (keccak). For one token that calls back (RE, ReclaimWit/ReClosed.lean) it FOLLOWS FROM Sep RE_KEYS (supply_reclaim_re_frame, process_reclaim_re: implications, Sep stays a hypothesis). For the tiny token reclaimToken run and for totalSupply runs it FOLLOWS FROM Sep (callKeys message) of the top message (cleanW_reclaim_tiny, cleanW_totalSupply: implications, Sep stays a hypothesis); cleanFrameW_reclaim_tiny alone is free of keccak hypotheses. Also implied by the finite list form cleanW_of_sepList and by the global forms.",
+  "SepAll and Reenter.NoCollision CODE: only in the corollaries named *_sepAll_noCollision and *_of_global. No main theorem depends on them.",
+  "HoldsCode L CODE state / GoodWbtc: the account at L holds the WBTC bytecode and Inv holds on its storage; assumed at the start, kept by every proved step. Closed instance: good_emptyState (Sanity/Base.lean) with hH as the only hypothesis.",
+  "Sane L CODE message for a top-level message (if it runs at L its code is CODE and it has a target): ASSUMED for the top message in process_good_local / MsgL, not derived from the state and the way EthLib builds a message from a transaction. message.data.size < 2^256. A top-level creation at L itself is excluded by hypothesis (CreateL, create_good_local).",
+  "Fork: Berlin <= fork < Glamsterdam in every theorem with a CALL (reclaimToken), in supply_all_calleeKeeps, supply_all_real_local, process_good_local, create_good_local, MsgL, CreateL; one-counter gas meter. Real-runner witnesses from Paris. The generated frame theorems of the functions with no CALL (paths, ok_<fn>, supply_<fn>, readable, Roles, Sanity/Zero) carry only Fork.berlin <= fork and no upper bound in their statement (the ten-token audit, fix 7): they are true as stated at every such fork, because they speak about EthLib's frame runner instantiated with the one-counter meter (Evm fork Nat), but EthLib runs transactions with that meter only below Glamsterdam, so they describe the real chain only for fork < Glamsterdam. The generator was not changed to add the bound: it would be an unused hypothesis in each of them.",
+  "Other steps in Seq.Run / RunL: a step that is not a message or creation (fees, end of transaction, account deletions) is ASSUMED to keep the code and storage of L. Not derived from EthLib's transaction layer (same as LINK).",
+  "Witnesses: C.toU256 = the WBTC address word (Sanity/Addr.lean gives it for the real address), concrete start states, gas lower bounds.",
+  "hH : hashOf CODE != EMPTY_CODE_HASH in reclaimToken_self_runs_closed, holdsCode_emptyState, good_emptyState, inv_runL_emptyState, holdsCode_reState, reSt_reState, reclaim_reenter_closed. True (Test/Hash.lean checks the hash at run time) but not proved in the kernel: see notes.incident.",
+  "Bubble theorems: mem.size % 32 = 0, rd.size < 2^256, enough gas (stated), Byzantium <= fork.",
+  "hA : Sep RE_KEYS, RE_KEYS = [CALLER1W, 0x1000, 0x2000, 1, 0] (sep_outer, sep_inner, supply_reclaim_re_frame, process_reclaim_re, msgL_reclaim_re, inv_reState, reclaim_reenter_closed; ReclaimWit/ReClosed.lean): the keccak separation of slots for the five words of the reentry witness (1 and 0 are there because callKeys reads the two argument words of every call as possible address keys). Not proved. It also gives the invariant of the start state reState (inv_reState: no other address has the balance slot of 0x1000, slots 1 and 5 are balance slots of no address).",
+  "hRE : hashOf RE != hashOf CODE (holdsCode_reState, reSt_reState, reclaim_reenter_closed): the keccak hash of the 45 byte token is not the hash of the code of WBTC. True, not proved in the kernel for the same reason as hH. hashOf RE != EMPTY_CODE_HASH is proved (re_hash_ne).",
+  "Reentry witness (ReclaimWit/ReRun.lean, ReClosed.lean): Paris <= fork < Glamsterdam; C.toU256 = the WBTC address word; the start state facts ReSt C S 2 0 (C holds CODE, the token holds RE, slot 5 = owner CALLER1 and not paused, balances 2 and 0); gas limit from 32,000,000 and below 2^64. All are discharged in reclaim_reenter_closed except the fork range, hA, hH, hRE."
+ ],
+ "not_covered": [
+  "The constructor and the state at deployment: nothing proves that Inv or HoldsCode holds for the on-chain state. The base case is emptyState (Sanity/Base.lean), a model state, modulo hH.",
+  "Any closed instance of Sep (and so of supply_all_calleeKeeps, supply_all_real_local, process_good_local or an inv_runL with a message step): there is no concrete state and message for which every hypothesis is machine-proved. The non-keccak part is closed by good_emptyState modulo hH. reclaim_reenter_closed is closed but for hA : Sep RE_KEYS, hH and hRE.",
+  "Roles over time: no sequence or reentrancy form of any Roles theorem. 'mintingFinished stays 0', 'decimals stays 8', 'only the owner ever mints' along a sequence of calls, or across a reclaimToken frame (during which the callee can call back, for example a pending owner chosen as token can claimOwnership inside balanceOf), are NOT proved. Suggested by the audit (finding WBTC-4): instantiate Trace.processMessage_good_local with P := 'the mintingFinished byte of slot 5 is 0'; not done, it needs a FrameKeepsQ proof for that P over all 24 selectors and the reclaimToken segments.",
+  "Sane for a top-level message derived from HoldsCode and EthLib's transaction layer, and Other proved for the end-of-transaction steps (audit finding WBTC-3): not done; both stay assumptions.",
+  "A proof of hashOf CODE != EMPTY_CODE_HASH (keccak of 4,582 bytes in the kernel needs more than 7.5 GB).",
+  "Reentry witness with a token other than WBTC (now covered for one run by reclaim_reenter_closed): only ONE token (RE, which calls transfer(0x2000, 1) on each call), balances 2 and 0, one concrete start state. Not covered: a token that calls another function of WBTC (for example claimOwnership or reclaimToken again), deeper nesting, runs that end with an error. The witness rests on the named hypotheses hA : Sep RE_KEYS, hH and hRE, which are not proved.",
+  "ReclaimCalleeKeeps (the hypothesis of the headline supply_all_calleeKeeps) shown directly for the token RE: not done. The reentry witness goes through supply_all_real_local (CleanFrameW), process_good_local (CleanW) and inv_runL instead, which give the same conclusion Inv at the end of the run.",
+  "Clean (run-local keccak condition) machine-checked for the self call reclaimToken(WBTC), and for reclaimToken runs that end with an error.",
+  "Failing branches of reclaimToken after the first EXTCODESIZE are not joined into one statement from pc 0 with exact gas: exact segments from the frame after each call exist (rc_bubble1/2, generated path theorems), plus ok_reclaim (a run with no error took none of them) and the five real-runner failing witnesses.",
+  "Bubbles with too little gas: only 'no run ends with no error'. A failing second call (transfer) and failure data of a size other than 32 bytes have no witness.",
+  "name() and symbol(): only no storage write, no account change, no log; no claim on the returned bytes, no witness (their paths are loops).",
+  "renounceOwnership: no readable theorem because it has no success path; Roles.renounceOwnership_fails and a revert witness stand for it.",
+  "Roles.every_call and the theorems after it exclude reclaimToken by hypothesis (its effect is whatever the callee does; the supply part is covered by supply_all_calleeKeeps and reclaimToken_readable, the role slots are not).",
+  "Exact gas in readable theorems (it is in ok_<fn>); exact gas left in the reclaimToken witnesses; revert witnesses state error != none, not the exact error.",
+  "Transactions (intrinsic gas, refunds, fees): sequences are over processMessage / processCreateMessage. Forks before Berlin and from Glamsterdam; the two-counter gas meter (EIP-8037).",
+  "No statement that the supply is constant (mint and burn change it): sequences keep the equation Inv only.",
+  "Transaction level (fix 2 of the ten-token audit, recipe C of audits/wbtc/fixes.json): WBTC has no Tx.lean on the shared library TokenKit.Seq; the sequence theorems are over RunL with the assumed Other step. Not part of the fixes 5 to 9."
+ ],
+ "findings_contract": [
+  "Gas forwarded: GAS then CALL at 1535/1536 and 3210/3211, so the asked gas is all gas left and the 63/64 rule decides (msg.gas = messageCallGas(...).subCall, exact in ok_reclaim). Value 0, so no stipend.",
+  "Checked by the bytes: msg.value == 0; CALLER == owner (slot 5 bits 8..167); EXTCODESIZE(token) != 0 before EACH call; success flag of each call (failure: RETURNDATACOPY of the whole return data to memory 0 and REVERT with it, proved byte exact); RETURNDATASIZE >= 32 after each call; first word of the second return != 0. The first returned word (the balance) is not checked, it is passed on as the amount.",
+  "Message 1: 36 bytes at memory 128: selector 0x70a08231, then address(this). Output range 128..160 (over the start of the input). Message 2: 68 bytes at memory 128: selector 0xa9059cbb, owner, balance; output 128..160.",
+  "The balance is read from memory 128 after the call; it is the first 32 returned bytes because RETURNDATASIZE >= 32 was checked first.",
+  "OWNER RE-READ: the owner in message 2 is SLOAD(5) of the state the first child left (rcOwner message child1.state), not the owner checked at the start. A callee that changed the owner of WBTC during balanceOf changes who is paid.",
+  "WBTC's own opcodes write no storage and emit no log in this function: the frame handed to each child differs from the state before only by records of reads (ReadsAs), logs equal (rcCallerSub_quiet); end state = child2.state.",
+  "Self call: token = WBTC passes the EXTCODESIZE test; WBTC then runs its own balanceOf and transfer as nested calls with msg.sender = WBTC. All theorems hold for it (no msg.currentTarget != L assumption); sane_of_sentVia proves the nested message runs CODE.",
+  "A token that is an EIP-7702 delegation is covered: SentVia says the message runs the code the state holds for the address the call resolves to.",
+  "Only the first argument word is read and its high 96 bits are masked; the call data size is not required to be 36.",
+  "finishMinting(): owner only, returns false (word 0), writes nothing, no log. No function sets mintingFinished: under Sep + AllowFixed no SINGLE call (a reclaimToken frame aside) changes that byte (Roles.mintingFinished_fixed). This is a per-call fact; there is no theorem over a sequence of calls or across a reclaimToken frame, so 'minting can never be finished' is the reading of the bytes, not a proved statement",
+  "renounceOwnership(): fails on every path (the owner path returns a reason string); ownership can not be renounced",
+  "transferOwnership(newOwner): owner only, only writes pendingOwner (low 160 bits of slot 6), owner unchanged, NO event, no zero-address check (0 and the owner itself accepted)",
+  "claimOwnership(): pending owner only; owner := pendingOwner, pendingOwner := 0, emits OwnershipTransferred(old, new); the log comes before the SSTOREs",
+  "mint(to, amount): owner only, needs mintingFinished = 0, NOT blocked by pause (witness mint_paused_runs), no check that to != 0 (can mint to address 0); logs Mint then Transfer(0, to, amount)",
+  "burn(value): owner only, burns the owner's OWN balance, NOT blocked by pause (witness burn_paused_runs); logs Burn then Transfer(owner, 0, value); returns nothing",
+  "pause blocks transfer, transferFrom, approve, increaseApproval, decreaseApproval; pause() needs not paused, unpause() needs paused; both owner only",
+  "transfer / transferFrom: to != 0 checked, to = the contract itself allowed; transferFrom lowers the allowance always (no infinite allowance) and emits no Approval",
+  "approve: no check of the old allowance, spender may be 0",
+  "decreaseApproval sets the allowance to 0 when subtracted >= old",
+  "no call-data size checks anywhere (solc 0.4.24): missing argument bytes read as zero",
+  "every plain function reverts on a non-zero call value",
+  "a token whose transfer returns 0 makes the whole call revert after both calls ran (SafeERC20 style check)",
+  "reclaimToken(WBTC) works as a direct self call: balanceOf then transfer with msg.sender = WBTC move WBTC's own balance to the owner; totalSupply_ and the sum of the two balances do not change. The inner transfer needs the token unpaused (whenNotPaused reads slot 5).",
+  "each CALL passes all gas but one 64th (63/64 rule); the witness needs about 60000 gas in the inner transfer",
+  "WBTC has no unbounded argument, so the frame theorems hold for every gas (LINK needed a gas cap).",
+  "Slot layout from the bytes: balances mapping slot 0, totalSupply_ slot 1, allowances mapping slot 2, slot 5 packs decimals / owner (bits 8..167) / mintingFinished / paused, pendingOwner slot 6."
+ ],
+ "global_keccak_hypotheses": {
+  "result": "Better than LINK on (b), and on (a) as far as the model allows. Both hypotheses are run-local now; the global SepAll and NoCollision remain only in corollaries with the hypothesis in the name. Non-reentrant theorems use only Sep (callKeys message); reclaimToken's own theorems use no keccak hypothesis.",
+  "a_NoCollision": "Cannot be avoided in the model. Checked on the box's EthLib (commit 62dbd687): one code table keyed by hash, State.setCode does codeWrites.insert (keccak256 code) code (overwrite), getCode reads codeWrites first, then the parent's, then preState; the account only stores the hash. So a deposit of another byte string with the hash of CODE would change what L runs. Replaced by: no code deposited DURING THIS RUN is a different byte string with the hash of CODE (deposit events of Occurs).",
+  "b_SepAll": "Replaced by Sep (callKeys m) only for messages m that enter L's code during the run (enter events of Occurs), and by the finite list form cleanW_of_sepList.",
+  "approach": "Ideas (i) and (ii) of the brief together: an inductive trace relation (Sent, Occurs) that mirrors runFrame and processRunner, a Prop Clean over its events, and the induction redone. The key trick is the restricted runner `only` with runFrame_agree, which meets the universal KeepsOn hypothesis of the token theorem with knowledge of sent messages only.",
+  "satisfiable": "Not shown satisfiable in closed form. cleanW_reclaim_tiny (real reclaimToken run against the tiny token) and cleanW_totalSupply show that the run-local condition follows from Sep (callKeys message) of the top message; cleanW_of_sepList reduces it to Sep of one caller-chosen finite list. Sep itself is never proved for any list. Only cleanFrameW_reclaim_tiny has no keccak hypothesis. For the token RE that calls back, CleanFrameW and CleanW follow from Sep RE_KEYS (five words): supply_reclaim_re_frame, process_reclaim_re.",
+  "missing": "Clean for the self call and for failing reclaimToken runs (see not_covered). Sep (callKeys message) of the top message stays in the Clean forms even for reclaimToken, because Clean asks it uniformly of every message that enters WBTC; dropping it needs a per-selector condition.",
+  "theorems_with_global_hypotheses": [
+   "runnerKeeps_processRunner_sepAll_noCollision",
+   "supply_all_real_sepAll_noCollision",
+   "frameKeeps_sepAll",
+   "process_good_sepAll_noCollision",
+   "good_msg_sepAll_noCollision",
+   "good_run_sepAll_noCollision",
+   "inv_run_sepAll_noCollision",
+   "cleanW_of_sepAll_noCollision",
+   "cleanRunW_of_sepAll_noCollision",
+   "cleanFrameW_of_sepAll_noCollision",
+   "supply_all_real_of_global",
+   "inv_run_of_global",
+   "Msg.toLocal",
+   "Run.toLocal"
+  ]
+ },
+ "to_merge_into_kit": {
+  "note": "Nothing under the kit's scripts/ or TokenKit/ was changed. The local generator copies start from the kit's copies as of the start of this work with LINK's solc 0.4 changes carried over (so several differ from LINK's older copies only by the kit's own newer options: min_fork, env_local, PUSH0, dotted_decl). Listed below: what is new beyond LINK.",
+  "scripts_changed": [
+   {
+    "file": "scripts/gen_paths.py",
+    "reason": "new `segments` config: prove a function with outside calls as separate path families between the CALLs (ReclaimCodeA / Mid / CodeB / End), on top of LINK's stops and prefix_functions"
+   },
+   {
+    "file": "scripts/gen_supply.py",
+    "reason": "supply.never_ok (a function whose every path fails needs no theorem) and supply.caller_key raw (caller used unmasked as mapping key)"
+   },
+   {
+    "file": "scripts/gen_value.py",
+    "reason": "solc 0.4.24 value check keeps the value on the stack (CALLVALUE DUP1 ISZERO): 28 gas, one more step"
+   },
+   {
+    "file": "scripts/gen_dispatch.py",
+    "reason": "doc text only: optimizer GT split table and CALLDATASIZE == 0 wording for solc 0.4.24"
+   },
+   {
+    "file": "scripts/gen_readable.py",
+    "reason": "facts04 for a bare EQ / LT jump condition (msg.sender == owner, decreaseApproval); readable_opts.caller_key raw"
+   },
+   {
+    "file": "scripts/gen_sanity.py",
+    "reason": "several witnesses per path (path@name), witnesses of REVERT paths, <fn>_runs for a single success path; writes work/sanity_names.json"
+   },
+   {
+    "file": "scripts/gen_axioms.py",
+    "reason": "reads work/sanity_names.json for the witness names when it exists"
+   },
+   {
+    "file": "scripts/tokenlib.py, scripts/kit_opens.py",
+    "reason": "find the kit as the nearest folder above that holds TokenKit.lean (so a work copy under sub/ works)"
+   }
+  ],
+  "scripts_new": [
+   {
+    "file": "scripts/wb.sh",
+    "reason": "the only build path: push one folder, one build at a time (flock), wait while under 3000 MB available, LEAN_NUM_THREADS=3, memory samples, and a watchdog that stops a Lean process of this build above 2600 MB; worth making the kit's box.sh"
+   },
+   {
+    "file": "scripts/mksub.sh",
+    "reason": "make a work copy sub/<name> with a seeded .lake so parallel streams build only their own files"
+   },
+   {
+    "file": "scripts/mk_config.py, mk_config_more.py, mk_config_reclaim.py, mk_config_readable.py, mk_config_axioms.py",
+    "reason": "write config/wbtc.json in parts (base, functions, reclaim segments, readable and sanity entries, axioms name list from config/axioms_names.json)"
+   },
+   {
+    "file": "scripts/mk_lib.py",
+    "reason": "one-time: builds Lib.lean from LINK's and WBT's local Lib files (log and SafeMath rules the shared library lacks)"
+   },
+   {
+    "file": "scripts/regen_wbtc.sh",
+    "reason": "local copy of regen.sh that runs the local generators"
+   }
+  ],
+  "lean_new_token_independent": [
+   {
+    "file": "WbtcVerify/Wbtc/CallOut.lean",
+    "reason": "callOut_outcome: what a finished CALL with value 0 and all gas did, for any runner (EXTCODESIZE, GAS, CALL outcome forms); belongs in TokenKit/Evm"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/CallBubble.lean",
+    "reason": "the solc 0.4/0.5 code after a CALL: callTail_ok, bubble_spec (RETURNDATACOPY + REVERT byte exact), ends_step; belongs in TokenKit/Evm"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/Trace.lean",
+    "reason": "run-local keccak hypotheses (Sent, Occurs, Clean, restricted runner `only`, runFrame_agree); token independent, replaces SepAll / NoCollision in any reentrancy result"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/ReclaimWit/Sent.lean (hoare_sent, run_child, callOut_sent, gas_sent, extcodesize_sent) and Tiny.lean (not_sent_low, tiny_spec, tiny_process, tiny_runner)",
+    "reason": "generic tools to list the messages a frame sends and to discharge Clean for a concrete callee"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/Sanity/ReclaimLib.lean",
+    "reason": "real-runner witness tools: runner_of_run, frame_of_ran, runner_of_spec, mcg_exact (63/64 rule), four tiny callees with their real runs"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/Reenter.lean, CallIn.lean, Hold.lean",
+    "reason": "copies of LINK's (namespace changed); should move to TokenKit once so tokens stop copying"
+   }
+  ],
+  "lean_token_specific": "Reclaim/*, ReclaimWit/Clean.lean, Any, AnyLocal, Seq, SeqLocal, TraceWit, Roles, Sanity/Reclaim*, Lib.lean",
+  "fix_round_4": [
+   {
+    "file": "WbtcVerify/Wbtc/Sanity/Base.lean",
+    "reason": "base case pattern (codeHash_codeState_self, holdsCode for a codeState, sumTo_zero); the first and last are token independent; LINK has the same file"
+   },
+   {
+    "file": "scripts/gen_dispatch.py, scripts/mk_config.py (dispatch.split_doc)",
+    "reason": "doc text of Map.lean only: the first table entry has the form PUSH4 key DUP2 EQ; the table text no longer claims a split by GT comparisons that this bytecode does not have"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/ReclaimWit/Re.lean",
+    "reason": "copy of LINK's ReWit/Re.lean (namespace changed, mcg_keep carried in): the contract RE that calls back into its caller and its lemmas, token independent; belongs in TokenKit once"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/ReclaimWit/SentSeg.lean",
+    "reason": "call_run_s, seg1_s, seg2_s, first_call_s, second_call_s: the call lemmas of Sanity/ReclaimSeg.lean and ReclaimRun.lean with one more conjunct on Trace.Sent. They are copies made by a script; the originals could take the conjunct and the copies go"
+   },
+   {
+    "file": "WbtcVerify/Wbtc/ReclaimWit/ReClosed.lean (addCode and its lemmas)",
+    "reason": "a state with one more account that holds a code; same text as in LINK's ReWit/Closed.lean, token independent"
+   }
+  ]
+ },
+ "reuse_notes": {
+  "ports_back_to_LINK": "Yes. Trace.lean is token independent (it imports only the token's copy of Reenter.lean and EthLib). For LINK: copy it, rename the namespace, prove FrameKeepsQ from LINK's supply_all with hsep := Q message (keeping LINK's GAS_CAP), then copy AnyLocal / SeqLocal with the names changed.",
+  "CRO": "8,144 bytes, solc 0.4.24 optimized: generators run as for WBTC (same dispatcher, SafeMath, value check). 3 CALL sites, all the same compiler pattern as WBTC (EXTCODESIZE, GAS, CALL, bubble, RETURNDATASIZE check), so CallOut / CallBubble / callTail and the `segments` config apply as is: pc 3514 upgradeFrom (0x753e88e5) in upgrade(), AFTER 3 SSTOREs (balance, totalSupply, totalUpgraded) and before a LOG3; pc 5940 isUpgradeAgent (0x61d3d7a6) and pc 6295 originalSupply (0x4b2ba0dd) in setUpgradeAgent, after the SSTORE of upgradeAgent at pc 5851. New work: (1) the callee is a STORED address, not an argument; (2) upgrade() writes before the call, so the state handed to the child must already satisfy the invariant (burn of balance and totalSupply together: it does) and the theorem needs the write-then-call form of reclaim_good; (3) Trace / AnyLocal / SeqLocal copy over with names changed; a frame gas cap may be needed if CRO has unbounded arguments.",
+  "LEO": "6,316 bytes, solc 0.5.1 optimized, MiniMe: much more than a rerun. CALL sites: pc 423 fallback proxyPayment (0xf48c3054) to the controller WITH VALUE (needs the value branch of the CALL rule, stipend and balance move: TokenKit Payee / Move / Stipend); pc 2454 onApprove (0xda682aeb) before the allowance SSTORE; pc 3193 STATICCALL balanceOfAt (0x4ee2cd7e) and pc 4461 STATICCALL totalSupplyAt (0x981b24d0) on parentToken (TokenKit StaticCall; a static child cannot write, so no reentrancy induction for these two, but their returned words enter the result); pc 3754 createCloneToken on the factory with dynamic strings and pc 3898 changeController (0x3cebb823) on the new clone; pc 4842 approveAndCall receiveApproval with dynamic bytes and output size 0 (like LINK's transferAndCall: gen_tac / tacsym); pc 5480 onTransfer (0x4a393149) to the controller. Also needed: checkpoint arrays (binary search loops, so a loop invariant and a different supply statement: the invariant is over the LAST checkpoint of each array), the NUMBER opcode, solc 0.5 dispatcher (CALLDATASIZE < 4, SHR-free but with the 0.5 revert shapes). CallOut covers value 0 CALLs only; the bubble tail of solc 0.5.1 should be checked against callTail (same shape expected). Trace.lean applies unchanged.",
+  "general": "For any token with outside calls: copy Reenter, CallIn, CallOut, CallBubble, Trace, Hold, AnyLocal, SeqLocal, use `segments` in the config, prove the <fn>_good theorem by hand from the segment theorems, then the any-callee and sequence files are near copies. Never evaluate keccak256 of the full code in the kernel."
+ },
+ "notes": {
+  "incident": "This work froze the shared box for about 50 minutes (about 12:58 to 13:48 UTC on 2026-11-11). Cause: a file of my witness stream, Sanity/CodeHash.lean (build TAG witness13), asked the kernel to compute the keccak of the 4,582 code bytes; one Lean process grew to 7.5 GB, used all memory and swap, and was killed by the kernel (exit 137). During that time the box did not answer, and the other agent's own Lean run (lake env lean /home/user/logs/scratch.lean, tokens/uni work) was slowed for about 50 minutes; I did not touch its process. The earlier memory rule (check free memory before a build, 3 threads) did not catch it because the growth came from one process after the build had started. Fix: scripts/wb.sh now has a watchdog that stops any Lean process of its own build above 2600 MB (resident + swap); the file was removed and the fact is kept as an explicit hypothesis. The box was never paused or removed.",
+  "sub_agents": "five one-job streams on work copies (reclaim, reenter, readable, witness, glue); their records were kept in the work folder, which is not in this export",
+  "small": [
+   "wb.sh was edited while two stream builds were reading it: one run (glue4) died before reaching the box and one printed a shell syntax error after its summary; both were rerun or complete, no build result was affected",
+   "Any.lean's runner form is named supply_reclaimToken_runner to avoid a clash with supply_reclaimToken of Reclaim/Good.lean",
+   "gen_axioms reports 7 names 'not declared, left out' (supply_renounceOwnership, supply_short, supply_other, supply_reclaim*): functions that never succeed or segments with no supply theorem of their own; expected"
+  ],
+  "fix_round_4": [
+   "supply_all (Any.lean) was renamed supply_all_runnerKeeps and is now a corollary of the new headline supply_all_calleeKeeps (moved in from a scratch file of the audit, not kept). The records of the first build (not kept) still used the name supply_all.",
+   "README.md of the repo says 1,119 theorems for WBTC; the count was 1116 before this round and is 1123 now. README.md is not a file of this fix part.",
+   "wbtc.done says the clean rebuild took 93 s: a note on the speed of that box only; the fix round clean build time is in build.",
+   "For the owner of the repo (audit finding WBTC-6): the per-call facts in findings_contract (reclaimToken owner re-read, reclaimToken(WBTC), mint and burn ignore the pause, mint to address 0, finishMinting does nothing, renounceOwnership fails, transferOwnership without event or zero check, no call data size checks) are single-frame facts with real witnesses; none is a statement over time.",
+   "Part 'reenter' of the fix round: four new files under ReclaimWit/ (Re, SentSeg, ReRun, ReClosed), 35 names added to config/axioms_names.json, config/wbtc.json and Test/Axioms.lean regenerated with mk_config.py and gen_axioms.py only (kit_opens.py was not run on the Mac: with the kit of the working tree, which another part is changing, it rewrites the open line of Test/Axioms.lean; the file as generated has the same open line as before). No old theorem was changed.",
+   "Part close-d (fixes 5 to 9): no Lean file of WBTC was changed. status.json: fork_range added, the Fork assumption says which theorems have no upper fork bound and why, one not_covered line. Fix 8 checked: supply_all_calleeKeeps is the headline (main_theorems.supply, Any.lean) and every Roles claim is worded PER CALL; the sequence form of the Roles theorems was judged not short and is not written (it needs a FrameKeepsQ proof of the predicate for all 24 selectors and the reclaimToken segments); see not_covered 'Roles over time'. Closed instance for fix 5: reclaim_reenter_closed (ReclaimWit/ReClosed.lean) and good_emptyState (Sanity/Base.lean). Clean rebuild on the box lean-fix-d: see build."
+  ]
+ },
+ "files": {
+  "root": "WbtcVerify.lean",
+  "lean": "WbtcVerify/Wbtc/** and WbtcVerify/Test/{Hash,Axioms}.lean",
+  "findings": "records of the five streams (reclaim, reenter, readable, witness, glue), not kept; the fix records are in audits/wbtc/fixes.json",
+  "inputs": "data/{wbtc.runtime.hex,abi.json,SOURCE.md}, docs/MAP.md",
+  "fix_status": "audits/wbtc/fixes.json",
+  "fix_status_reenter": "audits/wbtc/fixes.json"
+ }
+}
